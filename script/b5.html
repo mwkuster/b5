@@ -1,0 +1,1850 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>B5: Web Services </title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-10-02 21:33:51 CEST"/>
+<meta name="author" content="Marc Wilhelm Küster"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">B5: Web Services </h1>
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">B5 "Web Services"</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Marc Wilhelm Küster</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mwkuster/b5" rel="dct:source">https://github.com/mwkuster/b5</a>.
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Objectives and Formalia </a>
+<ul>
+<li><a href="#sec-1.1">1.1 Course objectives </a></li>
+<li><a href="#sec-1.2">1.2 Programming project </a></li>
+<li><a href="#sec-1.3">1.3 Preconditions </a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 RESTful Web Services and Resource Oriented Architectures </a>
+<ul>
+<li><a href="#sec-2.1">2.1 The HTTP protocol </a>
+<ul>
+<li><a href="#sec-2.1.1">2.1.1 HTTP methods and their use </a></li>
+<li><a href="#sec-2.1.2">2.1.2 Error handling </a></li>
+<li><a href="#sec-2.1.3">2.1.3 Content negotiation </a></li>
+<li><a href="#sec-2.1.4">2.1.4 Encryption and caching </a></li>
+<li><a href="#sec-2.1.5">2.1.5 Command line tools such as curl and wget </a></li>
+</ul>
+</li>
+<li><a href="#sec-2.2">2.2 Design principles for RESTful systems </a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 Excursion: Clojure and JVM </a>
+<ul>
+<li><a href="#sec-3.1">3.1 Why Clojure? </a></li>
+<li><a href="#sec-3.2">3.2 Practicalities </a>
+<ul>
+<li><a href="#sec-3.2.1">3.2.1 Installation and integration with Emacs </a></li>
+<li><a href="#sec-3.2.2">3.2.2 Leiningen </a></li>
+<li><a href="#sec-3.2.3">3.2.3 Syntax and data structures </a></li>
+</ul>
+</li>
+<li><a href="#sec-3.3">3.3 Control structures </a></li>
+<li><a href="#sec-3.4">3.4 Lazy sequences </a></li>
+<li><a href="#sec-3.5">3.5 Principles of functional programming </a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 Programming RESTful Web Services </a></li>
+<li><a href="#sec-5">5 SOAP-based Web Services and Service-oriented Architectures </a></li>
+<li><a href="#sec-6">6 Programming SOAP-based Web Services </a></li>
+<li><a href="#sec-7">7 Excursion: Web Services in .NET </a></li>
+<li><a href="#sec-8">8 The Semantic Web </a></li>
+<li><a href="#sec-9">9 Preparing the Practical Programming Projects </a></li>
+<li><a href="#sec-10">10 Bibliography </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Objectives and Formalia </h2>
+<div class="outline-text-2" id="text-1">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-05 Fri</span></span>
+</p>
+</div>
+
+<div id="outline-container-1.1" class="outline-3">
+<h3 id="sec-1.1"><span class="section-number-3">1.1</span> Course objectives </h3>
+<div class="outline-text-3" id="text-1.1">
+
+<p>Mastering the concepts and implementation of heterogeneous, loosely-coupled architectures using a substantial practical programming project
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-1.2" class="outline-3">
+<h3 id="sec-1.2"><span class="section-number-3">1.2</span> Programming project </h3>
+<div class="outline-text-3" id="text-1.2">
+
+<p>Course success is measured through a practical programming project,
+followed by a short oral exam. This project can be started after the
+basic web service part is over. I will suggest topics, but
+participants can also propose their own projects as long as the
+technologies fit in the overall scope of the course.
+</p>
+<p>
+You can and should work in teams of two.
+</p>
+<p>
+Repeating the exam means a second, new practical project followed by a second oral exam.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1.3" class="outline-3">
+<h3 id="sec-1.3"><span class="section-number-3">1.3</span> Preconditions </h3>
+<div class="outline-text-3" id="text-1.3">
+
+<ul>
+<li>
+Preconditions for this module:  B4, D4
+</li>
+<li>
+Registration for course and exam within deadlines
+</li>
+<li>
+Participating in the final exam depends on having successfully completed a practical programming project
+</li>
+<li>
+Exam: consists of a practical programming project followed by a presentation and an oral exam
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> RESTful Web Services and Resource Oriented Architectures </h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2.1" class="outline-3">
+<h3 id="sec-2.1"><span class="section-number-3">2.1</span> The HTTP protocol </h3>
+<div class="outline-text-3" id="text-2.1">
+
+<p>The Hypertext Transfer Protocol (HTTP) or RFC 2616 is next to the Uniform Resource Identifier (URI) the most important standard for the Web as we know it. Whenever we access anything on the web through a browser, we trigger at least one HTTP request, typically many. And not only through a browser: any mobile device uses HTTP requests, as do many software tools that are not browsers at all. 
+</p>
+<p>
+In this session we will learn more about this specification and how it is used. Fortunately, the specification {Fielding:1999ub} itself is very clear and readable. It sets out with the HTTP's overall objective:
+</p>
+<blockquote>
+
+<p>The Hypertext Transfer Protocol (HTTP) is an application-level protocol for distributed, collaborative, hypermedia information systems. It is a generic, stateless, protocol which can be used for many tasks beyond its use for hypertext, such as name servers and distributed object management systems, through extension of its request methods, error codes and headers. A feature of HTTP is the typing and negotiation of data representation, allowing systems to be built independently of the data being transferred (<a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">http://www.w3.org/Protocols/rfc2616/rfc2616.html</a>)
+</p>
+</blockquote>
+
+
+<p>
+The key phrase &mdash; and probably the main technical reason for HTTP's success &mdash; is <i>stateless</i>. Generally, HTTP operates on pairs of request and response. Once a request has received its response, the protocol keeps no memory of the interaction, making each interaction independent. Of course, an HTTP request can very well change the state of the recipient, for example by adding a resource &mdash; we'll shortly see how &mdash;, but this remains transparent for the next request / response pair. The next interaction has no inherent knowledge if the state of the server has just been changed a millisecond earlier, was changed a month ago or has always been in this state: "interaction is stateless between requests" ({Fielding:2000vh}, 5.3.1). The server also has no need to keep a state related to the concrete set of interactions, nor even which sequence of interactions come from the same sender. "Session state is therefore kept entirely on the client" ({Fielding:2000vh}, 5.1.3).
+</p>
+<p>
+If this sounds abstract, at the core it means that a sender &mdash; let's say, the browser &mdash; asks a server for a webpage, giving a URI to identify that page:
+</p>
+
+
+
+<pre class="example">-----------   Get Webpage       ----------
+|         | ------------------&gt; |        |
+| Browser |                     | Server |
+|         | &lt;------------------ |        |
+-----------  Send webpage       ----------
+</pre>
+
+
+
+
+<p>
+In reply, the server sends back the content of that website to the browser, and that's it.
+</p>
+<p>
+Of course, there's a bit more to it, though the principle does not change.
+</p>
+
+</div>
+
+<div id="outline-container-2.1.1" class="outline-4">
+<h4 id="sec-2.1.1"><span class="section-number-4">2.1.1</span> HTTP methods and their use </h4>
+<div class="outline-text-4" id="text-2.1.1">
+
+<ul>
+<li id="sec-2.1.1.1">GET-method <br/>
+In the easiest scenario, the client just wants to get some content from the server. In this case sends a request that is in fact just called <code>GET</code>:
+
+
+
+<pre class="example">GET /research/ HTTP/1.1
+User-Agent: curl/7.27.0
+Host: www.budabe.eu
+Accept: */*
+</pre>
+
+
+
+
+<p>
+This says pretty much what it seems to say: request the server to <code>GET</code> the URL webpage -/research- on the host -www.budabe.eu- and return its contents. If the page exists, the server responds by sending it back:
+</p>
+
+
+
+<pre class="example">&lt; HTTP/1.1 200 OK
+&lt; Date: Sat, 22 Sep 2012 15:09:33 GMT
+&lt; Server: Apache/2.2.20 (Ubuntu)
+&lt; Vary: Accept-Language,Cookie,Accept-Encoding
+&lt; Content-Language: de-de
+&lt; Transfer-Encoding: chunked
+&lt; Content-Type: text/html; charset=utf-8
+&lt; 
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;&lt;!-- mode: nxml; code: utf-8; --&gt;
+&lt;html version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;title&gt;
+Research
+&lt;/title&gt;
+[...]
+</pre>
+
+
+
+
+<p>
+Again, this says pretty much what it seems to say: On a given date the server sends back an html-page (-Content-Type: text/htm-) encoded in Unicode and more precisely UTF-8. The most cryptic and at the same time the most important part of this is the <code>200</code> part, though, that says that the request has succeeded. The <code>200</code> return code is specified RFC 2616 alongside 37 others. We'll come back to these codes below.
+</p>
+<p>
+Formally, <code>GET</code> is defined as:
+</p>
+<blockquote>
+
+<p>The GET method means retrieve whatever information (in the form of an entity) is identified by the Request-URI. If the Request-URI refers to a data-producing process, it is the produced data which shall be returned as the entity in the response and not the source text of the process, unless that text happens to be the output of the process ({Fielding:1999ub}, 9.3)
+</p>
+</blockquote>
+
+
+<p>
+<code>GET</code> returns existing webpages or more abstractly resources, if they exist, but it does not modify it. You can execute it any number of times, it will always return the resource. For this reason, it is called an idempotent method.
+</p>
+</li>
+<li id="sec-2.1.1.2">HEAD-method <br/>
+"The HEAD method is identical to GET except that the server MUST NOT return a message-body in the response" ({Fielding:1999ub}, 9.4):
+
+
+
+<pre class="example">&gt; HEAD /research/ HTTP/1.1
+&gt; User-Agent: curl/7.27.0
+&gt; Host: www.budabe.eu
+&gt; Accept: */*
+&gt; 
+&lt; HTTP/1.1 200 OK
+&lt; Date: Sat, 22 Sep 2012 15:31:18 GMT
+&lt; Server: Apache/2.2.20 (Ubuntu)
+&lt; Vary: Accept-Language,Cookie,Accept-Encoding
+&lt; Content-Language: de-de
+&lt; Content-Type: text/html; charset=utf-8
+ no chunk, no close, no size. Assume close to signal end
+&lt; 
+</pre>
+
+
+
+
+<p>
+Since the server does not return data, it is a quick way to test if a resource exists, is accessible and / or has recently been modified. Like <code>GET</code> <code>HEAD</code> is also idempotent.
+</p>
+</li>
+<li id="sec-2.1.1.3">DELETE-method <br/>
+Another idempotent method is <code>DELETE</code> that does exactly what you'd assume it does: "The DELETE method requests that the origin server delete the resource identified by the Request-URI" ({Fielding:1999ub}, 9.7):
+
+
+
+
+<pre class="example">&gt; DELETE /research/ HTTP/1.1
+&gt; User-Agent: curl/7.27.0
+&gt; Host: www.budabe.eu
+&gt; Accept: */*
+&gt; 
+</pre>
+
+
+
+
+<p>
+Of course, this does not mean that the sender has necessarily the right to do this and that the server will actually delete a resource. In this case, the server return a <code>403</code> (= forbidden) to indicate that it has no intention to delete it:
+</p>
+
+
+<pre class="example">&lt; HTTP/1.1 403 FORBIDDEN
+&lt; Date: Sat, 22 Sep 2012 15:28:08 GMT
+&lt; Server: Apache/2.2.20 (Ubuntu)
+&lt; Vary: Accept-Language,Cookie,Accept-Encoding
+&lt; Content-Language: de-de
+&lt; Transfer-Encoding: chunked
+&lt; Content-Type: text/html
+&lt; 
+</pre>
+
+
+
+
+<p>
+<code>DELETE</code> is also idempotent in that we can issue it any number of times, the result will always be the same (i.e. given necessary rights the resource will have disappeared).
+</p>
+</li>
+<li id="sec-2.1.1.4">PUT-method <br/>
+Another idempotent method is the <code>PUT</code> method. It "requests that the enclosed entity be stored under the supplied Request-URI. If the Request-URI refers to an already existing resource, the enclosed entity SHOULD be considered as a modified version of the one residing on the origin server. If the Request-URI does not point to an existing resource, and that URI is capable of being defined as a new resource by the requesting user agent, the origin server can create the resource with that URI. If a new resource is created, the origin server MUST inform the user agent via the 201 (Created) response" ({Fielding:1999ub}, 9.6). In other words, the client asks the server to generate a new resource or update an existing one for a given URI. The server has no leaway, it must create or update the resource under that URI or refuse the action.
+
+<p>
+In the following example the server is requested to create a page -/research/WebService- that currently does not exist:
+</p>
+
+
+
+<pre class="example">&gt; PUT /research/WebService HTTP/1.1
+&gt; User-Agent: curl/7.27.0
+&gt; Host: www.budabe.eu
+&gt; Accept: */*
+&gt; Content-Length: 26
+&gt; Content-Type: application/x-www-form-urlencoded
+&gt; 
+ upload completely sent off: 26 out of 26 bytes
+</pre>
+
+
+
+
+<p>
+As a payload, the string "Data for this new resource", which has a length of 26 bytes, is sent along.
+</p>
+<p>
+Of course, as always the fact that you can send a <code>PUT</code> request to the server does not mean you have the necessary rights.
+</p>
+
+
+
+<pre class="example">&lt; HTTP/1.1 403 FORBIDDEN
+&lt; Date: Sun, 23 Sep 2012 10:08:50 GMT
+&lt; Server: Apache/2.2.20 (Ubuntu)
+&lt; Vary: Accept-Language,Cookie,Accept-Encoding
+&lt; Content-Language: de-de
+&lt; Transfer-Encoding: chunked
+&lt; Content-Type: text/html
+</pre>
+
+
+
+
+<p>
+Similarly, the following request asks for an update to an existing resource with the same 26 characters: 
+</p>
+
+
+
+<pre class="example">&gt; PUT /research/ HTTP/1.1
+&gt; User-Agent: curl/7.27.0
+&gt; Host: www.budabe.eu
+&gt; Accept: */*
+&gt; Content-Length: 26
+&gt; Content-Type: application/x-www-form-urlencoded
+&gt; 
+ upload completely sent off: 26 out of 26 bytes
+</pre>
+
+
+
+
+<p>
+If this had succeeded, the (existing) page <a href="http://www.budabe.eu/research/">http://www.budabe.eu/research/</a> would now have the new content.
+</p>
+<p>
+Since the precondition for <code>PUT</code> is that the client knows the URI to which the data sent will be applied, this method is virtually always used ot update existing resources, not to create new ones.
+</p>
+<p>
+If you had the rights, the answer would obligatorily have been <code>201</code> in both cases.
+</p>
+</li>
+<li id="sec-2.1.1.5">POST-method <br/>
+If <code>PUT</code> normally updates existing resources, <code>POST</code> ist used to create new resources under a given URI. The client does not know in advance what the new URI will be, but will be informed by the server about this when things go according to plan. The server has a certain flexibility in interpreting the right action:
+
+<blockquote>
+
+<p>The actual function performed by the POST method is determined by the server and is usually dependent on the Request-URI. The posted entity is subordinate to that URI in the same way that a file is subordinate to a directory containing it, a news article is subordinate to a newsgroup to which it is posted, or a record is subordinate to a database.
+</p>
+</blockquote>
+
+
+<p>
+Possible positive responses are:
+</p>
+<ul>
+<li>
+200 (OK) or 204 (No Content) if no resource was created, but the action want OK
+</li>
+<li>
+201 (Created) with a reference to the new resource if a new resource was created
+
+
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.1.2" class="outline-4">
+<h4 id="sec-2.1.2"><span class="section-number-4">2.1.2</span> Error handling </h4>
+<div class="outline-text-4" id="text-2.1.2">
+
+<p>One of the strenghts of the HTTP protocol is that it has a clear semantics for handling possible errors through well-defined response codes. Leaving aside the hardly-ever used 1xx series of responses we have:
+</p>
+<ul>
+<li>
+Successful 2xx 
+<ul>
+<li>
+200 OK 
+</li>
+<li>
+201 Created 
+</li>
+<li>
+202 Accepted 
+</li>
+<li>
+203 Non-Authoritative Information 
+</li>
+<li>
+204 No Content 
+</li>
+<li>
+205 Reset Content 
+</li>
+<li>
+206 Partial Content 
+</li>
+</ul>
+</li>
+<li>
+Redirection 3xx 
+<ul>
+<li>
+300 Multiple Choices 
+</li>
+<li>
+301 Moved Permanently 
+</li>
+<li>
+302 Found 
+</li>
+<li>
+303 See Other 
+</li>
+<li>
+304 Not Modified 
+</li>
+<li>
+305 Use Proxy 
+</li>
+<li>
+306 (Unused) 
+</li>
+<li>
+307 Temporary Redirect 
+</li>
+</ul>
+</li>
+<li>
+Client Error 4xx 
+<ul>
+<li>
+400 Bad Request 
+</li>
+<li>
+401 Unauthorized 
+</li>
+<li>
+402 Payment Required 
+</li>
+<li>
+403 Forbidden 
+</li>
+<li>
+404 Not Found 
+</li>
+<li>
+405 Method Not Allowed 
+</li>
+<li>
+406 Not Acceptable 
+</li>
+<li>
+407 Proxy Authentication Required 
+</li>
+<li>
+408 Request Timeout 
+</li>
+<li>
+409 Conflict 
+</li>
+<li>
+410 Gone 
+</li>
+<li>
+411 Length Required 
+</li>
+<li>
+412 Precondition Failed 
+</li>
+<li>
+413 Request Entity Too Large 
+</li>
+<li>
+414 Request-URI Too Long 
+</li>
+<li>
+415 Unsupported Media Type 
+</li>
+<li>
+416 Requested Range Not Satisfiable 
+</li>
+<li>
+417 Expectation Failed 
+</li>
+</ul>
+</li>
+<li>
+Server Error 5xx 
+<ul>
+<li>
+500 Internal Server Error 
+</li>
+<li>
+501 Not Implemented 
+</li>
+<li>
+502 Bad Gateway 
+</li>
+<li>
+503 Service Unavailable 
+</li>
+<li>
+504 Gateway Timeout 
+</li>
+<li>
+505 HTTP Version Not Supported 
+
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.1.3" class="outline-4">
+<h4 id="sec-2.1.3"><span class="section-number-4">2.1.3</span> Content negotiation </h4>
+<div class="outline-text-4" id="text-2.1.3">
+
+<p>So far we have seen only requests with the HTTP header <code>Accept: */*</code>, which essentially says that you have no preference for the type of content to get back. However, normally clients have preferences for some type of content in some language over other types of content. In a typical browser session we see sequences like this:
+</p>
+
+
+
+<pre class="example">Request:
+http://www.budabe.eu/research/
+
+GET /research/ HTTP/1.1
+Host: www.budabe.eu
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:12.0) Gecko/20100101 Firefox/12.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: de-de,de;q=0.8,en-us;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+
+Response:
+HTTP/1.1 200 OK
+Date: Sun, 23 Sep 2012 17:19:33 GMT
+Server: Apache/2.2.20 (Ubuntu)
+Vary: Accept-Language,Cookie,Accept-Encoding
+Content-Language: de
+Content-Encoding: gzip
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+</pre>
+
+
+
+<p>
+(protocol of a live session taken with the Live HTTP headers plugin in Firefox)
+</p>
+<p>
+In contrast to the HTTP method the HTTP headers always follow the model: Header name ':' value of the header followed by a newline (theoretically a line continuation is possible, but rarely seen) (cf. {Fielding:1999ub}, 2.2 for the details of the BNF rules). In particular, <code>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</code>
+requests in the order of preference <code>text/html</code> and XHTML (<code>application/xhtml+xml</code>), then other formats. The server is expected to honour these requests. Similarly, <code>Accept-Language</code> specifies a preference for German (<code>de</code>) over English (<code>en</code>). More languages are possible.
+</p>
+<p>
+The very same logic can also be used for more web-service type requests to deliberatedly ask for some languages or content types.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2.1.4" class="outline-4">
+<h4 id="sec-2.1.4"><span class="section-number-4">2.1.4</span> Encryption and caching </h4>
+<div class="outline-text-4" id="text-2.1.4">
+
+<p>Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
+</p>
+<p>
+For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
+</p>
+<ul>
+<li>
+-Last-Modified-: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If -Last-Modified- is newer than the latest cached version, the cache should be updated accordingly
+</li>
+<li>
+<code>ETag</code>: A response header to enable cache validation
+
+</li>
+</ul>
+
+<p>The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (<a href="http://www.squid-cache.org/">http://www.squid-cache.org/</a>), Varnish Cache (<a href="https://www.varnish-cache.org/about">https://www.varnish-cache.org/about</a>) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2.1.5" class="outline-4">
+<h4 id="sec-2.1.5"><span class="section-number-4">2.1.5</span> Command line tools such as curl and wget </h4>
+<div class="outline-text-4" id="text-2.1.5">
+
+
+
+
+<pre class="example">curl -v -L -H "Host:publications.europa.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:ro" "http://publications.europa.eu/resource/celex/32011R1339"
+</pre>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2.2" class="outline-3">
+<h3 id="sec-2.2"><span class="section-number-3">2.2</span> Design principles for RESTful systems </h3>
+<div class="outline-text-3" id="text-2.2">
+
+
+
+<p>
+RESTful systems are, as the name suggests, systems on Representational State Transfer. This hints at Fielding's key idea in his famous dissertation is to see the entire web as a single monstrous state machine &mdash; "Hypermedia as the engine of application state" &mdash;, operated by "uniform interface between components" ({Fielding:2000vh}, 5.1.5). The web centres on resources &mdash; "any information that can be named" (5.2.1.1) &mdash; that are uniquely identified by URIs. A resource is in principle independent of its concrete representation, e.g. as HTML or pdf. Clients and server can use content negoation to mutually agree on a suitable representation of a resource. Hence, "REST-based architectures communicate primarily through the transfer of representations of resources" (5.3.3). 
+</p>
+<p>
+In this concept application state is "the state that the server needs to maintain between each request for each client" ({Allamaraju:2010ty}, p. 7). References to application state or indeed at time the application state itself is coded into URIs and sent with the representation to link to new application states.
+</p>
+<p>
+A Resource Oriented Architecture (ROA) is "an arrangement of URIs, HTTP, and XML that works like the rest of the Web, and that programmers will enjoy using" ({Richardson:2007td}, chapter 4), the term being coinded as an antithesis to Service Oriented Architectures (SOAs). ROAs embrace RESTful principles and systematize key ideas. 
+</p>
+<p>
+A ROA is characterized by the key tenents of RESTful systems, i.e.:
+</p>
+<ul>
+<li>
+Addressable: each resource is addresable through a URI
+</li>
+<li>
+Stateless: each HTTP request standard for itself. It contains all information that the server needs to process the request (it can change the server's resource state, though)
+</li>
+<li>
+Links: Links point to possible new states of this or another application
+</li>
+<li>
+Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:2007hb})
+
+
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Excursion: Clojure and JVM </h2>
+<div class="outline-text-2" id="text-3">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-06 Sat</span></span>
+</p>
+
+
+</div>
+
+<div id="outline-container-3.1" class="outline-3">
+<h3 id="sec-3.1"><span class="section-number-3">3.1</span> Why Clojure? </h3>
+<div class="outline-text-3" id="text-3.1">
+
+<p>Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
+</p>
+<p>
+At here two ultimatively simple examples:
+</p>
+
+
+<pre class="example">user=&gt; (+ 1 1)
+2
+user=&gt; (println "Hello World!")
+Hello World!
+nil
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Like other Lisps Clojure employs prefix notation for function calls. Things like -+- that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of -+- we have what is called a <i>pure</i> function that does not produce side-effects. The <code>println</code> in turn does not return anything useful &mdash; though it does return something, the value <code>nil</code> &mdash;, but it triggers a side action, namely to print out a string on the console.
+</p>
+<p>
+Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
+</p>
+
+
+
+<pre class="example">user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=&gt; (all-lower? "aBc")
+false
+user=&gt; (all-lower? "abc")
+true
+</pre>
+
+
+
+
+<p>
+This short code defines boolean function &mdash; a predicate &mdash; with one parameter using <code>defn</code>. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns <code>true</code>, otherwise <code>false</code>.
+</p>
+<p>
+Already this example is a typical use of functions that themselves call functions (higher-order functions). We can, however, use this function in turn in a larger context, e.g. to filter all all-lower-case strings from a list of strings
+</p>
+
+
+<pre class="example">user=&gt; (filter all-lower? '("aBc" "deF" "hij" "Klm" "nop" "QRS" "tuV" "WXy" "z"))
+("hij" "nop" "z")
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+That code demonstrates two things:
+</p><ul>
+<li>
+Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
+</li>
+<li>
+Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
+
+</li>
+</ul>
+
+<p>Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
+</p>
+
+
+<pre class="example">(defn hello
+  ([]
+     (hello "Hello" "World"))
+  ([name]
+     (hello "Hello" name))
+  ([phrase name]
+     (str phrase ", " name)))
+</pre>
+
+
+
+
+<p>
+Based on the parameters given the right function is chosen:
+</p>
+
+
+
+<pre class="example">user=&gt; (hello)
+"Hello, World"
+user=&gt; (hello "Worms")
+"Hello, Worms"
+user=&gt; (hello "Hallo" "Worms")
+"Hallo, Worms"
+user=&gt; 
+</pre>
+
+
+
+
+
+
+
+<p>
+On this basis we can now look at some more of the advantages:
+</p>
+<ul>
+<li>
+Elegant and concise syntax
+</li>
+<li>
+Largely immutable data structures
+</li>
+<li>
+Excellent support for concurrent programming
+</li>
+<li>
+Close JVM integration
+
+</li>
+</ul>
+
+<p>Recommended reading: {Halloway:2012ta}
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.2" class="outline-3">
+<h3 id="sec-3.2"><span class="section-number-3">3.2</span> Practicalities </h3>
+<div class="outline-text-3" id="text-3.2">
+
+
+</div>
+
+<div id="outline-container-3.2.1" class="outline-4">
+<h4 id="sec-3.2.1"><span class="section-number-4">3.2.1</span> Installation and integration with Emacs </h4>
+<div class="outline-text-4" id="text-3.2.1">
+
+<ol>
+<li>
+Download leiningen 2.0
+
+</li>
+</ol>
+
+<p>Download from <a href="http://leiningen.org/">http://leiningen.org/</a>
+</p>
+
+
+
+<pre class="example">wget https://raw.github.com/technomancy/leiningen/preview/bin/lein
+
+chmod 755 lein
+
+./lein self-install
+</pre>
+
+
+
+
+<p>
+then move lein to a place in the PATH
+</p>
+<ol>
+<li>
+Install package manager
+
+</li>
+</ol>
+
+<p>Only for Emacs 23: 
+</p>
+<p>
+Install the Marmalade package manager
+</p>
+
+
+
+<pre class="example">(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+</pre>
+
+
+
+
+<ol>
+<li>
+Install clojure-mode
+
+</li>
+</ol>
+
+<p><a href="https://github.com/technomancy/clojure-mode">https://github.com/technomancy/clojure-mode</a>
+</p>
+<ol>
+<li>
+Install nrepl
+
+</li>
+</ol>
+
+<p><a href="https://github.com/kingtim/nrepl.el">https://github.com/kingtim/nrepl.el</a>
+</p>
+<p>
+M-x package-install [RET] nrepl [RET]
+</p>
+<ol>
+<li>
+Start nrepl
+
+</li>
+</ol>
+
+<p>M-x nrepl-jack-in
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.2.2" class="outline-4">
+<h4 id="sec-3.2.2"><span class="section-number-4">3.2.2</span> Leiningen </h4>
+<div class="outline-text-4" id="text-3.2.2">
+
+<p>Leiningen (<a href="http://leiningen.org">http://leiningen.org</a>) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
+</p>
+<p>
+Like Maven projects Leiningen projects have a predefined directory structure:
+</p>
+
+
+
+<pre class="example">project/src            Source code
+       /test           Unit tests
+       /project.clj    Dependency file
+</pre>
+
+
+
+
+<p>
+Project files with the dependency structure just list the packages and their desired versions:
+</p>
+
+
+
+<pre class="example">(defproject eu.budabe/eli-project "0.1" 
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [clj-http "0.5.3"]
+                 [cheshire "4.0.2"]
+                 [org.clojure/data.zip "0.1.0"]])
+</pre>
+
+
+
+
+<p>
+Leiningen itself will then automatically download the necessary libraries and install them as necessary. Much like Python, Perl and Ruby Clojure has a universally accepted central repository <a href="http://clojars.org">http://clojars.org</a> which hosts Clojure libraries. In addition, all "normal" Java libraries can also be used.
+</p>
+<p>
+Leiningen itself has a number of options, most of which are self-explanatory.
+</p>
+
+
+
+<pre class="example">marcwilhelmkuster$ lein --help
+Leiningen is a tool for working with Clojure projects.
+
+Several tasks are available:
+check               Check syntax and warn on reflection.
+classpath           Write the classpath of the current project to output-file.
+clean               Remove all files from project's target-path.
+compile             Compile Clojure source into .class files.
+deploy              Build jar and deploy to remote repository.
+deps                Show details about dependencies.
+do                  Higher-order task to perform other tasks in succession.
+help                Display a list of tasks or help for a given task.
+install             Install current project to the local repository.
+jar                 Package up all the project's files into a jar file.
+javac               Compile Java source files.
+new                 Generate project scaffolding based on a template.
+plugin              DEPRECATED. Please use the :user profile instead.
+pom                 Write a pom.xml file to disk for Maven interoperability.
+repl                Start a repl session either with the current project or standalone.
+retest              Run only the test namespaces which failed last time around.
+ritz                Launch ritz server for Emacs to connect.
+ritz-in             Jack in to a ritz backed Clojure SLIME session from Emacs.
+run                 Run the project's -main function.
+search              Search remote maven repositories for matching jars.
+show-profiles       List all available profiles or display one if given an argument.
+test                Run the project's tests.
+trampoline          Run a task without nesting the project's JVM inside Leiningen's.
+uberjar             Package up the project files and all dependencies into a jar file.
+upgrade             Upgrade Leiningen to specified version or latest stable.
+version             Print version for Leiningen and the current JVM.
+with-profile        Apply the given task with the profile(s) specified.
+
+Run lein help $TASK for details.
+
+Aliases:
+
+See also: readme, faq, tutorial, news, sample, profiles,
+deploying and copying.
+</pre>
+
+
+
+
+<p>
+-lein repl- starts a Clojure command shell with all dependencies loaded:
+</p>
+
+
+<pre class="example">marcwilhelmkuster$ lein repl
+nREPL server started on port 55766
+REPL-y 0.1.0-beta10
+Clojure 1.4.0
+    Exit: Control+D or (exit) or (quit)
+Commands: (user/help)
+    Docs: (doc function-name-here)
+          (find-doc "part-of-name-here")
+  Source: (source function-name-here)
+          (user/sourcery function-name-here)
+ Javadoc: (javadoc java-object-or-class-here)
+Examples from clojuredocs.org: [clojuredocs or cdoc]
+          (user/clojuredocs name-here)
+          (user/clojuredocs "ns-here" "name-here")
+user=&gt; (+ 1 1)
+2
+user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=&gt; (all-lower? "aBc")
+false
+user=&gt; (all-lower? "abc")
+true
+user=&gt; 
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.2.3" class="outline-4">
+<h4 id="sec-3.2.3"><span class="section-number-4">3.2.3</span> Syntax and data structures </h4>
+<div class="outline-text-4" id="text-3.2.3">
+
+<p>We have already seen examples of Clojure's syntax. Function calls are of the type:
+</p>
+
+
+<pre class="example">user=&gt; (function-name params listed)
+</pre>
+
+
+
+
+
+<p>
+Defining new functions is as simple:
+</p>
+
+
+<pre class="example">(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+</pre>
+
+
+
+
+<p>
+In total the following primitive data structures exist in Clojure:
+</p>
+
+
+<pre class="example">Boolean: true | false
+Character: \a \b \c
+String: "abc"
+List: ("a" "b" "c") (all-lower? "abc")
+Map: {:key1 "Value1", :key2 "Value2"}
+Number: 1.23
+Set: #{ 1 2 3}
+Vector: [1 2 3]
+
+Symbol: eli/build-act
+Keywords: :keyword :name
+Nil: nil
+</pre>
+
+
+
+
+<ul>
+<li id="sec-3.2.3.1">Lists <br/>
+Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
+
+
+
+
+<pre class="example">user=&gt; (list 1 2 3)
+(1 2 3)
+user=&gt; (list 1 2 "a" "b")
+(1 2 "a" "b")
+user=&gt; '(1 2 "a" "b")
+(1 2 "a" "b")
+user=&gt; (quote (1 2 "a" "b"))
+(1 2 "a" "b")
+user=&gt; (list 1 2 (+ 3 4))
+(1 2 7)
+user=&gt; '(1 2 (+ 3 4))
+(1 2 (+ 3 4))
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+As we have seen, also function calls are lists:
+</p>
+
+
+<pre class="example">user=&gt; (all-lower? "abc")
+true
+</pre>
+
+
+
+
+
+</li>
+<li id="sec-3.2.3.2">Vectors <br/>
+Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
+
+
+
+<pre class="example">user=&gt; [1 2 3]
+[1 2 3]
+user=&gt; (def v [1 2 3])
+#'user/v
+user=&gt; (vector? v)
+true
+user=&gt; (v 1)
+2
+user=&gt; 
+user=&gt; [1 2 "a" "b"]
+[1 2 "a" "b"]
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Vectors themselves can be used as functions, taking the relevant index as a parameter.
+</p>
+</li>
+<li id="sec-3.2.3.3">Maps <br/>
+Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
+
+
+
+
+<pre class="example">user=&gt; {:first-name "Marc", :last-name "Kuester"}
+{:last-name "Kuester", :first-name "Marc"}
+user=&gt; (def kuester {:first-name "Marc", :last-name "Kuester"})
+#'user/kuester
+user=&gt; (:last-name kuester)
+"Kuester"
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
+</p>
+</li>
+<li id="sec-3.2.3.4">-defrecord- <br/>
+In addition, you can easily define new data structures in the form of records:
+
+
+
+<pre class="example">user=&gt; (defrecord Teacher [first-name last-name office-no])
+user.Teacher
+user=&gt; (-&gt;Teacher "Marc" "Kuester" 123)
+#user.Teacher{:first-name "Marc", :last-name "Kuester", :office-no 123}
+user=&gt; (:first-name (-&gt;Teacher "Marc" "Kuester" 123))
+"Marc"
+user=&gt; 
+</pre>
+
+
+
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3.3" class="outline-3">
+<h3 id="sec-3.3"><span class="section-number-3">3.3</span> Control structures </h3>
+<div class="outline-text-3" id="text-3.3">
+
+<p>Clojure has at its core only very simple comtrol structures: <code>if</code>, <code>do</code> and <code>loop</code>. Of these, however, you use only <code>if</code> regularly and directly:
+</p>
+
+
+
+<pre class="example">user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+user=&gt; (if (all-lower? "abc") "all lower case" "also capital letters")
+"all lower case"
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+The first branch is used if the condition is true ("then-branch"), the second one if it is false ("else-branch"). Incidentally, if is a function like all other functions, returning the then or else branch as the case may be.
+</p>
+
+
+
+<pre class="example">user=&gt; (def a (if (all-lower? "abc") "all lower case" "also capital letters"))
+#'user/a
+user=&gt; a
+"all lower case"
+user=&gt; (def b (if (all-lower? "aBc") "all lower case" "also capital letters"))
+#'user/b
+user=&gt; b
+"also capital letters"
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+<code>do</code> is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
+</p>
+
+
+<pre class="example">user=&gt;  (if (all-lower? "aBc") (do (println "then") "all lower case") (do (println "else") "also capital letters"))
+else
+"also capital letters"
+user=&gt; 
+</pre>
+
+
+
+
+
+<p>
+<code>loop</code> is hardly ever used directly. Here an example of a loop that calculates the squares of all even numbers:
+</p>
+
+
+<pre class="example">;;very complicated, do not use
+(loop [lst '(1 2 3 4 5 6) res '()]  
+(let [l (last lst)]
+(if (empty? lst)
+  res
+  (recur (drop-last lst) (if (even? l) (cons (* l l) res) res)))))
+</pre>
+
+
+
+
+<p>
+As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include <code>for</code> and <code>when</code>. <code>for</code>, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
+</p>
+
+
+
+<pre class="example">user=&gt; (for [i '(1 2 3 4 5 6) :when (even? i)] (* i i))
+(4 16 36)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Really, the use of explicit control structures is much rarer in Clojure than in traditional imperative languages. Instead, higher-order functions operating on sequences are the bread and butter of Clojure ans indeed of functional programming in general.
+</p>
+<p>
+So, instead of using the above idiom to output the squares of even numbers a even more idiomatic approach would be:
+</p>
+
+
+
+<pre class="example">user=&gt; (map (fn [i] (* i i)) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+or even shorter
+</p>
+
+
+
+<pre class="example">user=&gt; (map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+This makes usually for much clearer code.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-3.4" class="outline-3">
+<h3 id="sec-3.4"><span class="section-number-3">3.4</span> Lazy sequences </h3>
+<div class="outline-text-3" id="text-3.4">
+
+<p>However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list -'(1 2 3 4 5 6)-, but for any type of range:
+</p>
+
+
+<pre class="example">user=&gt; (defn even-squares [] (map #(* % %) (filter even? (range))))
+#'user/even-squares
+user=&gt; (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=&gt; (take 50 (even-squares))
+(0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+or even shorter
+</p>
+
+
+
+<pre class="example">user=&gt; (defn even-squares [] (map #(* % %)  (range 0 Double/POSITIVE_INFINITY 2)))
+#'user/even-squares
+user=&gt; (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=&gt; 
+</pre>
+
+
+
+
+
+<p>
+This may look rather surprising &mdash; how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated &mdash; realized is the term &mdash; only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
+</p>
+<p>
+Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
+</p>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.5" class="outline-3">
+<h3 id="sec-3.5"><span class="section-number-3">3.5</span> Principles of functional programming </h3>
+<div class="outline-text-3" id="text-3.5">
+
+<ul>
+<li>
+Immutabile data
+</li>
+<li>
+Functions as data
+</li>
+<li>
+Pure Functions
+</li>
+<li>
+Higher-Order Functions
+</li>
+<li>
+Use of recursion
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Programming RESTful Web Services </h2>
+<div class="outline-text-2" id="text-4">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-19 Fri</span></span>
+</p><ul>
+<li>
+ATOM and related standards
+</li>
+<li>
+Popular JVM libraries for RESTful web services
+</li>
+<li>
+Client-side programming
+<ul>
+<li>
+Apache HttpComponents
+</li>
+<li>
+clj-http as wrapper for HttpComponents
+
+</li>
+</ul>
+</li>
+</ul>
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-20 Sat</span></span>
+</p><ul>
+<li>
+JSON and some basic JavaScript
+</li>
+<li>
+cheshire for JSON
+
+</li>
+</ul>
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-02 Fri</span></span>
+</p><ul>
+<li>
+Server-side programming 
+<ul>
+<li>
+Ring, a Clojure web applications library
+</li>
+<li>
+Integration with Jetty and other Servlet containers
+</li>
+<li>
+Deploying Web Applications
+</li>
+</ul>
+</li>
+<li>
+Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> SOAP-based Web Services and Service-oriented Architectures </h2>
+<div class="outline-text-2" id="text-5">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-03 Sat</span></span>
+</p><ul>
+<li>
+XML Schema
+<ul>
+<li>
+Syntax
+</li>
+<li>
+Content models
+</li>
+<li>
+Choice and All
+</li>
+</ul>
+</li>
+<li>
+Interface descriptions: WSDL
+
+</li>
+</ul>
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-16 Fri</span></span>
+</p><ul>
+<li>
+SOAP 
+</li>
+<li>
+Tools: soapUI
+</li>
+<li>
+Tools to check the data flow (e.g. tcpMon)
+</li>
+<li>
+Services: SOAs: heterogeneous, loosely-coupled architectures
+</li>
+<li>
+Concepts of semantic and organizational interoperability
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Programming SOAP-based Web Services </h2>
+<div class="outline-text-2" id="text-6">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-17 Sat</span></span> 
+</p><ul>
+<li>
+Popular JVM libraries for SOAP-based services
+<ul>
+<li>
+Apache Axis 2 and clj-soap (<a href="https://clojars.org/org.clojars.seancorfield/clj-soap">https://clojars.org/org.clojars.seancorfield/clj-soap</a>)
+</li>
+<li>
+Jax-RPC 2.0 / JAX-WS 2.0 (<a href="http://www.artima.com/lejava/articles/threeminutes.html">http://www.artima.com/lejava/articles/threeminutes.html</a>, <a href="http://stackoverflow.com/questions/2855292/scala-simple-webservice">http://stackoverflow.com/questions/2855292/scala-simple-webservice</a>, <a href="https://gist.github.com/381129">https://gist.github.com/381129</a>)
+</li>
+</ul>
+</li>
+<li>
+Implementing clients for existing simple SOAP services in Clojure
+<ul>
+<li>
+Generation of stubs
+</li>
+<li>
+Analysis of stubs
+</li>
+</ul>
+</li>
+<li>
+Implementing simple SOAP services in Clojure
+
+</li>
+</ul>
+
+<p>Scala: <a href="http://timperrett.com/2011/07/26/using-soap-with-scala/">http://timperrett.com/2011/07/26/using-soap-with-scala/</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Excursion: Web Services in .NET </h2>
+<div class="outline-text-2" id="text-7">
+
+<p>Special guest: Lukas Georgieff, talking about SOAP-based and RESTful web services on the .NET platform using C#
+</p>
+<p>
+Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-30 Fri</span></span>
+</p><ul>
+<li>
+.Net-Framework
+</li>
+<li>
+Windows Communication Foundation
+<ul>
+<li>
+Architecture
+</li>
+<li>
+Contracts and Description
+</li>
+<li>
+Service Runtime
+</li>
+<li>
+Messaging
+</li>
+<li>
+Hosting and Activation
+</li>
+</ul>
+</li>
+<li>
+SOAP and WCF
+<ul>
+<li>
+Music Store (Service)
+<ul>
+<li>
+Requirements
+</li>
+<li>
+Implementation
+<ul>
+<li>
+Create a Visual Studio WCF-Project
+</li>
+<li>
+Service and Operation Contracts
+</li>
+<li>
+Message and Data Contracts
+</li>
+<li>
+loginUser and postUserImage
+</li>
+<li>
+Binding
+</li>
+</ul>
+</li>
+<li>
+Live Coding: Echo Service
+</li>
+</ul>
+</li>
+<li>
+Music Store (Client): Implementation
+<ul>
+<li>
+Service-Reference
+</li>
+<li>
+Calling Stub-Methods
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-12-01 Sat</span></span>
+</p><ul>
+<li>
+RESTful and WCF
+<ul>
+<li>
+Music Store (Service)
+<ul>
+<li>
+Implementation
+<ul>
+<li>
+Service and Operation Contracts
+</li>
+<li>
+UriTemplate, WebGet and WebInvoke
+</li>
+<li>
+Data Contracts
+</li>
+<li>
+loginUser, postUserImage and WebOperationContext
+</li>
+<li>
+Binding
+</li>
+</ul>
+</li>
+<li>
+Live Coding: Echo Service
+</li>
+<li>
+Music Store (Client): Implementation
+<ul>
+<li>
+WebChannelFactory
+</li>
+<li>
+Implementing a RESTful Stub
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> The Semantic Web </h2>
+<div class="outline-text-2" id="text-8">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-12-14 Fri</span></span>
+</p><ul>
+<li>
+What are Ontologies? Ontologies and Us
+</li>
+<li>
+Ontologies and Technology
+<ul>
+<li>
+Standards
+<ul>
+<li>
+RDF
+</li>
+<li>
+RDF-S
+</li>
+<li>
+OWL
+</li>
+<li>
+SPARQL
+</li>
+</ul>
+</li>
+<li>
+Object identity
+</li>
+<li>
+Tools
+<ul>
+<li>
+Protégé
+</li>
+<li>
+Semantic Stores
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+Linked Open Data
+</li>
+<li>
+Semantic Web Services
+
+</li>
+</ul>
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-12-15 Sat</span></span>
+</p><ul>
+<li>
+Programming the Semantic Web
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Preparing the Practical Programming Projects </h2>
+<div class="outline-text-2" id="text-9">
+
+<p>Sessions <span class="timestamp-wrapper"> <span class="timestamp">2013-01-04 Fri</span></span> and <span class="timestamp-wrapper"> <span class="timestamp">2013-01-05 Sat</span></span>
+</p>
+<p>
+Clojure-based ecosystems of agents and actors
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Bibliography </h2>
+<div class="outline-text-2" id="text-10">
+
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: Marc Wilhelm Küster
+<a href="mailto:marcwilhelmkuster@budabe.lan">&lt;marcwilhelmkuster@budabe.lan&gt;</a>
+</p>
+<p class="date"> Date: 2012-10-02 21:33:51 CEST</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>

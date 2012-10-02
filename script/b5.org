@@ -1,0 +1,851 @@
+# -*- coding: utf-8; -*-
+#+OPTIONS: ^:{}
+#+TITLE: B5: Web Services 
+#+AUTHOR: Marc Wilhelm Küster
+
+#+BEGIN_HTML
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">B5 "Web Services"</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Marc Wilhelm Küster</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mwkuster/b5" rel="dct:source">https://github.com/mwkuster/b5</a>.
+#+END_HTML
+* Objectives and Formalia
+Session <2012-10-05 Fri>
+** Course objectives
+Mastering the concepts and implementation of heterogeneous, loosely-coupled architectures using a substantial practical programming project
+
+
+** Programming project
+Course success is measured through a practical programming project,
+followed by a short oral exam. This project can be started after the
+basic web service part is over. I will suggest topics, but
+participants can also propose their own projects as long as the
+technologies fit in the overall scope of the course.
+
+You can and should work in teams of two.
+
+Repeating the exam means a second, new practical project followed by a second oral exam.
+
+** Preconditions
+- Preconditions for this module:  B4, D4
+- Registration for course and exam within deadlines
+- Participating in the final exam depends on having successfully completed a practical programming project
+- Exam: consists of a practical programming project followed by a presentation and an oral exam
+  
+* RESTful Web Services and Resource Oriented Architectures
+** The HTTP protocol
+The Hypertext Transfer Protocol (HTTP) or RFC 2616 is next to the Uniform Resource Identifier (URI) the most important standard for the Web as we know it. Whenever we access anything on the web through a browser, we trigger at least one HTTP request, typically many. And not only through a browser: any mobile device uses HTTP requests, as do many software tools that are not browsers at all. 
+               
+In this session we will learn more about this specification and how it is used. Fortunately, the specification {Fielding:1999ub} itself is very clear and readable. It sets out with the HTTP's overall objective:
+               
+#+BEGIN_QUOTE  
+The Hypertext Transfer Protocol (HTTP) is an application-level protocol for distributed, collaborative, hypermedia information systems. It is a generic, stateless, protocol which can be used for many tasks beyond its use for hypertext, such as name servers and distributed object management systems, through extension of its request methods, error codes and headers. A feature of HTTP is the typing and negotiation of data representation, allowing systems to be built independently of the data being transferred (http://www.w3.org/Protocols/rfc2616/rfc2616.html)
+#+END_QUOTE    
+               
+The key phrase --- and probably the main technical reason for HTTP's success --- is /stateless/. Generally, HTTP operates on pairs of request and response. Once a request has received its response, the protocol keeps no memory of the interaction, making each interaction independent. Of course, an HTTP request can very well change the state of the recipient, for example by adding a resource --- we'll shortly see how ---, but this remains transparent for the next request / response pair. The next interaction has no inherent knowledge if the state of the server has just been changed a millisecond earlier, was changed a month ago or has always been in this state: "interaction is stateless between requests" ({Fielding:2000vh}, 5.3.1). The server also has no need to keep a state related to the concrete set of interactions, nor even which sequence of interactions come from the same sender. "Session state is therefore kept entirely on the client" ({Fielding:2000vh}, 5.1.3).
+               
+If this sounds abstract, at the core it means that a sender --- let's say, the browser --- asks a server for a webpage, giving a URI to identify that page:
+               
+#+BEGIN_EXAMPLE
+ -----------   Get Webpage       ----------
+ |         | ------------------> |        |
+ | Browser |                     | Server |
+ |         | <------------------ |        |
+ -----------  Send webpage       ----------
+#+END_EXAMPLE
+
+In reply, the server sends back the content of that website to the browser, and that's it.
+
+Of course, there's a bit more to it, though the principle does not change.
+
+*** HTTP methods and their use
+**** GET-method
+In the easiest scenario, the client just wants to get some content from the server. In this case sends a request that is in fact just called ~GET~:
+#+BEGIN_EXAMPLE
+GET /research/ HTTP/1.1
+User-Agent: curl/7.27.0
+Host: www.budabe.eu
+Accept: */*
+#+END_EXAMPLE
+
+This says pretty much what it seems to say: request the server to ~GET~ the URL webpage -/research- on the host -www.budabe.eu- and return its contents. If the page exists, the server responds by sending it back:
+
+#+BEGIN_EXAMPLE
+< HTTP/1.1 200 OK
+< Date: Sat, 22 Sep 2012 15:09:33 GMT
+< Server: Apache/2.2.20 (Ubuntu)
+< Vary: Accept-Language,Cookie,Accept-Encoding
+< Content-Language: de-de
+< Transfer-Encoding: chunked
+< Content-Type: text/html; charset=utf-8
+< 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><!-- mode: nxml; code: utf-8; -->
+<html version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+Research
+</title>
+[...]
+#+END_EXAMPLE
+
+Again, this says pretty much what it seems to say: On a given date the server sends back an html-page (-Content-Type: text/htm-) encoded in Unicode and more precisely UTF-8. The most cryptic and at the same time the most important part of this is the ~200~ part, though, that says that the request has succeeded. The ~200~ return code is specified RFC 2616 alongside 37 others. We'll come back to these codes below.
+
+Formally, ~GET~ is defined as:
+
+#+BEGIN_QUOTE 
+The GET method means retrieve whatever information (in the form of an entity) is identified by the Request-URI. If the Request-URI refers to a data-producing process, it is the produced data which shall be returned as the entity in the response and not the source text of the process, unless that text happens to be the output of the process ({Fielding:1999ub}, 9.3)
+#+END_QUOTE
+
+~GET~ returns existing webpages or more abstractly resources, if they exist, but it does not modify it. You can execute it any number of times, it will always return the resource. For this reason, it is called an idempotent method.
+
+**** HEAD-method
+"The HEAD method is identical to GET except that the server MUST NOT return a message-body in the response" ({Fielding:1999ub}, 9.4):
+#+BEGIN_EXAMPLE
+> HEAD /research/ HTTP/1.1
+> User-Agent: curl/7.27.0
+> Host: www.budabe.eu
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Date: Sat, 22 Sep 2012 15:31:18 GMT
+< Server: Apache/2.2.20 (Ubuntu)
+< Vary: Accept-Language,Cookie,Accept-Encoding
+< Content-Language: de-de
+< Content-Type: text/html; charset=utf-8
+ no chunk, no close, no size. Assume close to signal end
+< 
+#+END_EXAMPLE
+
+Since the server does not return data, it is a quick way to test if a resource exists, is accessible and / or has recently been modified. Like ~GET~ ~HEAD~ is also idempotent.
+
+**** DELETE-method
+Another idempotent method is ~DELETE~ that does exactly what you'd assume it does: "The DELETE method requests that the origin server delete the resource identified by the Request-URI" ({Fielding:1999ub}, 9.7):
+
+#+BEGIN_EXAMPLE
+> DELETE /research/ HTTP/1.1
+> User-Agent: curl/7.27.0
+> Host: www.budabe.eu
+> Accept: */*
+> 
+#+END_EXAMPLE
+
+Of course, this does not mean that the sender has necessarily the right to do this and that the server will actually delete a resource. In this case, the server return a ~403~ (= forbidden) to indicate that it has no intention to delete it:
+#+BEGIN_EXAMPLE
+< HTTP/1.1 403 FORBIDDEN
+< Date: Sat, 22 Sep 2012 15:28:08 GMT
+< Server: Apache/2.2.20 (Ubuntu)
+< Vary: Accept-Language,Cookie,Accept-Encoding
+< Content-Language: de-de
+< Transfer-Encoding: chunked
+< Content-Type: text/html
+< 
+#+END_EXAMPLE
+
+~DELETE~ is also idempotent in that we can issue it any number of times, the result will always be the same (i.e. given necessary rights the resource will have disappeared).
+
+**** PUT-method
+Another idempotent method is the ~PUT~ method. It "requests that the enclosed entity be stored under the supplied Request-URI. If the Request-URI refers to an already existing resource, the enclosed entity SHOULD be considered as a modified version of the one residing on the origin server. If the Request-URI does not point to an existing resource, and that URI is capable of being defined as a new resource by the requesting user agent, the origin server can create the resource with that URI. If a new resource is created, the origin server MUST inform the user agent via the 201 (Created) response" ({Fielding:1999ub}, 9.6). In other words, the client asks the server to generate a new resource or update an existing one for a given URI. The server has no leaway, it must create or update the resource under that URI or refuse the action.
+
+In the following example the server is requested to create a page -/research/WebService- that currently does not exist:
+
+#+BEGIN_EXAMPLE
+> PUT /research/WebService HTTP/1.1
+> User-Agent: curl/7.27.0
+> Host: www.budabe.eu
+> Accept: */*
+> Content-Length: 26
+> Content-Type: application/x-www-form-urlencoded
+> 
+ upload completely sent off: 26 out of 26 bytes
+#+END_EXAMPLE
+
+As a payload, the string "Data for this new resource", which has a length of 26 bytes, is sent along.
+
+Of course, as always the fact that you can send a ~PUT~ request to the server does not mean you have the necessary rights.
+
+#+BEGIN_EXAMPLE
+< HTTP/1.1 403 FORBIDDEN
+< Date: Sun, 23 Sep 2012 10:08:50 GMT
+< Server: Apache/2.2.20 (Ubuntu)
+< Vary: Accept-Language,Cookie,Accept-Encoding
+< Content-Language: de-de
+< Transfer-Encoding: chunked
+< Content-Type: text/html
+#+END_EXAMPLE
+
+Similarly, the following request asks for an update to an existing resource with the same 26 characters: 
+
+#+BEGIN_EXAMPLE
+> PUT /research/ HTTP/1.1
+> User-Agent: curl/7.27.0
+> Host: www.budabe.eu
+> Accept: */*
+> Content-Length: 26
+> Content-Type: application/x-www-form-urlencoded
+> 
+ upload completely sent off: 26 out of 26 bytes
+#+END_EXAMPLE
+
+If this had succeeded, the (existing) page http://www.budabe.eu/research/ would now have the new content.
+
+Since the precondition for ~PUT~ is that the client knows the URI to which the data sent will be applied, this method is virtually always used ot update existing resources, not to create new ones.
+
+If you had the rights, the answer would obligatorily have been ~201~ in both cases.
+
+**** POST-method
+If ~PUT~ normally updates existing resources, ~POST~ ist used to create new resources under a given URI. The client does not know in advance what the new URI will be, but will be informed by the server about this when things go according to plan. The server has a certain flexibility in interpreting the right action:
+
+#+BEGIN_QUOTE  
+The actual function performed by the POST method is determined by the server and is usually dependent on the Request-URI. The posted entity is subordinate to that URI in the same way that a file is subordinate to a directory containing it, a news article is subordinate to a newsgroup to which it is posted, or a record is subordinate to a database.
+#+END_QUOTE  
+
+Possible positive responses are:
+
+- 200 (OK) or 204 (No Content) if no resource was created, but the action want OK
+- 201 (Created) with a reference to the new resource if a new resource was created
+
+
+*** Error handling
+One of the strenghts of the HTTP protocol is that it has a clear semantics for handling possible errors through well-defined response codes. Leaving aside the hardly-ever used 1xx series of responses we have:
+
+- Successful 2xx 
+  - 200 OK 
+  - 201 Created 
+  - 202 Accepted 
+  - 203 Non-Authoritative Information 
+  - 204 No Content 
+  - 205 Reset Content 
+  - 206 Partial Content 
+- Redirection 3xx 
+  - 300 Multiple Choices 
+  - 301 Moved Permanently 
+  - 302 Found 
+  - 303 See Other 
+  - 304 Not Modified 
+  - 305 Use Proxy 
+  - 306 (Unused) 
+  - 307 Temporary Redirect 
+- Client Error 4xx 
+  - 400 Bad Request 
+  - 401 Unauthorized 
+  - 402 Payment Required 
+  - 403 Forbidden 
+  - 404 Not Found 
+  - 405 Method Not Allowed 
+  - 406 Not Acceptable 
+  - 407 Proxy Authentication Required 
+  - 408 Request Timeout 
+  - 409 Conflict 
+  - 410 Gone 
+  - 411 Length Required 
+  - 412 Precondition Failed 
+  - 413 Request Entity Too Large 
+  - 414 Request-URI Too Long 
+  - 415 Unsupported Media Type 
+  - 416 Requested Range Not Satisfiable 
+  - 417 Expectation Failed 
+- Server Error 5xx 
+  - 500 Internal Server Error 
+  - 501 Not Implemented 
+  - 502 Bad Gateway 
+  - 503 Service Unavailable 
+  - 504 Gateway Timeout 
+  - 505 HTTP Version Not Supported 
+
+*** Content negotiation 
+So far we have seen only requests with the HTTP header ~Accept: */*~, which essentially says that you have no preference for the type of content to get back. However, normally clients have preferences for some type of content in some language over other types of content. In a typical browser session we see sequences like this:
+
+#+BEGIN_EXAMPLE
+Request:
+http://www.budabe.eu/research/
+
+GET /research/ HTTP/1.1
+Host: www.budabe.eu
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:12.0) Gecko/20100101 Firefox/12.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: de-de,de;q=0.8,en-us;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+
+Response:
+HTTP/1.1 200 OK
+Date: Sun, 23 Sep 2012 17:19:33 GMT
+Server: Apache/2.2.20 (Ubuntu)
+Vary: Accept-Language,Cookie,Accept-Encoding
+Content-Language: de
+Content-Encoding: gzip
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+#+END_EXAMPLE
+(protocol of a live session taken with the Live HTTP headers plugin in Firefox)
+
+In contrast to the HTTP method the HTTP headers always follow the model: Header name ':' value of the header followed by a newline (theoretically a line continuation is possible, but rarely seen) (cf. {Fielding:1999ub}, 2.2 for the details of the BNF rules). In particular, ~Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8~
+ requests in the order of preference ~text/html~ and XHTML (~application/xhtml+xml~), then other formats. The server is expected to honour these requests. Similarly, ~Accept-Language~ specifies a preference for German (~de~) over English (~en~). More languages are possible.
+
+The very same logic can also be used for more web-service type requests to deliberatedly ask for some languages or content types.
+
+
+*** Encryption and caching
+Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
+
+For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
+
+- -Last-Modified-: Indicates when the resource was last changed. This is typically retrieved with a cheap ~HEAD~ request. If -Last-Modified- is newer than the latest cached version, the cache should be updated accordingly
+- ~ETag~: A response header to enable cache validation
+
+The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (http://www.squid-cache.org/), Varnish Cache (https://www.varnish-cache.org/about) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
+
+*** Command line tools such as curl and wget
+#+BEGIN_EXAMPLE
+curl -v -L -H "Host:publications.europa.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:ro" "http://publications.europa.eu/resource/celex/32011R1339"
+#+END_EXAMPLE
+
+** Design principles for RESTful systems
+
+
+RESTful systems are, as the name suggests, systems on Representational State Transfer. This hints at Fielding's key idea in his famous dissertation is to see the entire web as a single monstrous state machine --- "Hypermedia as the engine of application state" ---, operated by "uniform interface between components" ({Fielding:2000vh}, 5.1.5). The web centres on resources --- "any information that can be named" (5.2.1.1) --- that are uniquely identified by URIs. A resource is in principle independent of its concrete representation, e.g. as HTML or pdf. Clients and server can use content negoation to mutually agree on a suitable representation of a resource. Hence, "REST-based architectures communicate primarily through the transfer of representations of resources" (5.3.3). 
+
+In this concept application state is "the state that the server needs to maintain between each request for each client" ({Allamaraju:2010ty}, p. 7). References to application state or indeed at time the application state itself is coded into URIs and sent with the representation to link to new application states.
+
+A Resource Oriented Architecture (ROA) is "an arrangement of URIs, HTTP, and XML that works like the rest of the Web, and that programmers will enjoy using" ({Richardson:2007td}, chapter 4), the term being coinded as an antithesis to Service Oriented Architectures (SOAs). ROAs embrace RESTful principles and systematize key ideas. 
+
+A ROA is characterized by the key tenents of RESTful systems, i.e.:
+
+- Addressable: each resource is addresable through a URI
+- Stateless: each HTTP request standard for itself. It contains all information that the server needs to process the request (it can change the server's resource state, though)
+- Links: Links point to possible new states of this or another application
+- Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:2007hb})
+
+
+
+
+* Excursion: Clojure and JVM
+Session <2012-10-06 Sat>
+
+
+** Why Clojure?
+Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
+
+At here two ultimatively simple examples:
+#+BEGIN_EXAMPLE
+user=> (+ 1 1)
+2
+user=> (println "Hello World!")
+Hello World!
+nil
+user=> 
+#+END_EXAMPLE
+
+Like other Lisps Clojure employs prefix notation for function calls. Things like -+- that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of -+- we have what is called a /pure/ function that does not produce side-effects. The ~println~ in turn does not return anything useful --- though it does return something, the value ~nil~ ---, but it triggers a side action, namely to print out a string on the console.
+
+Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
+
+#+BEGIN_EXAMPLE
+user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=> (all-lower? "aBc")
+false
+user=> (all-lower? "abc")
+true
+#+END_EXAMPLE
+
+This short code defines boolean function --- a predicate --- with one parameter using ~defn~. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns ~true~, otherwise ~false~.
+
+Already this example is a typical use of functions that themselves call functions (higher-order functions). We can, however, use this function in turn in a larger context, e.g. to filter all all-lower-case strings from a list of strings
+#+BEGIN_EXAMPLE
+user=> (filter all-lower? '("aBc" "deF" "hij" "Klm" "nop" "QRS" "tuV" "WXy" "z"))
+("hij" "nop" "z")
+user=> 
+#+END_EXAMPLE
+
+That code demonstrates two things:
+- Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
+- Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
+
+Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
+#+BEGIN_SRC clojure
+(defn hello
+  ([]
+     (hello "Hello" "World"))
+  ([name]
+     (hello "Hello" name))
+  ([phrase name]
+     (str phrase ", " name)))
+#+END_SRC
+
+Based on the parameters given the right function is chosen:
+
+#+BEGIN_EXAMPLE
+user=> (hello)
+"Hello, World"
+user=> (hello "Worms")
+"Hello, Worms"
+user=> (hello "Hallo" "Worms")
+"Hallo, Worms"
+user=> 
+#+END_EXAMPLE
+
+
+
+
+On this basis we can now look at some more of the advantages:
+
+- Elegant and concise syntax
+- Largely immutable data structures
+- Excellent support for concurrent programming
+- Close JVM integration
+
+Recommended reading: {Halloway:2012ta}
+
+** Practicalities
+*** Installation and integration with Emacs
+1. Download leiningen 2.0
+
+Download from http://leiningen.org/
+
+#+BEGIN_EXAMPLE
+  wget https://raw.github.com/technomancy/leiningen/preview/bin/lein
+
+  chmod 755 lein
+
+  ./lein self-install
+#+END_EXAMPLE
+
+then move lein to a place in the PATH
+
+2. Install package manager
+
+Only for Emacs 23: 
+
+Install the Marmalade package manager
+
+#+BEGIN_EXAMPLE
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+#+END_EXAMPLE
+
+3. Install clojure-mode
+
+https://github.com/technomancy/clojure-mode
+
+4. Install nrepl
+
+https://github.com/kingtim/nrepl.el
+
+M-x package-install [RET] nrepl [RET]
+
+5. Start nrepl
+
+M-x nrepl-jack-in
+
+*** Leiningen
+Leiningen (http://leiningen.org) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
+
+Like Maven projects Leiningen projects have a predefined directory structure:
+
+#+BEGIN_EXAMPLE
+project/src            Source code
+       /test           Unit tests
+       /project.clj    Dependency file
+#+END_EXAMPLE
+
+Project files with the dependency structure just list the packages and their desired versions:
+
+#+BEGIN_SRC clojure
+(defproject eu.budabe/eli-project "0.1" 
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [clj-http "0.5.3"]
+                 [cheshire "4.0.2"]
+                 [org.clojure/data.zip "0.1.0"]])
+#+END_SRC
+
+Leiningen itself will then automatically download the necessary libraries and install them as necessary. Much like Python, Perl and Ruby Clojure has a universally accepted central repository http://clojars.org which hosts Clojure libraries. In addition, all "normal" Java libraries can also be used.
+
+Leiningen itself has a number of options, most of which are self-explanatory.
+
+#+BEGIN_EXAMPLE
+marcwilhelmkuster$ lein --help
+Leiningen is a tool for working with Clojure projects.
+
+Several tasks are available:
+check               Check syntax and warn on reflection.
+classpath           Write the classpath of the current project to output-file.
+clean               Remove all files from project's target-path.
+compile             Compile Clojure source into .class files.
+deploy              Build jar and deploy to remote repository.
+deps                Show details about dependencies.
+do                  Higher-order task to perform other tasks in succession.
+help                Display a list of tasks or help for a given task.
+install             Install current project to the local repository.
+jar                 Package up all the project's files into a jar file.
+javac               Compile Java source files.
+new                 Generate project scaffolding based on a template.
+plugin              DEPRECATED. Please use the :user profile instead.
+pom                 Write a pom.xml file to disk for Maven interoperability.
+repl                Start a repl session either with the current project or standalone.
+retest              Run only the test namespaces which failed last time around.
+ritz                Launch ritz server for Emacs to connect.
+ritz-in             Jack in to a ritz backed Clojure SLIME session from Emacs.
+run                 Run the project's -main function.
+search              Search remote maven repositories for matching jars.
+show-profiles       List all available profiles or display one if given an argument.
+test                Run the project's tests.
+trampoline          Run a task without nesting the project's JVM inside Leiningen's.
+uberjar             Package up the project files and all dependencies into a jar file.
+upgrade             Upgrade Leiningen to specified version or latest stable.
+version             Print version for Leiningen and the current JVM.
+with-profile        Apply the given task with the profile(s) specified.
+
+Run lein help $TASK for details.
+
+Aliases:
+
+See also: readme, faq, tutorial, news, sample, profiles,
+deploying and copying.
+#+END_EXAMPLE
+
+-lein repl- starts a Clojure command shell with all dependencies loaded:
+#+BEGIN_EXAMPLE
+marcwilhelmkuster$ lein repl
+nREPL server started on port 55766
+REPL-y 0.1.0-beta10
+Clojure 1.4.0
+    Exit: Control+D or (exit) or (quit)
+Commands: (user/help)
+    Docs: (doc function-name-here)
+          (find-doc "part-of-name-here")
+  Source: (source function-name-here)
+          (user/sourcery function-name-here)
+ Javadoc: (javadoc java-object-or-class-here)
+Examples from clojuredocs.org: [clojuredocs or cdoc]
+          (user/clojuredocs name-here)
+          (user/clojuredocs "ns-here" "name-here")
+user=> (+ 1 1)
+2
+user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=> (all-lower? "aBc")
+false
+user=> (all-lower? "abc")
+true
+user=> 
+#+END_EXAMPLE
+
+*** Syntax and data structures
+We have already seen examples of Clojure's syntax. Function calls are of the type:
+#+BEGIN_EXAMPLE
+user=> (function-name params listed)
+#+END_EXAMPLE
+
+
+Defining new functions is as simple:
+#+BEGIN_SRC clojure
+(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#+END_SRC
+
+In total the following primitive data structures exist in Clojure:
+#+BEGIN_EXAMPLE
+Boolean: true | false
+Character: \a \b \c
+String: "abc"
+List: ("a" "b" "c") (all-lower? "abc")
+Map: {:key1 "Value1", :key2 "Value2"}
+Number: 1.23
+Set: #{ 1 2 3}
+Vector: [1 2 3]
+
+Symbol: eli/build-act
+Keywords: :keyword :name
+Nil: nil
+#+END_EXAMPLE
+
+**** Lists
+Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
+
+#+BEGIN_EXAMPLE
+user=> (list 1 2 3)
+(1 2 3)
+user=> (list 1 2 "a" "b")
+(1 2 "a" "b")
+user=> '(1 2 "a" "b")
+(1 2 "a" "b")
+user=> (quote (1 2 "a" "b"))
+(1 2 "a" "b")
+user=> (list 1 2 (+ 3 4))
+(1 2 7)
+user=> '(1 2 (+ 3 4))
+(1 2 (+ 3 4))
+user=> 
+#+END_EXAMPLE
+
+As we have seen, also function calls are lists:
+#+BEGIN_EXAMPLE
+user=> (all-lower? "abc")
+true
+#+END_EXAMPLE
+
+
+**** Vectors
+Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
+#+BEGIN_EXAMPLE
+user=> [1 2 3]
+[1 2 3]
+user=> (def v [1 2 3])
+#'user/v
+user=> (vector? v)
+true
+user=> (v 1)
+2
+user=> 
+user=> [1 2 "a" "b"]
+[1 2 "a" "b"]
+user=> 
+#+END_EXAMPLE
+
+Vectors themselves can be used as functions, taking the relevant index as a parameter.
+
+**** Maps
+Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
+
+#+BEGIN_EXAMPLE
+user=> {:first-name "Marc", :last-name "Kuester"}
+{:last-name "Kuester", :first-name "Marc"}
+user=> (def kuester {:first-name "Marc", :last-name "Kuester"})
+#'user/kuester
+user=> (:last-name kuester)
+"Kuester"
+user=> 
+#+END_EXAMPLE
+
+Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
+
+**** -defrecord-
+In addition, you can easily define new data structures in the form of records:
+#+BEGIN_EXAMPLE
+user=> (defrecord Teacher [first-name last-name office-no])
+user.Teacher
+user=> (->Teacher "Marc" "Kuester" 123)
+#user.Teacher{:first-name "Marc", :last-name "Kuester", :office-no 123}
+user=> (:first-name (->Teacher "Marc" "Kuester" 123))
+"Marc"
+user=> 
+#+END_EXAMPLE
+
+
+** Control structures
+Clojure has at its core only very simple comtrol structures: ~if~, ~do~ and ~loop~. Of these, however, you use only ~if~ regularly and directly:
+
+#+BEGIN_EXAMPLE
+user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+user=> (if (all-lower? "abc") "all lower case" "also capital letters")
+"all lower case"
+user=> 
+#+END_EXAMPLE
+
+The first branch is used if the condition is true ("then-branch"), the second one if it is false ("else-branch"). Incidentally, if is a function like all other functions, returning the then or else branch as the case may be.
+
+#+BEGIN_EXAMPLE
+user=> (def a (if (all-lower? "abc") "all lower case" "also capital letters"))
+#'user/a
+user=> a
+"all lower case"
+user=> (def b (if (all-lower? "aBc") "all lower case" "also capital letters"))
+#'user/b
+user=> b
+"also capital letters"
+user=> 
+#+END_EXAMPLE
+
+~do~ is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
+#+BEGIN_EXAMPLE
+user=>  (if (all-lower? "aBc") (do (println "then") "all lower case") (do (println "else") "also capital letters"))
+else
+"also capital letters"
+user=> 
+#+END_EXAMPLE
+
+
+~loop~ is hardly ever used directly. Here an example of a loop that calculates the squares of all even numbers:
+#+BEGIN_SRC clojure
+;;very complicated, do not use
+(loop [lst '(1 2 3 4 5 6) res '()]  
+(let [l (last lst)]
+(if (empty? lst)
+  res
+  (recur (drop-last lst) (if (even? l) (cons (* l l) res) res)))))
+#+END_SRC
+
+As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include ~for~ and ~when~. ~for~, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
+
+#+BEGIN_EXAMPLE
+user=> (for [i '(1 2 3 4 5 6) :when (even? i)] (* i i))
+(4 16 36)
+user=> 
+#+END_EXAMPLE
+
+Really, the use of explicit control structures is much rarer in Clojure than in traditional imperative languages. Instead, higher-order functions operating on sequences are the bread and butter of Clojure ans indeed of functional programming in general.
+
+So, instead of using the above idiom to output the squares of even numbers a even more idiomatic approach would be:
+
+#+BEGIN_EXAMPLE
+user=> (map (fn [i] (* i i)) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=> 
+#+END_EXAMPLE
+
+or even shorter
+
+#+BEGIN_EXAMPLE
+user=> (map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=> 
+#+END_EXAMPLE
+
+This makes usually for much clearer code.
+
+** Lazy sequences
+However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list -'(1 2 3 4 5 6)-, but for any type of range:
+#+BEGIN_EXAMPLE
+user=> (defn even-squares [] (map #(* % %) (filter even? (range))))
+#'user/even-squares
+user=> (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=> (take 50 (even-squares))
+(0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
+user=> 
+#+END_EXAMPLE
+
+or even shorter
+
+#+BEGIN_EXAMPLE
+user=> (defn even-squares [] (map #(* % %)  (range 0 Double/POSITIVE_INFINITY 2)))
+#'user/even-squares
+user=> (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=> 
+#+END_EXAMPLE
+
+
+This may look rather surprising --- how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated --- realized is the term --- only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
+
+Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
+
+
+
+** Principles of functional programming
+  - Immutabile data
+  - Functions as data
+  - Pure Functions
+  - Higher-Order Functions
+  - Use of recursion
+
+* Programming RESTful Web Services
+Session <2012-10-19 Fri>
+- ATOM and related standards
+- Popular JVM libraries for RESTful web services
+- Client-side programming
+  - Apache HttpComponents
+  - clj-http as wrapper for HttpComponents
+
+Session <2012-10-20 Sat>
+- JSON and some basic JavaScript
+- cheshire for JSON
+
+Session <2012-11-02 Fri>
+- Server-side programming 
+  - Ring, a Clojure web applications library
+  - Integration with Jetty and other Servlet containers
+  - Deploying Web Applications
+- Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
+
+* SOAP-based Web Services and Service-oriented Architectures 
+Session <2012-11-03 Sat>
+- XML Schema
+  - Syntax
+  - Content models
+  - Choice and All
+- Interface descriptions: WSDL
+
+Session <2012-11-16 Fri>
+- SOAP 
+- Tools: soapUI
+- Tools to check the data flow (e.g. tcpMon)
+- Services: SOAs: heterogeneous, loosely-coupled architectures
+- Concepts of semantic and organizational interoperability
+
+* Programming SOAP-based Web Services
+Session <2012-11-17 Sat> 
+- Popular JVM libraries for SOAP-based services
+  - Apache Axis 2 and clj-soap (https://clojars.org/org.clojars.seancorfield/clj-soap)
+  - Jax-RPC 2.0 / JAX-WS 2.0 (http://www.artima.com/lejava/articles/threeminutes.html, http://stackoverflow.com/questions/2855292/scala-simple-webservice, https://gist.github.com/381129)
+- Implementing clients for existing simple SOAP services in Clojure
+  - Generation of stubs
+  - Analysis of stubs
+- Implementing simple SOAP services in Clojure
+
+Scala: http://timperrett.com/2011/07/26/using-soap-with-scala/
+
+* Excursion: Web Services in .NET
+Special guest: Lukas Georgieff, talking about SOAP-based and RESTful web services on the .NET platform using C#
+
+Session <2012-11-30 Fri>
+- .Net-Framework
+- Windows Communication Foundation
+  - Architecture
+  - Contracts and Description
+  - Service Runtime
+  - Messaging
+  - Hosting and Activation
+- SOAP and WCF
+  - Music Store (Service)
+    - Requirements
+    - Implementation
+      - Create a Visual Studio WCF-Project
+      - Service and Operation Contracts
+      - Message and Data Contracts
+      - loginUser and postUserImage
+      - Binding
+    - Live Coding: Echo Service
+  - Music Store (Client): Implementation
+    - Service-Reference
+    - Calling Stub-Methods
+
+Session <2012-12-01 Sat>
+- RESTful and WCF
+   - Music Store (Service)
+     - Implementation
+       - Service and Operation Contracts
+       - UriTemplate, WebGet and WebInvoke
+       - Data Contracts
+       - loginUser, postUserImage and WebOperationContext
+       - Binding
+    - Live Coding: Echo Service
+    - Music Store (Client): Implementation
+      - WebChannelFactory
+      - Implementing a RESTful Stub
+
+* The Semantic Web
+Session <2012-12-14 Fri>
+- What are Ontologies? Ontologies and Us
+- Ontologies and Technology
+  - Standards
+    - RDF
+    - RDF-S
+    - OWL
+    - SPARQL
+  - Object identity
+  - Tools
+    - Protégé
+    - Semantic Stores
+- Linked Open Data
+- Semantic Web Services
+
+Session <2012-12-15 Sat>
+- Programming the Semantic Web
+
+* Preparing the Practical Programming Projects
+Sessions <2013-01-04 Fri> and <2013-01-05 Sat>
+
+Clojure-based ecosystems of agents and actors
+
+* Bibliography
