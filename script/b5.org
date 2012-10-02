@@ -65,7 +65,7 @@ Host: www.budabe.eu
 Accept: */*
 #+END_EXAMPLE
 
-This says pretty much what it seems to say: request the server to ~GET~ the URL webpage -/research- on the host -www.budabe.eu- and return its contents. If the page exists, the server responds by sending it back:
+This says pretty much what it seems to say: request the server to ~GET~ the URL webpage ~/research~ on the host ~www.budabe.eu~ and return its contents. If the page exists, the server responds by sending it back:
 
 #+BEGIN_EXAMPLE
 < HTTP/1.1 200 OK
@@ -143,7 +143,7 @@ Of course, this does not mean that the sender has necessarily the right to do th
 **** PUT-method
 Another idempotent method is the ~PUT~ method. It "requests that the enclosed entity be stored under the supplied Request-URI. If the Request-URI refers to an already existing resource, the enclosed entity SHOULD be considered as a modified version of the one residing on the origin server. If the Request-URI does not point to an existing resource, and that URI is capable of being defined as a new resource by the requesting user agent, the origin server can create the resource with that URI. If a new resource is created, the origin server MUST inform the user agent via the 201 (Created) response" ({Fielding:1999ub}, 9.6). In other words, the client asks the server to generate a new resource or update an existing one for a given URI. The server has no leaway, it must create or update the resource under that URI or refuse the action.
 
-In the following example the server is requested to create a page -/research/WebService- that currently does not exist:
+In the following example the server is requested to create a page ~/research/WebService~ that currently does not exist:
 
 #+BEGIN_EXAMPLE
 > PUT /research/WebService HTTP/1.1
@@ -295,7 +295,13 @@ The details of cache handling are beyond this script, cf. {Fielding:1999ub}, cha
 
 *** Command line tools such as curl and wget
 #+BEGIN_EXAMPLE
-curl -v -L -H "Host:publications.europa.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:ro" "http://publications.europa.eu/resource/celex/32011R1339"
+curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:de" "http://www.budabe.eu/research"
+#+END_EXAMPLE
+
+will return the German-language version of the webpage ~http://www.budabe.eu/research~, with preference in XHTML. The following command, in turn, will return the English language representation:
+
+#+BEGIN_EXAMPLE
+curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:en" "http://www.budabe.eu/research"
 #+END_EXAMPLE
 
 ** Design principles for RESTful systems
