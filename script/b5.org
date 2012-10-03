@@ -288,7 +288,7 @@ Because of its statelessness HTTP is easy to combine with encryption and caching
 
 For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
 
-- -Last-Modified-: Indicates when the resource was last changed. This is typically retrieved with a cheap ~HEAD~ request. If -Last-Modified- is newer than the latest cached version, the cache should be updated accordingly
+- ~Last-Modified~: Indicates when the resource was last changed. This is typically retrieved with a cheap ~HEAD~ request. If ~Last-Modified~ is newer than the latest cached version, the cache should be updated accordingly
 - ~ETag~: A response header to enable cache validation
 
 The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (http://www.squid-cache.org/), Varnish Cache (https://www.varnish-cache.org/about) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
@@ -510,7 +510,7 @@ See also: readme, faq, tutorial, news, sample, profiles,
 deploying and copying.
 #+END_EXAMPLE
 
--lein repl- starts a Clojure command shell with all dependencies loaded:
+~lein repl~ starts a Clojure command shell with all dependencies loaded:
 #+BEGIN_EXAMPLE
 marcwilhelmkuster$ lein repl
 nREPL server started on port 55766
