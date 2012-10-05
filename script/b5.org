@@ -59,6 +59,8 @@ Of course, there's a bit more to it, though the principle does not change.
 **** GET-method
 In the easiest scenario, the client just wants to get some content from the server. In this case sends a request that is in fact just called ~GET~:
 #+BEGIN_EXAMPLE
+$curl -v http://www.budabe.eu/research/
+--> 
 GET /research/ HTTP/1.1
 User-Agent: curl/7.27.0
 Host: www.budabe.eu
@@ -97,7 +99,9 @@ The GET method means retrieve whatever information (in the form of an entity) is
 
 **** HEAD-method
 "The HEAD method is identical to GET except that the server MUST NOT return a message-body in the response" ({Fielding:1999ub}, 9.4):
-#+BEGIN_EXAMPLE
+#+BEGIN_EXAMPLE$ curl -v -XHEAD  http://www.budabe.eu/research/
+$ curl -v -XHEAD  http://www.budabe.eu/research/ 
+-->
 > HEAD /research/ HTTP/1.1
 > User-Agent: curl/7.27.0
 > Host: www.budabe.eu
@@ -119,6 +123,8 @@ Since the server does not return data, it is a quick way to test if a resource e
 Another idempotent method is ~DELETE~ that does exactly what you'd assume it does: "The DELETE method requests that the origin server delete the resource identified by the Request-URI" ({Fielding:1999ub}, 9.7):
 
 #+BEGIN_EXAMPLE
+$ curl -v -XDELETE  http://www.budabe.eu/research/
+-->
 > DELETE /research/ HTTP/1.1
 > User-Agent: curl/7.27.0
 > Host: www.budabe.eu
@@ -146,6 +152,8 @@ Another idempotent method is the ~PUT~ method. It "requests that the enclosed en
 In the following example the server is requested to create a page ~/research/WebService~ that currently does not exist:
 
 #+BEGIN_EXAMPLE
+$ curl -v -XPUT -d "01234567890123456789012345"  http://www.budabe.eu/research/WebService
+-->
 > PUT /research/WebService HTTP/1.1
 > User-Agent: curl/7.27.0
 > Host: www.budabe.eu
@@ -173,6 +181,8 @@ Of course, as always the fact that you can send a ~PUT~ request to the server do
 Similarly, the following request asks for an update to an existing resource with the same 26 characters: 
 
 #+BEGIN_EXAMPLE
+$ curl -v -XPUT -d "01234567890123456789012345"  http://www.budabe.eu/research/WebService
+-->
 > PUT /research/ HTTP/1.1
 > User-Agent: curl/7.27.0
 > Host: www.budabe.eu
@@ -294,6 +304,7 @@ For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
 The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (http://www.squid-cache.org/), Varnish Cache (https://www.varnish-cache.org/about) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
 
 *** Command line tools such as curl and wget
+~curl~ (http://curl.haxx.se/) is a standard tool to download websites via the command line or (through ~libcurl~) programmatically:
 #+BEGIN_EXAMPLE
 curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:de" "http://www.budabe.eu/research"
 #+END_EXAMPLE
@@ -303,6 +314,8 @@ will return the German-language version of the webpage ~http://www.budabe.eu/res
 #+BEGIN_EXAMPLE
 curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:en" "http://www.budabe.eu/research"
 #+END_EXAMPLE
+
+~wget~ (http://www.gnu.org/software/wget/) has similar functionalities, though more targeted towards web crawling.
 
 ** Design principles for RESTful systems
 
@@ -322,6 +335,11 @@ A ROA is characterized by the key tenents of RESTful systems, i.e.:
 
 
 
+** Assignment
+1. Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with ~curl~
+2. In. a programming language of your choice, write a program or script that sends a GET request to that website. Your program must not call ~curl~ or ~wget~
+
+Hand in the assignment via the course's Moodle page.
 
 * Excursion: Clojure and JVM
 Session <2012-10-06 Sat>
@@ -340,7 +358,7 @@ nil
 user=> 
 #+END_EXAMPLE
 
-Like other Lisps Clojure employs prefix notation for function calls. Things like -+- that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of -+- we have what is called a /pure/ function that does not produce side-effects. The ~println~ in turn does not return anything useful --- though it does return something, the value ~nil~ ---, but it triggers a side action, namely to print out a string on the console.
+Like other Lisps Clojure employs prefix notation for function calls. Things like ~+~ that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of ~+~ we have what is called a /pure/ function that does not produce side-effects. The ~println~ in turn does not return anything useful --- though it does return something, the value ~nil~ ---, but it triggers a side action, namely to print out a string on the console.
 
 Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
 
@@ -739,12 +757,32 @@ Lazy sequences make for elegant code also for finite, but potentially large sequ
 
 
 ** Principles of functional programming
-  - Immutabile data
+Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
+
+  - Immutable data
   - Functions as data
   - Pure Functions
   - Higher-Order Functions
   - Use of recursion
 
+We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
+
+The example of the "square of even numbers" functions is built on functions as data (~even?~, ~#(* % %)~ etc.) that are parameters to higher-order functions (~filter~, ~map~). All of these functions are pure in a mathematical sense.
+#+BEGIN_SRC clojure
+(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+#+END_SRC 
+
+Clojure is less oriented towards explicit recursion as other languages such as Scheme, but they still play an important role. However, the concept of immutable data is at the core of Clojure. All the data structures that we have seen are immutable (and many are in addition lazy). Of course, it is still possible to handle mutable data, and in fact Clojure offers some powerful strategies to handle data updates in transactions (Software Transactional Memory or STM). Transactional references (Refs) make for safe mutable data. However, a detailed discussion of this is out of scope for this session.
+
+More information on Clojure and its API is available under http://clojure.org/ and http://clojuredocs.org/
+
+
+
+** Assignment
+1. Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input ~'("xyz" "cde" "abc" "bab" "axx")~ it should return ~'("ABC" "AXX")~. Write first a unit test and then the function and run lein test to prove it works.
+2. Write the same program in another programming language of your choice
+
+Hand in assignment via the course's Moodle page.
 * Programming RESTful Web Services
 Session <2012-10-19 Fri>
 - ATOM and related standards
@@ -789,7 +827,7 @@ Session <2012-11-17 Sat>
   - Analysis of stubs
 - Implementing simple SOAP services in Clojure
 
-Scala: http://timperrett.com/2011/07/26/using-soap-with-scala/
+
 
 * Excursion: Web Services in .NET
 Special guest: Lukas Georgieff, talking about SOAP-based and RESTful web services on the .NET platform using C#
@@ -845,6 +883,8 @@ Session <2012-12-14 Fri>
     - Semantic Stores
 - Linked Open Data
 - Semantic Web Services
+
+https://clojars.org/seabass
 
 Session <2012-12-15 Sat>
 - Programming the Semantic Web

@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-02 21:41:41 CEST"/>
+<meta name="generated" content="2012-10-05 19:01:12 CEST"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -98,6 +98,7 @@ lang="en" xml:lang="en">
 </ul>
 </li>
 <li><a href="#sec-2.2">2.2 Design principles for RESTful systems </a></li>
+<li><a href="#sec-2.3">2.3 Assignment </a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3 Excursion: Clojure and JVM </a>
@@ -113,6 +114,7 @@ lang="en" xml:lang="en">
 <li><a href="#sec-3.3">3.3 Control structures </a></li>
 <li><a href="#sec-3.4">3.4 Lazy sequences </a></li>
 <li><a href="#sec-3.5">3.5 Principles of functional programming </a></li>
+<li><a href="#sec-3.6">3.6 Assignment </a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4 Programming RESTful Web Services </a></li>
@@ -250,7 +252,9 @@ In the easiest scenario, the client just wants to get some content from the serv
 
 
 
-<pre class="example">GET /research/ HTTP/1.1
+<pre class="example">$curl -v http://www.budabe.eu/research/
+--&gt; 
+GET /research/ HTTP/1.1
 User-Agent: curl/7.27.0
 Host: www.budabe.eu
 Accept: */*
@@ -304,13 +308,12 @@ Formally, <code>GET</code> is defined as:
 </li>
 <li id="sec-2.1.1.2">HEAD-method <br/>
 "The HEAD method is identical to GET except that the server MUST NOT return a message-body in the response" ({Fielding:1999ub}, 9.4):
-
-
-
-<pre class="example">&gt; HEAD /research/ HTTP/1.1
+$ curl -v -XHEAD  <a href="http://www.budabe.eu/research/">http://www.budabe.eu/research/</a> 
+&ndash;&gt;
+&gt; HEAD <i>research</i> HTTP/1.1
 &gt; User-Agent: curl/7.27.0
 &gt; Host: www.budabe.eu
-&gt; Accept: */*
+&gt; Accept: <b>/</b>
 &gt; 
 &lt; HTTP/1.1 200 OK
 &lt; Date: Sat, 22 Sep 2012 15:31:18 GMT
@@ -318,12 +321,8 @@ Formally, <code>GET</code> is defined as:
 &lt; Vary: Accept-Language,Cookie,Accept-Encoding
 &lt; Content-Language: de-de
 &lt; Content-Type: text/html; charset=utf-8
- no chunk, no close, no size. Assume close to signal end
+no chunk, no close, no size. Assume close to signal end
 &lt; 
-</pre>
-
-
-
 
 <p>
 Since the server does not return data, it is a quick way to test if a resource exists, is accessible and / or has recently been modified. Like <code>GET</code> <code>HEAD</code> is also idempotent.
@@ -335,7 +334,9 @@ Another idempotent method is <code>DELETE</code> that does exactly what you'd as
 
 
 
-<pre class="example">&gt; DELETE /research/ HTTP/1.1
+<pre class="example">$ curl -v -XDELETE  http://www.budabe.eu/research/
+--&gt;
+&gt; DELETE /research/ HTTP/1.1
 &gt; User-Agent: curl/7.27.0
 &gt; Host: www.budabe.eu
 &gt; Accept: */*
@@ -376,7 +377,9 @@ In the following example the server is requested to create a page <code>/researc
 
 
 
-<pre class="example">&gt; PUT /research/WebService HTTP/1.1
+<pre class="example">$ curl -v -XPUT -d "01234567890123456789012345"  http://www.budabe.eu/research/WebService
+--&gt;
+&gt; PUT /research/WebService HTTP/1.1
 &gt; User-Agent: curl/7.27.0
 &gt; Host: www.budabe.eu
 &gt; Accept: */*
@@ -416,7 +419,9 @@ Similarly, the following request asks for an update to an existing resource with
 
 
 
-<pre class="example">&gt; PUT /research/ HTTP/1.1
+<pre class="example">$ curl -v -XPUT -d "01234567890123456789012345"  http://www.budabe.eu/research/WebService
+--&gt;
+&gt; PUT /research/ HTTP/1.1
 &gt; User-Agent: curl/7.27.0
 &gt; Host: www.budabe.eu
 &gt; Accept: */*
@@ -678,7 +683,7 @@ For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
 </p>
 <ul>
 <li>
--Last-Modified-: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If -Last-Modified- is newer than the latest cached version, the cache should be updated accordingly
+<code>Last-Modified</code>: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If <code>Last-Modified</code> is newer than the latest cached version, the cache should be updated accordingly
 </li>
 <li>
 <code>ETag</code>: A response header to enable cache validation
@@ -696,7 +701,8 @@ For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
 <h4 id="sec-2.1.5"><span class="section-number-4">2.1.5</span> Command line tools such as curl and wget </h4>
 <div class="outline-text-4" id="text-2.1.5">
 
-
+<p><code>curl</code> (<a href="http://curl.haxx.se/">http://curl.haxx.se/</a>) is a standard tool to download websites via the command line or (through <code>libcurl</code>) programmatically:
+</p>
 
 
 <pre class="example">curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:de" "http://www.budabe.eu/research"
@@ -717,6 +723,9 @@ will return the German-language version of the webpage <code>http://www.budabe.e
 
 
 
+<p>
+<code>wget</code> (<a href="http://www.gnu.org/software/wget/">http://www.gnu.org/software/wget/</a>) has similar functionalities, though more targeted towards web crawling.
+</p>
 </div>
 </div>
 
@@ -755,9 +764,28 @@ Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:
 
 
 
-
 </li>
 </ul>
+</div>
+
+</div>
+
+<div id="outline-container-2.3" class="outline-3">
+<h3 id="sec-2.3"><span class="section-number-3">2.3</span> Assignment </h3>
+<div class="outline-text-3" id="text-2.3">
+
+<ol>
+<li>
+Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with <code>curl</code>
+</li>
+<li>
+In. a programming language of your choice, write a program or script that sends a GET request to that website. Your program must not call <code>curl</code> or <code>wget</code>
+
+</li>
+</ol>
+
+<p>Hand in the assignment via the course's Moodle page.
+</p>
 </div>
 </div>
 
@@ -796,7 +824,7 @@ user=&gt;
 
 
 <p>
-Like other Lisps Clojure employs prefix notation for function calls. Things like -+- that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of -+- we have what is called a <i>pure</i> function that does not produce side-effects. The <code>println</code> in turn does not return anything useful &mdash; though it does return something, the value <code>nil</code> &mdash;, but it triggers a side action, namely to print out a string on the console.
+Like other Lisps Clojure employs prefix notation for function calls. Things like <code>+</code> that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of <code>+</code> we have what is called a <i>pure</i> function that does not produce side-effects. The <code>println</code> in turn does not return anything useful &mdash; though it does return something, the value <code>nil</code> &mdash;, but it triggers a side action, namely to print out a string on the console.
 </p>
 <p>
 Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
@@ -1088,7 +1116,7 @@ deploying and copying.
 
 
 <p>
--lein repl- starts a Clojure command shell with all dependencies loaded:
+<code>lein repl</code> starts a Clojure command shell with all dependencies loaded:
 </p>
 
 
@@ -1458,9 +1486,11 @@ Lazy sequences make for elegant code also for finite, but potentially large sequ
 <h3 id="sec-3.5"><span class="section-number-3">3.5</span> Principles of functional programming </h3>
 <div class="outline-text-3" id="text-3.5">
 
+<p>Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
+</p>
 <ul>
 <li>
-Immutabile data
+Immutable data
 </li>
 <li>
 Functions as data
@@ -1476,7 +1506,48 @@ Use of recursion
 
 </li>
 </ul>
+
+<p>We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
+</p>
+<p>
+The example of the "square of even numbers" functions is built on functions as data (<code>even?</code>, <code>#(* % %)</code> etc.) that are parameters to higher-order functions (<code>filter</code>, <code>map</code>). All of these functions are pure in a mathematical sense.
+</p>
+
+
+<pre class="example">(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+</pre>
+
+
+
+
+<p>
+Clojure is less oriented towards explicit recursion as other languages such as Scheme, but they still play an important role. However, the concept of immutable data is at the core of Clojure. All the data structures that we have seen are immutable (and many are in addition lazy). Of course, it is still possible to handle mutable data, and in fact Clojure offers some powerful strategies to handle data updates in transactions (Software Transactional Memory or STM). Transactional references (Refs) make for safe mutable data. However, a detailed discussion of this is out of scope for this session.
+</p>
+<p>
+More information on Clojure and its API is available under <a href="http://clojure.org/">http://clojure.org/</a> and <a href="http://clojuredocs.org/">http://clojuredocs.org/</a>
+</p>
+
+
 </div>
+
+</div>
+
+<div id="outline-container-3.6" class="outline-3">
+<h3 id="sec-3.6"><span class="section-number-3">3.6</span> Assignment </h3>
+<div class="outline-text-3" id="text-3.6">
+
+<ol>
+<li>
+Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input ~'("xyz" "cde" "abc" "bab" "axx")~ it should return ~'("ABC" "AXX")~. Write first a unit test and then the function and run lein test to prove it works.
+</li>
+<li>
+Write the same program in another programming language of your choice
+
+</li>
+</ol>
+
+<p>Hand in assignment via the course's Moodle page.
+</p></div>
 </div>
 
 </div>
@@ -1623,11 +1694,10 @@ Analysis of stubs
 <li>
 Implementing simple SOAP services in Clojure
 
+
+
 </li>
 </ul>
-
-<p>Scala: <a href="http://timperrett.com/2011/07/26/using-soap-with-scala/">http://timperrett.com/2011/07/26/using-soap-with-scala/</a>
-</p>
 </div>
 
 </div>
@@ -1820,7 +1890,10 @@ Semantic Web Services
 </li>
 </ul>
 
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-12-15 Sat</span></span>
+<p><a href="https://clojars.org/seabass">https://clojars.org/seabass</a>
+</p>
+<p>
+Session <span class="timestamp-wrapper"> <span class="timestamp">2012-12-15 Sat</span></span>
 </p><ul>
 <li>
 Programming the Semantic Web
@@ -1852,9 +1925,9 @@ Clojure-based ecosystems of agents and actors
 </div>
 <div id="postamble">
 <p class="author"> Author: Marc Wilhelm Küster
-<a href="mailto:marcwilhelmkuster@budabe.lan">&lt;marcwilhelmkuster@budabe.lan&gt;</a>
+<a href="mailto:marcwilhelmkuster@client-183-166.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-183-166.eduroam.fh-worms.de&gt;</a>
 </p>
-<p class="date"> Date: 2012-10-02 21:41:41 CEST</p>
+<p class="date"> Date: 2012-10-05 19:01:12 CEST</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>

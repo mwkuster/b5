@@ -7,3 +7,9 @@
       (if (empty? lst)
         res
         (recur (drop-last lst) (if (even? l) (cons (* l l) res) res))))))
+
+(defn even-squares-for [l]
+  (for [i l :when (even? i)] (* i i)))
+
+(defn even-squares-map [l]
+  (map  #(* % %) (filter even? l)))

@@ -21,22 +21,20 @@ Host: " host "
 (defn read-response [in]
   "Very low-level implementation of an HTTP response"
   ;; loop on (.read in)
-  (def c (atom 20)) ;set to an abritrary initial value (space in this case)
-  (defn read-next [s] (.read in))
-  (while (> @c 0)
-    (do 
-      (print (char @c))
-      (swap! c read-next)))
-  (println "Response received"))
+  (loop 
+      [c 20 res-str ""]
+    (if (> c 0)
+      (recur (.read in) (str res-str (char c)))
+      res-str)))
 
 (defn get-page [host port]
   (let
       [conn (Socket. host port)
        in (.getInputStream conn)
        out (.getOutputStream conn)]
-    (.setReceiveBufferSize conn 1)
     (write-request out host)
-    (read-response in)))
+    ;;http://clojuredocs.org/clojure_core/clojure.core/future
+    (future (read-response in))))
 
-
+;;(get-page "www.budabe.eu" 80)
 
