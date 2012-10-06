@@ -783,24 +783,86 @@ More information on Clojure and its API is available under http://clojure.org/ a
 2. Write the same program in another programming language of your choice
 
 Hand in assignment via the course's Moodle page.
+
 * Programming RESTful Web Services
 Session <2012-10-19 Fri>
-- ATOM and related standards
+
+In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. Afterwards we will actually write some Clojure programs to test this out.
+
+** Design of URIs
+Maybe the most overlooked aspect of RESTful Web Services is the need for "cool URIs". "A cool URI is one which does not change" ({BernersLee:1998ui}):
+#+BEGIN_QUOTE
+It is the the duty of a Webmaster to allocate URIs which you will be able to stand by in 2 years, in 20 years, in 200 years. This needs thought, and organization, and commitment.
+#+END_QUOTE
+
+Berners-Lee proposes that a good URI must remain stable over time. For this it should leave out of the URIs:
+- Author's names
+- Subject classifications
+- Status information (old, new etc.)
+- Access rights
+- File name extensions
+- Implementation details (e.g. ~/cgi-bin/~ or similar)
+
+Instead, he proposes to use stable information such as the original creation date. 
+
+For URIs referring to real-life objects such as persons, {Anonymous:2008vd}, 4.5 proposes to follow three design goals:
+- Simplicity
+- Stability
+- Manageability
+
+{Gregorio:2012vo}
+
+*** The case of ELI
+
+
+** ATOM and related standards
+#+BEGIN_QUOTE
+Atom is an XML-based document format that describes lists of related
+information known as "feeds".  Feeds are composed of a number of
+items, known as "entries", each with an extensible set of attached
+metadata.  For example, each entry has a title.
+
+The primary use case that Atom addresses is the syndication of Web
+content such as weblogs and news headlines to Web sites as well as
+directly to user agents. (RFC 4287 / {Gregorio:Z8RX-4sN})
+#+END_QUOTE
+
+#+BEGIN_EXAMPLE
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Example Feed</title>
+ <link href="http://example.org/"/>
+ <updated>2003-12-13T18:30:02Z</updated>
+ <author>
+  <name>John Doe</name>
+ </author>
+ <id>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6</id>
+
+ <entry>
+  <title>Atom-Powered Robots Run Amok</title>
+  <link href="http://example.org/2003/12/13/atom03"/>
+  <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
+  <updated>2003-12-13T18:30:02Z</updated>
+  <summary>Some text.</summary>
+ </entry>
+</feed>
+#+END_EXAMPLE
+
 - Popular JVM libraries for RESTful web services
 - Client-side programming
   - Apache HttpComponents
   - clj-http as wrapper for HttpComponents
 
+
 Session <2012-10-20 Sat>
 - JSON and some basic JavaScript
 - cheshire for JSON
+- Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
 
 Session <2012-11-02 Fri>
 - Server-side programming 
   - Ring, a Clojure web applications library
   - Integration with Jetty and other Servlet containers
   - Deploying Web Applications
-- Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
 
 * SOAP-based Web Services and Service-oriented Architectures 
 Session <2012-11-03 Sat>
@@ -893,5 +955,7 @@ Session <2012-12-15 Sat>
 Sessions <2013-01-04 Fri> and <2013-01-05 Sat>
 
 Clojure-based ecosystems of agents and actors
+
+Twitter-client
 
 * Bibliography

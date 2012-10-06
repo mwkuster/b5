@@ -1,6 +1,5 @@
 (ns httpget
-  (:import (java.net Socket)
-           (java.io PrintWriter InputStreamReader BufferedReader)))
+  (:import (java.net Socket)))
 
 ;Version that does not use an HTTP library to do an HTTP GET
 ;Instead uses low-level socket to read and write the HTTP request / response pair

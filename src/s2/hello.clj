@@ -2,7 +2,7 @@
 
 (defn hello
   ([]
-     (hello "Hello" "World"))
+     (hello "World"))
   ([name]
      (hello "Hello" name))
   ([phrase name]
