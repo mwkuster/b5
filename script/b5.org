@@ -460,6 +460,24 @@ https://github.com/kingtim/nrepl.el
 
 M-x package-install [RET] nrepl [RET]
 
+Configure in .emacs:
+#+BEGIN_SRC
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
+(require 'clojure-mode) ;;https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el
+
+(setq inferior-lisp-program "lein repl")
+(setq clojure-swank-command ;; https://github.com/pallet/ritz/tree/develop/swank
+  (if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
+    "lein ritz-in %s"
+    "echo \"lein ritz-in %s\" | $SHELL -l"))
+#+END_SRC
+
 5. Start nrepl
 
 M-x nrepl-jack-in
@@ -558,6 +576,31 @@ user=> (all-lower? "abc")
 true
 user=> 
 #+END_EXAMPLE
+
+~lein new PROJECT~ creates a new empty project structure with placeholders for all important files:
+
+#+BEGIN_EXAMPLE
+$ lein new b5
+Generating a project called b5 based on the 'default' template.
+To see other templates (app, lein plugin, etc), try `lein help new`.
+$ cd b5
+$ find . -name "*"
+.
+./.gitignore
+./doc
+./doc/intro.md
+./project.clj
+./README.md
+./src
+./src/b5
+./src/b5/core.clj
+./test
+./test/b5
+./test/b5/core_test.clj
+$ 
+#+END_EXAMPLE
+
+The Leiningen tutorial https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md illustrates all possible operations in detail.
 
 *** Syntax and data structures
 We have already seen examples of Clojure's syntax. Function calls are of the type:
@@ -1176,6 +1219,23 @@ Similarly, Cheshire can easily map native Clojure maps to JSON:
 "{\"c\":[1,2,3,4,5],\"a\":\"b\",\"b\":5}"
 #+END_SRC
 
+** Assignment 
+Take at your choice and depending on your language skills one of the websites
+
+- http://www.legilux.public.lu/  (Luxembourg, in French)
+- http://legimobile.fr/ (France)
+- http://www.belgielex.be/ (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
+- http://legislation.gov.uk/  (UK)
+- http://www.normattiva.it/ricerca/semplice (Italy)
+
+and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
+
+Hand in via the course's Moodle page the:
+- URI pattern defined
+- script used to test that pattern
+- list of at least 15 URIs generated and subsequently tested
+
+
 ** ATOM and related standards
 ATOM / RFC 4287 (= http://www.ietf.org/rfc/rfc4287.txt), which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
 #+BEGIN_QUOTE
@@ -1275,24 +1335,6 @@ b5=>
 In these examples Clojure returns as usual a map that can be manipulated with the usual higher-order functions. ~:entries~ then contains a sequence of maps with the data for the individual entries.
 
 
-** Assignment 
-Take at your choice and depending on your language skills one of the websites
-
-- http://www.legilux.public.lu/  (Luxembourg, in French)
-- http://legimobile.fr/ (France)
-- http://www.belgielex.be/ (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
-- http://legislation.gov.uk/  (UK)
-- http://www.normattiva.it/ricerca/semplice (Italy)
-
-and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
-
-Hand in via the course's Moodle page the:
-- URI pattern defined
-- script used to test that pattern
-- list of at least 15 URIs generated and subsequently tested
-
-
-
 ** Libraries for RESTful web services
 
 Session <2012-10-20 Sat>
@@ -1302,9 +1344,35 @@ Session <2012-10-20 Sat>
   - clj-http as wrapper for HttpComponents
 - Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
 
-RESTful web services are easy to use with most modern http libraries. 
+RESTful web services are easy to use with most modern http libraries. For client-side Clojure the most common solution is ~clj-http~ (https://clojars.org/clj-http / https://github.com/dakrone/clj-http/) which in turn is based on the poplular Apache HttpComponents libraries.
 
+Using ~clj-http~ is straightforward:
 
+#+BEGIN_SRC clojure
+(ns b5
+  (:require [clj-http.client :as client]))
+(client/get "http://www.dradio.de")
+#+END_SRC
+
+The return value comes as a standard Clojure map:
+
+#+BEGIN_SRC clojure
+{
+:cookies {"NSC_esbejp_esbejp" {:discard true, :path "/", :value "ffffffffda4d535d45525d5f4f58455e445a4a423660", :version 0}}, :trace-redirects ["http://www.dradio.de"], :request-time 8894, :status 200, 
+[...]
+}
+#+END_SRC
+
+~clj-http~ supports all standard http operations.
+
+In combination with URITemplates it is possible to run gets:
+
+#+BEGIN_SRC clojure
+(use 'uritemplate-clj.core)
+(def google-template "http://www.google.com//#hl={language}&q={query}")
+(map #(:status (client/get (uritemplate google-template %)))
+[{"language" "de", "query" "restful web services"}, {"language" "de", "query" "uritemplate"}])
+#+END_SRC
 
 *** Web Services the Google way
 Google offers a elegant, well-documented and powerful RESTful interfaces to its services. We will use it here to illustrate key RESTful principles in practice. This means no endorsement of any kind either by or for Google, with which the author has no affiliation.
@@ -1330,16 +1398,80 @@ curl -H "Authorization: OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9P
 #+END_SRC
 returns a map. The body is encoded in JSON that we can parse with Cheshire:
 
+
+**** Accessing the API
+I assume that we've obtained via OAuth2, e.g. using the OAuth 2.0 Playground, a valid access token.
+
 #+BEGIN_SRC clojure
 (def calender-list (client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}}))
 (cheshire.core/parse-string (:body calender-list))
 -->
-{"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "webservices.worms@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
+{"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "XXXXX@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
 #+END_SRC
+
+We can then process the return value using standard Clojure operations:
+#+BEGIN_SRC clojure
+b5> (map #(get % "id")  (get (cheshire.core/parse-string (:body (client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTn3crVvDHPVBldT2yXaec1hJqk9dsFeEW_oYs"}})              )) "items"))
+("XXXXX@googlemail.com" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com")
+b5> 
+#+END_SRC
+
+This information can now be used to attack individual calendars and e.g. read all events stored in them.
 
 Details of the calendar API are documented under https://developers.google.com/google-apps/calendar/
 
-**** Accessing the API
+#+BEGIN_SRC clojure
+(client/get "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZTn3crVvDHPVBldT2yXaec1hJqk9dsFeEW_oYs"}})
+
+(map #(get % "summary") (get (cheshire.core/parse-string (:body (client/get "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"}}))) "items"))
+-->
+("Web 3" "Schwimmen gehen" "Essen" "Brief schreiben" "Spazierengehen#" "Essen gehen" "Essen gehen" "Web 3" "test" "test" "ZERRIK URA" "ZERRIK URA" "Test" "Gelibesuchen" "Gelibesuchen" "B5 Nachholtermin" "Mensaessen" "Besprechung" "Test in B5" "Pratikum" "Pratikum heute Nachmittag" "Schwimmen" "Schwimmen" "Essen" "Schlafen" "Test0815" "Test0815" "Test0815" "Test0815" "Test0815" "Test0815" "web3" "Test0815" "Test0815" "Test0815" "Test0815" "Fahrrad" "Test0815" "Fahrrad" "Editierter Titel" "Vorlesung im O206" "Huepfen" "H��rdenlauf" "zweiter eintrag" "Test0815" "Test0815" "web3" "Test Eintrag in Web3" "Neuer Termin" "XYZ&" "New4r" "Test0815" "Wir gehen huepfen" "test")
+#+END_SRC
+
+The same mechanism can then also be used to add new events by sending a suitable JSON request:
+
+#+BEGIN_EXAMPLE
+{"start":{"dateTime":"2012-10-20T10:00:00.000-01:00"},"summary":"B5 Lecture today","location":"A126","attendees":["abc@xy.de"],"end":{"dateTime":"2012-10-20T15:00:00.000-01:00"}}
+#+END_EXAMPLE
+
+In Clojure the corresponding code looks like this:
+
+#+BEGIN_SRC clojure
+(def event (cheshire.core/generate-string {"summary" "B5 Lecture today", "location" "A126", "start"  {"dateTime" "2012-10-20T10:00:00.000-01:00"}, "end" {"dateTime" "2012-10-20T15:00:00.000-01:00"}, "attendees" ["abc@xy.de"]}))
+
+(client/post "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body event}) 
+#+END_SRC
+
+If successful the method returns a 200 JSON struture repeating the full information about the created entry. Most importantly, it also returns the event id that can afterwards be used to modify the created entry.
+
+#+BEGIN_EXAMPLE
+(get (cheshire.core/parse-string (:body (client/post "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body event}))) "id")
+-->
+"74bvi6025o76q1ffpalst8ih60"
+#+END_EXAMPLE
+
+With this information we can update (= ~PUT~) the event:
+#+BEGIN_EXAMPLE
+(def modified-event (cheshire.core/generate-string {"summary" "B5 Lecture today, prolonged", "location" "A126", "start"  {"dateTime" "2012-10-20T10:00:00.000-01:00"}, "end" {"dateTime" "2012-10-20T16:00:00.000-01:00"}, "attendees" ["abc@xy.de"]}))
+(client/put "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body modified-event})
+#+END_EXAMPLE
+
+or even delete it again
+#+BEGIN_EXAMPLE
+(client/delete "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"}})
+-->
+{:trace-redirects ["https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60"], :request-time 586, :status 204, :headers {"cache-control" "no-cache, no-store, max-age=0, must-revalidate", "pragma" "no-cache", "expires" "Fri, 01 Jan 1990 00:00:00 GMT", "date" "Fri, 19 Oct 2012 17:27:54 GMT", "etag" "\"xuTtQAt8DDsZ3NJgXaKj-AnoGow/W6k8nbDP-T9StSHXQg5D9u2ieE8\"", "server" "GSE", "connection" "close"}, :body nil}
+#+END_EXAMPLE
+
+*** Assignment
+
+1. For the Google Calendar API describe the CRUD (= Create / Update / Delete) operations for events as a URITemplate and use that URITemplate for further operations
+
+2. Develop a command line application in Clojure that takes as parameter a mode (create, update, delete), a title, a number of participants, a start and an end date and inserts / modifies / deletes it in the Calendar
+
+3. Enhance the command line application so that it lists all of today's events
+
+Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
 
 
 

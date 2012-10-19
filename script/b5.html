@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-19 09:25:35 CEST"/>
+<meta name="generated" content="2012-10-19 19:34:31 CEST"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -129,17 +129,18 @@ lang="en" xml:lang="en">
 </ul>
 </li>
 <li><a href="#sec-4.2">4.2 JSON and cheshire </a></li>
-<li><a href="#sec-4.3">4.3 ATOM and related standards </a>
+<li><a href="#sec-4.3">4.3 Assignment </a></li>
+<li><a href="#sec-4.4">4.4 ATOM and related standards </a>
 <ul>
-<li><a href="#sec-4.3.1">4.3.1 Rome and <code>clj-rome</code> </a></li>
+<li><a href="#sec-4.4.1">4.4.1 Rome and <code>clj-rome</code> </a></li>
 </ul>
 </li>
-<li><a href="#sec-4.4">4.4 Assignment </a></li>
 <li><a href="#sec-4.5">4.5 Libraries for RESTful web services </a>
 <ul>
 <li><a href="#sec-4.5.1">4.5.1 Web Services the Google way </a></li>
-<li><a href="#sec-4.5.2">4.5.2 Server-side REST </a></li>
-<li><a href="#sec-4.5.3">4.5.3 Assignment </a></li>
+<li><a href="#sec-4.5.2">4.5.2 Assignment </a></li>
+<li><a href="#sec-4.5.3">4.5.3 Server-side REST </a></li>
+<li><a href="#sec-4.5.4">4.5.4 Assignment </a></li>
 </ul></li>
 </ul>
 </li>
@@ -1042,6 +1043,25 @@ Install nrepl
 <p>
 M-x package-install [RET] nrepl [RET]
 </p>
+<p>
+Configure in .emacs:
+(require 'package)
+(add-to-list 'package-archives
+'("marmalade" . "<a href="http://marmalade-repo.org/packages/"">http://marmalade-repo.org/packages/"</a>) t)
+(add-to-list 'package-archives
+'("melpa" . "<a href="http://melpa.milkbox.net/packages/"">http://melpa.milkbox.net/packages/"</a>) t)
+(package-initialize)
+</p>
+<p>
+(require 'clojure-mode) ;;<a href="https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el">https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el</a>
+</p>
+<p>
+(setq inferior-lisp-program "lein repl")
+(setq clojure-swank-command ;; <a href="https://github.com/pallet/ritz/tree/develop/swank">https://github.com/pallet/ritz/tree/develop/swank</a>
+(if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
+"lein ritz-in %s"
+"echo \"lein ritz-in %s\" | $SHELL -l"))
+</p>
 <ol>
 <li>
 Start nrepl
@@ -1179,6 +1199,38 @@ user=&gt;
 
 
 
+<p>
+<code>lein new PROJECT</code> creates a new empty project structure with placeholders for all important files:
+</p>
+
+
+
+<pre class="example">$ lein new b5
+Generating a project called b5 based on the 'default' template.
+To see other templates (app, lein plugin, etc), try `lein help new`.
+$ cd b5
+$ find . -name "*"
+.
+./.gitignore
+./doc
+./doc/intro.md
+./project.clj
+./README.md
+./src
+./src/b5
+./src/b5/core.clj
+./test
+./test/b5
+./test/b5/core_test.clj
+$ 
+</pre>
+
+
+
+
+<p>
+The Leiningen tutorial <a href="https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md">https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md</a> illustrates all possible operations in detail.
+</p>
 </div>
 
 </div>
@@ -2235,8 +2287,54 @@ Similarly, Cheshire can easily map native Clojure maps to JSON:
 </div>
 
 <div id="outline-container-4.3" class="outline-3">
-<h3 id="sec-4.3"><span class="section-number-3">4.3</span> ATOM and related standards </h3>
+<h3 id="sec-4.3"><span class="section-number-3">4.3</span> Assignment </h3>
 <div class="outline-text-3" id="text-4.3">
+
+<p>Take at your choice and depending on your language skills one of the websites
+</p>
+<ul>
+<li>
+<a href="http://www.legilux.public.lu/">http://www.legilux.public.lu/</a>  (Luxembourg, in French)
+</li>
+<li>
+<a href="http://legimobile.fr/">http://legimobile.fr/</a> (France)
+</li>
+<li>
+<a href="http://www.belgielex.be/">http://www.belgielex.be/</a> (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
+</li>
+<li>
+<a href="http://legislation.gov.uk/">http://legislation.gov.uk/</a>  (UK)
+</li>
+<li>
+<a href="http://www.normattiva.it/ricerca/semplice">http://www.normattiva.it/ricerca/semplice</a> (Italy)
+
+</li>
+</ul>
+
+<p>and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
+</p>
+<p>
+Hand in via the course's Moodle page the:
+</p><ul>
+<li>
+URI pattern defined
+</li>
+<li>
+script used to test that pattern
+</li>
+<li>
+list of at least 15 URIs generated and subsequently tested
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-4.4" class="outline-3">
+<h3 id="sec-4.4"><span class="section-number-3">4.4</span> ATOM and related standards </h3>
+<div class="outline-text-3" id="text-4.4">
 
 <p>ATOM / RFC 4287 (= <a href="http://www.ietf.org/rfc/rfc4287.txt">http://www.ietf.org/rfc/rfc4287.txt</a>), which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
 </p><blockquote>
@@ -2334,9 +2432,9 @@ ATOM is in this paradigmatic for RESTful design. It is transported via HTTP, is 
 
 </div>
 
-<div id="outline-container-4.3.1" class="outline-4">
-<h4 id="sec-4.3.1"><span class="section-number-4">4.3.1</span> Rome and <code>clj-rome</code> </h4>
-<div class="outline-text-4" id="text-4.3.1">
+<div id="outline-container-4.4.1" class="outline-4">
+<h4 id="sec-4.4.1"><span class="section-number-4">4.4.1</span> Rome and <code>clj-rome</code> </h4>
+<div class="outline-text-4" id="text-4.4.1">
 
 <p>"ROME is a set of RSS and Atom Utilities for Java that is open source under the Apache 2.0 license" (<a href="https://rometools.jira.com/wiki/display/ROME/Home">https://rometools.jira.com/wiki/display/ROME/Home</a>). It is one of the most popular libraries for handling of (not only) ATOM in the Java world. <code>clj-rome</code> (<a href="https://clojars.org/clj-rome">https://clojars.org/clj-rome</a> / <a href="https://github.com/ngrunwald/clj-rome">https://github.com/ngrunwald/clj-rome</a>) is a Clojure wrapper to the ROME library:
 </p>
@@ -2371,53 +2469,6 @@ In these examples Clojure returns as usual a map that can be manipulated with th
 
 </div>
 
-<div id="outline-container-4.4" class="outline-3">
-<h3 id="sec-4.4"><span class="section-number-3">4.4</span> Assignment </h3>
-<div class="outline-text-3" id="text-4.4">
-
-<p>Take at your choice and depending on your language skills one of the websites
-</p>
-<ul>
-<li>
-<a href="http://www.legilux.public.lu/">http://www.legilux.public.lu/</a>  (Luxembourg, in French)
-</li>
-<li>
-<a href="http://legimobile.fr/">http://legimobile.fr/</a> (France)
-</li>
-<li>
-<a href="http://www.belgielex.be/">http://www.belgielex.be/</a> (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
-</li>
-<li>
-<a href="http://legislation.gov.uk/">http://legislation.gov.uk/</a>  (UK)
-</li>
-<li>
-<a href="http://www.normattiva.it/ricerca/semplice">http://www.normattiva.it/ricerca/semplice</a> (Italy)
-
-</li>
-</ul>
-
-<p>and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
-</p>
-<p>
-Hand in via the course's Moodle page the:
-</p><ul>
-<li>
-URI pattern defined
-</li>
-<li>
-script used to test that pattern
-</li>
-<li>
-list of at least 15 URIs generated and subsequently tested
-
-
-
-</li>
-</ul>
-</div>
-
-</div>
-
 <div id="outline-container-4.5" class="outline-3">
 <h3 id="sec-4.5"><span class="section-number-3">4.5</span> Libraries for RESTful web services </h3>
 <div class="outline-text-3" id="text-4.5">
@@ -2446,8 +2497,53 @@ Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Cloj
 </li>
 </ul>
 
-<p>RESTful web services are easy to use with most modern http libraries. 
+<p>RESTful web services are easy to use with most modern http libraries. For client-side Clojure the most common solution is <code>clj-http</code> (<a href="https://clojars.org/clj-http">https://clojars.org/clj-http</a> / <a href="https://github.com/dakrone/clj-http/">https://github.com/dakrone/clj-http/</a>) which in turn is based on the poplular Apache HttpComponents libraries.
 </p>
+<p>
+Using <code>clj-http</code> is straightforward:
+</p>
+
+
+
+<pre class="example">(ns b5
+  (:require [clj-http.client :as client]))
+(client/get "http://www.dradio.de")
+</pre>
+
+
+
+
+<p>
+The return value comes as a standard Clojure map:
+</p>
+
+
+
+<pre class="example">{
+:cookies {"NSC_esbejp_esbejp" {:discard true, :path "/", :value "ffffffffda4d535d45525d5f4f58455e445a4a423660", :version 0}}, :trace-redirects ["http://www.dradio.de"], :request-time 8894, :status 200, 
+[...]
+}
+</pre>
+
+
+
+
+<p>
+<code>clj-http</code> supports all standard http operations.
+</p>
+<p>
+In combination with URITemplates it is possible to run gets:
+</p>
+
+
+
+<pre class="example">(use 'uritemplate-clj.core)
+(def google-template "http://www.google.com//#hl={language}&amp;q={query}")
+(map #(:status (client/get (uritemplate google-template %)))
+[{"language" "de", "query" "restful web services"}, {"language" "de", "query" "uritemplate"}])
+</pre>
+
+
 
 
 
@@ -2497,22 +2593,116 @@ Authentication APIs are defined in <a href="https://developers.google.com/accoun
 returns a map. The body is encoded in JSON that we can parse with Cheshire:
 </p>
 
+</li>
+<li id="sec-4.5.1.2">Accessing the API <br/>
+I assume that we've obtained via OAuth2, e.g. using the OAuth 2.0 Playground, a valid access token.
+
+
 
 
 <pre class="example">(def calender-list (client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}}))
 (cheshire.core/parse-string (:body calender-list))
 --&gt;
-{"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "webservices.worms@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
+{"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "XXXXX@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
 </pre>
 
 
 
 
 <p>
+We can then process the return value using standard Clojure operations:
+</p>
+
+
+<pre class="example">b5&gt; (map #(get % "id")  (get (cheshire.core/parse-string (:body (client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTn3crVvDHPVBldT2yXaec1hJqk9dsFeEW_oYs"}})              )) "items"))
+("XXXXX@googlemail.com" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com")
+b5&gt; 
+</pre>
+
+
+
+
+<p>
+This information can now be used to attack individual calendars and e.g. read all events stored in them.
+</p>
+<p>
 Details of the calendar API are documented under <a href="https://developers.google.com/google-apps/calendar/">https://developers.google.com/google-apps/calendar/</a>
 </p>
-</li>
-<li id="sec-4.5.1.2">Accessing the API <br/>
+
+
+
+<pre class="example">(client/get "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZTn3crVvDHPVBldT2yXaec1hJqk9dsFeEW_oYs"}})
+
+(map #(get % "summary") (get (cheshire.core/parse-string (:body (client/get "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"}}))) "items"))
+--&gt;
+("Web 3" "Schwimmen gehen" "Essen" "Brief schreiben" "Spazierengehen#" "Essen gehen" "Essen gehen" "Web 3" "test" "test" "ZERRIK URA" "ZERRIK URA" "Test" "Gelibesuchen" "Gelibesuchen" "B5 Nachholtermin" "Mensaessen" "Besprechung" "Test in B5" "Pratikum" "Pratikum heute Nachmittag" "Schwimmen" "Schwimmen" "Essen" "Schlafen" "Test0815" "Test0815" "Test0815" "Test0815" "Test0815" "Test0815" "web3" "Test0815" "Test0815" "Test0815" "Test0815" "Fahrrad" "Test0815" "Fahrrad" "Editierter Titel" "Vorlesung im O206" "Huepfen" "H��rdenlauf" "zweiter eintrag" "Test0815" "Test0815" "web3" "Test Eintrag in Web3" "Neuer Termin" "XYZ&amp;" "New4r" "Test0815" "Wir gehen huepfen" "test")
+</pre>
+
+
+
+
+<p>
+The same mechanism can then also be used to add new events by sending a suitable JSON request:
+</p>
+
+
+
+<pre class="example">{"start":{"dateTime":"2012-10-20T10:00:00.000-01:00"},"summary":"B5 Lecture today","location":"A126","attendees":["abc@xy.de"],"end":{"dateTime":"2012-10-20T15:00:00.000-01:00"}}
+</pre>
+
+
+
+
+<p>
+In Clojure the corresponding code looks like this:
+</p>
+
+
+
+<pre class="example">(def event (cheshire.core/generate-string {"summary" "B5 Lecture today", "location" "A126", "start"  {"dateTime" "2012-10-20T10:00:00.000-01:00"}, "end" {"dateTime" "2012-10-20T15:00:00.000-01:00"}, "attendees" ["abc@xy.de"]}))
+
+(client/post "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body event}) 
+</pre>
+
+
+
+
+<p>
+If successful the method returns a 200 JSON struture repeating the full information about the created entry. Most importantly, it also returns the event id that can afterwards be used to modify the created entry.
+</p>
+
+
+
+<pre class="example">(get (cheshire.core/parse-string (:body (client/post "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body event}))) "id")
+--&gt;
+"74bvi6025o76q1ffpalst8ih60"
+</pre>
+
+
+
+
+<p>
+With this information we can update (= <code>PUT</code>) the event:
+</p>
+
+
+<pre class="example">(def modified-event (cheshire.core/generate-string {"summary" "B5 Lecture today, prolonged", "location" "A126", "start"  {"dateTime" "2012-10-20T10:00:00.000-01:00"}, "end" {"dateTime" "2012-10-20T16:00:00.000-01:00"}, "attendees" ["abc@xy.de"]}))
+(client/put "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body modified-event})
+</pre>
+
+
+
+
+<p>
+or even delete it again
+</p>
+
+
+<pre class="example">(client/delete "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"}})
+--&gt;
+{:trace-redirects ["https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60"], :request-time 586, :status 204, :headers {"cache-control" "no-cache, no-store, max-age=0, must-revalidate", "pragma" "no-cache", "expires" "Fri, 01 Jan 1990 00:00:00 GMT", "date" "Fri, 19 Oct 2012 17:27:54 GMT", "etag" "\"xuTtQAt8DDsZ3NJgXaKj-AnoGow/W6k8nbDP-T9StSHXQg5D9u2ieE8\"", "server" "GSE", "connection" "close"}, :body nil}
+</pre>
+
 
 
 
@@ -2523,8 +2713,36 @@ Details of the calendar API are documented under <a href="https://developers.goo
 </div>
 
 <div id="outline-container-4.5.2" class="outline-4">
-<h4 id="sec-4.5.2"><span class="section-number-4">4.5.2</span> Server-side REST </h4>
+<h4 id="sec-4.5.2"><span class="section-number-4">4.5.2</span> Assignment </h4>
 <div class="outline-text-4" id="text-4.5.2">
+
+
+<ol>
+<li>
+For the Google Calendar API describe the CRUD (= Create / Update / Delete) operations for events as a URITemplate and use that URITemplate for further operations
+
+</li>
+<li>
+Develop a command line application in Clojure that takes as parameter a mode (create, update, delete), a title, a number of participants, a start and an end date and inserts / modifies / deletes it in the Calendar
+
+</li>
+<li>
+Enhance the command line application so that it lists all of today's events
+
+</li>
+</ol>
+
+<p>Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
+</p>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4.5.3" class="outline-4">
+<h4 id="sec-4.5.3"><span class="section-number-4">4.5.3</span> Server-side REST </h4>
+<div class="outline-text-4" id="text-4.5.3">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-02 Fri</span></span>
 </p><ul>
@@ -2557,9 +2775,9 @@ Deploying Web Applications
 
 </div>
 
-<div id="outline-container-4.5.3" class="outline-4">
-<h4 id="sec-4.5.3"><span class="section-number-4">4.5.3</span> Assignment </h4>
-<div class="outline-text-4" id="text-4.5.3">
+<div id="outline-container-4.5.4" class="outline-4">
+<h4 id="sec-4.5.4"><span class="section-number-4">4.5.4</span> Assignment </h4>
+<div class="outline-text-4" id="text-4.5.4">
 
 
 
@@ -2883,9 +3101,9 @@ Twitter-client
 </div>
 <div id="postamble">
 <p class="author"> Author: Marc Wilhelm Küster
-<a href="mailto:marcwilhelmkuster@client-180-179.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-180-179.eduroam.fh-worms.de&gt;</a>
+<a href="mailto:marcwilhelmkuster@client-182-159.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-182-159.eduroam.fh-worms.de&gt;</a>
 </p>
-<p class="date"> Date: 2012-10-19 09:25:35 CEST</p>
+<p class="date"> Date: 2012-10-19 19:34:31 CEST</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>
