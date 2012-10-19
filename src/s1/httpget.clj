@@ -1,4 +1,4 @@
-(ns httpget
+(ns s1.httpget
   (:import (java.net Socket)))
 
 ;Version that does not use an HTTP library to do an HTTP GET
@@ -7,7 +7,7 @@
 (def host "www.google.de")
 (def port 80)
 
-(defn write-request [out host]
+(defn write-request [^java.io.OutputStream out host]
   (let
       [req (str "GET / HTTP/1.1
 Host: " host "
@@ -17,7 +17,7 @@ Host: " host "
     (.write out (.getBytes req))
     (println "Request written")))
 
-(defn read-response [in]
+(defn read-response [^java.io.InputStream in]
   "Very low-level implementation of an HTTP response"
   ;; loop on (.read in)
   (loop 
@@ -26,7 +26,7 @@ Host: " host "
       (recur (.read in) (str res-str (char c)))
       res-str)))
 
-(defn get-page [host port]
+(defn get-page [^String host ^Integer port]
   (let
       [conn (Socket. host port)
        in (.getInputStream conn)

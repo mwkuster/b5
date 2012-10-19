@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-10-05 19:01:12 CEST"/>
+<meta name="generated" content="2012-10-19 09:06:33 CEST"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -113,11 +113,36 @@ lang="en" xml:lang="en">
 </li>
 <li><a href="#sec-3.3">3.3 Control structures </a></li>
 <li><a href="#sec-3.4">3.4 Lazy sequences </a></li>
-<li><a href="#sec-3.5">3.5 Principles of functional programming </a></li>
-<li><a href="#sec-3.6">3.6 Assignment </a></li>
+<li><a href="#sec-3.5">3.5 Assignment </a></li>
+<li><a href="#sec-3.6">3.6 Principles of functional programming </a></li>
+<li><a href="#sec-3.7">3.7 Futures </a></li>
+<li><a href="#sec-3.8">3.8 Multimethods: Polymorphism functional style </a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Programming RESTful Web Services </a></li>
+<li><a href="#sec-4">4 Programming RESTful Web Services </a>
+<ul>
+<li><a href="#sec-4.1">4.1 Design of URIs </a>
+<ul>
+<li><a href="#sec-4.1.1">4.1.1 URI Templates </a></li>
+<li><a href="#sec-4.1.2">4.1.2 The case of the European Legislation Identifier (ELI) </a></li>
+<li><a href="#sec-4.1.3">4.1.3 Handling URITemplates in Clojure </a></li>
+</ul>
+</li>
+<li><a href="#sec-4.2">4.2 JSON and cheshire </a></li>
+<li><a href="#sec-4.3">4.3 ATOM and related standards </a>
+<ul>
+<li><a href="#sec-4.3.1">4.3.1 Rome and <code>clj-rome</code> </a></li>
+</ul>
+</li>
+<li><a href="#sec-4.4">4.4 Assignment </a></li>
+<li><a href="#sec-4.5">4.5 Libraries for RESTful web services </a>
+<ul>
+<li><a href="#sec-4.5.1">4.5.1 Web Services the Google way </a></li>
+<li><a href="#sec-4.5.2">4.5.2 Server-side REST </a></li>
+<li><a href="#sec-4.5.3">4.5.3 Assignment </a></li>
+</ul></li>
+</ul>
+</li>
 <li><a href="#sec-5">5 SOAP-based Web Services and Service-oriented Architectures </a></li>
 <li><a href="#sec-6">6 Programming SOAP-based Web Services </a></li>
 <li><a href="#sec-7">7 Excursion: Web Services in .NET </a></li>
@@ -159,6 +184,9 @@ technologies fit in the overall scope of the course.
 </p>
 <p>
 You can and should work in teams of two.
+</p>
+<p>
+Precondition for participating in the practical programming project is regular participation in the practical courses. You must pass at least 80% of the weekly assignments. An assignment is considered a pass if you have at least 50 of points out of 100.
 </p>
 <p>
 Repeating the exam means a second, new practical project followed by a second oral exam.
@@ -1023,6 +1051,9 @@ Start nrepl
 
 <p>M-x nrepl-jack-in
 </p>
+<p>
+For Eclipse users there is the Counterclockwise plugin that can be used instead (<a href="http://code.google.com/p/counterclockwise/">http://code.google.com/p/counterclockwise/</a>). For installation instructions see there.
+</p>
 </div>
 
 </div>
@@ -1437,7 +1468,7 @@ This makes usually for much clearer code.
 <h3 id="sec-3.4"><span class="section-number-3">3.4</span> Lazy sequences </h3>
 <div class="outline-text-3" id="text-3.4">
 
-<p>However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list -'(1 2 3 4 5 6)-, but for any type of range:
+<p>However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
 </p>
 
 
@@ -1476,17 +1507,39 @@ This may look rather surprising &mdash; how can a language treat infinite sequen
 <p>
 Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
 </p>
-
-
 </div>
 
 </div>
 
 <div id="outline-container-3.5" class="outline-3">
-<h3 id="sec-3.5"><span class="section-number-3">3.5</span> Principles of functional programming </h3>
+<h3 id="sec-3.5"><span class="section-number-3">3.5</span> Assignment </h3>
 <div class="outline-text-3" id="text-3.5">
 
-<p>Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
+<ol>
+<li>
+Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
+</li>
+<li>
+Write the same program in another programming language of your choice
+
+</li>
+</ol>
+
+<p>Hand in assignment via the course's Moodle page.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-3.6" class="outline-3">
+<h3 id="sec-3.6"><span class="section-number-3">3.6</span> Principles of functional programming </h3>
+<div class="outline-text-3" id="text-3.6">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-19 Fri</span></span>
+</p>
+<p>
+Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
 </p>
 <ul>
 <li>
@@ -1528,26 +1581,103 @@ More information on Clojure and its API is available under <a href="http://cloju
 </p>
 
 
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-3.7" class="outline-3">
+<h3 id="sec-3.7"><span class="section-number-3">3.7</span> Futures </h3>
+<div class="outline-text-3" id="text-3.7">
+
+<p>For long-running calculations Clojure has the concept of futures (<a href="http://clojuredocs.org/clojure_core/clojure.core/future">http://clojuredocs.org/clojure_core/clojure.core/future</a>). A future is calculated in a separate thread, but transparently to the user:
+</p>
+
+
+
+<pre class="example">(defn get-page [host port]
+  (let
+      [conn (Socket. host port)
+       in (.getInputStream conn)
+       out (.getOutputStream conn)]
+    (write-request out host)
+    (future (read-response in))))
+</pre>
+
+
+
+
+<p>
+Assuming that <code>read-response</code> takes a considerable time to execute and would block further program execution for the time it takes, <code>(future (read-response in))</code> returns instead a <i>promise</i> to the real value that it will contain. Once the calculation is complete, it will be transparently replaced by the final value, without blocking the current execution:
+</p>
+
+
+
+<pre class="example">user&gt; (def p (get-page "www.google.de" 80))
+GET / HTTP/1.1
+Host: www.google.de
+
+Request written
+#'user/p
+user&gt; p
+#&lt;core$future_call$reify__6110@2ca275d8: :pending&gt;
+user&gt; 
+user&gt; p
+#&lt;core$future_call$reify__6110@2ca275d8: :pending&gt;
+user&gt; @p
+[now execution blocks until the page is fully retrieved]
+</pre>
+
+
+
+
+<p>
+If you need the guarantee to have the value at a later stage, you can dereference the future by using the <code>@</code> reader macro, e.g. <code>@p</code>. In this case program execution will block until the correct value is calculated, if that is not yet the case.
+</p>
 </div>
 
 </div>
 
-<div id="outline-container-3.6" class="outline-3">
-<h3 id="sec-3.6"><span class="section-number-3">3.6</span> Assignment </h3>
-<div class="outline-text-3" id="text-3.6">
+<div id="outline-container-3.8" class="outline-3">
+<h3 id="sec-3.8"><span class="section-number-3">3.8</span> Multimethods: Polymorphism functional style </h3>
+<div class="outline-text-3" id="text-3.8">
 
-<ol>
-<li>
-Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input ~'("xyz" "cde" "abc" "bab" "axx")~ it should return ~'("ABC" "AXX")~. Write first a unit test and then the function and run lein test to prove it works.
-</li>
-<li>
-Write the same program in another programming language of your choice
 
-</li>
-</ol>
+<p>
+Clojure has no native concept of objects (it does have an object concept for interfacing with Java). Instead, it offers named data structures &mdash; records &mdash; as well as functions that can dispatch on them and indeed on many other criteria. In the simplest of cases we have 
+</p>
 
-<p>Hand in assignment via the course's Moodle page.
-</p></div>
+
+
+<pre class="example">
+(defrecord Variable [text postfix])
+
+(defrecord Token [variables prefix])
+
+(defmulti handle-value 
+  "Handling of individual variables. Returns the variable replaced by the supplied values"
+  (fn [^Variable variable values separator encoding-fn]
+    (class (values (:text variable)))))
+
+(defmethod handle-value String [^Variable variable values separator encoding-fn]
+ ;one strategy for strings
+)
+
+(defmethod handle-value java.util.Collection [^Variable variable values separator encoding-fn]
+ ; another strategy to handle collections
+)
+; and so on
+</pre>
+
+
+
+
+<p>
+In the most frequent case dispatching is by data type or class, but it can be by anything else. <code>defmulti</code> defines in its implementation the strategy to be chosen by the individual <code>defmethod</code>.
+</p>
+</div>
 </div>
 
 </div>
@@ -1556,11 +1686,746 @@ Write the same program in another programming language of your choice
 <h2 id="sec-4"><span class="section-number-2">4</span> Programming RESTful Web Services </h2>
 <div class="outline-text-2" id="text-4">
 
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-19 Fri</span></span>
+
+
+<p>
+In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. Afterwards we will actually write some Clojure programs to test this out.
+</p>
+
+</div>
+
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1"><span class="section-number-3">4.1</span> Design of URIs </h3>
+<div class="outline-text-3" id="text-4.1">
+
+<p>Maybe the most overlooked aspect of RESTful Web Services is the need for "cool URIs". "A cool URI is one which does not change" ({BernersLee:1998ui}):
+</p><blockquote>
+
+<p>It is the the duty of a Webmaster to allocate URIs which you will be able to stand by in 2 years, in 20 years, in 200 years. This needs thought, and organization, and commitment.
+</p>
+</blockquote>
+
+
+<p>
+Berners-Lee proposes that a good URI must remain stable over time. For this it should leave out of the URIs:
 </p><ul>
 <li>
-ATOM and related standards
+Author's names
 </li>
+<li>
+Subject classifications
+</li>
+<li>
+Status information (old, new etc.)
+</li>
+<li>
+Access rights
+</li>
+<li>
+File name extensions
+</li>
+<li>
+Implementation details (e.g. <code>/cgi-bin/</code> or similar)
+
+</li>
+</ul>
+
+<p>Instead, he proposes to use stable information such as the original creation date. 
+</p>
+<p>
+For URIs referring to real-life objects such as persons, {Anonymous:2008vd}, 4.5 proposes to follow three design goals:
+</p><ul>
+<li>
+Simplicity
+</li>
+<li>
+Stability
+</li>
+<li>
+Manageability
+
+</li>
+</ul>
+
+</div>
+
+<div id="outline-container-4.1.1" class="outline-4">
+<h4 id="sec-4.1.1"><span class="section-number-4">4.1.1</span> URI Templates </h4>
+<div class="outline-text-4" id="text-4.1.1">
+
+<p>Remains the question on how to transpose these principles into concrete URIs and how to document the resulting URI patterns. RFC 6570 "URI templates" (<a href="http://tools.ietf.org/html/rfc6570">http://tools.ietf.org/html/rfc6570</a> / {Gregorio:2012vo}) defines a template language to document and automatically fill URI templates. The specification defines four levels of compliance. At its simplest, URI templates define string substitutions (compliance level 1):
+</p>
+
+
+
+<pre class="example">http://www.budabe.eu/{section}/{subsection}
+
+section := "research"
+subsection := "DigitalHumanities"
+
+--&gt;
+http://www.budabe.eu/research/DigitalHumanities
+</pre>
+
+
+
+
+<p>
+If necessary, strings are URI encoded, e.g. <code>http://www.budabe.eu/research/Digital%20Humanities</code> if <code>subsection := Digital Humanities</code>. Variables can occur both at the level of URIs and query parameters.
+</p>
+<p>
+Level 2 adds handling of reserved characters that would otherwise be URI encoded. You achieve this goal by adding a <code>+</code> as the first character of the variable:
+</p>
+
+
+<pre class="example">http://www.budabe.eu/{section}
+section := "research/Digital Humanities"
+--&gt;
+http://www.budabe.eu/research%2FDigital%20Humanities
+
+but
+
+http://www.budabe.eu/{+section}
+section := "research/Digital Humanities"
+--&gt;
+http://www.budabe.eu/research/Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+Similarly, if the first character is a hash (<code>#</code>), the resulting string contains the hash:
+</p>
+
+
+
+<pre class="example">http://www.budabe.eu/{#section}
+section := "Digital Humanities"
+--&gt;
+http://www.budabe.eu/#Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+Level 3 add "multiple variables per expression, each separated by a comma, and add more complex operators for dot-prefixed labels, slash-prefixed path segments, semicolon-prefixed path parameters, and the form-style construction of a query syntax consisting of name=value pairs that are separated by an ampersand character" (RFC 6570, p. 5):
+</p>
+
+
+
+<pre class="example">http://www.budabe.eu/{+section,subsection}
+section := "research"
+subsection := "Digital Humanities"
+--&gt;
+http://www.budabe.eu/research,Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+Similarly, if the first character is a <code>/</code>, the template is treated as a path (and, in the case of <code>#</code> as an anchor):
+</p>
+
+
+
+<pre class="example">http://www.budabe.eu{/section,subsection}       
+(note that there is no slash behind .eu)
+section := "research"
+subsection := "Digital Humanities"
+--&gt;
+http://www.budabe.eu/research/Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+If a part of the variables are not given for substitution, the corresponding part is just left out:
+</p>
+
+
+<pre class="example">http://www.budabe.eu{/section,subsection}       
+section := "research"
+--&gt;
+http://www.budabe.eu/research
+
+http://www.budabe.eu{/section,subsection}       
+subsection := "Digital Humanities"
+--&gt;
+http://www.budabe.eu/Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+The same applies if the first character is a <code>?</code> or <code>&amp;</code>, in which case all arguments are treated as query string parameters. 
+</p>
+<p>
+Level 4 adds the ability to slighly modify values during variable substitution by adding a <code>:</code> at the end:
+</p>
+
+
+<pre class="example">http://www.budabe.eu{/section:4}
+section := "research"
+--&gt;
+http://www.budabe.eu/rese
+</pre>
+
+
+
+
+<p>
+Likewise, a <code>*</code> at the end permits the handling of multiple values in lists or similar:
+</p>
+
+
+
+<pre class="example">http://www.budabe.eu/{section*}
+section := ("research", "Digital Humanities")
+--&gt;
+http://www.budabe.eu/research,Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+Pre- and postfix modifiers can be combined:
+</p>
+
+
+
+<pre class="example">http://www.budabe.eu{/section*}
+section := http://www.budabe.eu{/section*}
+--&gt; 
+http://www.budabe.eu/research/Digital%20Humanities
+</pre>
+
+
+
+
+<p>
+RFC 6570 also has a semi-official test suite <a href="https://github.com/uri-templates/uritemplate-test">https://github.com/uri-templates/uritemplate-test</a>. The examples given in this test suite help to understand many of the edge cases.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4.1.2" class="outline-4">
+<h4 id="sec-4.1.2"><span class="section-number-4">4.1.2</span> The case of the European Legislation Identifier (ELI) </h4>
+<div class="outline-text-4" id="text-4.1.2">
+
+<p>The European Legislation Identifier (ELI / <a href="http://register.consilium.europa.eu/pdf/en/12/st13/st13401.en12.pdf">http://register.consilium.europa.eu/pdf/en/12/st13/st13401.en12.pdf</a>, cf. also <a href="http://europa.eu/rapid/pressReleasesAction.do?reference=IP/12/1040&amp;format=HTML&amp;aged=0&amp;language=EN&amp;guiLanguage=en">http://europa.eu/rapid/pressReleasesAction.do?reference=IP/12/1040&amp;format=HTML&amp;aged=0&amp;language=EN&amp;guiLanguage=en</a>), published as a Council Conclusions 13401/12,  is a scheme to express laws through URIs. Every member state can flexibly express their own online resources for legislation, however using common variables that can be used to build concrete URI templates. The following variables are in principle foreseen:
+</p>
+
+
+
+<pre class="example">{jurisdiction} {agent} {sub-agent} {year} {month} {day } {type} {natural identifier} {level 1…} {point in time} {version} {language}
+</pre>
+
+
+
+
+<p>
+The semantics of these template components is well defined within the Council Conclusions (cf. p. 9).
+</p>
+<p>
+Concrete URI templates for European Legislation can look like this:
+</p>
+
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+</pre>
+
+
+
+
+<p>
+The type of legislation is in this case identified by a language-independent code, e.g. <code>reg</code> for <code>regulation</code> or <code>dir</code> for directive. Likewise, <code>agent</code> can be the code for zero to many actors in the European legislative process, e.g. <code>ep</code> for the European Parliament or <code>consil</code> for the Council of the European Union. <code>year</code> is the year in which the legislation was passed and the natural identifier is typically a running number given to a specific type of legislation. The optional <code>version</code> can identify if this specific act is a corrigendum, e.g. <code>R1</code>. <code>language</code> optionally identifies a language version of an act.
+</p>
+<p>
+So, for the Public Sector Information Directive 2003/98/EC of the European Parliament and of the Council of 17 November 2003 in English the ELI would be as follows:
+</p>
+
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+
+type := "dir"
+agent := ("ep", "consil")
+year := 2003
+natural_identifier := 98
+language := "ENG"
+--&gt;
+http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/ENG
+</pre>
+
+
+
+
+<p>
+The third corrigendum of the same act in Spanish has the ELI:
+</p>
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+
+type := "dir"
+agent := ("ep", "consil")
+year := 2003
+natural_identifier := 98
+version := "R3"
+language := "SPA"
+--&gt;
+http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
+</pre>
+
+
+
+
+<p>
+ELIs follow a logic of search: individual legal resources have metadata elements such as <code>type</code> or <code>agent</code>, an ELI identifies the resource that corresponds to that combination of metadata. By construction, there is maximally one such resource.
+</p>
+<p>
+This logic, however, generalizes also to URI templates that identify a set of resources, e.g.:
+</p>
+<p>
+All legal resources of a given type in a year with its natural identifier regardless of their creating agent:
+</p>
+
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
+</pre>
+
+
+
+
+<p>
+All legal resources of a given type in a given year:
+</p>
+
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}{/year}
+</pre>
+
+
+
+
+<p>
+All legal resources of a given type:
+</p>
+
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}
+</pre>
+
+
+
+
+<p>
+All legal resources in a given year regardless of its type:
+</p>
+
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/year}
+</pre>
+
+
+
+
+<p>
+And finally all legal resources of a given type from one or more given agents:
+</p>
+
+
+<pre class="example">http://eurlex.europa.eu/eli{/type}{/agent*}
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4.1.3" class="outline-4">
+<h4 id="sec-4.1.3"><span class="section-number-4">4.1.3</span> Handling URITemplates in Clojure </h4>
+<div class="outline-text-4" id="text-4.1.3">
+
+
+<p>
+The URITemplates implementation in Clojure, <code>uritemplates-clj</code> (<a href="https://github.com/mwkuster/uritemplate-clj">https://github.com/mwkuster/uritemplate-clj</a>), that I have prepared for this purpose has an extremely simple interface. It exposes a single method, <code>uritemplate</code>, taking the URI template and a map of values as input and returning the URI with the filled in template:
+</p>
+
+
+
+<pre class="example">user=&gt; (ns test
+  #_=&gt; (:require [uritemplate-clj.core :as templ]))
+nil
+test=&gt; (templ/uritemplate "http://example.org/abc{/type}{/agent*}{/year}{/natural_identifier,version,language}" {"type" "dir", 
+  #_=&gt;                "agent"  ["ep" "consil"], 
+  #_=&gt;                "year"  "2003",
+  #_=&gt;                "natural_identifier" "98"})
+"http://example.org/abc/dir/ep/consil/2003/98"
+test=&gt; 
+</pre>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4.2" class="outline-3">
+<h3 id="sec-4.2"><span class="section-number-3">4.2</span> JSON and cheshire </h3>
+<div class="outline-text-3" id="text-4.2">
+
+<p>The JavaScript Object Notation or JSON (=
+<a href="http://tools.ietf.org/html/rfc4627">http://tools.ietf.org/html/rfc4627</a>) at its simplest is just a subset
+of JavaScript concerning only data. JSON uses UTF-8 and supports the
+usual datatypes: "A JSON value MUST be an object, array, number, or
+string, or one of the following three literal names: false null true" (2.1). Concretely, the following types exist (description follows RFC 4627):
+</p>
+
+<ul>
+<li>
+Number: an integer component that   may be prefixed with an optional minus sign, which may be followed by  a fraction part and/or an exponent part. Octal and hex forms are not allowed.  Leading zeros are not allowed
+</li>
+<li>
+String: string begins and ends with  quotation marks.  All Unicode characters may be placed within the   quotation marks except for the characters that must be escaped:   quotation mark, reverse solidus, and the control characters (U+0000   through U+001F). The string is encoded in UTF-8
+</li>
+<li>
+Boolean: true or false
+</li>
+<li>
+Array: square brackets surrounding zero or more values (or elements).  Elements are separated by commas
+</li>
+<li>
+Object: a pair of curly brackets   surrounding zero or more name/value pairs (or members).  A name is a   string.  A single colon comes after each name, separating the name   from the value. 
+</li>
+<li>
+null (empty)
+
+</li>
+</ul>
+
+<p>We see many of these in action in the following extract taken from <a href="https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json:">https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json:</a>
+</p>
+
+
+
+<pre class="example">{
+    "Additional Examples 1":{
+        "level":4,
+        "variables":{
+            "id"           : "person",
+            "token"        : "12345",
+            "fields"       : ["id", "name", "picture"],
+            "format"       : "json",
+            "q"            : "URI Templates",
+            "page"         : "5",
+            "lang"         : "en",
+            "geocode"      : ["37.76","-122.427"],
+            "first_name"   : "John",
+            "last.name"    : "Doe", 
+            "Some%20Thing" : "foo",
+            "number"       : 6,
+            "long"         : 37.76,
+            "lat"          : -122.427,
+            "group_id"     : "12345",
+            "query"        : "PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt; SELECT ?book ?who WHERE { ?book dc:creator ?who }",
+            "word"         : "drücken",
+            "Stra%C3%9Fe"  : "Grüner Weg",
+            "random"       : "šöäŸœñê€£¥‡ÑÒÓÔÕÖ×ØÙÚàáâãäåæçÿ",
+            "assoc_special_chars"  :
+              { "šöäŸœñê€£¥‡ÑÒÓÔÕ" : "Ö×ØÙÚàáâãäåæçÿ" }
+        }
+}
+</pre>
+
+
+
+
+<p>
+For many languages and especially for dynamic languages JSON maps directly into the corresponding language structures. In Clojure the internal representation of this objects looks very similar to the JSON original and that's certainly no coincidence:
+</p>
+
+
+
+<pre class="example">{"Additional Examples 1"
+ {"level" 4, "variables" 
+   {"random" "šöäŸœñê€£¥‡ÑÒÓÔÕÖ×ØÙÚàáâãäåæçÿ", 
+   "last.name" "Doe", 
+   "query" "PREFIX dc: &lt;http://purl.org/dc/elements/1.1/&gt; SELECT ?book ?who WHERE { ?book dc:creator ?who }",
+   "number" 6, 
+   "word" "drücken", 
+   "assoc_special_chars" {"šöäŸœñê€£¥‡ÑÒÓÔÕ" "Ö×ØÙÚàáâãäåæçÿ"},
+   "lang" "en", 
+   "page" "5", 
+   "q" "URI Templates", 
+   "format" "json", 
+   "Stra%C3%9Fe" "Grüner Weg", 
+   "token" "12345", 
+   "fields" ["id" "name" "picture"], 
+   "first_name" "John", 
+   "id" "person", 
+   "group_id" "12345", 
+   "long" 37.76, 
+   "geocode" ["37.76" "-122.427"], 
+   "lat" -122.427, 
+   "Some%20Thing" "foo"
+   } 
+ }
+}
+</pre>
+
+
+
+
+<p>
+Incidentally, the order of attributes in an object is undefined.
+</p>
+<p>
+There are a number of Clojure libraries for JSON handling. The one we use here is Cheshire (<a href="https://clojars.org/cheshire">https://clojars.org/cheshire</a>), build on the Open Source Java Jackson library (<a href="http://wiki.fasterxml.com/JacksonHome">http://wiki.fasterxml.com/JacksonHome</a>). It is extremely easy to use:
+</p>
+
+
+
+<pre class="example">(ns b5
+  (:use [cheshire.core]))
+
+(def extended-tests  
+ (cheshire.core/parse-stream 
+    (clojure.java.io/reader "test/uritemplate_clj/extended-tests.json")))
+</pre>
+
+
+
+
+<p>
+Similarly, Cheshire can easily map native Clojure maps to JSON:
+</p>
+
+
+
+<pre class="example">(ns b5
+  (:use [cheshire.core]))
+
+(cheshire.core/generate-string {:a  "b", :b 5, "c" [1 2 3 4 5]})
+--&gt;
+"{\"c\":[1,2,3,4,5],\"a\":\"b\",\"b\":5}"
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4.3" class="outline-3">
+<h3 id="sec-4.3"><span class="section-number-3">4.3</span> ATOM and related standards </h3>
+<div class="outline-text-3" id="text-4.3">
+
+<p>ATOM / RFC 4287, which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
+</p><blockquote>
+
+<p>Atom is an XML-based document format that describes lists of related
+information known as "feeds".  Feeds are composed of a number of
+items, known as "entries", each with an extensible set of attached
+metadata.  For example, each entry has a title.
+</p>
+<p>
+The primary use case that Atom addresses is the syndication of Web
+content such as weblogs and news headlines to Web sites as well as
+directly to user agents. (RFC 4287 / {Gregorio:Z8RX-4sN})
+</p>
+</blockquote>
+
+
+<p>
+The following extract is taken directly from the RFC:
+</p>
+
+
+
+<pre class="example">&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
+ &lt;title&gt;Example Feed&lt;/title&gt;
+ &lt;link href="http://example.org/"/&gt;
+ &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;
+ &lt;author&gt;
+  &lt;name&gt;John Doe&lt;/name&gt;
+ &lt;/author&gt;
+ &lt;id&gt;urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6&lt;/id&gt;
+
+ &lt;entry&gt;
+  &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;
+  &lt;link href="http://example.org/2003/12/13/atom03"/&gt;
+  &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;
+  &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;
+  &lt;summary&gt;Some text.&lt;/summary&gt;
+ &lt;/entry&gt;
+&lt;/feed&gt;
+</pre>
+
+
+
+
+<p>
+ATOM feeds exist for many blogs, often alongside feeds in RSS. For further examples we will use  <a href="http://planet.clojure.in/atom.xml">http://planet.clojure.in/atom.xml</a>, but we could have used any number of other blogs.
+</p>
+
+
+
+<pre class="example">curl http://planet.clojure.in/atom.xml | less
+--&gt;
+
+&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
+  &lt;title&gt;Planet Clojure&lt;/title&gt;
+  &lt;link rel="self" href="http://planet.clojure.in/atom.xml"/&gt;
+  &lt;link href="http://planet.clojure.in/"/&gt;
+  &lt;id&gt;http://planet.clojure.in/atom.xml&lt;/id&gt;
+  &lt;updated&gt;2012-10-14T10:15:44+00:00&lt;/updated&gt;
+  &lt;generator uri="http://www.planetplanet.org/"&gt;http://intertwingly.net/code/venus/&lt;/generator&gt;
+  &lt;entry&gt;
+    &lt;title type="html"&gt;Presentation: Distributed Apps: The Joys of Testing and Debugging&lt;/title&gt;
+    &lt;link href="http://www.infoq.com/presentations/Clojure-Stack-Trace"/&gt;
+    &lt;id&gt;http://www.infoq.com/presentations/Clojure-Stack-Trace&lt;/id&gt;
+    &lt;updated&gt;2012-10-12T22:40:00+00:00&lt;/updated&gt;
+    &lt;content type="html"&gt;Chris Houser discusses stack traces in Clojure and introduces a library for investigating activity across multiple threads and servers, plus a technique for reproducing race conditions. &amp;lt;i&amp;gt;By Chris Houser&amp;lt;/i&amp;gt;&lt;/content&gt;
+    &lt;author&gt;
+            &lt;name&gt;Clojure at InfoQ&lt;/name&gt;
+            &lt;uri&gt;http://pipes.yahoo.com/pipes/pipe.info?_id=be83c0b5b0d92b259682cb8021e14d2a&lt;/uri&gt;
+    &lt;/author&gt;
+    &lt;source&gt;
+            &lt;title type="html"&gt;InfoQ Clojure-related materials&lt;/title&gt;
+            &lt;subtitle type="html"&gt;Pipes Output&lt;/subtitle&gt;
+            &lt;link rel="self" href="http://pipes.yahoo.com/pipes/pipe.run?_id=be83c0b5b0d92b259682cb8021e14d2a&amp;amp;_render=rss"/&gt;
+            &lt;id&gt;http://pipes.yahoo.com/pipes/pipe.info?_id=be83c0b5b0d92b259682cb8021e14d2a&lt;/id&gt;
+    &lt;/source&gt;
+  &lt;/entry&gt;
+  &lt;entry&gt;
+        [...]
+   &lt;/entry&gt;
+   [...]
+&lt;/feed&gt;
+</pre>
+
+
+
+
+<p>
+ATOM uses the namespace <code>http://www.w3.org/2005/Atom</code>. Some information is provided on the Feed level, notably the feed's title, an identifier (<code>id</code>), a link to the Atom feed itself (<code>link</code> with rel="self") and possibly to its website and, most crucially, the last update data <code>updated</code> that allows a feed reader to decide if it needs to check for added or updated entries without downloading everything. The real content is then inside the individual <code>entry</code> elements, bringing the entry <code>title</code>, a link to the corresponding web page, again the last <code>updated</code> timestamp for this entry and a summary (<code>content</code>), in this case formatted in basic HTML. Planet Clojure is special in that it is a feed of feeds that aggregates entries from a lot of smaller blogs. For this reason, it indicates the source of that information, together with links and ids.
+</p>
+<p>
+ATOM is in this paradigmatic for RESTful design. It is transported via HTTP, is both machine and (with suitable readers) human readable and provides links to further pages that the reader, whether a machien or a human, can follow.
+</p>
+
+</div>
+
+<div id="outline-container-4.3.1" class="outline-4">
+<h4 id="sec-4.3.1"><span class="section-number-4">4.3.1</span> Rome and <code>clj-rome</code> </h4>
+<div class="outline-text-4" id="text-4.3.1">
+
+<p>"ROME is a set of RSS and Atom Utilities for Java that is open source under the Apache 2.0 license" (<a href="https://rometools.jira.com/wiki/display/ROME/Home">https://rometools.jira.com/wiki/display/ROME/Home</a>). It is one of the most popular libraries for handling of (not only) ATOM in the Java world. <code>clj-rome</code> (<a href="https://clojars.org/clj-rome">https://clojars.org/clj-rome</a> / <a href="https://github.com/ngrunwald/clj-rome">https://github.com/ngrunwald/clj-rome</a>) is a Clojure wrapper to the ROME library:
+</p>
+
+
+
+<pre class="example">user=&gt; (ns b5 
+  #_=&gt; (:require [clj-rome.reader :as rr]))
+nil
+b5=&gt; (def feed (rr/build-feed "http://planet.clojure.in/atom.xml"))
+#'b5/feed
+b5=&gt; (keys feed)
+(:foreign-markup :published-date :entries :preserving-wire-feed? :copyright :link :contributors :author :supported-feed-types :feed-type :image :language :title :uri :categories :original :modules :interface :links :encoding :authors :title-ex :description :description-ex)
+b5=&gt; (count (:entries feed))
+40
+b5=&gt; (map #(:title %) (:entries feed))
+("Presentation: Distributed Apps: The Joys of Testing and Debugging" "Rich Hickey - Podcast Episode 019" "\"Concretely, a Graph is just a Clojure map of functions that can depend on the outputs of other...\"" "Google Common Lisp Style Guide" "Clojure/ClojureScript: One Language to Rule the Web" "No such pipe, or this pipe has been deleted" "codeq" "Writing Datomic in Clojure" "Announcing a new Clojure documentation project" "Stuart Sierra - Podcast Episode 018" "Clojure: Refactoring From Thread Last (-&amp;gt;&amp;gt;) To Thread First (-&amp;gt;)" "Versatile into" "Top 20 Web Frameworks for the JVM" "Replacing Common Code With clojure.set Function Calls" "Clojure: Stages of Enlightenment." "Clojure Gazette 1.23" "Memobot" "All ideas are old ideas" "Announcing Langohr documentation guides" "Creating a glow effect" "clojure: lein tar" "Applying DRY to Editing" "Jay Fields' Thoughts: Clojure: Avoiding Anonymous Functions" "Does Scala as a FP Language Suffer From Its OO Syntax?" "No such pipe, or this pipe has been deleted" "Clojure: Avoiding Anonymous Functions" "HalBuilder 2.0.1 Progress" "More Core.logic" "Prismatic's \"Graph\" at Strange Loop" "Clojure Koans" "Image filtering" "Configuration Files in Clojure" "Functional thinking: Tons of transformations" "Functional thinking: Tons of transformations" "A Crash Course on CTCO" "Ecosystems Are Overrated" "I tried using Twitter Bootstrap this morning. Really nice way to support mobile devices." "Clojure Macro: defn-curried" "Clojure Gazette 1.22" "Some core.logic graph code")
+b5=&gt; (first (:entries feed))
+{:enclosures [], :foreign-markup [], :wire-entry nil, :published-date nil, :link "http://www.infoq.com/presentations/Clojure-Stack-Trace", :contributors [], :author "Clojure at InfoQ", :title "Presentation: Distributed Apps: The Joys of Testing and Debugging", :uri "http://www.infoq.com/presentations/Clojure-Stack-Trace", :updated-date #inst "2012-10-12T22:40:00.000-00:00", :categories [], :modules [{:subject nil, :creator "Clojure at InfoQ", :date nil, :identifier nil, :formats [], :subjects [], :creators ["Clojure at InfoQ"], :types [], :contributors [], :coverages [], :contributor nil, :language nil, :title nil, :uri "http://purl.org/dc/elements/1.1/", :identifiers [], :rights nil, :rights-list [], :coverage nil, :type nil, :interface com.sun.syndication.feed.module.DCModule, :sources [], :dates [], :format nil, :publishers [], :relations [], :descriptions [], :languages [], :source nil, :relation nil, :titles [], :publisher nil, :description nil}], :interface com.sun.syndication.feed.synd.SyndEntry, :links [{:href "http://www.infoq.com/presentations/Clojure-Stack-Trace", :length 0, :title nil, :type nil, :rel "alternate", :hreflang nil}], :authors [{:name "Clojure at InfoQ", :uri "http://pipes.yahoo.com/pipes/pipe.info?_id=be83c0b5b0d92b259682cb8021e14d2a", :email nil, :modules []}], :title-ex {:type "html", :interface com.sun.syndication.feed.synd.SyndContent, :mode nil, :value "Presentation: Distributed Apps: The Joys of Testing and Debugging"}, :description nil, :contents [{:type "html", :interface com.sun.syndication.feed.synd.SyndContent, :mode nil, :value "Chris Houser discusses stack traces in Clojure and introduces a library for investigating activity across multiple threads and servers, plus a technique for reproducing race conditions. &lt;i&gt;By Chris Houser&lt;/i&gt;"}]}
+b5=&gt; 
+</pre>
+
+
+
+
+<p>
+In these examples Clojure returns as usual a map that can be manipulated with the usual higher-order functions. <code>:entries</code> then contains a sequence of maps with the data for the individual entries.
+</p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4.4" class="outline-3">
+<h3 id="sec-4.4"><span class="section-number-3">4.4</span> Assignment </h3>
+<div class="outline-text-3" id="text-4.4">
+
+<p>Take at your choice and depending on your language skills one of the websites
+</p>
+<ul>
+<li>
+<a href="http://www.legilux.public.lu/">http://www.legilux.public.lu/</a>  (Luxembourg, in French)
+</li>
+<li>
+<a href="http://legimobile.fr/">http://legimobile.fr/</a> (France)
+</li>
+<li>
+<a href="http://www.belgielex.be/">http://www.belgielex.be/</a> (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
+</li>
+<li>
+<a href="http://legislation.gov.uk/">http://legislation.gov.uk/</a>  (UK)
+</li>
+<li>
+<a href="http://www.normattiva.it/ricerca/semplice">http://www.normattiva.it/ricerca/semplice</a> (Italy)
+
+</li>
+</ul>
+
+<p>and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
+</p>
+<p>
+Hand in via the course's Moodle page the:
+</p><ul>
+<li>
+URI pattern defined
+</li>
+<li>
+script used to test that pattern
+</li>
+<li>
+list of at least 15 URIs generated and subsequently tested
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-4.5" class="outline-3">
+<h3 id="sec-4.5"><span class="section-number-3">4.5</span> Libraries for RESTful web services </h3>
+<div class="outline-text-3" id="text-4.5">
+
+
+<p>
+Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-20 Sat</span></span>
+</p><ul>
 <li>
 Popular JVM libraries for RESTful web services
 </li>
@@ -1572,22 +2437,94 @@ Apache HttpComponents
 </li>
 <li>
 clj-http as wrapper for HttpComponents
-
 </li>
 </ul>
-</li>
-</ul>
-
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-20 Sat</span></span>
-</p><ul>
-<li>
-JSON and some basic JavaScript
 </li>
 <li>
-cheshire for JSON
+Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
 
 </li>
 </ul>
+
+<p>RESTful web services are easy to use with most modern http libraries. 
+</p>
+
+
+
+</div>
+
+<div id="outline-container-4.5.1" class="outline-4">
+<h4 id="sec-4.5.1"><span class="section-number-4">4.5.1</span> Web Services the Google way </h4>
+<div class="outline-text-4" id="text-4.5.1">
+
+<p>Google offers a elegant, well-documented and powerful RESTful interfaces to its services. We will use it here to illustrate key RESTful principles in practice. This means no endorsement of any kind either by or for Google, with which the author has no affiliation.
+</p>
+<p>
+The web service we are specifically using here is the Calendar API. We will see how to read, create, update and delete entries in a Google calendar.
+</p>
+<ul>
+<li id="sec-4.5.1.1">Account and authentication <br/>
+In a first stage you need to create a test account that is associated ot an email address (not necessarily a GMail account, though), obviously coupled to a password. With this we can look into the Google Console at <a href="https://code.google.com/apis/console:">https://code.google.com/apis/console:</a>
+
+
+<div class="figure">
+<p><img src="./img/google_console.png"  alt="./img/google_console.png" /></p>
+<p>Google API console</p>
+</div>
+
+<p>
+After agreeing to various terms of use and activating the Calendar API you are free to use the service. Finally you can access the API key, a long machine generated unique identifier. Then you can authorized API Access that (amongst others) defines a product name, e.g. worms_calendar. Details of that process are described in <a href="https://developers.google.com/google-apps/calendar/firstapp">https://developers.google.com/google-apps/calendar/firstapp</a> and <a href="https://developers.google.com/google-apps/calendar/auth">https://developers.google.com/google-apps/calendar/auth</a>.
+</p>
+<p>
+Authentication APIs are defined in <a href="https://developers.google.com/accounts/docs/GettingStarted#OAuth">https://developers.google.com/accounts/docs/GettingStarted#OAuth</a> and <a href="https://developers.google.com/console/help/?hl=de#UsingKeys">https://developers.google.com/console/help/?hl=de#UsingKeys</a>. You can interactively test it out using <a href="https://developers.google.com/oauthplayground/?hl=de">https://developers.google.com/oauthplayground/?hl=de</a>. This way you can also access the relevant access tokens.
+</p>
+
+
+
+<pre class="example">curl -H "Authorization: OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr" https://www.googleapis.com/calendar/v3/users/me/calendarList
+</pre>
+
+
+
+
+
+<pre class="example">(client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}})
+</pre>
+
+
+
+<p>
+returns a map. The body is encoded in JSON that we can parse with Cheshire:
+</p>
+
+
+
+<pre class="example">(def calender-list (client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}}))
+(cheshire.core/parse-string (:body calender-list))
+--&gt;
+{"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "webservices.worms@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
+</pre>
+
+
+
+
+<p>
+Details of the calendar API are documented under <a href="https://developers.google.com/google-apps/calendar/">https://developers.google.com/google-apps/calendar/</a>
+</p>
+</li>
+<li id="sec-4.5.1.2">Accessing the API <br/>
+
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-4.5.2" class="outline-4">
+<h4 id="sec-4.5.2"><span class="section-number-4">4.5.2</span> Server-side REST </h4>
+<div class="outline-text-4" id="text-4.5.2">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-02 Fri</span></span>
 </p><ul>
@@ -1602,14 +2539,32 @@ Integration with Jetty and other Servlet containers
 </li>
 <li>
 Deploying Web Applications
-</li>
-</ul>
-</li>
-<li>
-Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
+
 
 </li>
 </ul>
+</li>
+</ul>
+
+<p><a href="https://clojars.org/clj-oauth2">https://clojars.org/clj-oauth2</a>
+<a href="https://github.com/DerGuteMoritz/clj-oauth2">https://github.com/DerGuteMoritz/clj-oauth2</a>
+</p>
+<p>
+<a href="http://coderwall.com/p/y9w4-g:">http://coderwall.com/p/y9w4-g:</a> explanation, full set depends on server side programs
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-4.5.3" class="outline-4">
+<h4 id="sec-4.5.3"><span class="section-number-4">4.5.3</span> Assignment </h4>
+<div class="outline-text-4" id="text-4.5.3">
+
+
+
+</div>
+</div>
 </div>
 
 </div>
@@ -1913,6 +2868,9 @@ Programming the Semantic Web
 <p>
 Clojure-based ecosystems of agents and actors
 </p>
+<p>
+Twitter-client
+</p>
 </div>
 
 </div>
@@ -1925,9 +2883,9 @@ Clojure-based ecosystems of agents and actors
 </div>
 <div id="postamble">
 <p class="author"> Author: Marc Wilhelm Küster
-<a href="mailto:marcwilhelmkuster@client-183-166.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-183-166.eduroam.fh-worms.de&gt;</a>
+<a href="mailto:marcwilhelmkuster@Budabe-2.local">&lt;marcwilhelmkuster@Budabe-2.local&gt;</a>
 </p>
-<p class="date"> Date: 2012-10-05 19:01:12 CEST</p>
+<p class="date"> Date: 2012-10-19 09:06:33 CEST</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>

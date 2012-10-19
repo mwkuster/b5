@@ -21,6 +21,8 @@ technologies fit in the overall scope of the course.
 
 You can and should work in teams of two.
 
+Precondition for participating in the practical programming project is regular participation in the practical courses. You must pass at least 80% of the weekly assignments. An assignment is considered a pass if you have at least 50 of points out of 100.
+
 Repeating the exam means a second, new practical project followed by a second oral exam.
 
 ** Preconditions
@@ -462,6 +464,8 @@ M-x package-install [RET] nrepl [RET]
 
 M-x nrepl-jack-in
 
+For Eclipse users there is the Counterclockwise plugin that can be used instead (http://code.google.com/p/counterclockwise/). For installation instructions see there.
+
 *** Leiningen
 Leiningen (http://leiningen.org) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
 
@@ -728,7 +732,7 @@ user=>
 This makes usually for much clearer code.
 
 ** Lazy sequences
-However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list -'(1 2 3 4 5 6)-, but for any type of range:
+However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
 #+BEGIN_EXAMPLE
 user=> (defn even-squares [] (map #(* % %) (filter even? (range))))
 #'user/even-squares
@@ -754,9 +758,16 @@ This may look rather surprising --- how can a language treat infinite sequences?
 
 Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
 
+** Assignment
+1. Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
+2. Write the same program in another programming language of your choice
+
+Hand in assignment via the course's Moodle page.
 
 
 ** Principles of functional programming
+Session <2012-10-19 Fri>
+
 Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
 
   - Immutable data
@@ -778,14 +789,71 @@ More information on Clojure and its API is available under http://clojure.org/ a
 
 
 
-** Assignment
-1. Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input ~'("xyz" "cde" "abc" "bab" "axx")~ it should return ~'("ABC" "AXX")~. Write first a unit test and then the function and run lein test to prove it works.
-2. Write the same program in another programming language of your choice
 
-Hand in assignment via the course's Moodle page.
+
+
+** Futures
+For long-running calculations Clojure has the concept of futures (http://clojuredocs.org/clojure_core/clojure.core/future). A future is calculated in a separate thread, but transparently to the user:
+
+#+BEGIN_SRC clojure
+(defn get-page [host port]
+  (let
+      [conn (Socket. host port)
+       in (.getInputStream conn)
+       out (.getOutputStream conn)]
+    (write-request out host)
+    (future (read-response in))))
+#+END_SRC 
+
+Assuming that ~read-response~ takes a considerable time to execute and would block further program execution for the time it takes, ~(future (read-response in))~ returns instead a /promise/ to the real value that it will contain. Once the calculation is complete, it will be transparently replaced by the final value, without blocking the current execution:
+
+#+BEGIN_EXAMPLE
+user> (def p (get-page "www.google.de" 80))
+GET / HTTP/1.1
+Host: www.google.de
+
+Request written
+#'user/p
+user> p
+#<core$future_call$reify__6110@2ca275d8: :pending>
+user> 
+user> p
+#<core$future_call$reify__6110@2ca275d8: :pending>
+user> @p
+[now execution blocks until the page is fully retrieved]
+#+END_EXAMPLE
+
+If you need the guarantee to have the value at a later stage, you can dereference the future by using the ~@~ reader macro, e.g. ~@p~. In this case program execution will block until the correct value is calculated, if that is not yet the case.
+
+** Multimethods: Polymorphism functional style
+
+Clojure has no native concept of objects (it does have an object concept for interfacing with Java). Instead, it offers named data structures --- records --- as well as functions that can dispatch on them and indeed on many other criteria. In the simplest of cases we have 
+
+#+BEGIN_SRC Clojure
+
+(defrecord Variable [text postfix])
+
+(defrecord Token [variables prefix])
+
+(defmulti handle-value 
+  "Handling of individual variables. Returns the variable replaced by the supplied values"
+  (fn [^Variable variable values separator encoding-fn]
+    (class (values (:text variable)))))
+
+(defmethod handle-value String [^Variable variable values separator encoding-fn]
+ ;one strategy for strings
+)
+
+(defmethod handle-value java.util.Collection [^Variable variable values separator encoding-fn]
+ ; another strategy to handle collections
+)
+; and so on
+#+END_SRC
+
+In the most frequent case dispatching is by data type or class, but it can be by anything else. ~defmulti~ defines in its implementation the strategy to be chosen by the individual ~defmethod~.
 
 * Programming RESTful Web Services
-Session <2012-10-19 Fri>
+  
 
 In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. Afterwards we will actually write some Clojure programs to test this out.
 
@@ -810,12 +878,306 @@ For URIs referring to real-life objects such as persons, {Anonymous:2008vd}, 4.5
 - Stability
 - Manageability
 
-{Gregorio:2012vo}
+*** URI Templates
+Remains the question on how to transpose these principles into concrete URIs and how to document the resulting URI patterns. RFC 6570 "URI templates" (http://tools.ietf.org/html/rfc6570 / {Gregorio:2012vo}) defines a template language to document and automatically fill URI templates. The specification defines four levels of compliance. At its simplest, URI templates define string substitutions (compliance level 1):
 
-*** The case of ELI
+#+BEGIN_EXAMPLE
+http://www.budabe.eu/{section}/{subsection}
 
+section := "research"
+subsection := "DigitalHumanities"
+
+-->
+http://www.budabe.eu/research/DigitalHumanities
+#+END_EXAMPLE
+
+If necessary, strings are URI encoded, e.g. ~http://www.budabe.eu/research/Digital%20Humanities~ if ~subsection := Digital Humanities~. Variables can occur both at the level of URIs and query parameters.
+
+Level 2 adds handling of reserved characters that would otherwise be URI encoded. You achieve this goal by adding a ~+~ as the first character of the variable:
+#+BEGIN_EXAMPLE
+http://www.budabe.eu/{section}
+section := "research/Digital Humanities"
+-->
+http://www.budabe.eu/research%2FDigital%20Humanities
+
+but
+
+http://www.budabe.eu/{+section}
+section := "research/Digital Humanities"
+-->
+http://www.budabe.eu/research/Digital%20Humanities
+#+END_EXAMPLE
+
+Similarly, if the first character is a hash (~#~), the resulting string contains the hash:
+
+#+BEGIN_EXAMPLE
+http://www.budabe.eu/{#section}
+section := "Digital Humanities"
+-->
+http://www.budabe.eu/#Digital%20Humanities
+#+END_EXAMPLE
+
+Level 3 add "multiple variables per expression, each separated by a comma, and add more complex operators for dot-prefixed labels, slash-prefixed path segments, semicolon-prefixed path parameters, and the form-style construction of a query syntax consisting of name=value pairs that are separated by an ampersand character" (RFC 6570, p. 5):
+
+#+BEGIN_EXAMPLE
+http://www.budabe.eu/{+section,subsection}
+section := "research"
+subsection := "Digital Humanities"
+-->
+http://www.budabe.eu/research,Digital%20Humanities
+#+END_EXAMPLE
+
+Similarly, if the first character is a ~/~, the template is treated as a path (and, in the case of ~#~ as an anchor):
+
+#+BEGIN_EXAMPLE
+http://www.budabe.eu{/section,subsection}       
+(note that there is no slash behind .eu)
+section := "research"
+subsection := "Digital Humanities"
+-->
+http://www.budabe.eu/research/Digital%20Humanities
+#+END_EXAMPLE
+
+If a part of the variables are not given for substitution, the corresponding part is just left out:
+#+BEGIN_EXAMPLE
+http://www.budabe.eu{/section,subsection}       
+section := "research"
+-->
+http://www.budabe.eu/research
+
+http://www.budabe.eu{/section,subsection}       
+subsection := "Digital Humanities"
+-->
+http://www.budabe.eu/Digital%20Humanities
+#+END_EXAMPLE
+
+The same applies if the first character is a ~?~ or ~&~, in which case all arguments are treated as query string parameters. 
+
+Level 4 adds the ability to slighly modify values during variable substitution by adding a ~:~ at the end:
+#+BEGIN_EXAMPLE
+http://www.budabe.eu{/section:4}
+section := "research"
+-->
+http://www.budabe.eu/rese
+#+END_EXAMPLE
+
+Likewise, a ~*~ at the end permits the handling of multiple values in lists or similar:
+
+#+BEGIN_EXAMPLE
+http://www.budabe.eu/{section*}
+section := ("research", "Digital Humanities")
+-->
+http://www.budabe.eu/research,Digital%20Humanities
+#+END_EXAMPLE
+
+Pre- and postfix modifiers can be combined:
+
+#+BEGIN_EXAMPLE
+http://www.budabe.eu{/section*}
+section := http://www.budabe.eu{/section*}
+--> 
+http://www.budabe.eu/research/Digital%20Humanities
+#+END_EXAMPLE
+
+RFC 6570 also has a semi-official test suite https://github.com/uri-templates/uritemplate-test. The examples given in this test suite help to understand many of the edge cases.
+
+*** The case of the European Legislation Identifier (ELI)
+The European Legislation Identifier (ELI / http://register.consilium.europa.eu/pdf/en/12/st13/st13401.en12.pdf, cf. also http://europa.eu/rapid/pressReleasesAction.do?reference=IP/12/1040&format=HTML&aged=0&language=EN&guiLanguage=en), published as a Council Conclusions 13401/12,  is a scheme to express laws through URIs. Every member state can flexibly express their own online resources for legislation, however using common variables that can be used to build concrete URI templates. The following variables are in principle foreseen:
+
+#+BEGIN_EXAMPLE
+{jurisdiction} {agent} {sub-agent} {year} {month} {day } {type} {natural identifier} {level 1…} {point in time} {version} {language}
+#+END_EXAMPLE
+
+The semantics of these template components is well defined within the Council Conclusions (cf. p. 9).
+
+Concrete URI templates for European Legislation can look like this:
+
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+#+END_EXAMPLE
+
+The type of legislation is in this case identified by a language-independent code, e.g. ~reg~ for ~regulation~ or ~dir~ for directive. Likewise, ~agent~ can be the code for zero to many actors in the European legislative process, e.g. ~ep~ for the European Parliament or ~consil~ for the Council of the European Union. ~year~ is the year in which the legislation was passed and the natural identifier is typically a running number given to a specific type of legislation. The optional ~version~ can identify if this specific act is a corrigendum, e.g. ~R1~. ~language~ optionally identifies a language version of an act.
+
+So, for the Public Sector Information Directive 2003/98/EC of the European Parliament and of the Council of 17 November 2003 in English the ELI would be as follows:
+
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+
+type := "dir"
+agent := ("ep", "consil")
+year := 2003
+natural_identifier := 98
+language := "ENG"
+-->
+http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/ENG
+#+END_EXAMPLE
+
+The third corrigendum of the same act in Spanish has the ELI:
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+
+type := "dir"
+agent := ("ep", "consil")
+year := 2003
+natural_identifier := 98
+version := "R3"
+language := "SPA"
+-->
+http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
+#+END_EXAMPLE
+
+ELIs follow a logic of search: individual legal resources have metadata elements such as ~type~ or ~agent~, an ELI identifies the resource that corresponds to that combination of metadata. By construction, there is maximally one such resource.
+
+This logic, however, generalizes also to URI templates that identify a set of resources, e.g.:
+
+All legal resources of a given type in a year with its natural identifier regardless of their creating agent:
+
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
+#+END_EXAMPLE
+
+All legal resources of a given type in a given year:
+
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/year}
+#+END_EXAMPLE
+
+All legal resources of a given type:
+
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}
+#+END_EXAMPLE
+
+All legal resources in a given year regardless of its type:
+
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/year}
+#+END_EXAMPLE
+
+And finally all legal resources of a given type from one or more given agents:
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/agent*}
+#+END_EXAMPLE
+
+*** Handling URITemplates in Clojure
+
+The URITemplates implementation in Clojure, ~uritemplates-clj~ (https://github.com/mwkuster/uritemplate-clj), that I have prepared for this purpose has an extremely simple interface. It exposes a single method, ~uritemplate~, taking the URI template and a map of values as input and returning the URI with the filled in template:
+
+#+BEGIN_EXAMPLE
+user=> (ns test
+  #_=> (:require [uritemplate-clj.core :as templ]))
+nil
+test=> (templ/uritemplate "http://example.org/abc{/type}{/agent*}{/year}{/natural_identifier,version,language}" {"type" "dir", 
+  #_=>                "agent"  ["ep" "consil"], 
+  #_=>                "year"  "2003",
+  #_=>                "natural_identifier" "98"})
+"http://example.org/abc/dir/ep/consil/2003/98"
+test=> 
+#+END_EXAMPLE
+
+** JSON and cheshire
+The JavaScript Object Notation or JSON (=
+http://tools.ietf.org/html/rfc4627) at its simplest is just a subset
+of JavaScript concerning only data. JSON uses UTF-8 and supports the
+usual datatypes: "A JSON value MUST be an object, array, number, or
+string, or one of the following three literal names: false null true" (2.1). Concretely, the following types exist (description follows RFC 4627):
+
+
+- Number: an integer component that   may be prefixed with an optional minus sign, which may be followed by  a fraction part and/or an exponent part. Octal and hex forms are not allowed.  Leading zeros are not allowed
+- String: string begins and ends with  quotation marks.  All Unicode characters may be placed within the   quotation marks except for the characters that must be escaped:   quotation mark, reverse solidus, and the control characters (U+0000   through U+001F). The string is encoded in UTF-8
+- Boolean: true or false
+- Array: square brackets surrounding zero or more values (or elements).  Elements are separated by commas
+- Object: a pair of curly brackets   surrounding zero or more name/value pairs (or members).  A name is a   string.  A single colon comes after each name, separating the name   from the value. 
+- null (empty)
+
+We see many of these in action in the following extract taken from https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json:
+
+#+BEGIN_SRC JavaScript
+{
+    "Additional Examples 1":{
+        "level":4,
+        "variables":{
+            "id"           : "person",
+            "token"        : "12345",
+            "fields"       : ["id", "name", "picture"],
+            "format"       : "json",
+            "q"            : "URI Templates",
+            "page"         : "5",
+            "lang"         : "en",
+            "geocode"      : ["37.76","-122.427"],
+            "first_name"   : "John",
+            "last.name"    : "Doe", 
+            "Some%20Thing" : "foo",
+            "number"       : 6,
+            "long"         : 37.76,
+            "lat"          : -122.427,
+            "group_id"     : "12345",
+            "query"        : "PREFIX dc: <http://purl.org/dc/elements/1.1/> SELECT ?book ?who WHERE { ?book dc:creator ?who }",
+            "word"         : "drücken",
+            "Stra%C3%9Fe"  : "Grüner Weg",
+            "random"       : "šöäŸœñê€£¥‡ÑÒÓÔÕÖ×ØÙÚàáâãäåæçÿ",
+            "assoc_special_chars"  :
+              { "šöäŸœñê€£¥‡ÑÒÓÔÕ" : "Ö×ØÙÚàáâãäåæçÿ" }
+        }
+}
+#+END_SRC
+
+For many languages and especially for dynamic languages JSON maps directly into the corresponding language structures. In Clojure the internal representation of this objects looks very similar to the JSON original and that's certainly no coincidence:
+
+#+BEGIN_SRC Clojure
+{"Additional Examples 1"
+ {"level" 4, "variables" 
+   {"random" "šöäŸœñê€£¥‡ÑÒÓÔÕÖ×ØÙÚàáâãäåæçÿ", 
+   "last.name" "Doe", 
+   "query" "PREFIX dc: <http://purl.org/dc/elements/1.1/> SELECT ?book ?who WHERE { ?book dc:creator ?who }",
+   "number" 6, 
+   "word" "drücken", 
+   "assoc_special_chars" {"šöäŸœñê€£¥‡ÑÒÓÔÕ" "Ö×ØÙÚàáâãäåæçÿ"},
+   "lang" "en", 
+   "page" "5", 
+   "q" "URI Templates", 
+   "format" "json", 
+   "Stra%C3%9Fe" "Grüner Weg", 
+   "token" "12345", 
+   "fields" ["id" "name" "picture"], 
+   "first_name" "John", 
+   "id" "person", 
+   "group_id" "12345", 
+   "long" 37.76, 
+   "geocode" ["37.76" "-122.427"], 
+   "lat" -122.427, 
+   "Some%20Thing" "foo"
+   } 
+ }
+}
+#+END_SRC
+
+Incidentally, the order of attributes in an object is undefined.
+
+There are a number of Clojure libraries for JSON handling. The one we use here is Cheshire (https://clojars.org/cheshire), build on the Open Source Java Jackson library (http://wiki.fasterxml.com/JacksonHome). It is extremely easy to use:
+
+#+BEGIN_SRC Clojure
+(ns b5
+  (:use [cheshire.core]))
+
+(def extended-tests  
+ (cheshire.core/parse-stream 
+    (clojure.java.io/reader "test/uritemplate_clj/extended-tests.json")))
+#+END_SRC
+
+Similarly, Cheshire can easily map native Clojure maps to JSON:
+
+#+BEGIN_SRC Clojure
+(ns b5
+  (:use [cheshire.core]))
+
+(cheshire.core/generate-string {:a  "b", :b 5, "c" [1 2 3 4 5]})
+-->
+"{\"c\":[1,2,3,4,5],\"a\":\"b\",\"b\":5}"
+#+END_SRC
 
 ** ATOM and related standards
+ATOM / RFC 4287, which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
 #+BEGIN_QUOTE
 Atom is an XML-based document format that describes lists of related
 information known as "feeds".  Feeds are composed of a number of
@@ -826,6 +1188,8 @@ The primary use case that Atom addresses is the syndication of Web
 content such as weblogs and news headlines to Web sites as well as
 directly to user agents. (RFC 4287 / {Gregorio:Z8RX-4sN})
 #+END_QUOTE
+
+The following extract is taken directly from the RFC:
 
 #+BEGIN_EXAMPLE
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -847,22 +1211,155 @@ directly to user agents. (RFC 4287 / {Gregorio:Z8RX-4sN})
 </feed>
 #+END_EXAMPLE
 
+ATOM feeds exist for many blogs, often alongside feeds in RSS. For further examples we will use  http://planet.clojure.in/atom.xml, but we could have used any number of other blogs.
+
+#+BEGIN_EXAMPLE
+curl http://planet.clojure.in/atom.xml | less
+-->
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Planet Clojure</title>
+  <link rel="self" href="http://planet.clojure.in/atom.xml"/>
+  <link href="http://planet.clojure.in/"/>
+  <id>http://planet.clojure.in/atom.xml</id>
+  <updated>2012-10-14T10:15:44+00:00</updated>
+  <generator uri="http://www.planetplanet.org/">http://intertwingly.net/code/venus/</generator>
+  <entry>
+    <title type="html">Presentation: Distributed Apps: The Joys of Testing and Debugging</title>
+    <link href="http://www.infoq.com/presentations/Clojure-Stack-Trace"/>
+    <id>http://www.infoq.com/presentations/Clojure-Stack-Trace</id>
+    <updated>2012-10-12T22:40:00+00:00</updated>
+    <content type="html">Chris Houser discusses stack traces in Clojure and introduces a library for investigating activity across multiple threads and servers, plus a technique for reproducing race conditions. &lt;i&gt;By Chris Houser&lt;/i&gt;</content>
+    <author>
+            <name>Clojure at InfoQ</name>
+            <uri>http://pipes.yahoo.com/pipes/pipe.info?_id=be83c0b5b0d92b259682cb8021e14d2a</uri>
+    </author>
+    <source>
+            <title type="html">InfoQ Clojure-related materials</title>
+            <subtitle type="html">Pipes Output</subtitle>
+            <link rel="self" href="http://pipes.yahoo.com/pipes/pipe.run?_id=be83c0b5b0d92b259682cb8021e14d2a&amp;_render=rss"/>
+            <id>http://pipes.yahoo.com/pipes/pipe.info?_id=be83c0b5b0d92b259682cb8021e14d2a</id>
+    </source>
+  </entry>
+  <entry>
+        [...]
+   </entry>
+   [...]
+</feed>
+#+END_EXAMPLE
+
+ATOM uses the namespace ~http://www.w3.org/2005/Atom~. Some information is provided on the Feed level, notably the feed's title, an identifier (~id~), a link to the Atom feed itself (~link~ with rel="self") and possibly to its website and, most crucially, the last update data ~updated~ that allows a feed reader to decide if it needs to check for added or updated entries without downloading everything. The real content is then inside the individual ~entry~ elements, bringing the entry ~title~, a link to the corresponding web page, again the last ~updated~ timestamp for this entry and a summary (~content~), in this case formatted in basic HTML. Planet Clojure is special in that it is a feed of feeds that aggregates entries from a lot of smaller blogs. For this reason, it indicates the source of that information, together with links and ids.
+
+ATOM is in this paradigmatic for RESTful design. It is transported via HTTP, is both machine and (with suitable readers) human readable and provides links to further pages that the reader, whether a machien or a human, can follow.
+
+*** Rome and ~clj-rome~
+"ROME is a set of RSS and Atom Utilities for Java that is open source under the Apache 2.0 license" (https://rometools.jira.com/wiki/display/ROME/Home). It is one of the most popular libraries for handling of (not only) ATOM in the Java world. ~clj-rome~ (https://clojars.org/clj-rome / https://github.com/ngrunwald/clj-rome) is a Clojure wrapper to the ROME library:
+
+#+BEGIN_EXAMPLE
+user=> (ns b5 
+  #_=> (:require [clj-rome.reader :as rr]))
+nil
+b5=> (def feed (rr/build-feed "http://planet.clojure.in/atom.xml"))
+#'b5/feed
+b5=> (keys feed)
+(:foreign-markup :published-date :entries :preserving-wire-feed? :copyright :link :contributors :author :supported-feed-types :feed-type :image :language :title :uri :categories :original :modules :interface :links :encoding :authors :title-ex :description :description-ex)
+b5=> (count (:entries feed))
+40
+b5=> (map #(:title %) (:entries feed))
+("Presentation: Distributed Apps: The Joys of Testing and Debugging" "Rich Hickey - Podcast Episode 019" "\"Concretely, a Graph is just a Clojure map of functions that can depend on the outputs of other...\"" "Google Common Lisp Style Guide" "Clojure/ClojureScript: One Language to Rule the Web" "No such pipe, or this pipe has been deleted" "codeq" "Writing Datomic in Clojure" "Announcing a new Clojure documentation project" "Stuart Sierra - Podcast Episode 018" "Clojure: Refactoring From Thread Last (-&gt;&gt;) To Thread First (-&gt;)" "Versatile into" "Top 20 Web Frameworks for the JVM" "Replacing Common Code With clojure.set Function Calls" "Clojure: Stages of Enlightenment." "Clojure Gazette 1.23" "Memobot" "All ideas are old ideas" "Announcing Langohr documentation guides" "Creating a glow effect" "clojure: lein tar" "Applying DRY to Editing" "Jay Fields' Thoughts: Clojure: Avoiding Anonymous Functions" "Does Scala as a FP Language Suffer From Its OO Syntax?" "No such pipe, or this pipe has been deleted" "Clojure: Avoiding Anonymous Functions" "HalBuilder 2.0.1 Progress" "More Core.logic" "Prismatic's \"Graph\" at Strange Loop" "Clojure Koans" "Image filtering" "Configuration Files in Clojure" "Functional thinking: Tons of transformations" "Functional thinking: Tons of transformations" "A Crash Course on CTCO" "Ecosystems Are Overrated" "I tried using Twitter Bootstrap this morning. Really nice way to support mobile devices." "Clojure Macro: defn-curried" "Clojure Gazette 1.22" "Some core.logic graph code")
+b5=> (first (:entries feed))
+{:enclosures [], :foreign-markup [], :wire-entry nil, :published-date nil, :link "http://www.infoq.com/presentations/Clojure-Stack-Trace", :contributors [], :author "Clojure at InfoQ", :title "Presentation: Distributed Apps: The Joys of Testing and Debugging", :uri "http://www.infoq.com/presentations/Clojure-Stack-Trace", :updated-date #inst "2012-10-12T22:40:00.000-00:00", :categories [], :modules [{:subject nil, :creator "Clojure at InfoQ", :date nil, :identifier nil, :formats [], :subjects [], :creators ["Clojure at InfoQ"], :types [], :contributors [], :coverages [], :contributor nil, :language nil, :title nil, :uri "http://purl.org/dc/elements/1.1/", :identifiers [], :rights nil, :rights-list [], :coverage nil, :type nil, :interface com.sun.syndication.feed.module.DCModule, :sources [], :dates [], :format nil, :publishers [], :relations [], :descriptions [], :languages [], :source nil, :relation nil, :titles [], :publisher nil, :description nil}], :interface com.sun.syndication.feed.synd.SyndEntry, :links [{:href "http://www.infoq.com/presentations/Clojure-Stack-Trace", :length 0, :title nil, :type nil, :rel "alternate", :hreflang nil}], :authors [{:name "Clojure at InfoQ", :uri "http://pipes.yahoo.com/pipes/pipe.info?_id=be83c0b5b0d92b259682cb8021e14d2a", :email nil, :modules []}], :title-ex {:type "html", :interface com.sun.syndication.feed.synd.SyndContent, :mode nil, :value "Presentation: Distributed Apps: The Joys of Testing and Debugging"}, :description nil, :contents [{:type "html", :interface com.sun.syndication.feed.synd.SyndContent, :mode nil, :value "Chris Houser discusses stack traces in Clojure and introduces a library for investigating activity across multiple threads and servers, plus a technique for reproducing race conditions. <i>By Chris Houser</i>"}]}
+b5=> 
+#+END_EXAMPLE
+
+In these examples Clojure returns as usual a map that can be manipulated with the usual higher-order functions. ~:entries~ then contains a sequence of maps with the data for the individual entries.
+
+
+** Assignment 
+Take at your choice and depending on your language skills one of the websites
+
+- http://www.legilux.public.lu/  (Luxembourg, in French)
+- http://legimobile.fr/ (France)
+- http://www.belgielex.be/ (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
+- http://legislation.gov.uk/  (UK)
+- http://www.normattiva.it/ricerca/semplice (Italy)
+
+and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
+
+Hand in via the course's Moodle page the:
+- URI pattern defined
+- script used to test that pattern
+- list of at least 15 URIs generated and subsequently tested
+
+
+
+** Libraries for RESTful web services
+
+Session <2012-10-20 Sat>
 - Popular JVM libraries for RESTful web services
 - Client-side programming
   - Apache HttpComponents
   - clj-http as wrapper for HttpComponents
-
-
-Session <2012-10-20 Sat>
-- JSON and some basic JavaScript
-- cheshire for JSON
 - Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
 
+RESTful web services are easy to use with most modern http libraries. 
+
+
+
+*** Web Services the Google way
+Google offers a elegant, well-documented and powerful RESTful interfaces to its services. We will use it here to illustrate key RESTful principles in practice. This means no endorsement of any kind either by or for Google, with which the author has no affiliation.
+
+The web service we are specifically using here is the Calendar API. We will see how to read, create, update and delete entries in a Google calendar.
+
+**** Account and authentication
+In a first stage you need to create a test account that is associated ot an email address (not necessarily a GMail account, though), obviously coupled to a password. With this we can look into the Google Console at https://code.google.com/apis/console:
+
+#+CAPTION: Google API console
+[[./img/google_console.png]]
+
+After agreeing to various terms of use and activating the Calendar API you are free to use the service. Finally you can access the API key, a long machine generated unique identifier. Then you can authorized API Access that (amongst others) defines a product name, e.g. worms_calendar. Details of that process are described in https://developers.google.com/google-apps/calendar/firstapp and https://developers.google.com/google-apps/calendar/auth.
+
+Authentication APIs are defined in https://developers.google.com/accounts/docs/GettingStarted#OAuth and https://developers.google.com/console/help/?hl=de#UsingKeys. You can interactively test it out using https://developers.google.com/oauthplayground/?hl=de. This way you can also access the relevant access tokens.
+
+#+BEGIN_EXAMPLE
+curl -H "Authorization: OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr" https://www.googleapis.com/calendar/v3/users/me/calendarList
+#+END_EXAMPLE
+
+#+BEGIN_SRC clojure
+(client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}})
+#+END_SRC
+returns a map. The body is encoded in JSON that we can parse with Cheshire:
+
+#+BEGIN_SRC clojure
+(def calender-list (client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}}))
+(cheshire.core/parse-string (:body calender-list))
+-->
+{"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "webservices.worms@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
+#+END_SRC
+
+Details of the calendar API are documented under https://developers.google.com/google-apps/calendar/
+
+**** Accessing the API
+
+
+
+*** Server-side REST 
 Session <2012-11-02 Fri>
 - Server-side programming 
   - Ring, a Clojure web applications library
   - Integration with Jetty and other Servlet containers
   - Deploying Web Applications
+
+
+https://clojars.org/clj-oauth2
+https://github.com/DerGuteMoritz/clj-oauth2
+
+http://coderwall.com/p/y9w4-g: explanation, full set depends on server side programs
+
+
+*** Assignment
+
+# Write a ATOM publisher in Clojure using the ROME library that consumes at least two existing feeds, then uses Java interop to access SyndFeed (https://rometools.jira.com/wiki/display/ROME/Rome+v0.4+Tutorial%2C+Using+Rome+to+create+and+write+a+syndication+feed) to create a new aggregation feed based on the source feeds. Use ring to set up a server to publish the resulting feed. 
 
 * SOAP-based Web Services and Service-oriented Architectures 
 Session <2012-11-03 Sat>
