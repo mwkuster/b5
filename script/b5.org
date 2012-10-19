@@ -1177,7 +1177,7 @@ Similarly, Cheshire can easily map native Clojure maps to JSON:
 #+END_SRC
 
 ** ATOM and related standards
-ATOM / RFC 4287, which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
+ATOM / RFC 4287 (= http://www.ietf.org/rfc/rfc4287.txt), which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
 #+BEGIN_QUOTE
 Atom is an XML-based document format that describes lists of related
 information known as "feeds".  Feeds are composed of a number of

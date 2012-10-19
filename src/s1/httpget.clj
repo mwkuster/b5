@@ -3,13 +3,10 @@
 
 ;Version that does not use an HTTP library to do an HTTP GET
 ;Instead uses low-level socket to read and write the HTTP request / response pair
-;Normally you'd work with threads or futures to get avoid blocking the REPL
-(def host "www.google.de")
-(def port 80)
 
-(defn write-request [^java.io.OutputStream out host]
+(defn write-request [^java.io.OutputStream out host page]
   (let
-      [req (str "GET / HTTP/1.1
+      [req (str "GET " page " HTTP/1.1
 Host: " host "
 
 ")]
@@ -26,14 +23,14 @@ Host: " host "
       (recur (.read in) (str res-str (char c)))
       res-str)))
 
-(defn get-page [^String host ^Integer port]
+(defn get-page [^String host ^Integer port ^String page]
   (let
       [conn (Socket. host port)
        in (.getInputStream conn)
        out (.getOutputStream conn)]
-    (write-request out host)
+    (write-request out host page)
     ;;http://clojuredocs.org/clojure_core/clojure.core/future
     (future (read-response in))))
 
-;;(get-page "www.budabe.eu" 80)
+;;(get-page "www.budabe.eu" 80 "/")
 
