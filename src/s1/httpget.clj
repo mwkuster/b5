@@ -32,5 +32,5 @@ Host: " host "
     ;;http://clojuredocs.org/clojure_core/clojure.core/future
     (future (read-response in))))
 
-;;(get-page "www.budabe.eu" 80 "/")
+;;(get-page "www.dradio.de" 80 "/")
 
