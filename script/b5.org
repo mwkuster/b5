@@ -1468,7 +1468,7 @@ or even delete it again
 1. For the Google Calendar API describe the CRUD (= Create / Update / Delete) operations for events as a URITemplate and use that URITemplate for further operations
 
 2. Develop a command line application in Clojure that takes as parameter an access token, a mode (create, update, delete) and 
-   - for create: a title, a start and an end date, and a number of participants
+   - for create: a title, a start and an end date, and a list of participants as email addresses
    - for update: an event id, a title, a start and an end date, and a number of participants 
    - for delete: an event id
 
