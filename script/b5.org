@@ -1469,7 +1469,7 @@ or even delete it again
 
 2. Develop a command line application in Clojure that takes as parameter an access token, a mode (create, update, delete) and 
    - for create: a title, a start and an end date, and a list of participants as email addresses
-   - for update: an event id, a title, a start and an end date, and a number of participants 
+   - for update: an event id, a title, a start and an end date, and a list of participants as email addresses
    - for delete: an event id
 
    The application inserts / modifies / deletes the event in the Calendar. To simpliy things you can assume that you always get all parameters in the sequence mentioned above on the command line, e.g.:
