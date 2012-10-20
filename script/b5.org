@@ -1467,7 +1467,16 @@ or even delete it again
 
 1. For the Google Calendar API describe the CRUD (= Create / Update / Delete) operations for events as a URITemplate and use that URITemplate for further operations
 
-2. Develop a command line application in Clojure that takes as parameter a mode (create, update, delete), a title, a number of participants, a start and an end date and inserts / modifies / deletes it in the Calendar
+2. Develop a command line application in Clojure that takes as parameter an access token, a mode (create, update, delete) and 
+   - for create: a title, a start and an end date, and a number of participants
+   - for update: an event id, a title, a start and an end date, and a number of participants 
+   - for delete: an event id
+
+   The application inserts / modifies / deletes the event in the Calendar. To simpliy things you can assume that you always get all parameters in the sequence mentioned above on the command line, e.g.:
+
+#+BEGIN_EXAMPLE
+lein run ACCESS-KEY MODE PARAMETER1 PARAMETER2...
+#+END_EXAMPLE
 
 3. Enhance the command line application so that it lists all of today's events
 
@@ -1475,7 +1484,7 @@ Work in teams of two, but hand in the results individually via the project's Moo
 
 
 
-*** Server-side REST 
+** Server-side REST 
 Session <2012-11-02 Fri>
 - Server-side programming 
   - Ring, a Clojure web applications library
