@@ -1508,6 +1508,12 @@ A graph database assumes that we want to model the world as a directed graph ---
 
 [[img/neo4j_graph.png]]
 
+Installation of Neo4j is trivial:
+
+1. Download the latest version from http://neo4j.org/download/
+2. Unpack it to a suitable directory
+3. ~cd~ to that directory and execute ~bin/neo4j start~ or the corresponding command under Windows
+4. Check with http://localhost:7474/webadmin that the database is up
 
 *** Neo4j's admin interface
 Neo4j’s admin interface also has one of the more innovative graph UIs that is currently available in an off-the-shelf database.

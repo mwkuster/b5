@@ -6,4 +6,6 @@
                  [stuarth/clj-oauth2 "0.3.2"]
                  [clojurewerkz/neocons "1.1.0-beta1"]
                  [net.djpowell/b64 "0.1.0"]
+                 [clj-hmac "0.1.0-SNAPSHOT"]
+                 [commons-codec/commons-codec "1.4"]
                  [uritemplate-clj "1.0.0"]])
