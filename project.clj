@@ -4,4 +4,6 @@
                  [cheshire "4.0.3"]
                  [clj-rome "0.3.0"]
                  [stuarth/clj-oauth2 "0.3.2"]
+                 [clojurewerkz/neocons "1.1.0-beta1"]
+                 [net.djpowell/b64 "0.1.0"]
                  [uritemplate-clj "1.0.0"]])
