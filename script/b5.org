@@ -1950,20 +1950,30 @@ Work in teams of two, but hand in the results individually via the project's Moo
 
 ** Accessing RESTful storage
 Session <2012-11-03 Sat>
-Example of EMC2 ATMOS
+
+EMC2 ATMOS self-describes itself as a 
+#+BEGIN_QUOTE
+Cloud storage platform that lets enterprises and service providers store, manage, and protect globally distributed, unstructured content at scale. Atmos provides the essential building blocks to implement a private, public, or hybrid cloud storage environment. (http://www.emc.com/storage/atmos/atmos.htm)
+#+END_QUOTE
+
+It is developed by EMC Corporation, currently accourding to wikipedia the "the largest provider of data storage platforms in the world" and mother company to companies such as VMware, Iomega and Documentum. ATMOS can be used both as a hardware and software stack. It is meant for very big storage systems up to many petabytes of size. It can be deployed both in a public and a private cloud. In this it directly competes with services such as Amazon's S3 (Simple Storage Service) service and in fact has the S3 API as one of its options.
+
+The overall architecture of EMC ATMOS is described in one of the company's whitepapers,  http://belgium.emc.com/collateral/software/white-papers/h9505-emc-atmos-archit-wp.pdf. 
+
+The reason to explain RESTful APIs for cloud storage  with EMC2 ATMOS is you can get a free developer account to test the API: https://community.emc.com/docs/DOC-10405. The API documentation is available via https://community.emc.com/docs/DOC-10404 (with links to various libraries implementing that interface) and https://community.emc.com/docs/DOC-14430 (for the documetnation itself).
+
+
 
 *** Security
 The Atmos Online Programmers Guide 2.01 specifies on p. 99 the details on how to handle security:
 
 **** Calculate a hash of the core http request itself
+Dependencies on 
+#+BEGIN_EXAMPLE
+[commons-codec/commons-codec "1.4"]
+#+END_EXAMPLE
 
-Dependencies on:
-#+BEGIN_SRC clojure
-[net.djpowell/b64 "0.1.0"]
-#+END_SRC
-
-
-The overall formula is:
+The overall formula to calculate a signature is:
 #+BEGIN_EXAMPLE
 HTTPRequestMethod + '\n' +
    ContentType + '\n' +
@@ -1975,15 +1985,109 @@ HTTPRequestMethod + '\n' +
 
 where ~CanonicalizedResource~ is the path and query part of the request-URI, in lower-case and ~CanonicalizedEMCHeaders~ are EMC-specific HTTP headers, prepared according to a given algorithm.
 
+**** Signing a request
+
+The signature of the request is itself transmitted as a custom http header ~x-emc-signature~:
+
 For a request like:
 #+BEGIN_EXAMPLE
-
+{"x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"}
 #+END_EXAMPLE
 
+with ~POST~ as method on https://api.atmosonline.com/rest/objects and a secret key of ~LJLuryj6zs8ste6Y3jTGQp71xq0=~ (these are the values for UID and secret key given as an example in the manual) the result is a signature is ~mIAtBPko+OFST0l0hKsgFxA3/4s=~:
 
 #+BEGIN_SRC clojure
-
+(s6.atmos/sign "LJLuryj6zs8ste6Y3jTGQp71xq0" "POST" "rest/objects" {"x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"})
+--> "mIAtBPko+OFST0l0hKsgFxA3/4s="
 #+END_SRC
+
+giving the complete set of headers:
+
+#+BEGIN_EXAMPLE
+{"x-emc-signature" "mIAtBPko+OFST0l0hKsgFxA3/4s=", "x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"}
+#+END_EXAMPLE
+
+To prevent replay attacks ~x-emc-date~ must be recent (within 5 minutes of the server time), otherwise a request is rejected.
+
+*** Creating an object
+Objects are as usual created via ~POST~ requests:
+#+BEGIN_EXAMPLE
+curl -v -XPOST -d "ATMOS, here I come" --header "x-emc-uid: UID" --header "content-type: application/octet-stream" --header "x-emc-date: Fri, 02 Nov 2012 14:15:19 GMT" --header "x-emc-useracl: A60284312655ec6780c9" --header "x-emc-signature: 6WqDxVWWvbOC3ZQGGD+hkvK+8sk=" https://api.atmosonline.com/rest/objects
+#+END_EXAMPLE
+
+If successful, the request returns a ~201~ and contains amongst other information a location header that points to the new object:
+
+#+BEGIN_EXAMPLE
+location: /rest/objects/4ee696e4a41f549604f0b75398081305093d5f6d1950
+#+END_EXAMPLE
+
+Alternatively, objects can also be created in a "logical" namespace by ~POST~ing to ~/rest/namespace~ with a URI afterwards that is interpreted as a directory:
+
+#+BEGIN_SRC clojure
+(create-object-in-namespace UUID SECRET USERID "/results/res3.xml" (slurp "/tmp/res3.xml") "author=ABC,date=2012-11-02")
+#+END_SRC
+
+resulting in the object and its tag structure being created. However, again the API returns the object id in the location header to uniquely identify the resulting object:
+
+#+BEGIN_EXAMPLE
+location: /rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f
+#+END_EXAMPLE
+
+*** Atmosfox
+A Firefox plugin, Atmosfox, allows to navigate remote files in somewhat Norton-commander-style.
+
+In the following screenshots we see the restults of the previous command, as shown in Atmosfox in object view:
+
+[[img/atmosfox_files.png]]
+
+[[img/atmosfox_author_date.png]]
+
+and the same in namespace view:
+
+[[img/atmosfox_namespace_view.png]]
+
+*** Handling of Metadata
+
+All objects have system metadata. They can also have user-defined metadata that is transmitted in the custom header ~x-emc-listable-meta~ and has the form ~tag_name1=value1,tag_name2=value2~. For metadata that is just stored, but not searchable there is yet another header called ~x-emc-meta~.
+
+The general approach for accessing metadata is:
+
+For system level metadata:
+
+#+BEGIN_EXAMPLE
+/rest/objects/<objectID>?metadata/system
+or 
+/rest/namespace/<pathname>?metadata/system
+#+END_EXAMPLE
+
+This gives for example:
+
+#+BEGIN_SRC clojure
+(get-system-metadata UUID SECRET-KEY "4ee696e4a31f549604f0b753961dcc0509435479c09f")
+{:trace-redirects ["https://api.atmosonline.com/rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f?metadata/system"], :request-time 2703, :status 200, :headers {"date" "Sat, 03 Nov 2012 07:20:11 GMT", "server" "Apache", "x-emc-policy" "_int", "x-emc-meta" "atime=2012-11-02T21:04:07Z, mtime=2012-11-02T21:04:07Z, ctime=2012-11-02T21:04:07Z, itime=2012-11-02T21:04:07Z, type=regular, uid=A60284312655ec6780c9, gid=apache, objectid=4ee696e4a31f549604f0b753961dcc0509435479c09f, objname=res3.xml, size=1957, nlink=1, policyname=default", "content-length" "0", "connection" "close", "content-type" "text/plain; charset=UTF-8"}, :body ""}
+#+END_SRC 
+
+By default all system-level metadata is returned. Using ~x-emc-tags~ it is possible to filter.
+
+For user metadata the approach is quite the same:
+
+#+BEGIN_EXAMPLE
+/rest/objects/<objectID>?metadata/user
+or 
+/rest/namespace/<pathname>?metadata/user
+#+END_EXAMPLE
+
+giving for example:
+
+#+BEGIN_SRC clojure
+(get-user-metadata UUID SECRET-KEY "4ee696e4a31f549604f0b753961dcc0509435479c09f")
+{:trace-redirects ["https://api.atmosonline.com/rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f?metadata/user"], :request-time 1650, :status 200, :headers {"date" "Sat, 03 Nov 2012 07:21:15 GMT", "server" "Apache", "x-emc-policy" "_int", "x-emc-listable-meta" "author=ABC, date=2012-11-02", "content-length" "0", "connection" "close", "content-type" "text/plain; charset=UTF-8"}, :body ""}
+#+END_SRC 
+
+Again, it is possible to filter with ~x-emc-tags~.
+
+*** Assignment
+Continue yesterday's assignment, but devise namespaces to actually store the corresponding entries in the ATMOS developer acount (for a few examples). Have Neo4j store those references as content references.
 
 ** Server-side REST 
 Session <2012-11-16 Fri>

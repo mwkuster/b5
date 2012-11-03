@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-02 07:36:14 CET"/>
+<meta name="generated" content="2012-11-03 08:25:28 CET"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -157,6 +157,10 @@ lang="en" xml:lang="en">
 <li><a href="#sec-4.9">4.9 Accessing RESTful storage </a>
 <ul>
 <li><a href="#sec-4.9.1">4.9.1 Security </a></li>
+<li><a href="#sec-4.9.2">4.9.2 Creating an object </a></li>
+<li><a href="#sec-4.9.3">4.9.3 Atmosfox </a></li>
+<li><a href="#sec-4.9.4">4.9.4 Handling of Metadata </a></li>
+<li><a href="#sec-4.9.5">4.9.5 Assignment </a></li>
 </ul>
 </li>
 <li><a href="#sec-4.10">4.10 Server-side REST </a>
@@ -2844,7 +2848,24 @@ A graph database assumes that we want to model the world as a directed graph &md
 <p>
 <a href="#sec-4.8.1"><img src="img/neo4j_graph.png"/></a>
 </p>
+<p>
+Installation of Neo4j is trivial:
+</p>
+<ol>
+<li>
+Download the latest version from <a href="http://neo4j.org/download/">http://neo4j.org/download/</a>
+</li>
+<li>
+Unpack it to a suitable directory
+</li>
+<li>
+<code>cd</code> to that directory and execute <code>bin/neo4j start</code> or the corresponding command under Windows
+</li>
+<li>
+Check with <a href="http://localhost:7474/webadmin">http://localhost:7474/webadmin</a> that the database is up
 
+</li>
+</ol>
 </div>
 
 </div>
@@ -3515,8 +3536,27 @@ Work in teams of two, but hand in the results individually via the project's Moo
 <div class="outline-text-3" id="text-4.9">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-03 Sat</span></span>
-Example of EMC2 ATMOS
 </p>
+<p>
+EMC2 ATMOS self-describes itself as a 
+</p><blockquote>
+
+<p>Cloud storage platform that lets enterprises and service providers store, manage, and protect globally distributed, unstructured content at scale. Atmos provides the essential building blocks to implement a private, public, or hybrid cloud storage environment. (<a href="http://www.emc.com/storage/atmos/atmos.htm">http://www.emc.com/storage/atmos/atmos.htm</a>)
+</p>
+</blockquote>
+
+
+<p>
+It is developed by EMC Corporation, currently accourding to wikipedia the "the largest provider of data storage platforms in the world" and mother company to companies such as VMware, Iomega and Documentum. ATMOS can be used both as a hardware and software stack. It is meant for very big storage systems up to many petabytes of size. It can be deployed both in a public and a private cloud. In this it directly competes with services such as Amazon's S3 (Simple Storage Service) service and in fact has the S3 API as one of its options.
+</p>
+<p>
+The overall architecture of EMC ATMOS is described in one of the company's whitepapers,  <a href="http://belgium.emc.com/collateral/software/white-papers/h9505-emc-atmos-archit-wp.pdf">http://belgium.emc.com/collateral/software/white-papers/h9505-emc-atmos-archit-wp.pdf</a>. 
+</p>
+<p>
+The reason to explain RESTful APIs for cloud storage  with EMC2 ATMOS is you can get a free developer account to test the API: <a href="https://community.emc.com/docs/DOC-10405">https://community.emc.com/docs/DOC-10405</a>. The API documentation is available via <a href="https://community.emc.com/docs/DOC-10404">https://community.emc.com/docs/DOC-10404</a> (with links to various libraries implementing that interface) and <a href="https://community.emc.com/docs/DOC-14430">https://community.emc.com/docs/DOC-14430</a> (for the documetnation itself).
+</p>
+
+
 
 </div>
 
@@ -3528,9 +3568,18 @@ Example of EMC2 ATMOS
 </p>
 <ul>
 <li id="sec-4.9.1.1">Calculate a hash of the core http request itself <br/>
+Dependencies on 
+
+
+
+<pre class="example">[commons-codec/commons-codec "1.4"]
+</pre>
+
+
+
 
 <p>
-The overall formula is:
+The overall formula to calculate a signature is:
 </p>
 
 
@@ -3548,15 +3597,217 @@ The overall formula is:
 <p>
 where <code>CanonicalizedResource</code> is the path and query part of the request-URI, in lower-case and <code>CanonicalizedEMCHeaders</code> are EMC-specific HTTP headers, prepared according to a given algorithm.
 </p>
+</li>
+<li id="sec-4.9.1.2">Signing a request <br/>
+
+<p>
+The signature of the request is itself transmitted as a custom http header <code>x-emc-signature</code>:
+</p>
 <p>
 For a request like:
 </p>
 
 
+<pre class="example">{"x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"}
+</pre>
 
 
+
+
+<p>
+with <code>POST</code> as method on <a href="https://api.atmosonline.com/rest/objects">https://api.atmosonline.com/rest/objects</a> and a secret key of <code>LJLuryj6zs8ste6Y3jTGQp71xq0=</code> (these are the values for UID and secret key given as an example in the manual) the result is a signature is <code>mIAtBPko+OFST0l0hKsgFxA3/4s=</code>:
+</p>
+
+
+
+<pre class="example">(s6.atmos/sign "LJLuryj6zs8ste6Y3jTGQp71xq0" "POST" "rest/objects" {"x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"})
+--&gt; "mIAtBPko+OFST0l0hKsgFxA3/4s="
+</pre>
+
+
+
+
+<p>
+giving the complete set of headers:
+</p>
+
+
+
+<pre class="example">{"x-emc-signature" "mIAtBPko+OFST0l0hKsgFxA3/4s=", "x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"}
+</pre>
+
+
+
+
+<p>
+To prevent replay attacks <code>x-emc-date</code> must be recent (within 5 minutes of the server time), otherwise a request is rejected.
+</p>
 </li>
 </ul>
+</div>
+
+</div>
+
+<div id="outline-container-4.9.2" class="outline-4">
+<h4 id="sec-4.9.2"><span class="section-number-4">4.9.2</span> Creating an object </h4>
+<div class="outline-text-4" id="text-4.9.2">
+
+<p>Objects are as usual created via <code>POST</code> requests:
+</p>
+
+
+<pre class="example">curl -v -XPOST -d "ATMOS, here I come" --header "x-emc-uid: UID" --header "content-type: application/octet-stream" --header "x-emc-date: Fri, 02 Nov 2012 14:15:19 GMT" --header "x-emc-useracl: A60284312655ec6780c9" --header "x-emc-signature: 6WqDxVWWvbOC3ZQGGD+hkvK+8sk=" https://api.atmosonline.com/rest/objects
+</pre>
+
+
+
+
+<p>
+If successful, the request returns a <code>201</code> and contains amongst other information a location header that points to the new object:
+</p>
+
+
+
+<pre class="example">location: /rest/objects/4ee696e4a41f549604f0b75398081305093d5f6d1950
+</pre>
+
+
+
+
+<p>
+Alternatively, objects can also be created in a "logical" namespace by <code>POST~ing to ~/rest/namespace</code> with a URI afterwards that is interpreted as a directory:
+</p>
+
+
+
+<pre class="example">(create-object-in-namespace UUID SECRET USERID "/results/res3.xml" (slurp "/tmp/res3.xml") "author=ABC,date=2012-11-02")
+</pre>
+
+
+
+
+<p>
+resulting in the object and its tag structure being created. However, again the API returns the object id in the location header to uniquely identify the resulting object:
+</p>
+
+
+
+<pre class="example">location: /rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-4.9.3" class="outline-4">
+<h4 id="sec-4.9.3"><span class="section-number-4">4.9.3</span> Atmosfox </h4>
+<div class="outline-text-4" id="text-4.9.3">
+
+<p>A Firefox plugin, Atmosfox, allows to navigate remote files in somewhat Norton-commander-style.
+</p>
+<p>
+In the following screenshots we see the restults of the previous command, as shown in Atmosfox in object view:
+</p>
+<p>
+<a href="#sec-4.9.3"><img src="img/atmosfox_files.png"/></a>
+</p>
+<p>
+<a href="#sec-4.9.3"><img src="img/atmosfox_author_date.png"/></a>
+</p>
+<p>
+and the same in namespace view:
+</p>
+<p>
+<a href="#sec-4.9.3"><img src="img/atmosfox_namespace_view.png"/></a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4.9.4" class="outline-4">
+<h4 id="sec-4.9.4"><span class="section-number-4">4.9.4</span> Handling of Metadata </h4>
+<div class="outline-text-4" id="text-4.9.4">
+
+
+<p>
+All objects have system metadata. They can also have user-defined metadata that is transmitted in the custom header <code>x-emc-listable-meta</code> and has the form <code>tag_name1=value1,tag_name2=value2</code>. For metadata that is just stored, but not searchable there is yet another header called <code>x-emc-meta</code>.
+</p>
+<p>
+The general approach for accessing metadata is:
+</p>
+<p>
+For system level metadata:
+</p>
+
+
+
+<pre class="example">/rest/objects/&lt;objectID&gt;?metadata/system
+or 
+/rest/namespace/&lt;pathname&gt;?metadata/system
+</pre>
+
+
+
+
+<p>
+This gives for example:
+</p>
+
+
+
+<pre class="example">(get-system-metadata UUID SECRET-KEY "4ee696e4a31f549604f0b753961dcc0509435479c09f")
+{:trace-redirects ["https://api.atmosonline.com/rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f?metadata/system"], :request-time 2703, :status 200, :headers {"date" "Sat, 03 Nov 2012 07:20:11 GMT", "server" "Apache", "x-emc-policy" "_int", "x-emc-meta" "atime=2012-11-02T21:04:07Z, mtime=2012-11-02T21:04:07Z, ctime=2012-11-02T21:04:07Z, itime=2012-11-02T21:04:07Z, type=regular, uid=A60284312655ec6780c9, gid=apache, objectid=4ee696e4a31f549604f0b753961dcc0509435479c09f, objname=res3.xml, size=1957, nlink=1, policyname=default", "content-length" "0", "connection" "close", "content-type" "text/plain; charset=UTF-8"}, :body ""}
+</pre>
+
+
+
+
+<p>
+By default all system-level metadata is returned. Using <code>x-emc-tags</code> it is possible to filter.
+</p>
+<p>
+For user metadata the approach is quite the same:
+</p>
+
+
+
+<pre class="example">/rest/objects/&lt;objectID&gt;?metadata/user
+or 
+/rest/namespace/&lt;pathname&gt;?metadata/user
+</pre>
+
+
+
+
+<p>
+giving for example:
+</p>
+
+
+
+<pre class="example">(get-user-metadata UUID SECRET-KEY "4ee696e4a31f549604f0b753961dcc0509435479c09f")
+{:trace-redirects ["https://api.atmosonline.com/rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f?metadata/user"], :request-time 1650, :status 200, :headers {"date" "Sat, 03 Nov 2012 07:21:15 GMT", "server" "Apache", "x-emc-policy" "_int", "x-emc-listable-meta" "author=ABC, date=2012-11-02", "content-length" "0", "connection" "close", "content-type" "text/plain; charset=UTF-8"}, :body ""}
+</pre>
+
+
+
+
+<p>
+Again, it is possible to filter with <code>x-emc-tags</code>.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-4.9.5" class="outline-4">
+<h4 id="sec-4.9.5"><span class="section-number-4">4.9.5</span> Assignment </h4>
+<div class="outline-text-4" id="text-4.9.5">
+
+<p>Continue yesterday's assignment, but devise namespaces to actually store the corresponding entries in the ATMOS developer acount (for a few examples). Have Neo4j store those references as content references.
+</p>
 </div>
 </div>
 
@@ -3931,9 +4182,9 @@ Twitter-client
 </div>
 <div id="postamble">
 <p class="author"> Author: Marc Wilhelm Küster
-<a href="mailto:marcwilhelmkuster@Budabe-2.local">&lt;marcwilhelmkuster@Budabe-2.local&gt;</a>
+<a href="mailto:marcwilhelmkuster@client-182-133.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-182-133.eduroam.fh-worms.de&gt;</a>
 </p>
-<p class="date"> Date: 2012-11-02 07:36:14 CET</p>
+<p class="date"> Date: 2012-11-03 08:25:28 CET</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>
