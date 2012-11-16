@@ -911,9 +911,7 @@ Clojure has no native concept of objects (it does have an object concept for int
 
 In the most frequent case dispatching is by data type or class, but it can be by anything else. ~defmulti~ defines in its implementation the strategy to be chosen by the individual ~defmethod~.
 
-* Programming RESTful Web Services
-  
-
+* Programming RESTful Web Services: Client side web services
 In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. Afterwards we will actually write some Clojure programs to test this out.
 
 ** Design of URIs
@@ -2089,21 +2087,166 @@ Again, it is possible to filter with ~x-emc-tags~.
 *** Assignment
 Continue yesterday's assignment, but devise namespaces to actually store the corresponding entries in the ATMOS developer acount (for a few examples). Have Neo4j store those references as content references.
 
-** Server-side REST 
+* Server-side REST 
 Session <2012-11-16 Fri>
 - Server-side programming 
   - Ring, a Clojure web applications library
   - Integration with Jetty and other Servlet containers
   - Deploying Web Applications
 
+** The Giant Global Graph: Facebook
 
-https://clojars.org/clj-oauth2
-https://github.com/DerGuteMoritz/clj-oauth2
+The development uses a Facebook account specifically created for this purpose with the login / email webservices.worms@googlemail.com and the username Web Worms.
+
+http://www.facebook.com/web.worms.7?sk=timeline
+
+Facebook has a well-known set of objects associated to an entity (person or company). This person can have certain properties such as  name, email address, age etc, can own other objects such as photos and most importantly be linked to other entities ("friends") or objects in general ("likes" or similar). "All of the objects in the Facebook social graph are connected to each other via relationships. Bret Taylor is a fan of the Coca-Cola page, and Bret Taylor and Arjun Banker are friends" (https://developers.facebook.com/docs/reference/api/).
+
+In general Facebook constitute a monstrous directed graph in which each entity (node) and relationship can carry properties.
+
+Some properties such as ~id~, ~name~, ~first_name~, ~last_name~, ~link~, ~username~, ~gender~ and ~locale~ are more equal than others in that they are always present:
+#+BEGIN_EXAMPLE
+{
+   "id": "220439",
+   "name": "Bret Taylor",
+   "first_name": "Bret",
+   "last_name": "Taylor",
+   "link": "http://www.facebook.com/btaylor",
+   "username": "btaylor",
+   "gender": "male",
+   "locale": "en_US"
+}
+#+END_EXAMPLE
+
+
+It is simple to access public information in machine readable format, concretely JSON, for any user:
+#+BEGIN_EXAMPLE
+$ curl https://graph.facebook.com/web.worms.7
+{"id":"100004654151051","name":"Web Worms","first_name":"Web","last_name":"Worms","link":"http:\/\/www.facebook.com\/web.worms.7","username":"web.worms.7","gender":"female","locale":"de_DE"}
+#+END_EXAMPLE
+
+In fact, all (or almost all) of the Facebook functionality is exposed via RESTful webservices. However, only some of the information is publicly accessible, for the remainder we need a login. Given the right permissions you can then get an access-token to see much more information. However, how to integrate a login programmatically via OAuth is the subject of another session. 
+
+For now we can use the Facebook Graph API tool allows to test the environment: http://developers.facebook.com/tools/explorer?method=GET&path=me%3Ffields%3Dlikes.offset%285000%29.limit%285000%29
+
+[[img/facebook_permissions.png]]
+
+[[img/facebook_graph_api.png]]
+
+
+Via the Graph API tool you can easily ~GET~ information, ~POST~ new entries and in general to everything you can do otherwise with the client.
+
+** ~budabe-graph~
+
+Before going further into Facebook, let us do our first own RESTful web application called ~budabe-graph~ that allows to create, update and get information on persons and their links between them.
+
+The two key libraries in this space are ~ring~ and ~compojure~.
+
+
+#+BEGIN_SRC clojure
+(defproject budabe-graph "0.1.0-SNAPSHOT"
+  :description "A super-simple social graph application"
+  :url "http://example.com/FIXME"
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [compojure "1.1.3"]
+                 [ring "1.1.6"]
+                 [cheshire "4.0.4"]
+                 [clojurewerkz/neocons "1.1.0-beta1"]])
+#+END_SRC
+
+~ring~ (https://clojars.org/ring) self-describes itself as a "Clojure web applications library". Ring offers a number of functionalities, but as its core it defines a set of standards for Clojure structure, low-level handling HTTP requests as well as a means to define handlers for those requests. ~compojure~ offers a means to define routes to map concrete URIs and HTTP methods on these handlers. 
+
+** Assignment
+Based on the first steps in https://github.com/mwkuster/budabe-graph:
+
+- Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under https://developers.facebook.com/docs/reference/fql/)
+- Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
+- Adapt the implementation so that it uses Neo4j as a backend instead of the local db
+
+
+
+
+
+** Creating a Facebook application
+In order to create a new application that integrates with Facebook, you have to be log  into Facebook and then go to https://developers.facebook.com/ to create a basic application. In a first stage you must register as an application developer, having to give unfortunately also a GSM number (you can delete it afterwards). After some more screens you can choose an application name, here WormsB5, to develop the application:
+
+[[img/facebook_screenshot.png]]
+
+In the end you get the real information:
+
+#+BEGIN_EXAMPLE
+WormsB5
+App ID: 	YYYYY
+App Secret: 	XXXX
+#+END_EXAMPLE
+
+In a permission screen you can request which permissions the application needs to work. In this case I have requested the same rights as a friend for a number of fields including email:
+
+[[img/facebook_permission_tab.png]]
+
+"As with any other OAuth-enabled app, to get started you’ll need to acquire an application ID and secret to use for authorization, opt into the developer community, and create an application" ({Russell:2011vv}, p. 272). For this purpose you need the App ID and the App Secret to log in. For this it needs
+
+- the application ID
+- the application secret
+- a callback URL
+
+that all need to be configure in the Facebook app centre.
+
+A Facebook user wanting to use this application then needs to grant it access.
+
+The overall flow is described in http://dragon.ak.fbcdn.net/cfs-ak-ash4/84991/914/165799420225798-/server-side-diagram.png
+
+#+BEGIN_EXAMPLE
+$curl "https://graph.facebook.com/oauth/access_token?client_id=230196110444178&grant_type=client_credentials&redirect_uri=http://localhost:8080/facebook-callback&code=AQBMSgT3RhBbZdpQ0tQo0vJURoYm4SV011MmG5RUfWTXg-LoNxJhUAZ2FxHFm_TAhf_nbhEN2_5fCP9fbla5s2HEDh1JWmMb8yy2aLMWUPwjiTNYoTtUV7FrumEYQ8SEhIuq8mshUbNaHULo2mo45eT_JNOGzWXvfNEuAMZDTdCfjg6gRUS4GqwadLNMzu46WT1BssHn2fSvKGid7kc55PCt&client_secret=c488568fc8d6f8c1a0d317d7d097c396"
+#+END_EXAMPLE
+
+
+** Clojure and Facebook
+Those parts of Facebook that are public can also be used by Clojure without login:
+
+#+BEGIN_SRC clojure
+(slurp "https://graph.facebook.com/web.worms.7")
+"{\"id\":\"100004654151051\",\"name\":\"Web Worms\",\"first_name\":\"Web\",\"last_name\":\"Worms\",\"link\":\"http:\\/\\/www.facebook.com\\/web.worms.7\",\"username\":\"web.worms.7\",\"gender\":\"female\",\"locale\":\"de_DE\"}"
+#+END_SRC 
+
+However, the same is not true for non-public data where you need to go via the OAuth 2.0 and that in turn via the application:
+
+#+BEGIN_SRC clojure
+(def facebook-app-info {:client-id "230196110444178"
+                        :client-secret "c488568fc8d6f8c1a0d317d7d097c396"
+                        :redirect-uri "http://localhost:8080/facebook-callback"
+                        :permissions ["user_photos" "user_likes"]})
+#+END_SRC 
+
+After the Jetty server is started:
+#+BEGIN_SRC clojure
+(def server (start-server))
+#+END_SRC 
+
+the tests can start by going to http://localhost:8080/facebook-login
+#+BEGIN_EXAMPLE
+user=> (load-file "test/clj_facebook_graph/example.clj")
+#'clj-facebook-graph.example/with-facebook-auth-by-name
+user=> (in-ns 'clj-facebook-graph.example)
+#<Namespace clj-facebook-graph.example>
+clj-facebook-graph.example=> facebook-app-info
+{:client-secret "c488568fc8d6f8c1a0d317d7d097c396", :redirect-uri "http://localhost:8080/facebook-callback", :client-id "230196110444178", :permissions ["user_photos" "user_likes"]}
+clj-facebook-graph.example=> 
+#+END_EXAMPLE
+
+#+BEGIN_SRC clojure
+(clj-facebook-graph.auth/make-auth-request facebook-app-info)
+#+END_SRC
+
+
 
 http://coderwall.com/p/y9w4-g: explanation, full set depends on server side programs
 
 
-*** Assignment
+
+** Assignment
 
 # Write a ATOM publisher in Clojure using the ROME library that consumes at least two existing feeds, then uses Java interop to access SyndFeed (https://rometools.jira.com/wiki/display/ROME/Rome+v0.4+Tutorial%2C+Using+Rome+to+create+and+write+a+syndication+feed) to create a new aggregation feed based on the source feeds. Use ring to set up a server to publish the resulting feed. 
 
