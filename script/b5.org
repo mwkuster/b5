@@ -2258,48 +2258,6 @@ $curl "https://graph.facebook.com/oauth/access_token?client_id=XXX&grant_type=cl
 #+END_EXAMPLE
 
 
-** Clojure and Facebook
-Those parts of Facebook that are public can also be used by Clojure without login:
-
-#+BEGIN_SRC clojure
-(slurp "https://graph.facebook.com/web.worms.7")
-"{\"id\":\"100004654151051\",\"name\":\"Web Worms\",\"first_name\":\"Web\",\"last_name\":\"Worms\",\"link\":\"http:\\/\\/www.facebook.com\\/web.worms.7\",\"username\":\"web.worms.7\",\"gender\":\"female\",\"locale\":\"de_DE\"}"
-#+END_SRC 
-
-However, the same is not true for non-public data where you need to go via the OAuth 2.0 and that in turn via the application:
-
-#+BEGIN_SRC clojure
-(def facebook-app-info {:client-id "230196110444178"
-                        :client-secret "c488568fc8d6f8c1a0d317d7d097c396"
-                        :redirect-uri "http://localhost:8080/facebook-callback"
-                        :permissions ["user_photos" "user_likes"]})
-#+END_SRC 
-
-After the Jetty server is started:
-#+BEGIN_SRC clojure
-(def server (start-server))
-#+END_SRC 
-
-the tests can start by going to http://localhost:8080/facebook-login
-#+BEGIN_EXAMPLE
-user=> (load-file "test/clj_facebook_graph/example.clj")
-#'clj-facebook-graph.example/with-facebook-auth-by-name
-user=> (in-ns 'clj-facebook-graph.example)
-#<Namespace clj-facebook-graph.example>
-clj-facebook-graph.example=> facebook-app-info
-{:client-secret "c488568fc8d6f8c1a0d317d7d097c396", :redirect-uri "http://localhost:8080/facebook-callback", :client-id "230196110444178", :permissions ["user_photos" "user_likes"]}
-clj-facebook-graph.example=> 
-#+END_EXAMPLE
-
-#+BEGIN_SRC clojure
-(clj-facebook-graph.auth/make-auth-request facebook-app-info)
-#+END_SRC
-
-
-
-http://coderwall.com/p/y9w4-g: explanation, full set depends on server side programs
-
-
 
 ** Assignment
 Build on yesterday's assignment use your query to build up the network of a person (~https://graph.facebook.com/me~) and his / her friends and other connections (friends, likes...) in Neo4j. For this purpose either change or enhance the existing RESTful interface to ensure that the objects and connections that you have retrieved from Facebook is loaded as nodes and their relationships into Neo4j.
