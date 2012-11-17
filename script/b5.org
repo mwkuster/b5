@@ -2223,8 +2223,15 @@ $ curl -XGET "https://graph.facebook.com/me?access_token=AAADRXLVkRpIBAOVAWRhWUQ
 
 
 
+** Assignment
+Build on yesterday's assignment use your query to build up the network of a person (~https://graph.facebook.com/me~) and his / her friends and other connections (friends, likes...) in Neo4j. For this purpose either change or enhance the existing RESTful interface to ensure that the objects and connections that you have retrieved from Facebook is loaded as nodes and their relationships into Neo4j.
+
+Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
+
 
 ** Creating a Facebook application
+Session <2012-11-17 Sat>
+
 In order to create a new application that integrates with Facebook, you have to be log  into Facebook and then go to https://developers.facebook.com/ to create a basic application. In a first stage you must register as an application developer, having to give unfortunately also a GSM number (you can delete it afterwards). After some more screens you can choose an application name, here WormsB5, to develop the application:
 
 [[img/facebook_screenshot.png]]
@@ -2258,11 +2265,6 @@ $curl "https://graph.facebook.com/oauth/access_token?client_id=XXX&grant_type=cl
 #+END_EXAMPLE
 
 
-
-** Assignment
-Build on yesterday's assignment use your query to build up the network of a person (~https://graph.facebook.com/me~) and his / her friends and other connections (friends, likes...) in Neo4j. For this purpose either change or enhance the existing RESTful interface to ensure that the objects and connections that you have retrieved from Facebook is loaded as nodes and their relationships into Neo4j.
-
-Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
 
 
 
