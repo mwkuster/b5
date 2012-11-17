@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-11-16 12:32:47 CET"/>
+<meta name="generated" content="2012-11-17 11:06:33 CET"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -167,11 +167,12 @@ lang="en" xml:lang="en">
 <li><a href="#sec-5">5 Server-side REST </a>
 <ul>
 <li><a href="#sec-5.1">5.1 The Giant Global Graph: Facebook </a></li>
-<li><a href="#sec-5.2">5.2 <code>budabe-graph</code> </a></li>
-<li><a href="#sec-5.3">5.3 Assignment </a></li>
-<li><a href="#sec-5.4">5.4 Creating a Facebook application </a></li>
-<li><a href="#sec-5.5">5.5 Clojure and Facebook </a></li>
-<li><a href="#sec-5.6">5.6 Assignment </a></li>
+<li><a href="#sec-5.2">5.2 Assignment </a></li>
+<li><a href="#sec-5.3">5.3 <code>budabe-graph</code> </a></li>
+<li><a href="#sec-5.4">5.4 OAuth2 </a></li>
+<li><a href="#sec-5.5">5.5 Creating a Facebook application </a></li>
+<li><a href="#sec-5.6">5.6 Clojure and Facebook </a></li>
+<li><a href="#sec-5.7">5.7 Assignment </a></li>
 </ul>
 </li>
 <li><a href="#sec-6">6 SOAP-based Web Services and Service-oriented Architectures </a></li>
@@ -3912,10 +3913,33 @@ Via the Graph API tool you can easily <code>GET</code> information, <code>POST</
 </div>
 
 <div id="outline-container-5.2" class="outline-3">
-<h3 id="sec-5.2"><span class="section-number-3">5.2</span> <code>budabe-graph</code> </h3>
+<h3 id="sec-5.2"><span class="section-number-3">5.2</span> Assignment </h3>
 <div class="outline-text-3" id="text-5.2">
 
+<p>Based on the first steps in <a href="https://github.com/mwkuster/budabe-graph:">https://github.com/mwkuster/budabe-graph:</a>
+</p>
+<ul>
+<li>
+Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under <a href="https://developers.facebook.com/docs/reference/fql/">https://developers.facebook.com/docs/reference/fql/</a>)
+</li>
+<li>
+Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
+</li>
+<li>
+Adapt the implementation so that it uses Neo4j as a backend instead of the local db
 
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-5.3" class="outline-3">
+<h3 id="sec-5.3"><span class="section-number-3">5.3</span> <code>budabe-graph</code> </h3>
+<div class="outline-text-3" id="text-5.3">
+
+<p>Session: <span class="timestamp-wrapper"> <span class="timestamp">2012-11-17 Sat</span></span>
+</p>
 <p>
 Before going further into Facebook, let us do our first own RESTful web application called <code>budabe-graph</code> that allows to create, update and get information on persons and their links between them.
 </p>
@@ -3944,44 +3968,101 @@ The two key libraries in this space are <code>ring</code> and <code>compojure</c
 <p>
 <code>ring</code> (<a href="https://clojars.org/ring">https://clojars.org/ring</a>) self-describes itself as a "Clojure web applications library". Ring offers a number of functionalities, but as its core it defines a set of standards for Clojure structure, low-level handling HTTP requests as well as a means to define handlers for those requests. <code>compojure</code> offers a means to define routes to map concrete URIs and HTTP methods on these handlers. 
 </p>
-</div>
-
-</div>
-
-<div id="outline-container-5.3" class="outline-3">
-<h3 id="sec-5.3"><span class="section-number-3">5.3</span> Assignment </h3>
-<div class="outline-text-3" id="text-5.3">
-
-<p>Based on the first steps in <a href="https://github.com/mwkuster/budabe-graph:">https://github.com/mwkuster/budabe-graph:</a>
+<p>
+<code>compojure</code> in turn ensures the rouging of elements:
 </p>
-<ul>
-<li>
-Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under <a href="https://developers.facebook.com/docs/reference/fql/">https://developers.facebook.com/docs/reference/fql/</a>)
-</li>
-<li>
-Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
-</li>
-<li>
-Adapt the implementation so that it uses Neo4j as a backend instead of the local db
+
+
+<pre class="example">(defroutes main-routes
+  (GET "/" [] (json/generate-string (list-users)))
+  (POST "/"  request (create-user-handler  (:body request)))
+  (PUT "/"  request (update-user-handler  (:body request)))
+  (GET "/:username" [username] (get-user-by-username username))
+  (route/not-found "Page not found"))
+</pre>
 
 
 
 
+<p>
+Then the RESTful interface can respond to the usual HTTP methods:
+</p>
 
-</li>
-</ul>
+
+
+<pre class="example">$ curl -v -XPOST -d '{"username": "johnsmith", "first_name" : "John", "last_name": "Smith", "gender" : "male", "locale": "US"}' --header "Content-Type: application/json" http://localhost:3000/
+$  curl -v -XPOST -d '{"username": "janegreen", "first_name" : "Jane", "last_name": "Green", "gender" : "female", "locale": "US"}' --header "Content-Type: application/json" http://localhost:3000/
+$  curl -v -XGET http://localhost:3000/
+
+$ curl -v -XPUT -d '{"username": "johnsmith", "first_name" : "John", "last_name": "Brown", "gender" : "male", "locale": "US"}' --header "Content-Type: application/json" http://localhost:3000/johnsmith
+</pre>
+
+
+
+
 </div>
 
 </div>
 
 <div id="outline-container-5.4" class="outline-3">
-<h3 id="sec-5.4"><span class="section-number-3">5.4</span> Creating a Facebook application </h3>
+<h3 id="sec-5.4"><span class="section-number-3">5.4</span> OAuth2 </h3>
 <div class="outline-text-3" id="text-5.4">
+
+<p>The OAuth 2.0 Authorization Framework RFC 6750 (<a href="http://tools.ietf.org/html/rfc6750">http://tools.ietf.org/html/rfc6750</a>) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0). Unfortunately, it is rather complex as it necessitates a lot of interactions between an application and the identity provider, Facebook in our case:
+</p>
+
+
+
+<pre class="example">     +--------+                               +---------------+
+     |        |--(A)- Authorization Request -&gt;|   Resource    |
+     |        |                               |     Owner     |
+     |        |&lt;-(B)-- Authorization Grant ---|               |
+     |        |                               +---------------+
+     |        |                               +---------------+
+     |        |--(C)-- Authorization Grant --&gt;| Authorization |
+     | Client |                               |     Server    |
+     |        |&lt;-(D)----- Access Token -------|               |
+     |        |                               +---------------+
+     |        |                               +---------------+
+     |        |--(E)----- Access Token ------&gt;|    Resource   |
+     |        |                               |     Server    |
+     |        |&lt;-(F)--- Protected Resource ---|               |
+     +--------+                               +---------------+
+(Source: RFC 6750)
+</pre>
+
+
+
+
+
+
+
+<pre class="example">$ curl -v -XGET "https://www.facebook.com/dialog/oauth?client_id=XXX&amp;redirect_uri=http://localhost:3000/api/facebook-callback"
+--&gt; redirect to URI, gives code
+$curl -v -XGET "https://graph.facebook.com/oauth/access_token?client_id=XXX&amp;client_secret=YYYYYYY&amp;redirect_uri=http://localhost:3000/api/facebook-callback&amp;code=AQA5hjdHIKzV6TsMe-sxFqV8A_xI0pu0I-Xb8AIZusVq9Zgt472OGrjW87FXzlMIk_o6TSNMFCear7gpBsHrRSxGOJCegZm65vEv3Mul7N32m5bVem_tB7Nsz8hFhjjoD5yL76pEB--KaZptJvHyEmtR2O7ROM8i0WZj4ERtp7YB3AFhoQAt-Hacp_r9AB4pFmMGgtiwlUs4q45DbATabgTG"
+[...]
+access_token=AAADRXLVkRpIBAOVAWRhWUQzITBsLbZCkRUgxxpakh8YJIo1jOiqw5nWp82SSiGRo41TLFarO6StOROjbCBf9RHZBQJCzFaBCRxwsjIYwZDZD&amp;expires=5182940
+$ curl -XGET "https://graph.facebook.com/me?access_token=AAADRXLVkRpIBAOVAWRhWUQzITBsLbZCkRUgxxpakh8YJIo1jOiqw5nWp82SSiGRo41TLFarO6StOROjbCBf9RHZBQJCzFaBCRxwsjIYwZDZD"
+</pre>
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5.5" class="outline-3">
+<h3 id="sec-5.5"><span class="section-number-3">5.5</span> Creating a Facebook application </h3>
+<div class="outline-text-3" id="text-5.5">
 
 <p>In order to create a new application that integrates with Facebook, you have to be log  into Facebook and then go to <a href="https://developers.facebook.com/">https://developers.facebook.com/</a> to create a basic application. In a first stage you must register as an application developer, having to give unfortunately also a GSM number (you can delete it afterwards). After some more screens you can choose an application name, here WormsB5, to develop the application:
 </p>
 <p>
-<a href="#sec-5.4"><img src="img/facebook_screenshot.png"/></a>
+<a href="#sec-5.5"><img src="img/facebook_screenshot.png"/></a>
 </p>
 <p>
 In the end you get the real information:
@@ -4001,7 +4082,7 @@ App Secret:     XXXX
 In a permission screen you can request which permissions the application needs to work. In this case I have requested the same rights as a friend for a number of fields including email:
 </p>
 <p>
-<a href="#sec-5.4"><img src="img/facebook_permission_tab.png"/></a>
+<a href="#sec-5.5"><img src="img/facebook_permission_tab.png"/></a>
 </p>
 <p>
 "As with any other OAuth-enabled app, to get started you’ll need to acquire an application ID and secret to use for authorization, opt into the developer community, and create an application" ({Russell:2011vv}, p. 272). For this purpose you need the App ID and the App Secret to log in. For this it needs
@@ -4030,7 +4111,7 @@ The overall flow is described in <img src="http://dragon.ak.fbcdn.net/cfs-ak-ash
 
 
 
-<pre class="example">$curl "https://graph.facebook.com/oauth/access_token?client_id=230196110444178&amp;grant_type=client_credentials&amp;redirect_uri=http://localhost:8080/facebook-callback&amp;code=AQBMSgT3RhBbZdpQ0tQo0vJURoYm4SV011MmG5RUfWTXg-LoNxJhUAZ2FxHFm_TAhf_nbhEN2_5fCP9fbla5s2HEDh1JWmMb8yy2aLMWUPwjiTNYoTtUV7FrumEYQ8SEhIuq8mshUbNaHULo2mo45eT_JNOGzWXvfNEuAMZDTdCfjg6gRUS4GqwadLNMzu46WT1BssHn2fSvKGid7kc55PCt&amp;client_secret=c488568fc8d6f8c1a0d317d7d097c396"
+<pre class="example">$curl "https://graph.facebook.com/oauth/access_token?client_id=XXX&amp;grant_type=client_credentials&amp;redirect_uri=http://localhost:8080/facebook-callback&amp;code=AQBMSgT3RhBbZdpQ0tQo0vJURoYm4SV011MmG5RUfWTXg-LoNxJhUAZ2FxHFm_TAhf_nbhEN2_5fCP9fbla5s2HEDh1JWmMb8yy2aLMWUPwjiTNYoTtUV7FrumEYQ8SEhIuq8mshUbNaHULo2mo45eT_JNOGzWXvfNEuAMZDTdCfjg6gRUS4GqwadLNMzu46WT1BssHn2fSvKGid7kc55PCt&amp;client_secret=YYYY"
 </pre>
 
 
@@ -4041,9 +4122,9 @@ The overall flow is described in <img src="http://dragon.ak.fbcdn.net/cfs-ak-ash
 
 </div>
 
-<div id="outline-container-5.5" class="outline-3">
-<h3 id="sec-5.5"><span class="section-number-3">5.5</span> Clojure and Facebook </h3>
-<div class="outline-text-3" id="text-5.5">
+<div id="outline-container-5.6" class="outline-3">
+<h3 id="sec-5.6"><span class="section-number-3">5.6</span> Clojure and Facebook </h3>
+<div class="outline-text-3" id="text-5.6">
 
 <p>Those parts of Facebook that are public can also be used by Clojure without login:
 </p>
@@ -4118,9 +4199,15 @@ clj-facebook-graph.example=&gt;
 
 </div>
 
-<div id="outline-container-5.6" class="outline-3">
-<h3 id="sec-5.6"><span class="section-number-3">5.6</span> Assignment </h3>
-<div class="outline-text-3" id="text-5.6">
+<div id="outline-container-5.7" class="outline-3">
+<h3 id="sec-5.7"><span class="section-number-3">5.7</span> Assignment </h3>
+<div class="outline-text-3" id="text-5.7">
+
+<p>Build on yesterday's assignment use your query to build up the network of a person (<code>https://graph.facebook.com/me</code>) and his / her friends and other connections (friends, likes&hellip;) in Neo4j. For this purpose either change or enhance the existing RESTful interface to ensure that the objects and connections that you have retrieved from Facebook is loaded as nodes and their relationships into Neo4j.
+</p>
+<p>
+Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
+</p>
 
 
 
@@ -4452,9 +4539,9 @@ Twitter-client
 </div>
 <div id="postamble">
 <p class="author"> Author: Marc Wilhelm Küster
-<a href="mailto:marcwilhelmkuster@client-183-113.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-183-113.eduroam.fh-worms.de&gt;</a>
+<a href="mailto:marcwilhelmkuster@client-183-63.eduroam.fh-worms.de">&lt;marcwilhelmkuster@client-183-63.eduroam.fh-worms.de&gt;</a>
 </p>
-<p class="date"> Date: 2012-11-16 12:32:47 CET</p>
+<p class="date"> Date: 2012-11-17 11:06:33 CET</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>

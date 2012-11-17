@@ -2136,7 +2136,15 @@ For now we can use the Facebook Graph API tool allows to test the environment: h
 
 Via the Graph API tool you can easily ~GET~ information, ~POST~ new entries and in general to everything you can do otherwise with the client.
 
+** Assignment
+Based on the first steps in https://github.com/mwkuster/budabe-graph:
+
+- Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under https://developers.facebook.com/docs/reference/fql/)
+- Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
+- Adapt the implementation so that it uses Neo4j as a backend instead of the local db
+
 ** ~budabe-graph~
+Session: <2012-11-17 Sat>
 
 Before going further into Facebook, let us do our first own RESTful web application called ~budabe-graph~ that allows to create, update and get information on persons and their links between them.
 
@@ -2158,13 +2166,60 @@ The two key libraries in this space are ~ring~ and ~compojure~.
 
 ~ring~ (https://clojars.org/ring) self-describes itself as a "Clojure web applications library". Ring offers a number of functionalities, but as its core it defines a set of standards for Clojure structure, low-level handling HTTP requests as well as a means to define handlers for those requests. ~compojure~ offers a means to define routes to map concrete URIs and HTTP methods on these handlers. 
 
-** Assignment
-Based on the first steps in https://github.com/mwkuster/budabe-graph:
+~compojure~ in turn ensures the rouging of elements:
+#+BEGIN_SRC clojure
+(defroutes main-routes
+  (GET "/" [] (json/generate-string (list-users)))
+  (POST "/"  request (create-user-handler  (:body request)))
+  (PUT "/"  request (update-user-handler  (:body request)))
+  (GET "/:username" [username] (get-user-by-username username))
+  (route/not-found "Page not found"))
+#+END_SRC
 
-- Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under https://developers.facebook.com/docs/reference/fql/)
-- Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
-- Adapt the implementation so that it uses Neo4j as a backend instead of the local db
+Then the RESTful interface can respond to the usual HTTP methods:
 
+#+BEGIN_EXAMPLE
+$ curl -v -XPOST -d '{"username": "johnsmith", "first_name" : "John", "last_name": "Smith", "gender" : "male", "locale": "US"}' --header "Content-Type: application/json" http://localhost:3000/
+$  curl -v -XPOST -d '{"username": "janegreen", "first_name" : "Jane", "last_name": "Green", "gender" : "female", "locale": "US"}' --header "Content-Type: application/json" http://localhost:3000/
+$  curl -v -XGET http://localhost:3000/
+
+$ curl -v -XPUT -d '{"username": "johnsmith", "first_name" : "John", "last_name": "Brown", "gender" : "male", "locale": "US"}' --header "Content-Type: application/json" http://localhost:3000/johnsmith
+#+END_EXAMPLE
+
+** OAuth2
+The OAuth 2.0 Authorization Framework RFC 6750 (http://tools.ietf.org/html/rfc6750) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0). Unfortunately, it is rather complex as it necessitates a lot of interactions between an application and the identity provider, Facebook in our case:
+
+#+BEGIN_EXAMPLE
+     +--------+                               +---------------+
+     |        |--(A)- Authorization Request ->|   Resource    |
+     |        |                               |     Owner     |
+     |        |<-(B)-- Authorization Grant ---|               |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(C)-- Authorization Grant -->| Authorization |
+     | Client |                               |     Server    |
+     |        |<-(D)----- Access Token -------|               |
+     |        |                               +---------------+
+     |        |
+     |        |                               +---------------+
+     |        |--(E)----- Access Token ------>|    Resource   |
+     |        |                               |     Server    |
+     |        |<-(F)--- Protected Resource ---|               |
+     +--------+                               +---------------+
+(Source: RFC 6750)
+#+END_EXAMPLE
+
+
+
+#+BEGIN_EXAMPLE
+$ curl -v -XGET "https://www.facebook.com/dialog/oauth?client_id=XXX&redirect_uri=http://localhost:3000/api/facebook-callback"
+--> redirect to URI, gives code
+$curl -v -XGET "https://graph.facebook.com/oauth/access_token?client_id=XXX&client_secret=YYYYYYY&redirect_uri=http://localhost:3000/api/facebook-callback&code=AQA5hjdHIKzV6TsMe-sxFqV8A_xI0pu0I-Xb8AIZusVq9Zgt472OGrjW87FXzlMIk_o6TSNMFCear7gpBsHrRSxGOJCegZm65vEv3Mul7N32m5bVem_tB7Nsz8hFhjjoD5yL76pEB--KaZptJvHyEmtR2O7ROM8i0WZj4ERtp7YB3AFhoQAt-Hacp_r9AB4pFmMGgtiwlUs4q45DbATabgTG"
+[...]
+access_token=AAADRXLVkRpIBAOVAWRhWUQzITBsLbZCkRUgxxpakh8YJIo1jOiqw5nWp82SSiGRo41TLFarO6StOROjbCBf9RHZBQJCzFaBCRxwsjIYwZDZD&expires=5182940
+$ curl -XGET "https://graph.facebook.com/me?access_token=AAADRXLVkRpIBAOVAWRhWUQzITBsLbZCkRUgxxpakh8YJIo1jOiqw5nWp82SSiGRo41TLFarO6StOROjbCBf9RHZBQJCzFaBCRxwsjIYwZDZD"
+#+END_EXAMPLE
 
 
 
@@ -2199,7 +2254,7 @@ A Facebook user wanting to use this application then needs to grant it access.
 The overall flow is described in http://dragon.ak.fbcdn.net/cfs-ak-ash4/84991/914/165799420225798-/server-side-diagram.png
 
 #+BEGIN_EXAMPLE
-$curl "https://graph.facebook.com/oauth/access_token?client_id=230196110444178&grant_type=client_credentials&redirect_uri=http://localhost:8080/facebook-callback&code=AQBMSgT3RhBbZdpQ0tQo0vJURoYm4SV011MmG5RUfWTXg-LoNxJhUAZ2FxHFm_TAhf_nbhEN2_5fCP9fbla5s2HEDh1JWmMb8yy2aLMWUPwjiTNYoTtUV7FrumEYQ8SEhIuq8mshUbNaHULo2mo45eT_JNOGzWXvfNEuAMZDTdCfjg6gRUS4GqwadLNMzu46WT1BssHn2fSvKGid7kc55PCt&client_secret=c488568fc8d6f8c1a0d317d7d097c396"
+$curl "https://graph.facebook.com/oauth/access_token?client_id=XXX&grant_type=client_credentials&redirect_uri=http://localhost:8080/facebook-callback&code=AQBMSgT3RhBbZdpQ0tQo0vJURoYm4SV011MmG5RUfWTXg-LoNxJhUAZ2FxHFm_TAhf_nbhEN2_5fCP9fbla5s2HEDh1JWmMb8yy2aLMWUPwjiTNYoTtUV7FrumEYQ8SEhIuq8mshUbNaHULo2mo45eT_JNOGzWXvfNEuAMZDTdCfjg6gRUS4GqwadLNMzu46WT1BssHn2fSvKGid7kc55PCt&client_secret=YYYY"
 #+END_EXAMPLE
 
 
@@ -2247,6 +2302,11 @@ http://coderwall.com/p/y9w4-g: explanation, full set depends on server side prog
 
 
 ** Assignment
+Build on yesterday's assignment use your query to build up the network of a person (~https://graph.facebook.com/me~) and his / her friends and other connections (friends, likes...) in Neo4j. For this purpose either change or enhance the existing RESTful interface to ensure that the objects and connections that you have retrieved from Facebook is loaded as nodes and their relationships into Neo4j.
+
+Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
+
+
 
 # Write a ATOM publisher in Clojure using the ROME library that consumes at least two existing feeds, then uses Java interop to access SyndFeed (https://rometools.jira.com/wiki/display/ROME/Rome+v0.4+Tutorial%2C+Using+Rome+to+create+and+write+a+syndication+feed) to create a new aggregation feed based on the source feeds. Use ring to set up a server to publish the resulting feed. 
 
