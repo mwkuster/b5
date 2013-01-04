@@ -1,0 +1,1049 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix cdm: <http://publications.europa.eu/ontology/cdm#> .
+@prefix cdm-annotation: <http://publications.europa.eu/ontology/annotation#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+
+
+#################################################################
+#
+#    Annotation properties
+#
+#################################################################
+
+
+cdm:resource_legal_id_obsolete_document rdf:type owl:AnnotationProperty .
+
+
+
+cdm:expression_belongs_to_work rdf:type owl:AnnotationProperty .
+
+
+
+cdm:manifestation_source-pool rdf:type owl:AnnotationProperty .
+
+
+
+cdm:expression_title rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_number_natural_celex rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_has_type_act_concept_type_act rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_id_celex rdf:type owl:AnnotationProperty .
+
+
+
+cdm:manifestation_special-court-report_part_page_first rdf:type owl:AnnotationProperty .
+
+
+
+cdm:manifestation_manifests_expression rdf:type owl:AnnotationProperty .
+
+
+
+cdm:manifestation_special-court-report_part_year rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_uses_originally_language rdf:type owl:AnnotationProperty .
+
+
+
+cdm:work_date_creation_legacy rdf:type owl:AnnotationProperty .
+
+
+
+cdm:work_id_document rdf:type owl:AnnotationProperty .
+
+
+
+cdm:expression_uses_language rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_comment_internal rdf:type owl:AnnotationProperty .
+
+
+
+cdm:expression_title_alternative rdf:type owl:AnnotationProperty .
+
+
+
+cdm:work_date_document rdf:type owl:AnnotationProperty .
+
+
+
+cdm:work_created_by_agent rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_delivered_by_judge rdf:type owl:AnnotationProperty .
+
+
+
+cdm:work_part_of_collection_document rdf:type owl:AnnotationProperty .
+
+
+
+cdm-annotation:build_info rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_is_about_subject-matter rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_id_sector rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_type rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_requested_by_agent rdf:type owl:AnnotationProperty .
+
+
+
+cdm:expression_title_information_additional rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_based_on_concept_treaty rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_year rdf:type owl:AnnotationProperty .
+
+
+
+cdm:manifestation_special-court-report_part_type rdf:type owl:AnnotationProperty .
+
+
+
+cdm:manifestation_type rdf:type owl:AnnotationProperty .
+
+
+
+cdm:work_id_obsolete_notice rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_date_request_opinion rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_commented_by_agent rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_delivered_by_advocate-general rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_defended_by_agent rdf:type owl:AnnotationProperty .
+
+
+
+skos:inScheme rdf:type owl:AnnotationProperty .
+
+
+
+cdm:resource_legal_information_miscellaneous rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_has_type_procedure_concept_type_procedure rdf:type owl:AnnotationProperty .
+
+
+
+cdm:case-law_originates_in_country rdf:type owl:AnnotationProperty .
+
+
+
+
+
+#################################################################
+#
+#    Datatypes
+#
+#################################################################
+
+
+###  http://www.w3.org/2001/XMLSchema#date
+
+xsd:date rdf:type rdfs:Datatype .
+
+
+
+###  http://www.w3.org/2001/XMLSchema#gYear
+
+xsd:gYear rdf:type rdfs:Datatype .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://publications.europa.eu/ontology/cdm#ATTO_FD_110
+
+cdm:ATTO_FD_110 rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#case-law
+
+cdm:case-law rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#document_cjeu
+
+cdm:document_cjeu rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#expression
+
+cdm:expression rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#institution
+
+cdm:institution rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#manifestation
+
+cdm:manifestation rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#manifestation_special-court-report_part
+
+cdm:manifestation_special-court-report_part rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#opinion_advocate-general
+
+cdm:opinion_advocate-general rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#resource_legal
+
+cdm:resource_legal rdf:type owl:Class .
+
+
+
+###  http://publications.europa.eu/ontology/cdm#work
+
+cdm:work rdf:type owl:Class .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002> rdf:type cdm:case-law ,
+                                                                              cdm:document_cjeu ,
+                                                                              cdm:opinion_advocate-general ,
+                                                                              cdm:resource_legal ,
+                                                                              cdm:work ,
+                                                                              owl:NamedIndividual ;
+                                                                     
+                                                                     cdm:resource_legal_number_natural_celex "0002"^^xsd:positiveInteger ;
+                                                                     
+                                                                     cdm:work_id_obsolete_notice "131"^^xsd:positiveInteger ;
+                                                                     
+                                                                     cdm:resource_legal_year "1960"^^xsd:gYear ;
+                                                                     
+                                                                     cdm:resource_legal_date_request_opinion "1960-02-22"^^xsd:date ;
+                                                                     
+                                                                     cdm:work_date_document "1961-05-19"^^xsd:date ;
+                                                                     
+                                                                     cdm:work_date_creation_legacy "1961-05-19"^^xsd:date ;
+                                                                     
+                                                                     cdm:resource_legal_comment_internal "1961P0263"^^xsd:string ;
+                                                                     
+                                                                     cdm:resource_legal_id_sector "6"^^xsd:string ;
+                                                                     
+                                                                     cdm:resource_legal_id_obsolete_document "61960C0002"^^xsd:string ;
+                                                                     
+                                                                     cdm:resource_legal_id_celex "61960CC0002"^^xsd:string ;
+                                                                     
+                                                                     cdm:resource_legal_type "CC"^^xsd:string ;
+                                                                     
+                                                                     cdm:work_id_document "celex:61960CC0002"^^xsd:string ;
+                                                                     
+                                                                     cdm:resource_legal_information_miscellaneous "{AFFAIRE|http://publications.europa.eu/resource/authority/fd_400/AFFAIRE} {:|http://publications.europa.eu/resource/authority/fd_400/%3A} {61960CJ0003|http://anycellar.publications.europa.eu/resource/celex/61960CJ0003}"^^xsd:string ;
+                                                                     
+                                                                     cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                     
+                                                                     cdm:case-law_delivered_by_judge <http://anycellar.publications.europa.eu/resource/agent/Catalano> ;
+                                                                     
+                                                                     cdm:case-law_delivered_by_advocate-general <http://anycellar.publications.europa.eu/resource/agent/Lagrange> ;
+                                                                     
+                                                                     cdm:work_created_by_agent <http://publications.europa.eu/resource/authority/corporate-body/CJ> ;
+                                                                     
+                                                                     cdm:case-law_commented_by_agent <http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO> ;
+                                                                     
+                                                                     cdm:case-law_originates_in_country <http://publications.europa.eu/resource/authority/country/DEU> ;
+                                                                     
+                                                                     cdm:work_part_of_collection_document <http://publications.europa.eu/resource/authority/document-collection/CELEX> ;
+                                                                     
+                                                                     cdm:resource_legal_has_type_act_concept_type_act <http://publications.europa.eu/resource/authority/fd_030/CONCLUSIONS> ;
+                                                                     
+                                                                     cdm:resource_legal_is_about_subject-matter <http://publications.europa.eu/resource/authority/fd_070/COMB> ,
+                                                                                                                        <http://publications.europa.eu/resource/authority/fd_070/SAUV> ;
+                                                                     
+                                                                     cdm:case-law_has_type_procedure_concept_type_procedure <http://publications.europa.eu/resource/authority/fd_100/ANNU%3DRI> ;
+                                                                     
+                                                                     cdm:case-law_defended_by_agent <http://publications.europa.eu/resource/authority/fd_110/HAUT> ,
+                                                                                                            <http://publications.europa.eu/resource/authority/fd_110/IC> ;
+                                                                     
+                                                                     cdm:case-law_requested_by_agent <http://publications.europa.eu/resource/authority/fd_110/PART> ;
+                                                                     
+                                                                     cdm:resource_legal_uses_originally_language <http://publications.europa.eu/resource/authority/language/FRA> ;
+                                                                     
+                                                                     cdm:resource_legal_based_on_concept_treaty <http://publications.europa.eu/resource/authority/treaty/CECA_1951> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.BUL
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.BUL> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft и Unternehmensverband des Aachener Steinkohlenbergbaues/Върховен орган"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Заключение на генералния адвокат Lagrange представено на19 май 1961 г. # Niederrheinische Bergwerks - Aktiengesellschaft и Unternehmensverband des Aachener Steinkohlenbergbaues срещу Върховен орган на Европейската общност за въглища и стомана. # Съединени дела 2 и 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/BUL> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.CES
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.CES> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft a Unternehmensverband des Aachener Steinkohlenbergbaues v. Vysoký úřad"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Stanovisko generálního advokáta - Lagrange - 19 května 1961. # Niederrheinische Bergwerks - Aktiengesellschaft a Unternehmensverband des Aachener Steinkohlenbergbaues proti Vysokému úřadu ESUO. # Spojené věci 2 a 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/CES> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DAN
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DAN> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Forslag til afgørelse fra generaladvokat Lagrange fremsat den 19. maj 1961. # Niederrheinische Bergwerks - Aktiengesellschaft og Unternehmensverband des Aachener Steinkohlenbergbaues mod Den Høje Myndighed for Det Europæiske Kul- og Stålfællesskab. # Forenede sager 2 og 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft og Unternehmensverband des Aachener Steinkohlenbergbaues mod Den Høje Myndighed"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/DAN> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DAN.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DAN.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00255"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1954-1964"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DAN> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft und Unternehmensverband des Aachener Steinkohlenbergbaues / Hohe Behörde"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Schlussanträge des Generalanwalts Lagrange vom 19. Mai 1961. # Niederrheinische Bergwerks - Aktiengesellschaft und Unternehmensverband des Aachener Steinkohlenbergbaues gegen Hohe Behörde der Europäischen Gemeinschaft für Kohle und Stahl. # Verbundene Rechtssachen 2 und 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/DEU> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU.pdf
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU.pdf> rdf:type cdm:manifestation ,
+                                                                                      owl:NamedIndividual ;
+                                                                             
+                                                                             cdm:manifestation_type "pdf"^^xsd:string ;
+                                                                             
+                                                                             cdm:manifestation_source-pool "src/eurlex/content"^^xsd:string ;
+                                                                             
+                                                                             cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                             
+                                                                             cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00283"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1961"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.DEU> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ELL
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ELL> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft και Unternehmensverband des Aachener Steinkohlenbergbaues κατά Ανωτάτης Αρχής"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Προτάσεις του γενικού εισαγγελέα Lagrange της 19ης Μαΐου 1961. # Niederrheinische Bergwerks - Aktiengesellschaft και Unternehmensverband des Aachener Steinkohlenbergbaues κατά Ανωτάτης Αρχής της Ευρωπαϊκής Κοινότητας Άνθρακα και Χάλυβα. # Συνεκδικασθείσες υποθέσεις 2 και 3/60."^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ELL> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ELL.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ELL.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00611"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1954-1964"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ELL> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft and Unternehmensverband des Aachener Steinkohlenbergbaues v High Authority"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Opinion of Mr Advocate General Lagrange delivered on 19 May 1961. # Niederrheinische Bergwerks - Aktiengesellschaft and Unternehmensverband des Aachener Steinkohlenbergbaues v High Authority of the European Coal and Steel Community. # Joined cases 2 and 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ENG> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG.pdf
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG.pdf> rdf:type cdm:manifestation ,
+                                                                                      owl:NamedIndividual ;
+                                                                             
+                                                                             cdm:manifestation_type "pdf"^^xsd:string ;
+                                                                             
+                                                                             cdm:manifestation_source-pool "src/eurlex/content"^^xsd:string ;
+                                                                             
+                                                                             cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                             
+                                                                             cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00133"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1961"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ENG> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.EST
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.EST> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Kohtujuristi ettepanek - Lagrange - 19. mai 1961. # Niederrheinische Bergwerks - Aktiengesellschaft ja Unternehmensverband des Aachener Steinkohlenbergbaues versus ESTÜ Ülemamet. # Liidetud kohtuasjad 2 ja 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft ja Unternehmensverband des Aachener Steinkohlenbergbaues vs. Ülemamet"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/EST> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FIN
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FIN> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Julkisasiamiehen ratkaisuehdotus Lagrange 19 päivänä toukokuuta 1961. # Niederrheinische Bergwerks-Aktiengesellschaft ja Unternehmensverband des Aachener Steinkohlenbergbaues v. Euroopan hiili- ja teräsyhteisön korkea viranomainen. # Yhdistetyt asiat 2/60 ja 3/60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft ja Unternehmensverband des Aachener Steinkohlenbergbaues v. korkea viranomainen"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/FIN> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Conclusions de l'avocat général Lagrange présentées le 19 mai 1961. # Niederrheinische Bergwerks - Aktiengesellschaft et Unternehmensverband des Aachener Steinkohlenbergbaues contre Haute Autorité de la Communauté européenne du charbon et de l'acier. # Affaires jointes 2 et 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft et Unternehmensverband des Aachener Steinkohlenbergbaues / Haute Autorité"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/FRA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA.pdf
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA.pdf> rdf:type cdm:manifestation ,
+                                                                                      owl:NamedIndividual ;
+                                                                             
+                                                                             cdm:manifestation_type "pdf"^^xsd:string ;
+                                                                             
+                                                                             cdm:manifestation_source-pool "src/eurlex/content"^^xsd:string ;
+                                                                             
+                                                                             cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                             
+                                                                             cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00263"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1961"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.FRA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.HUN
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.HUN> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Lagrange főtanácsnok indítványa, az ismertetés napja: 1961. május 19. # Niederrheinische Bergwerks - Aktiengesellschaft és Unternehmensverband des Aachener Steinkohlenbergbaues kontra ESZAK Főhatóság. # 2-60. és 3-60. sz. egyesített ügyek"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft és Unternehmensverband des Aachener Steinkohlenbergbaues kontra Főhatóság"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/HUN> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Conclusioni dell'avvocato generale Lagrange del 19 maggio 1961. # Niederrheinische Bergwerks - Aktiengesellschaft e Unternehmensverband des Aachener Steinkohlenbergbaues contro l'Alta Autorità della Comunità europea del Carbone e dell'Acciaio. # Cause riunite 2 e 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft e Unternehmensverband des Aachener Steinkohlenbergbaues / Alta Autorità"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/ITA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA.pdf
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA.pdf> rdf:type cdm:manifestation ,
+                                                                                      owl:NamedIndividual ;
+                                                                             
+                                                                             cdm:manifestation_type "pdf"^^xsd:string ;
+                                                                             
+                                                                             cdm:manifestation_source-pool "src/eurlex/content"^^xsd:string ;
+                                                                             
+                                                                             cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                             
+                                                                             cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00251"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1961"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.ITA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.LAV
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.LAV> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft un Unternehmensverband des Aachener Steinkohlenbergbaues/Augstā iestāde"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Ģenerāladvokāta Lagrange secinājumi, sniegti 1961. gada 19.maijā. # Niederrheinische Bergwerks - Aktiengesellschaft un Unternehmensverband des Aachener Steinkohlenbergbaues pret EOTK Augsto iestādi. # Apvienotās lietas 2 un 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/LAV> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.LIT
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.LIT> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Generalinio advokato Lagrange išvada, pateikta 1961 m. gegužės 19 d. # Niederrheinische Bergwerks - Aktiengesellschaft ir Unternehmensverband des Aachener Steinkohlenbergbaues prieš Europos anglių ir plieno bendrijos Aukščiausiąją valdžios instituciją. # Sujungtos bylos 2 ir 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft ir Unternehmensverband des Aachener Steinkohlenbergbaues prieš Vyriausiąją valdybą"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/LIT> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.MLT
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.MLT> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Konklużjonijiet ta' l-Avukat Ġenerali - Lagrange - 19 ta' Mejju 1961. # Niederrheinische Bergwerks - Aktiengesellschaft u Unternehmensverband des Aachener Steinkohlenbergbaues vs L-Awtorità Għolja tal-Komunità Ewropea tal-Faħam u l-Azzar. # Każijiet Magħquda 2 u 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft u Unternehmensverband des Aachener Steinkohlenbergbaues vs Awtorità Għolja"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/MLT> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Conclusie van advocaat-generaal Lagrange van 19 mei 1961. # Niederrheinische Bergwerks - Aktiengesellschaft en Unternehmensverband des Aachener Steinkohlenbergbaues tegen Hoge Autoriteit van de Europese Gemeenschap voor Kolen en Staal. # Gevoegde zaken 2 en 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft en Unternehmensverband des Aachener Steinkohlenbergbaues/Hoge Autoriteit"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/NLD> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD.pdf
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD.pdf> rdf:type cdm:manifestation ,
+                                                                                      owl:NamedIndividual ;
+                                                                             
+                                                                             cdm:manifestation_type "pdf"^^xsd:string ;
+                                                                             
+                                                                             cdm:manifestation_source-pool "src/eurlex/content"^^xsd:string ;
+                                                                             
+                                                                             cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                             
+                                                                             cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00271"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1961"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.NLD> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POL
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POL> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft i Unternehmensverband des Aachener Steinkohlenbergbaues przeciwko Wysokiej Władzy"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Opinia rzecznika generalnego Lagrange przedstawione w dniu 19 maja 1961 r. # Niederrheinische Bergwerks - Aktiengesellschaft i Unternehmensverband des Aachener Steinkohlenbergbaues przeciwko Wysokiej Władzy EWWiS. # Sprawy połączone 2 oraz 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/POL> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Conclusões do advogado-geral Lagrange apresentadas em 19 de Maio de 1961. # Niederrheinische Bergwerks - Aktiengesellschaft e Unternehmensverband des Aachener Steinkohlenbergbaues eV contra Alta Autoridade da Comunidade Europeia do Carvão e do Aço. # Processos apensos 2 e 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft e Unternehmensverband des Aachener Steinkohlenbergbaues/Alta Autoridade"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/POR> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR.pdf
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR.pdf> rdf:type cdm:manifestation ,
+                                                                                      owl:NamedIndividual ;
+                                                                             
+                                                                             cdm:manifestation_type "pdf"^^xsd:string ;
+                                                                             
+                                                                             cdm:manifestation_source-pool "src/eurlex/content"^^xsd:string ;
+                                                                             
+                                                                             cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                             
+                                                                             cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR.print
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR.print> rdf:type cdm:manifestation_special-court-report_part ,
+                                                                                        owl:NamedIndividual ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_page_first "00611"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_year "1954-1961"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_special-court-report_part_type "TEST"^^xsd:string ;
+                                                                               
+                                                                               cdm:manifestation_type "print"^^xsd:string ;
+                                                                               
+                                                                               cdm-annotation:build_info "$BUILD_INFO$" ;
+                                                                               
+                                                                               cdm:manifestation_manifests_expression <http://anycellar.publications.europa.eu/resource/celex/61960CC0002.POR> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.RON
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.RON> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Concluziile avocatului general Lagrange prezentate la data de19 mai 1961. # Niederrheinische Bergwerks - Aktiengesellschaft și Unternehmensverband des Aachener Steinkohlenbergbaues împotriva Înaltei Autorități a Comunității Europene a Cărbunelui și Oțelului. # Cauze conexate 2 și 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft și Unternehmensverband des Aachener Steinkohlenbergbaues/Înalta Autoritate"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/RON> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SLK
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SLK> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft a Unternehmensverband des Aachener Steinkohlenbergbaues/Vysoký úrad"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Návrhy generálneho advokáta - Lagrange - 19. mája 1961. # Niederrheinische Bergwerks - Aktiengesellschaft a Unternehmensverband des Aachener Steinkohlenbergbaues proti Vysokému úradu ESUO. # Spojené veci 2 a 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/SLK> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SLV
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SLV> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft in Unternehmensverband des Aachener Steinkohlenbergbaues proti Visoka oblast"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title "Sklepni predlogi generalnega pravobranilca - Lagrange - 19. maja 1961. # Niederrheinische Bergwerks - Aktiengesellschaft in Unternehmensverband des Aachener Steinkohlenbergbaues proti Visoki oblasti Evropske skupnosti za premog in jeklo. # Združeni zadevi 2 in 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/SLV> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SPA
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SPA> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Conclusiones del Abogado General Lagrange presentadas el 19 de mayo de 1961. # Niederrheinische Bergwerks - Aktiengesellschaft y Unternehmensverband des Aachener Steinkohlenbergbaues contra Alta Autoridad de la Comunidad Europea del Carbón y del Acero. # Asuntos acumulados 2 y 3-60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft y Unternehmensverband des Aachener Steinkohlenbergbaues/Alta Autoridad"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/SPA> .
+
+
+
+###  http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SWE
+
+<http://anycellar.publications.europa.eu/resource/celex/61960CC0002.SWE> rdf:type cdm:expression ,
+                                                                                  owl:NamedIndividual ;
+                                                                         
+                                                                         cdm:expression_title "Förslag till avgörande av generaladvokat Lagrange föredraget den 19 maj 1961. # Niederrheinische Bergwerks - Aktiengesellschaft och Unternehmensverband des Aachener Steinkohlenbergbaues mot Europeiska kol- och stålgemenskapens höga myndighet. # Förenade målen 2/60 och 3/60."^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_alternative "Niederrheinische Bergwerks-Aktiengesellschaft och Unternehmensverband des Aachener Steinkohlenbergbaues mot Höga myndigheten"^^xsd:string ;
+                                                                         
+                                                                         cdm:expression_title_information_additional "TITJUR"^^xsd:string ;
+                                                                         
+                                                                         cdm-annotation:build_info "cdm:4441  tdm:1523  xslt:3945 saxon:9.0.0.1J JVM:1.6.0_29 metaconvJar:1.1.1 builddate:13/11/2012 10:38:13" ;
+                                                                         
+                                                                         cdm:expression_belongs_to_work <http://anycellar.publications.europa.eu/resource/celex/61960CC0002> ;
+                                                                         
+                                                                         cdm:expression_uses_language <http://publications.europa.eu/resource/authority/language/SWE> .
+
+
+
+###  http://publications.europa.eu/resource/authority/corporate-body/CJ
+
+<http://publications.europa.eu/resource/authority/corporate-body/CJ> rdf:type cdm:institution ,
+                                                                              owl:NamedIndividual ;
+                                                                     
+                                                                     skos:inScheme <http://publications.europa.eu/resource/authority/corporate-body/> .
+
+
+
+###  http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO
+
+<http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO> rdf:type cdm:institution ,
+                                                                                     owl:NamedIndividual ;
+                                                                            
+                                                                            skos:inScheme <http://publications.europa.eu/resource/authority/corporate-body/> .
+
+
+
+###  http://publications.europa.eu/resource/authority/fd_110/HAUT
+
+<http://publications.europa.eu/resource/authority/fd_110/HAUT> rdf:type cdm:ATTO_FD_110 ,
+                                                                        owl:NamedIndividual ;
+                                                               
+                                                               skos:inScheme <http://publications.europa.eu/resource/authority/fd_110/> .
+
+
+
+###  http://publications.europa.eu/resource/authority/fd_110/IC
+
+<http://publications.europa.eu/resource/authority/fd_110/IC> rdf:type cdm:ATTO_FD_110 ,
+                                                                      owl:NamedIndividual ;
+                                                             
+                                                             skos:inScheme <http://publications.europa.eu/resource/authority/fd_110/> .
+
+
+
+###  http://publications.europa.eu/resource/authority/fd_110/PART
+
+<http://publications.europa.eu/resource/authority/fd_110/PART> rdf:type cdm:ATTO_FD_110 ,
+                                                                        owl:NamedIndividual ;
+                                                               
+                                                               skos:inScheme <http://publications.europa.eu/resource/authority/fd_110/> .
+
+
+
+
+###  Generated by the OWL API (version 3.3.1957) http://owlapi.sourceforge.net
+

@@ -1,0 +1,865 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY skos "http://www.w3.org/2004/02/skos/core#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY cdm "http://publications.europa.eu/ontology/cdm#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY cdm-annotation "http://publications.europa.eu/ontology/annotation#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:cdm="http://publications.europa.eu/ontology/cdm#"
+     xmlns:cdm-annotation="http://publications.europa.eu/ontology/annotation#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <AnnotationProperty rdf:about="&cdm;resource_legal_id_obsolete_document"/>
+    <AnnotationProperty rdf:about="&cdm;expression_belongs_to_work"/>
+    <AnnotationProperty rdf:about="&cdm;expression_title"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_number_natural_celex"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_has_type_act_concept_type_act"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_id_celex"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_case-law_operative_part"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_manifests_expression"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_case-law_summary"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_states_failure_concerning_resource_legal"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_is_about_concept_new_case-law"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_uses_originally_language"/>
+    <AnnotationProperty rdf:about="&cdm;work_date_creation_legacy"/>
+    <AnnotationProperty rdf:about="&cdm;work_id_document"/>
+    <AnnotationProperty rdf:about="&cdm;expression_uses_language"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_comment_internal"/>
+    <AnnotationProperty rdf:about="&cdm;work_cites_work"/>
+    <AnnotationProperty rdf:about="&cdm;expression_title_alternative"/>
+    <AnnotationProperty rdf:about="&cdm;work_date_document"/>
+    <AnnotationProperty rdf:about="&cdm;work_created_by_agent"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_delivered_by_judge"/>
+    <AnnotationProperty rdf:about="&cdm;work_part_of_collection_document"/>
+    <AnnotationProperty rdf:about="&cdm-annotation;build_info"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_is_about_subject-matter"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_case-law_keywords"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_id_sector"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_type"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_requested_by_agent"/>
+    <AnnotationProperty rdf:about="&cdm;expression_title_information_additional"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_case-law_grounds"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_based_on_concept_treaty"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_year"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_case-law_parties"/>
+    <AnnotationProperty rdf:about="&cdm;manifestation_type"/>
+    <AnnotationProperty rdf:about="&cdm;work_id_obsolete_notice"/>
+    <AnnotationProperty rdf:about="&cdm;resource_legal_date_request_opinion"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_commented_by_agent"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_delivered_by_advocate-general"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_defended_by_agent"/>
+    <AnnotationProperty rdf:about="&cdm;memberList"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_article_journal_related"/>
+    <AnnotationProperty rdf:about="&skos;inScheme"/>
+    <AnnotationProperty rdf:about="&cdm;listedProperty"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_has_type_procedure_concept_type_procedure"/>
+    <AnnotationProperty rdf:about="&cdm;case-law_originates_in_country"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="&xsd;date"/>
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#gYear -->
+
+    <rdfs:Datatype rdf:about="&xsd;gYear"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#ATTO_FD_110 -->
+
+    <Class rdf:about="&cdm;ATTO_FD_110"/>
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#document_cjeu -->
+
+    <Class rdf:about="&cdm;document_cjeu"/>
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#expression -->
+
+    <Class rdf:about="&cdm;expression"/>
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#institution -->
+
+    <Class rdf:about="&cdm;institution"/>
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#judgement -->
+
+    <Class rdf:about="&cdm;judgement"/>
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#manifestation -->
+
+    <Class rdf:about="&cdm;manifestation"/>
+    
+
+
+    <!-- http://publications.europa.eu/ontology/cdm#manifestation_case-law -->
+
+    <Class rdf:about="&cdm;manifestation_case-law"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535 -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535">
+        <rdf:type rdf:resource="&cdm;document_cjeu"/>
+        <rdf:type rdf:resource="&cdm;judgement"/>
+        <cdm:resource_legal_number_natural_celex rdf:datatype="&xsd;positiveInteger">0535</cdm:resource_legal_number_natural_celex>
+        <cdm:resource_legal_year rdf:datatype="&xsd;gYear">2007</cdm:resource_legal_year>
+        <cdm:resource_legal_date_request_opinion rdf:datatype="&xsd;date">2007-11-30</cdm:resource_legal_date_request_opinion>
+        <cdm:work_date_document rdf:datatype="&xsd;date">2010-10-14</cdm:work_date_document>
+        <cdm:work_date_creation_legacy rdf:datatype="&xsd;date">2010-10-20</cdm:work_date_creation_legacy>
+        <cdm:resource_legal_comment_internal rdf:datatype="&xsd;string">201010C0218</cdm:resource_legal_comment_internal>
+        <cdm:resource_legal_id_sector rdf:datatype="&xsd;string">6</cdm:resource_legal_id_sector>
+        <cdm:resource_legal_id_celex rdf:datatype="&xsd;string">62007CJ0535</cdm:resource_legal_id_celex>
+        <cdm:resource_legal_id_obsolete_document rdf:datatype="&xsd;string">62007J0535</cdm:resource_legal_id_obsolete_document>
+        <cdm:work_id_obsolete_notice rdf:datatype="&xsd;positiveInteger">769793</cdm:work_id_obsolete_notice>
+        <cdm:case-law_article_journal_related rdf:datatype="&xsd;string">Bastmeijer, C.J.: Milieu en recht 2011 p.30-32</cdm:case-law_article_journal_related>
+        <cdm:resource_legal_type rdf:datatype="&xsd;string">CJ</cdm:resource_legal_type>
+        <cdm:work_id_document rdf:datatype="&xsd;string">celex:62007CJ0535</cdm:work_id_document>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:case-law_delivered_by_judge rdf:resource="http://anycellar.publications.europa.eu/resource/agent/Bay%20Larsen"/>
+        <cdm:case-law_delivered_by_advocate-general rdf:resource="http://anycellar.publications.europa.eu/resource/agent/Sharpston"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/11997E249"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/12008E288"/>
+        <cdm:case-law_states_failure_concerning_resource_legal rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31979L0409"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31979L0409"/>
+        <cdm:case-law_states_failure_concerning_resource_legal rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31992L0043"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31992L0043"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/61995CJ0044"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/61997CJ0166"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/61998CJ0374"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62000CJ0240"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62001CJ0415"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62002CJ0394"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62004CJ0006"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62004CJ0235"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62004CJ0418"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62005CJ0183"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62005CJ0236"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62006CJ0186"/>
+        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0293"/>
+        <cdm:work_created_by_agent rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/CURIA"/>
+        <cdm:case-law_commented_by_agent rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO"/>
+        <cdm:case-law_originates_in_country rdf:resource="http://publications.europa.eu/resource/authority/country/AUT"/>
+        <cdm:work_part_of_collection_document rdf:resource="http://publications.europa.eu/resource/authority/document-collection/CELEX"/>
+        <cdm:resource_legal_has_type_act_concept_type_act rdf:resource="http://publications.europa.eu/resource/authority/fd_030/ARRET"/>
+        <cdm:resource_legal_is_about_subject-matter rdf:resource="http://publications.europa.eu/resource/authority/fd_070/ENV"/>
+        <cdm:case-law_has_type_procedure_concept_type_procedure rdf:resource="http://publications.europa.eu/resource/authority/fd_100/CONS%3DOB"/>
+        <cdm:case-law_has_type_procedure_concept_type_procedure rdf:resource="http://publications.europa.eu/resource/authority/fd_100/CONS%3DRF"/>
+        <cdm:case-law_defended_by_agent rdf:resource="http://publications.europa.eu/resource/authority/fd_110/AT"/>
+        <cdm:case-law_requested_by_agent rdf:resource="http://publications.europa.eu/resource/authority/fd_110/COMM"/>
+        <cdm:case-law_defended_by_agent rdf:resource="http://publications.europa.eu/resource/authority/fd_110/EM"/>
+        <cdm:case-law_requested_by_agent rdf:resource="http://publications.europa.eu/resource/authority/fd_110/IC"/>
+        <cdm:case-law_is_about_concept_new_case-law rdf:resource="http://publications.europa.eu/resource/authority/fd_578/3.01.00"/>
+        <cdm:case-law_is_about_concept_new_case-law rdf:resource="http://publications.europa.eu/resource/authority/fd_578/3.01.02"/>
+        <cdm:case-law_is_about_concept_new_case-law rdf:resource="http://publications.europa.eu/resource/authority/fd_578/4.23"/>
+        <cdm:resource_legal_uses_originally_language rdf:resource="http://publications.europa.eu/resource/authority/language/DEU"/>
+        <cdm:resource_legal_based_on_concept_treaty rdf:resource="http://publications.europa.eu/resource/authority/treaty/TEEC_1957"/>
+        <cdm:memberList>
+            <rdf:Description>
+                <cdm:listedProperty rdf:resource="&cdm;case-law_is_about_concept"/>
+            </rdf:Description>
+        </cdm:memberList>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.BUL -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.BUL">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Комисия/Австрия</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Решение на Съда (втори състав) от14 октомври 2010 г. # Европейска комисия срещу Република Австрия. # Неизпълнение на задължения от държава членка - Директиви 79/409/ЕИО и 92/43/ЕИО - Опазване на дивите птици - Неправилно определяне и недостатъчна правна защита на специалните защитени зони. # Дело C-535/07.</cdm:expression_title>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/BUL"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.CES -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.CES">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komise v. Rakousko</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Rozsudek Soudního dvora (druhého senátu) ze dne 14. října 2010. # Evropská komise proti Rakouské republice. # Nesplnění povinnosti státem - Směrnice 79/409/EHS a 92/43/EHS - Ochrana volně žijících ptáků - Nesprávné vyhlášení a nedostatečná právní ochrana zvláště chráněných oblastí. # Věc C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/CES"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DAN -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DAN">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">Domstolens Dom (Anden Afdeling) af 14. oktober  2010. # Europa-Kommissionen mod Republikken Østrig. # Traktatbrud - direktiv 79/409/EØF og 92/43/EØF - beskyttelse af vilde fugle - fejlagtig udpegning og utilstrækkelig retlig beskyttelse af særligt beskyttede områder. # Sag C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Kommissionen mod Østrig</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/DAN"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DEU -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DEU">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Kommission / Österreich</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title rdf:datatype="&xsd;string">Urteil des Gerichtshofes (Zweite Kammer) vom 14. Oktober  2010. # Europäische Kommission gegen Republik Österreich. # Vertragsverletzung eines Mitgliedstaats - Richtlinien 79/409/EWG und 92/43/EWG - Erhaltung der wildlebenden Vogelarten - Fehlerhafte Ausweisung und unzureichender rechtlicher Schutz der besonderen Schutzgebiete. # Rechtssache C-535/07.</cdm:expression_title>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/DEU"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ELL -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ELL">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title rdf:datatype="&xsd;string">Απόφαση του Δικαστηρίου (δεύτερο τμήμα) της 14ης Οκτωβρίου  2010. # Ευρωπαϊκή Επιτροπή κατά Δημοκρατίας της Αυστρίας. # Παράβαση κράτους μέλους - Οδηγίες 79/409/ΕΟΚ και 92/43/ΕΟΚ - Διατήρηση των αγρίων πτηνών - Μη ορθός καθορισμός και ανεπαρκής έννομη προστασία των ζωνών ειδικής προστασίας. # Υπόθεση C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Επιτροπή κατά Αυστρίας</cdm:expression_title_alternative>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ELL"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ENG -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ENG">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commission v Austria</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Judgment of the Court (Second Chamber) of 14 October 2010. # European Commission v Republic of Austria. # Failure of a Member State to fulfil obligations - Directives 79/409/EEC and 92/43/EEC - Conservation of wild birds - Incorrect designation and inadequate legal protection of special protection areas. # Case C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.EST -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.EST">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">Euroopa Kohtu otsus (teine koda), 14. oktoober 2010. # Euroopa Komisjon versus Austria Vabariik. # Liikmesriigi kohustuste rikkumine - Direktiivid 79/409/EMÜ ja 92/43/EMÜ - Loodusliku linnustiku kaitse - Erikaitsealade ebaõige määramine ja ebapiisav õiguskaitse. # Kohtuasi C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">komisjon vs. Austria</cdm:expression_title_alternative>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/EST"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FIN -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FIN">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title rdf:datatype="&xsd;string">Yhteisöjen tuomioistuimen tuomio (toinen jaosto) 14 päivänä lokakuuta 2010. # Euroopan komissio vastaan Itävallan tasavalta. # Jäsenyysvelvoitteiden noudattamatta jättäminen - Direktiivit 79/409/ETY ja 92/43/ETY - Luonnonvaraisten lintujen suojelu - Erityissuojelualueiden virheellinen osoittaminen ja riittämätön oikeudellinen suojelu. # Asia C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">komissio v. Itävalta</cdm:expression_title_alternative>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/FIN"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">Arrêt de la Cour (deuxième chambre) du 14 octobre 2010. # Commission européenne contre République d&apos;Autriche. # Manquement d’État - Directives 79/409/CEE et 92/43/CEE - Conservation des oiseaux sauvages - Désignation incorrecte et protection juridique insuffisante des zones de protection spéciale. # Affaire C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commission / Autriche</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/FRA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.HUN -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.HUN">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">A Bíróság (második tanács) 2010. október 14-i ítélete. # Európai Bizottság kontra Osztrák Köztársaság. # Tagállami kötelezettségszegés - 79/409/EGK és 92/43/EGK irányelv - A vadon élő madarak védelme - Különleges védelmi területek nem megfelelő kijelölése és elégtelen jogi védelme. # C-535/07. sz. ügy</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Bizottság kontra Ausztria</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/HUN"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ITA -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ITA">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commissione / Austria</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Sentenza della Corte (Seconda Sezione) del 14 ottobre 2010. # Commissione europea contro Repubblica d&apos;Austria. # Inadempimento di uno Stato - Direttive 79/409/CEE e 92/43/CEE - Conservazione degli uccelli selvatici - Designazione erronea e tutela giuridica insufficiente delle zone di protezione speciale. # Causa C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ITA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LAV -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LAV">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisija/Austrija</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title rdf:datatype="&xsd;string">Tiesas spriedums (otrā palāta) 2010. gada 14.oktobrī. # Eiropas Komisija pret Austrijas Republiku. # Valsts pienākumu neizpilde - Direktīvas 79/409/EEK un 92/43/EEK - Savvaļas putnu aizsardzība - Īpaši aizsargājamo teritoriju nepareiza noteikšana un nepietiekama tiesiskā aizsardzība. # Lieta C-535/07.</cdm:expression_title>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/LAV"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LIT -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LIT">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">2010 m. spalio 14 d. Teisingumo Teismo (antroji kolegija) sprendimas. # Europos Komisija prieš Austrijos Respubliką. # Valstybės įsipareigojimų neįvykdymas - Direktyvos 79/409/EEB ir 92/43/EEB - Laukinių paukščių apsauga - Specialios apsaugos teritorijų neteisingas įsteigimas ir nepakankama teisinė apsauga. # Byla C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisija prieš Austriją</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/LIT"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.MLT -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.MLT">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Il-Kummissjoni vs L-Awstrija</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Sentenza tal-Qorti tal-Ġustizzja (it-Tieni Awla) tal-14 ta&apos; Ottubru 2010. # Il-Kummissjoni Ewropea vs ir-Repubblika ta&apos; l-Awstrija. # Nuqqas ta’ Stat li jwettaq obbligu - Direttivi 79/409/KEE u 92/43/KEE - Konservazzjoni ta’ għasafar selvaġġi - Klassifikazzjoni inkorretta u protezzjoni legali insuffiċjenti ta’ żoni speċjali tal-protezzjoni. # Kawża C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/MLT"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.NLD -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.NLD">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">Arrest van het Hof (Tweede kamer) van 14 oktober 2010. # Europese Commissie tegen Republiek Oostenrijk. # Niet-nakoming - Richtlijnen 79/409/EEG en 92/43/EEG - Behoud van vogelstand - Onjuiste aanwijzing en onvoldoende rechtsbescherming van specialebeschermingszones. # Zaak C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commissie/Oostenrijk</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/NLD"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POL -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POL">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisja przeciwko Austrii</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title rdf:datatype="&xsd;string">Wyrok Trybunału (druga izba) z dnia 14 października 2010 r. # Komisja Europejska przeciwko Republice Austrii. # Uchybienie zobowiązaniom państwa członkowskiego - Dyrektywy 79/409/EWG i 92/43/EWG - Ochrona dzikiego ptactwa - Nieprawidłowe wyznaczenie i niewystarczająca ochrona prawna obszarów specjalnej ochrony. # Sprawa C-535/07.</cdm:expression_title>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/POL"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POR -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POR">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">Acórdão do Tribunal de Justiça (Segunda Secção) de 14 de Outubro de 2010. # Comissão Europeia contra República da Áustria. # Incumprimento de Estado - Directivas 79/409/CEE e 92/43/CEE - Conservação das aves selvagens - Designação incorrecta e protecção jurídica insuficiente das zonas de protecção especial. # Processo C-535/07.</cdm:expression_title>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Comissão/Áustria</cdm:expression_title_alternative>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/POR"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.RON -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.RON">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Comisia/Austria</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Hotărârea Curții (camera a doua) din data de14 octombrie 2010. # Comisia Europeană împotriva Republicii Austria. # Neîndeplinirea obligațiilor de către un stat membru - Directivele 79/409/CEE și 92/43/CEE - Conservarea păsărilor sălbatice - Desemnare incorectă și protecție juridică insuficientă a ariilor de protecție specială. # Cauza C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/RON"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLK -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLK">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisia/Rakúsko</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Rozsudok Súdneho dvora (druhá komora) zo 14. októbra 2010. # Európska komisia proti Rakúskej republike. # Nesplnenie povinnosti členským štátom - Smernice 79/409/EHS a 92/43/EHS - Ochrana voľne žijúceho vtáctva - Nesprávne označenie a nedostatočná právna ochrana území osobitnej ochrany. # Vec C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SLK"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLV -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLV">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisija proti Avstriji</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Sodba Sodišča (drugi senat) z dne14. oktobra 2010. # Evropska komisija proti Republiki Avstriji. # Neizpolnitev obveznosti države - Direktivi 79/409/EGS in 92/43/EGS - Ohranjanje prosto živečih ptic - Nepravilna določitev in nezadostno pravno varstvo posebnih območij varstva. # Zadeva C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SLV"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">Comisión/Austria</cdm:expression_title_alternative>
+        <cdm:expression_title rdf:datatype="&xsd;string">Sentencia del Tribunal de Justicia (Sala Segunda) de 14 de octubre de 2010. # Comisión Europea contra República de Austria. # Incumplimiento de Estado - Directivas 79/409/CEE y 92/43/CEE - Conservación de las aves silvestres - Designación incorrecta y protección jurídica insuficiente de las zonas de protección especial. # Asunto C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SPA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.html -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.html">
+        <rdf:type rdf:resource="&cdm;manifestation"/>
+        <cdm:manifestation_type rdf:datatype="&xsd;string">html</cdm:manifestation_type>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:manifestation_manifests_expression rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.txt -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.txt">
+        <rdf:type rdf:resource="&cdm;manifestation_case-law"/>
+        <cdm:manifestation_case-law_operative_part rdf:datatype="&rdf;XMLLiteral">
+      &lt;TXT_DI&gt;
+        &lt;p&gt;En virtud de todo lo expuesto, el Tribunal de Justicia (Sala Segunda) decide:&lt;/p&gt;
+        &lt;p&gt;1) Declarar que la República de Austria ha incumplido las obligaciones que le incumben en virtud de las Directivas 79/409/CEE del Consejo, de 2 de abril de 1979, relativa a la conservación de las aves silvestres y 92/43/CEE del Consejo, de 21 de mayo de 1992, relativa a la conservación de los hábitats naturales y de la fauna y flora silvestres: &lt;/p&gt;
+        &lt;p&gt;– al no haber clasificado correctamente, sobre la base de criterios ornitológicos, como zona de protección especial el lugar de Hanság, en el Land de Burgenland, y al no haber delimitado correctamente la zona de protección especial de Niedere Tauern, en el Land de Estiria, con arreglo al artículo 4, apartado 1, de la Directiva 79/409, y &lt;/p&gt;
+        &lt;p&gt;– al no haber proporcionado a las zonas de protección especial de Maltsch, de Wiesengebiete im Freinwald, de Pfeifer Anger, de Oberes Donautal y de Untere Traun, en el Land de Alta Austria, y a la zona de protección especial de Verwall, en el Land de Vorarlberg, una protección jurídica que cumpla las exigencias impuestas en los artículos 4 de la Directiva 79/409, y 6, apartado 2, en relación con el 7 de la Directiva 92/43. &lt;/p&gt;
+        &lt;p&gt;2) Desestimar el recurso en todo lo demás. &lt;/p&gt;
+        &lt;p&gt;3) La Comisión Europea, la República de Austria y la República Federal de Alemania cargarán con sus propias costas. &lt;/p&gt;
+      &lt;/TXT_DI&gt;
+    </cdm:manifestation_case-law_operative_part>
+        <cdm:manifestation_case-law_parties rdf:datatype="&rdf;XMLLiteral">
+      &lt;TXT_I1&gt;
+        &lt;p&gt;En el asunto C‑535/07,&lt;/p&gt;
+        &lt;p&gt;que tiene por objeto un recurso por incumplimiento interpuesto, con arreglo al artículo 226 CE, el 30 de noviembre de 2007,&lt;/p&gt;
+        &lt;p&gt;Comisión Europea , representada por el Sr. R. Sauer y la Sra. D. Recchia, en calidad de agentes, que designa domicilio en Luxemburgo,&lt;/p&gt;
+        &lt;p&gt;parte demandante,&lt;/p&gt;
+        &lt;p&gt;y&lt;/p&gt;
+        &lt;p&gt;República de Austria , representada por los Sres. E. Riedl y E. Pürgy y la Sra. K. Drechsel, en calidad de agentes, que designa domicilio en Luxemburgo,&lt;/p&gt;
+        &lt;p&gt;parte demandada,&lt;/p&gt;
+        &lt;p&gt;apoyada por:&lt;/p&gt;
+        &lt;p&gt;República Federal de Alemania , representada por los Sres. M. Lumma y J. Möller, en calidad de agentes,&lt;/p&gt;
+        &lt;p&gt;parte coadyuvante,&lt;/p&gt;
+        &lt;p&gt;EL TRIBUNAL DE JUSTICIA (Sala Segunda),&lt;/p&gt;
+        &lt;p&gt;integrado por el Sr. J.‑C. Bonichot, Presidente de la Sala Cuarta, en funciones de Presidente de la Sala Segunda, y el Sr. L. Bay Larsen (Ponente) y la Sra. C. Toader, Jueces;&lt;/p&gt;
+        &lt;p&gt;Abogado General: Sra. E. Sharpston;&lt;/p&gt;
+        &lt;p&gt;Secretaria: Sra. M. Ferreira, administradora principal;&lt;/p&gt;
+        &lt;p&gt;habiendo considerado los escritos obrantes en autos y celebrada la vista el 9 de julio de 2009;&lt;/p&gt;
+        &lt;p&gt;oídas las conclusiones de la Abogado General, presentadas en audiencia pública el 25 de febrero de 2010;&lt;/p&gt;
+        &lt;p&gt;dicta la siguiente&lt;/p&gt;
+        &lt;p&gt;Sentencia &lt;/p&gt;
+      &lt;/TXT_I1&gt;
+    </cdm:manifestation_case-law_parties>
+        <cdm:manifestation_case-law_keywords rdf:datatype="&rdf;XMLLiteral">
+      &lt;TXT_IX&gt;
+        &lt;p&gt;1. Recurso por incumplimiento — Examen de su fundamento por el Tribunal de Justicia — Situación que debe considerarse — Situación al expirar el plazo fijado por el dictamen motivado &lt;/p&gt;
+        &lt;p&gt;(Art. 226 CE) &lt;/p&gt;
+        &lt;p&gt;2. Medio ambiente — Conservación de las aves silvestres — Directiva 79/409/CEE — Elección y delimitación de las zonas de protección especial &lt;/p&gt;
+        &lt;p&gt;(Directiva 79/409/CE del Consejo, art. 4, aps. 1 y 2) &lt;/p&gt;
+        &lt;p&gt;3. Recurso por incumplimiento — Objeto del litigio — Determinación durante el procedimiento administrativo previo — Exposición coherente y detallada de las imputaciones — Inexistencia — Inadmisibilidad &lt;/p&gt;
+        &lt;p&gt;(Art. 226 CE) &lt;/p&gt;
+        &lt;p&gt;4. Recurso por incumplimiento — Procedimiento administrativo previo — Dictamen motivado — Contenido &lt;/p&gt;
+        &lt;p&gt;(Art. 226 CE) &lt;/p&gt;
+        &lt;p&gt;5. Medio ambiente — Conservación de las aves silvestres — Directiva 79/409/CEE — Medidas de conservación especiales — Obligaciones de los Estados miembros &lt;/p&gt;
+        &lt;p&gt;(Directivas del Consejo 79/409/CEE, art. 4, aps. 1 y 2, y 92/43/CEE, arts. 6, ap. 2, y 7) &lt;/p&gt;
+      &lt;/TXT_IX&gt;
+    </cdm:manifestation_case-law_keywords>
+        <cdm:manifestation_case-law_grounds rdf:datatype="&rdf;XMLLiteral">
+      &lt;TXT_MO&gt;
+        &lt;p&gt;1. Mediante su recurso, la Comisión de las Comunidades Europeas solicita al Tribunal de Justicia que declare que la República de Austria ha incumplido las obligaciones que le incumben en virtud de las Directivas 79/409/CEE del Consejo, de 2 de abril de 1979, relativa a la conservación de las aves silvestres (DO L 103, p. 1; EE 15/02, p. 125; en lo sucesivo, «Directiva sobre las aves») y 92/43/CEE del Consejo, de 21 de mayo de 1992, relativa a la conservación de los hábitats naturales y de la fauna y flora silvestres (DO L 206, p. 7; en lo sucesivo, «Directiva sobre los hábitats»):&lt;/p&gt;
+        &lt;p&gt;– al no haber designado correctamente, sobre la base de criterios ornitológicos (el lugar de Hanság en el Land de Burgenland), y al no haber delimitado correctamente (el lugar de Niedere Tauern en el Land de Estiria) los territorios austriacos más adecuados, en número y en superficie, para la conservación de las aves como zonas de protección especial (en lo sucesivo, «ZPE»), con arreglo al artículo 4, apartado 1 o 2, de la Directiva sobre las aves, y&lt;/p&gt;
+        &lt;p&gt;– al no haber proporcionado a una parte de las ZPE ya clasificadas una protección jurídica que cumpla las exigencias impuestas en los artículos 4, apartado 1 o 2, de la Directiva sobre las aves, y 6, apartado 2, en relación con el 7 de la Directiva sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;2. Mediante auto del Presidente del Tribunal de Justicia de 26 de mayo de 2008, se admitió la intervención de la República Federal de Alemania en apoyo de las pretensiones de la República de Austria.&lt;/p&gt;
+        &lt;p&gt;Marco jurídico &lt;/p&gt;
+        &lt;p&gt;La Directiva sobre las aves &lt;/p&gt;
+        &lt;p&gt;3. El artículo 2 de la Directiva sobre las aves establece que «los Estados miembros tomarán todas las medidas necesarias para mantener o adaptar las poblaciones de todas las especies de aves contempladas en el artículo 1 en un nivel que corresponda en particular a las exigencias ecológicas, científicas y culturales, habida cuenta de las exigencias económicas y recreativas».&lt;/p&gt;
+        &lt;p&gt;4. El artículo 3, apartado 1, de la Directiva sobre las aves establece que, teniendo en cuenta las exigencias mencionadas en el artículo 2 de dicha Directiva, los Estados miembros tomarán todas las medidas necesarias para preservar, mantener o restablecer una diversidad y una superficie suficientes de hábitats para todas las especies de aves que viven normalmente en estado salvaje en el territorio europeo de los Estados miembros en los que es aplicable el Tratado CE. En virtud del apartado 2, letra a), del mismo artículo, las medidas destinadas a la preservación, el mantenimiento y el restablecimiento de los biotopos y de los hábitats impondrán en particular la creación de zonas de protección.&lt;/p&gt;
+        &lt;p&gt;5. El artículo 4, apartados 1, 2 y 4, primera frase, de la Directiva sobre las aves dispone:&lt;/p&gt;
+        &lt;p&gt;«1. Las especies mencionadas en el Anexo I serán objeto de medidas de conservación especiales en cuanto a su hábitat, con el fin de asegurar su supervivencia y su reproducción en su área de distribución.&lt;/p&gt;
+        &lt;p&gt;En este sentido se tendrán en cuenta:&lt;/p&gt;
+        &lt;p&gt;a) las especies amenazadas de extinción;&lt;/p&gt;
+        &lt;p&gt;b) las especies vulnerables a determinadas modificaciones de sus hábitats;&lt;/p&gt;
+        &lt;p&gt;c) las especies consideradas como raras porque sus poblaciones son escasas o porque su distribución local es limitada;&lt;/p&gt;
+        &lt;p&gt;d) otras especies que requieran una atención particular debido al carácter específico de su hábitat.&lt;/p&gt;
+        &lt;p&gt;Para proceder a las evaluaciones se tendrán en cuenta las tendencias y las variaciones en los niveles de población.&lt;/p&gt;
+        &lt;p&gt;Los Estados miembros clasificarán en particular como [ZPE] de los territorios más adecuados en número y en superficie para la conservación en estas últimas dentro de la zona geográfica marítima y terrestre en que es aplicable la presente Directiva.&lt;/p&gt;
+        &lt;p&gt;2. Los Estados miembros tomarán medidas semejantes con respecto a las especies migratorias no contempladas en el Anexo I cuya llegada sea regular, teniendo en cuenta las necesidades de protección en la zona geográfica marítima y terrestre en que se aplica la presente Directiva en lo relativo a sus áreas de reproducción, de muda y de invernada y a las zonas de descanso en sus áreas de migración. A tal fin los Estados miembros asignarán una particular importancia a la producción de las zonas húmedas y muy especialmente a las de importancia internacional.&lt;/p&gt;
+        &lt;p&gt;[…]&lt;/p&gt;
+        &lt;p&gt;4. Los Estados miembros tomarán las medidas adecuadas para evitar dentro de las zonas de protección mencionadas en los apartados 1 y 2 la contaminación o el deterioro de los hábitats así como las perturbaciones que afecten a las aves, en la medida que tengan un efecto significativo respecto a los objetivos del presente artículo.»&lt;/p&gt;
+        &lt;p&gt;La Directiva sobre los hábitats &lt;/p&gt;
+        &lt;p&gt;6. En virtud del artículo 3, apartado 1, de la Directiva sobre los hábitats, se creará una red ecológica europea coherente de zonas especiales de conservación, denominada «Natura 2000», que incluirá asimismo las ZPE designadas por los Estados miembros con arreglo a las disposiciones de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;7. El artículo 6, apartado 2, de la Directiva sobre los hábitats es del siguiente tenor:&lt;/p&gt;
+        &lt;p&gt;«Los Estados miembros adoptarán las medidas apropiadas para evitar, en las zonas especiales de conservación, el deterioro de los hábitats naturales y de los hábitats de especies, así como las alteraciones que repercutan en las especies que hayan motivado la designación de las zonas, en la medida en que dichas alteraciones puedan tener un efecto apreciable en lo que respecta a los objetivos de la presente Directiva.»&lt;/p&gt;
+        &lt;p&gt;8. A tenor del artículo 7 de dicha Directiva, «las obligaciones impuestas en virtud de los apartados 2, 3 y 4 del artículo 6 de la presente Directiva sustituirán a cualesquiera obligaciones derivadas de la primera frase del apartado 4 del artículo 4 de la Directiva [sobre las aves] en lo que se refiere a las zonas clasificadas con arreglo al apartado 1 del artículo 4 o con análogo reconocimiento en virtud del apartado 2 del artículo 4 de la citada Directiva, a partir de la fecha de puesta en aplicación de la presente Directiva, o de la fecha de clasificación o de reconocimiento por parte de un Estado miembro en virtud de la Directiva [sobre las aves] si esta última fecha fuere posterior».&lt;/p&gt;
+        &lt;p&gt;Procedimiento administrativo previo &lt;/p&gt;
+        &lt;p&gt;9. El 23 de octubre de 2001, la Comisión dirigió a la República de Austria un escrito de requerimiento en el que indicaba que ésta no había clasificado como ZPE los territorios más adecuados en número y en superficie, en particular por lo que respecta a la designación del lugar de Hanság y a la delimitación del lugar de Niedere Tauern. Además, la Comisión alegó que el Estado miembro aún no había cumplido plenamente las exigencias de la Directiva sobre las aves tendentes a garantizar la protección jurídica de las ZPE en Austria.&lt;/p&gt;
+        &lt;p&gt;10. La República de Austria respondió a dicho requerimiento facilitando a la Comisión, en particular, una lista de las distintas zonas de conservación de las aves con su régimen de protección jurídica. De ese modo, destacaba la designación completa o parcial de determinadas ZPE como parque nacional, reserva natural, zona de protección del paisaje, patrimonio natural o zona de tranquilidad y, paralelamente, la existencia de leyes o de reglamentos aprobados en los distintos Länder en relación con la protección de la naturaleza.&lt;/p&gt;
+        &lt;p&gt;11. Posteriormente, el 18 de octubre de 2004, la Comisión envió a la República de Austria un escrito de requerimiento complementario que sustituía al primer escrito de requerimiento y hacía hincapié en que la clasificación y la delimitación de las ZPE continuaban siendo incorrectas y que dichas zonas carecían de medidas de protección jurídica específicas. En concreto, la Comisión señaló que el lugar Hanság aún no había sido clasificado como ZPE y que el lugar de Niedere Tauern aún no se había ampliado. También señaló que algunas zonas austriacas de conservación de las aves estaban o bien protegidas esencialmente por reglamentos relativamente antiguos o bien, en algunos casos, privadas de protección jurídica. En la mayoría de los instrumentos de protección, no se puede discernir el objetivo de conservación y de protección específica para las especies de aves que se pretende conservar y proteger. A este respecto, la Comisión considera indispensable que el marco normativo aclare al menos los objetivos de protección específica de las aves, incluso cuando el nivel de protección resulte en principio suficiente, por medio de prohibiciones de intervención y de obligaciones de conservación.&lt;/p&gt;
+        &lt;p&gt;12. Mediante su escrito de 21 de diciembre de 2004, la República de Austria transmitió sus observaciones en las que se pronunciaba, en particular, acerca de la protección jurídica de los lugares controvertidos dando explicaciones de índole general y explicaciones específicas a los distintos Länder. En este último aspecto, este Estado miembro sostenía que no puede ser determinante el que la indicación explícita de objetivos de conservación o de protección figure en el acto jurídico que sirve de instrumento de protección.&lt;/p&gt;
+        &lt;p&gt;13. Al no considerar satisfactorias las observaciones formuladas por la República de Austria, la Comisión envió el 15 de diciembre de 2006 un dictamen motivado a dicho Estado miembro conminándolo a atenerse a sus obligaciones en un plazo de dos meses a partir de la recepción del dictamen. En éste se señalaba que, en relación con los lugares de Hanság y de Niedere Tauern, el mencionado Estado miembro no se había adecuado a sus obligaciones. Por lo que atañe al estatuto jurídico de las zonas protegidas controvertidas, se indicaba que, de un modo general, es decir, también en los casos en que una ZPE se superponga a una reserva natural ya existente y goce de una protección jurídica nacional o regional más estricta, la inclusión de los objetivos de conservación, a saber, los referentes tanto a las especies de aves y a las exigencias específicas relativas a la protección de éstas como al restablecimiento de sus hábitats, junto con las medidas y obligaciones correspondientes, debía ser un elemento esencial de los reglamentos relativos a dichas zonas protegidas. Pues bien, un gran número de ZPE carece todavía de cualquier reglamento específico que garantice la protección especial de la avifauna de que se trata.&lt;/p&gt;
+        &lt;p&gt;14. Dado que las observaciones de la República de Austria en respuesta al mencionado dictamen motivado no convencieron a la Comisión, ésta interpuso el presente recurso.&lt;/p&gt;
+        &lt;p&gt;Sobre el recurso &lt;/p&gt;
+        &lt;p&gt;Sobre la primera imputación, basada en el incumplimiento de lo dispuesto en el artículo 4, apartado 1 o 2, de la Directiva sobre las aves por no haber clasificado el lugar de Hanság como ZPE y por no haber delimitado correctamente la ZPE de Niedere Tauern &lt;/p&gt;
+        &lt;p&gt;15. Con carácter preliminar, procede recordar que el artículo 4, apartado 1, de la Directiva sobre las aves obliga a los Estados miembros a clasificar como ZPE los territorios más adecuados en número y en superficie para la conservación de las especies mencionadas en el anexo I de dicha Directiva y que, en virtud del apartado 2 del mismo artículo, los Estados miembros clasificarán también como ZPE las áreas de reproducción, de muda y de invernada de las especies migratorias no contempladas en dicho anexo cuya llegada sea regular, así como las zonas de descanso en su área de migración (sentencia de 6 de marzo de 2003, Comisión/Finlandia, C‑240/00, Rec. p. I‑2187, apartado 16).&lt;/p&gt;
+        &lt;p&gt;Sobre la omisión de clasificar el lugar de Hanság como ZPE&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;16. La Comisión sostiene, en primer lugar, que la República de Austria incumplió su obligación de clasificar el lugar de Hanság con arreglo a las exigencias de la Directiva sobre las aves. En efecto, dicha zona se identificó como el territorio más adecuado para la protección de determinadas especies de aves como, en concreto, la avutarda (Otis tarda), el aguilucho cenizo (Circus pygargus) y el búho campestre (Asio flammeus). &lt;/p&gt;
+        &lt;p&gt;17. La República de Austria replica que actualmente el lugar de Hanság ya no puede considerarse el lugar más adecuado para la conservación de las especies mencionadas por la Comisión. Otros territorios han adquirido una importancia mayor para esas especies. No obstante, el mencionado Estado miembro reconoce que está materialmente justificado ampliar los límites de dicho lugar, cuya parte principal ya está sujeta al régimen de protección previsto en el artículo 6, apartados 2 a 4, de la Directiva sobre los hábitats debido a su designación como zona Natura 2000. Pues bien, el Estado miembro demandado considera que un retraso al respecto no supone ningún riesgo, dado que dicha zona Natura 2000 y las poblaciones de las especies de aves que se hallan en la misma ya están sujetas al régimen de protección instituido por dichas disposiciones. Por otra parte, no se ha producido ningún deterioro en el lugar de Hanság. Por último, mediante un Reglamento del Gobierno del Land de Burgenland de 3 de junio de 2008, notificado a la Comisión, se declaró dicha zona, en aplicación de la Directiva sobre las aves, «zona europea de conservación Waasen-Hanság».&lt;/p&gt;
+        &lt;p&gt;18. En consecuencia, la República de Austria considera que, en todo caso, ya no existe infracción de la Directiva sobre las aves y, por tanto, está justificado el desistimiento del recurso en ese punto.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;19. Procede señalar que, durante el procedimiento administrativo previo, la República de Austria había admitido la necesidad de clasificar el lugar de Hanság como ZPE y comunicó a la Comisión su intención de designar efectivamente dicho lugar.&lt;/p&gt;
+        &lt;p&gt;20. Por otra parte, está acreditado que, tras la expiración del plazo establecido en el dictamen motivado, el Gobierno del Land de Burgenland clasificó mediante reglamento el lugar de Hanság como «zona europea de conservación», en aplicación de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;21. Por tanto, resulta indiscutible que el lugar de Hanság figura entre los lugares más adecuados para la conservación de las especies de que se trata, incluidas en el anexo I de la Directiva sobre las aves y a las que se refiere el artículo 4, apartado 1, de ésta, y que, en consecuencia, dicho lugar debía clasificarse como ZPE con arreglo a dicha Directiva.&lt;/p&gt;
+        &lt;p&gt;22. Dado que la existencia de un incumplimiento debe apreciarse en función de la situación del Estado miembro tal como ésta se presentaba al final del plazo señalado en el dictamen motivado y que los cambios ocurridos posteriormente no deben ser tenidos en cuenta por el Tribunal de Justicia (véase, en particular, la sentencia de 11 de enero de 2007, Comisión/Irlanda, C‑183/05, Rec. p. I‑137, apartado 17), procede señalar que, como la clasificación mencionada en el apartado 20 de la presente sentencia tuvo lugar tras la expiración de dicho plazo, es fundada la imputación basada en la falta de clasificación del lugar de Hanság como ZPE, en contra de lo dispuesto en el artículo 4, apartado 1, de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;23. La afirmación hecha en el apartado anterior no puede ponerse en entredicho por el hecho de que la República de Austria sostenga ahora ante el Tribunal de Justicia, sin fundamentar suficientemente sus afirmaciones a este respecto, que, en comparación con otra zona, el lugar de Hanság ya no puede considerarse el más adecuado para la conservación de la avutarda, del aguilucho cenizo y del búho campestre.&lt;/p&gt;
+        &lt;p&gt;24. Tampoco puede cuestionarse dicha afirmación por el hecho de que, aún suponiéndolo demostrado, el citado lugar, por una parte, ya estaba en gran medida protegido en virtud de la Directiva sobre los hábitats en el marco de la Red Natura 2000 y, por otra parte, no ha sufrido ningún deterioro. En efecto, por una parte, como los regímenes jurídicos de las Directivas sobre las aves y sobre los hábitats son distintos, un Estado miembro no puede eludir las obligaciones que el incumben en virtud del artículo 4, apartados 1 y 2, de la Directiva sobre las aves invocando medidas diferentes de las establecidas en ésta (sentencia de 28 de junio de 2007, Comisión/España, C‑235/04, Rec. p. I‑5415, apartado 79). Por otra parte, pese a que el lugar en cuestión no ha sufrido deterioro, subsiste la obligación de los Estados miembros de clasificar lugares como ZPE (véase, en ese sentido, la sentencia de 13 de diciembre de 2007, Comisión/Irlanda, C‑418/04, Rec. p. I‑10947, apartado 38).&lt;/p&gt;
+        &lt;p&gt;Sobre la delimitación incorrecta de la ZPE de Niedere Tauern&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;25. Observando que la ZPE de Niedere Tauren, que tenía una superficie de 137.742 hectáreas en 1999, había sido reducida a aproximadamente 87.000 hectáreas en mayo de 2001, la Comisión alega que la delimitación de dicha zona es insuficiente por lo que respecta a las exigencias de protección previstas en el artículo 4, apartado 1 o 2, de la Directiva sobre las aves para las especies de aves contempladas en ésta. En el presente caso, se trata, en particular, de especies como el chorlito carambolo (Charadrius morinellus), el urogallo (Tetrao urogallus), el mochuelo boreal (Aegolius funereus), el mochuelo alpino (Glaucidium passerinum), el pito negro (Dryocopus martius), el pito tridáctilo (Picoides tridactylus), el pito cano (Picus canus) y el grévol (Bonasa bonasia). &lt;/p&gt;
+        &lt;p&gt;26. Según la Comisión, la República de Austria aún no ha demostrado científicamente que la delimitación original del lugar de Niedere Tauern deba considerarse técnicamente errónea.&lt;/p&gt;
+        &lt;p&gt;27. La República de Austria indica que, para garantizar la protección del chorlito carambolo, el Land de Estiria amplió en 2008 la ZPE de Niedere Tauern. Por lo demás, esta ampliación, que se basa en estudios científicos, permite cumplir las exigencias del artículo 4, apartado 1, de la Directiva sobre las aves, ya que los territorios más adecuados en número y en superficie para la conservación de las especies protegidas han sido clasificados como ZPE.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;28. Procede señalar que la ZPE de Niedere Tauern, cuya superficie se redujo en un primer momento de 137.742 hectáreas a aproximadamente 87.000 hectáreas, a continuación fue ampliada a 101.880 hectáreas en 2008, a saber, con posterioridad a la expiración del plazo establecido en el dictamen motivado, con respecto al cual debe apreciarse el incumplimiento alegado por la Comisión, tal como se recuerda en el apartado 22 de la presente sentencia.&lt;/p&gt;
+        &lt;p&gt;29. La propia República de Austria reconoce que la razón de dicha ampliación fue la exigencia de garantizar una protección adecuada del chorlito carambolo, especie mencionada en el anexo I de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;30. Por ello, procede en todo caso limitarse a constatar que, al expirar el plazo establecido en el dictamen motivado, la superficie de la ZPE controvertida era insuficiente por lo que atañe a las exigencias de protección contempladas en el artículo 4, apartado 1, de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;31. En consecuencia, debe estimarse la primera imputación, en la medida en que se basa en la infracción del artículo 4, apartado 1, de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;Sobre la segunda imputación, basada en el incumplimiento de lo dispuesto en los artículos 4, apartado 1 o 2, de la Directiva sobre las aves y 6, apartado 2, en relación con el 7 de la Directiva sobre los hábitats, debido a la protección jurídica insuficiente otorgada a una parte de las ZPE ya clasificadas &lt;/p&gt;
+        &lt;p&gt;Sobre la admisibilidad&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;32. La República de Austria sostiene que la Comisión, por una parte, amplió el objeto del recurso y, por otra parte, no argumentó suficientemente la existencia de incumplimientos concretos relativos a determinados lugares de protección.&lt;/p&gt;
+        &lt;p&gt;33. Por lo que atañe al primer punto, el Estado miembro mencionado alega que, mientras que el dictamen motivado no se refería a los «reglamentos relativos a las zonas europeas de conservación» ya designadas, el escrito de interposición del recurso hace referencia también a supuestos incumplimientos a las Directivas de que se trata, que derivan de dichos reglamentos. Además, las imputaciones que figuran en el dictamen motivado se resumen en el incumplimiento de las obligaciones de formular objetivos de conservación para cada ZPE, de garantizar, por medio de medidas vinculantes, los objetivos de protección, y establecer mapas con carácter vinculante y que sean objeto de publicidad adecuada. Por el contrario, en el escrito de interposición del recurso, las exigencias materiales relativas al estatuto jurídico de las ZPE fueron ampliadas considerablemente en el sentido que la Comisión exige que los reglamentos relativos a dichas ZPE contengan obligaciones y prohibiciones específicas a lugares y especies precisos, así como medidas concretas tendentes a garantizar el cumplimiento de las disposiciones pertinentes de las Directivas sobre las aves y sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;34. A modo de ejemplo, la República de Austria señala, en particular, que la imputación basada en que la normativa relativa a las zonas europeas de conservación adoptada por los Länder de Estiria y de Baja Austria no cumple las exigencias del Derecho de la Unión no se corresponde con lo expuesto por la Comisión en su dictamen motivado. Además, por lo que respecta al Land de Salzburgo, la Comisión no señaló, en el escrito de requerimiento complementario, que el estatuto jurídico de las ZPE de dicho Land fuera insuficiente y únicamente mencionó, por lo demás, por primera vez en el dictamen motivado, el lugar de Salzachauen como ZPE carente de estatuto jurídico de protección suficiente.&lt;/p&gt;
+        &lt;p&gt;35. En relación con el segundo punto, la República de Austria sostiene que ni el dictamen motivado ni el escrito de interposición del recurso permiten conocer los incumplimientos alegados por la Comisión ni las ZPE afectadas. En consecuencia, este Estado miembro no se halla en condiciones de defenderse de modo eficaz. Además, dado que no se determinan el contenido ni el alcance de las medidas necesarias para atenerse a las obligaciones impuestas por las Directivas sobre las aves y sobre los hábitats, la República de Austria corre el riesgo, durante un período ilimitado, de verse involucrada en un procedimiento por incumplimiento de las obligaciones que deriven de la futura sentencia que declare el incumplimiento objeto del presente recurso.&lt;/p&gt;
+        &lt;p&gt;36. De ese modo, en primer lugar por lo que respecta al Land de Burgenland, la Comisión no identifica los lugares que carecen de un estatuto de protección adecuado. A continuación, la Comisión se limita a calificar de insuficiente la situación jurídica de los lugares del Land de Alta Austria. Por último, respecto del Land del Tirol, la Comisión se basa en el ejemplo de la zona de Tiroler Lechtal para calificar todas las disposiciones adoptadas, para proteger los lugares Natura 2000 en el Tirol, de disposiciones generales que no garantizan un estatuto de protección suficiente.&lt;/p&gt;
+        &lt;p&gt;37. Sobre el primer punto, la Comisión replica que el escrito de interposición del recurso y el dictamen motivado son, en sustancia, idénticos por lo que atañe a la imputación basada en la insuficiencia del estatuto de protección jurídica otorgado a una parte de las ZPE ya clasificadas. Por tanto, los reglamentos existentes relativos a las zonas europeas de conservación no han sido excluidos del litigio. Por lo demás, las obligaciones y prohibiciones relativas a las ZPE son, en todo caso, vinculantes para la República de Austria. En consecuencia, debe desestimarse necesariamente la alegación según la cual lo expuesto en el dictamen motivado no comprende específicamente la imputación relativa al nivel de protección insuficiente en los Länder de Estiria y de Baja Austria. Por último, si bien es cierto que en el escrito de requerimiento complementario no se menciona la situación jurídica en el Land de Salzburgo, ello no faculta al citado Estado miembro para concluir que la imputación formulada a modo de ejemplo respecto del estatuto de protección de las ZPE en el Burgenland tampoco valga por lo que se refiere a la normativa del Land de Salzburgo y, en particular, para el lugar de Salzachauen.&lt;/p&gt;
+        &lt;p&gt;38. Por lo que atañe al segundo punto, la Comisión sostiene que el dictamen motivado debe entenderse de un modo más amplio, en el sentido que el nivel de protección que debe alcanzarse estaba definido cualitativamente por exigencias determinadas que permiten a la República de Austria discernir claramente las ZPE para las que eran necesarias otras medidas de adaptación del Derecho nacional y las formas que éstas debían revestir. Este extremo se explica de modo más preciso en el escrito de interposición del recurso en relación con cada Land y cada ZPE afectados, sin modificar por ello el objeto del litigio. Según la Comisión, este Estado miembro estaba en condiciones de defenderse sin dificultad sobre este punto y, por lo demás, hizo amplio uso de esta posibilidad.&lt;/p&gt;
+        &lt;p&gt;39. Por último, la Comisión alega que el escrito de interposición del recurso afirma con total rotundidad que, al término del plazo establecido en el dictamen motivado, ninguna ZPE de los Länder de Burgenland y de Alta Austria disponía de un estatuto de protección adecuado, zonas para las que no se había fijado ningún objetivo específico de protección o de conservación. La falta de objetivos de protección y de conservación específicos, basados en la situación de cada especie de aves, se da también en el lugar de Tiroler Lechtal. Por otra parte, el estatuto de protección es insuficiente en las once zonas Natura 2000 designadas por las autoridades de este último Land.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;40. Debe recordarse que el objeto del recurso por incumplimiento queda delimitado por el dictamen motivado de la Comisión, de forma que el recurso debe basarse en los mismos motivos y alegaciones que el citado dictamen (véase la sentencia de 9 de noviembre de 2006, Comisión/Reino Unido, C‑236/05, Rec. p. I‑10819, apartado 10 y jurisprudencia citada).&lt;/p&gt;
+        &lt;p&gt;41. Además, según jurisprudencia reiterada, el escrito de requerimiento que la Comisión dirige al Estado miembro y, posteriormente, el dictamen motivado emitido por aquella delimitan el objeto del litigio que, en consecuencia, ya no puede ser ampliado. En efecto, la posibilidad de que el Estado miembro afectado presente sus observaciones, aun cuando considere que no tiene el deber de hacer uso de ella, constituye una garantía esencial querida por el Tratado y su observancia es un requisito sustancial de forma para la conformidad a Derecho del procedimiento por el que se declara un incumplimiento de un Estado miembro. Por consiguiente, el dictamen motivado y el recurso de la Comisión deben basarse en las mismas imputaciones que el escrito de requerimiento que inicia el procedimiento administrativo previo. De no ser así, no puede considerarse que tal irregularidad desaparezca por el hecho de que el Estado miembro demandado haya formulado observaciones sobre el dictamen motivado (véase la sentencia de 18 de diciembre de 2007, Comisión/España, C‑186/06, Rec. p. I‑12093, apartado 15 y jurisprudencia citada).&lt;/p&gt;
+        &lt;p&gt;42. Por otra parte, el dictamen motivado y el recurso deben exponer las imputaciones de forma coherente y precisa, a fin de permitir al Estado miembro y al Tribunal de Justicia comprender exactamente el alcance de la violación del Derecho de la Unión alegada, requisito éste necesario para que dicho Estado miembro pueda invocar oportunamente los motivos en los que basa su defensa y para que el Tribunal de Justicia pueda verificar la existencia del incumplimiento imputado (véase la sentencia de 18 de diciembre de 2007, Comisión/España, antes citada, apartado 18).&lt;/p&gt;
+        &lt;p&gt;Sobre la ampliación del objeto del recurso&lt;/p&gt;
+        &lt;p&gt;43. En primer lugar, procede constatar que, aunque el dictamen motivado señala que un gran número de ZPE aún carecen de cualquier normativa específica, que en Austria adopta la forma de un «reglamento de zona europea de conservación», cuyo fin es garantizar la salvaguardia de la avifauna de que se trata, lo cierto es que está formulado en términos que no excluyen que el dictamen también se refiera a las ZPE para las que existe un «reglamento de zona europea de conservación». Al respecto, puede recordarse en concreto que, a raíz de dicho dictamen motivado, la República de Austria informó a la Comisión de que la zona de conservación de las aves de Flachwasserbiotop Neudenstein había sido declarada en 2005 zona europea de conservación mediante un Reglamento del Gobierno del Land de Carintia de 23 de mayo de 2005 (LGBl. nº 47/2005).&lt;/p&gt;
+        &lt;p&gt;44. En segundo lugar, debe señalarse que el escrito de interposición del recurso de la Comisión, al considerar que los reglamentos relativos a las ZPE deben contener obligaciones y prohibiciones específicas a lugares y especies concretos, así como medidas concretas para garantizar el cumplimiento de las disposiciones pertinentes de las Directivas sobre las aves y sobre los hábitats, reproduce en sustancia los términos del dictamen motivado. En efecto, en este último se señala que, «de un modo general, […] una inclusión de los objetivos de conservación, es decir de las especies de aves y de las exigencias específicas relativas a su protección y al restablecimiento de su hábitats, debe, junto con las medidas y obligaciones correspondientes, ser un elemento esencial de los reglamentos relativos a dichas zonas protegidas».&lt;/p&gt;
+        &lt;p&gt;45. En tercer lugar, la imputación basada en que los reglamentos relativos a las zonas europeas de conservación adoptados por los Länder de Estiria y de Baja Austria no cumplen las exigencias del Derecho de la Unión no figura en el dictamen motivado y, por tanto, debe considerarse inadmisible.&lt;/p&gt;
+        &lt;p&gt;46. Respecto de la imputación basada en que el estatuto jurídico de protección de las ZPE del Land de Salzburgo y, en concreto, del lugar de Salzachauen es insuficiente, no se discute que el escrito de requerimiento complementario no contenía ninguna mención de la situación en ese Land ni, en particular, de dicho lugar. En consecuencia, el recurso es igualmente inadmisible en la medida en que se refiere al estatuto jurídico de protección de las ZPE del Land de Salzburgo.&lt;/p&gt;
+        &lt;p&gt;47. De las consideraciones anteriores se desprende que el recurso es inadmisible en la medida en que tiene por objeto el régimen jurídico de protección de las ZPE de los Länder de Salzburgo, de Estiria y de Baja Austria.&lt;/p&gt;
+        &lt;p&gt;Sobre la falta de precisión y de coherencia&lt;/p&gt;
+        &lt;p&gt;48. No se discute que la Comisión reprocha a la República de Austria no haber otorgado a una parte de las ZPE ya clasificadas una protección jurídica conforme con las exigencias del Derecho de la Unión. En apoyo de dicha imputación, expone las carencias del sistema de protección jurídica de las ZPE vigente en Austria. Al respecto, la Comisión aclara su imputación de índole general haciendo referencia a la situación existente en los distintos Länder del mencionado Estado miembro.&lt;/p&gt;
+        &lt;p&gt;49. Por tanto, no parece que dicha imputación formulada de ese modo sea imprecisa o incoherente.&lt;/p&gt;
+        &lt;p&gt;50. Por otra parte, procede recordar que, si bien el dictamen motivado debe contener una exposición coherente y detallada de las razones que han llevado a la Comisión a la convicción de que el Estado miembro de que se trate ha incumplido alguna de las obligaciones que le incumben en virtud del Tratado, la Comisión no está obligada a indicar en dicho dictamen las medidas que permitirían eliminar el incumplimiento imputado (véase la sentencia de 2 de junio de 2005, Comisión/Grecia, C‑394/02, Rec. p. I‑4713, apartado 21 y la jurisprudencia citada). Del mismo modo, la Comisión tampoco está obligada a indicar dichas medidas en el escrito de interposición del recurso.&lt;/p&gt;
+        &lt;p&gt;51. Debe examinarse a fondo la supuesta insuficiencia de elementos que establecen la inadecuación del régimen de protección de las ZPE en los Länder de Burgenland, de Alta Austria y del Tirol.&lt;/p&gt;
+        &lt;p&gt;52. En consecuencia, debe considerarse que el recurso por incumplimiento es admisible dentro de los límites que se mencionan en el apartado 47 de la presente sentencia.&lt;/p&gt;
+        &lt;p&gt;Sobre el fondo&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;53. La Comisión sostiene que una parte de las ZPE ya clasificadas en Austria no goza de protección jurídica conforme con las exigencias a las que se refieren los artículos 4, apartado 1 o 2, de la Directiva sobre las aves, y 6, apartado 2, en relación con el 7 de la Directiva sobre los hábitats. Al respecto, alega que las obligaciones y prohibiciones que resultan de dichas disposiciones y que deben no sólo ser específicas a ZPE y a especies concretas, sino también revestir una forma vinculante y ser objeto de publicidad suficiente, han de estar contenidas en el mismo acto jurídico obligatorio que el que establece, para cada ZPE, las especies y los hábitats protegidos así como los objetivos de conservación. De ese modo, de manera general, el estatuto jurídico de protección de las ZPE resulta insuficiente cuando la clasificación de una ZPE se vincula a una reserva natural o a otro tipo de lugar clasificado existentes y protegidos mediante medidas nacionales o regionales.&lt;/p&gt;
+        &lt;p&gt;54. La República de Austria replica en primer lugar que la tesis de la Comisión, según la cual las obligaciones o prohibiciones relat ivas a las diversas especies de aves deben revestir una forma vinculante y ser objeto de una publicidad suficiente, es excesiva en esa formulación general. A continuación, ninguna norma imponía que las mencionadas obligaciones o prohibiciones estén incluidas en el mismo acto jurídico obligatorio que el que establece, para cada ZPE, las especies y los hábitats protegidos y los objetivos de conservación. Además, la alegación con arreglo a la cual los objetivos de conservación en el sentido del artículo 4, apartados 1 y 2, de la Directiva sobre las aves deben inscribirse en un acto jurídico de ese tipo carece de fundamento. Por último, el Estado miembro demandado subraya que, habida cuenta de que la protección de las reservas naturales se extiende generalmente a todas las especies animales y vegetales y a su hábitat y a su paisaje, las prohibiciones de cualquier agresión son más amplias que para las «zonas europeas de conservación», que tienden generalmente a proteger especies y hábitats precisos.&lt;/p&gt;
+        &lt;p&gt;55. En su escrito de formalización de la intervención, la República Federal de Alemania alega que las Directivas sobre las aves y sobre los hábitats no exigen que las medidas de protección y de conservación consistan en obligaciones o prohibiciones específicas, es decir, que se refieran a zonas y a objetos de protección determinados. Incluso suponiendo que los Estados miembros deban adoptar obligaciones y prohibiciones de ese tipo, dichas Directivas no implicarían en modo alguno intimaciones con un grado determinado de concretización. De las mencionadas Directivas tampoco resulta que a los Estados miembros incumba una obligación de fijar «objetivos de conservación que hay que cumplir» con carácter vinculante y, aún menos, de definir éstos en el mismo acto jurídico que regula los bienes que hay que proteger y las obligaciones y prohibiciones específicas que hay que cumplir.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;56. Según la jurisprudencia del Tribunal de Justicia, el artículo 4, apartados 1 y 2, de la Directiva sobre las aves impone a los Estados miembros la obligación de conferir a las ZPE un régimen jurídico de protección que pueda garantizar, en especial, la supervivencia y la reproducción de las especies de aves mencionadas en el anexo I, así como la reproducción, la muda y la invernada de las especies migratorias no contempladas en el anexo I, cuya llegada es regular (véanse las sentencias de 18 de marzo de 1999, Comisión/Francia, C‑166/97, Rec. p. I‑1719, apartado 21; de 13 diciembre de 2007, Comisión/Irlanda, antes citada, apartado 153, y de 11 de diciembre de 2008, Comisión/Grecia, C‑293/07, apartado 22).&lt;/p&gt;
+        &lt;p&gt;57. También consta que el artículo 4 de la Directiva sobre las aves establece un régimen de protección dotado de un objetivo específico, y reforzado, tanto para las especies mencionadas en el anexo I como para las especies migratorias, que está justificado por el hecho de que se trata, respectivamente, de las especies más amenazadas y de las especies que constituyen un patrimonio común de la Unión Europea (sentencias de 11 de julio de 1996, Royal Society for the Protection of Birds, C‑44/95, Rec. p. I‑3805, apartado 23; de 13 de diciembre de 2007, Comisión/Irlanda, antes citada, apartado 46, y de 11 de diciembre de 2008, Comisión/Grecia, antes citada, apartado 23).&lt;/p&gt;
+        &lt;p&gt;58. En virtud del artículo 6, apartado 2, de la Directiva sobre los hábitats, cuyas obligaciones sustituyen a las que resultan del artículo 4, apartado 4, primera frase, de la Directiva sobre las aves en lo relativo a las zonas clasificadas, el estatuto jurídico de protección de las ZPE debe garantizar asimismo que se eviten, en éstas, el deterioro de los hábitats naturales y de los hábitats de las especies, así como las perturbaciones significativas que afecten a aquellas especies para las que se hayan designado las referidas zonas (véanse las sentencias de 27 de febrero de 2003, Comisión/Bélgica, C‑415/01, Rec. p. I‑2081, apartado 16, y de 11 de diciembre de 2008, Comisión/Grecia, antes citada, apartado 24).&lt;/p&gt;
+        &lt;p&gt;59. Por otra parte, la protección de las ZPE no debe limitarse a medidas destinadas a evitar los atentados y las perturbaciones externas causadas por el hombre, sino que, según la situación que se presente, debe también incluir medidas positivas cuyo objetivo sea conservar y mejorar el estado del lugar (véase, en ese sentido, la sentencia de 13 de diciembre de 2007, Comisión/Irlanda, antes citada, apartado 154).&lt;/p&gt;
+        &lt;p&gt;60. A tenor del artículo 249 CE, párrafo tercero, actualmente artículo 288 TFUE, párrafo tercero, la Directiva obliga al Estado miembro destinatario en cuanto al resultado que deba conseguirse, dejando, sin embargo, a las autoridades nacionales la elección de la forma y de los medios. De ello se deduce que, como cualquier otro Estado miembro, la República de Austria puede elegir la forma y los medios para dar cumplimiento a la Directiva sobre las aves (véase, en ese sentido, la sentencia de 13 de diciembre de 2007, Comisión/Irlanda, antes citada, apartado 157).&lt;/p&gt;
+        &lt;p&gt;61. Si bien es cierto que la exactitud de la adaptación del ordenamiento jurídico interno a una directiva reviste especial importancia en relación con la Directiva sobre las aves, en la medida en que la gestión del patrimonio común está confiada, para sus respectivos territorios, a los Estados miembros (véase la sentencia de 13 de diciembre de 2007, Comisión/Irlanda, antes citada, apartados 64 y 159), no puede, en cualquier caso, imponer a éstos que incluyan las obligaciones y las prohibiciones, resultantes de los artículos 4, apartados 1 y 2, de la Directiva sobre las aves y 6, apartado 2, de la Directiva sobre los hábitats, en el acto jurídico que establece, para cada ZPE, las especies y los hábitats protegidos, así como los objetivos de conservación.&lt;/p&gt;
+        &lt;p&gt;62. Respecto de las mencionadas obligaciones, que a juicio de la Comisión deben ser positivas y específicas a ZPE y a especies concretas, del apartado 59 de la presente sentencia y del apartado 34 de la sentencia de 20 de octubre de 2005, Comisión/Reino Unido (C‑6/04, Rec. p. I‑9017), resulta que la adopción de medidas positivas tendentes a conservar y a mejorar el estado de una ZPE no tiene carácter sistemático, sino que depende de la situación concreta de la ZPE de que se trate.&lt;/p&gt;
+        &lt;p&gt;63. Por lo que atañe a las prohibiciones que supuestamente deben ser específicas a ZPE y a especies concretas, si bien es cierto, por ejemplo, que la protección de las ZPE contra las actividades de los particulares exige que con carácter preventivo se impida a éstos llevar a cabo actividades posiblemente perjudiciales (sentencia de 13 de diciembre de 2007, Comisión/Irlanda, antes citada, apartado 208), no resulta que la realización de dicho objetivo requiera necesariamente que se dicten prohibiciones específicas para cada ZPE ni tampoco, como resulta del apartado 20 de la sentencia de 7 de diciembre de 2000, Comisión/Francia (C‑374/98, Rec. p. I‑10799), para cada especie concreta.&lt;/p&gt;
+        &lt;p&gt;64. Por lo que respecta a la identificación de las especies y de los hábitats protegidos en cada ZPE, procede señalar que, al igual que la delimitación de una ZPE debe tener necesariamente una indiscutible fuerza vinculante (véase la sentencia Comisión/Bélgica, antes citada, apartado 22), la identificación de las especies que justificaron la clasificación de la mencionada ZPE debe responder a la misma exigencia. En efecto, de no ser así, podría no alcanzarse plenamente el objetivo de protección que resulta de los artículos 4, apartados 1 y 2, de la Directiva sobre las aves, y 6, apartado 2, en relación con el 7 de la Directiva sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;65. En lo relativo a los objetivos de conservación, de los apartados 20 y 21 de la sentencia de 7 de diciembre de 2000, Comisión/Francia, antes citada, resulta que el estatuto jurídico de protección del que deben gozar las ZPE no implica que dichos objetivos deban ser específicos para cada especie considerada por separado. Por otra parte, teniendo en cuenta lo mencionado en los apartados 60 y 61 de la presente sentencia, no puede considerarse en ningún caso que los objetivos de conservación deban contenerse en el mismo acto jurídico que el que se refiere a las especies y los hábitats protegidos de una ZPE determinada.&lt;/p&gt;
+        &lt;p&gt;66. Por lo que atañe a la supuesta insuficiencia del estatuto jurídico de protección de las ZPE correspondientes a una reserva natural o a otro tipo de lugar clasificado existentes y protegidas por medidas nacionales o regionales, hay que recordar que, como se señala en el apartado 57 de la presente sentencia, el artículo 4 de la Directiva sobre las aves establece un régimen de protección dotado de un objetivo específico, y reforzado, tanto para las especies mencionadas en el anexo I como para las especies migratorias. Ésa es la especificidad del régimen de protección del que deben gozar las ZPE, a diferencia del régimen de protección general menos estricto previsto en el artículo 3 de la Directiva sobre las aves para todas las especies de aves a las que se refiere ésta (véase, en ese sentido, la sentencia Royal Society for the Protection of Birds, antes citada, apartados 19 y 24). Sin embargo, de ello no se desprende que los lugares de ese tipo sólo puedan ser protegidos eficazmente mediante un régimen jurídico específicamente definido y aplicado para cada ZPE.&lt;/p&gt;
+        &lt;p&gt;67. Habida cuenta de las observaciones anteriores, procede señalar que, en el caso de autos, no ha quedado demostrado el fundamento de la imputación basada en un incumplimiento general por parte del Estado miembro demandado de las obligaciones contempladas en los artículos 4, apartado 1 o 2, de la Directiva sobre las aves, y 6, apartado 2, en relación con el 7 de la Directiva sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;68. En consecuencia, procede examinar el fundamento del recurso por incumplimiento teniendo en cuenta la normativa vigente en los distintos Länder al término del plazo fijado en el dictamen motivado y dentro de los límites precisados en el apartado 47 de la presente sentencia.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta al Land de Burgenland&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;69. La Comisión sostiene que, dado que las zonas Natura 2000 no se convirtieron en zonas europeas de conservación con el estatuto jurídico inherente a estas últimas, las ZPE del Land de Burgenland carecen de un estatuto de protección adecuado.&lt;/p&gt;
+        &lt;p&gt;70. La República de Austria menciona determinados lugares respecto de los cuales señala que los reglamentos que los clasifican como zonas europeas de conservación están en curso de elaboración. Únicamente el lugar de Auwiesen Zickenbachtal fue designado como «zona europea de conservación mediante Reglamento del Gobierno del Land de Burgenland de 23 de marzo de 2008.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;71. De las alegaciones de las partes y del escrito que el 20 de febrero de 2007 la República de Austria dirigió a la Comisión en respuesta al dictamen motivado se desprende que, al término del plazo fijado en éste, no se había clasificado ninguna ZPE en el Land de Burgenland. Pues bien, la segunda imputación únicamente se refiere a las ZPE ya clasificadas, tal como se indica en las pretensiones del recurso.&lt;/p&gt;
+        &lt;p&gt;72. En consecuencia, dicha imputación, en la medida en que se refiere a la situación del mencionado Land, carece de objeto y debe desestimarse.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta al Land de Viena&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;73. La Comisión alega que las cuatro ZPE de dicho Land, que no fueron clasificadas hasta el 17 de octubre de 2007, no gozan de un estatuto jurídico que les otorgara una protección suficiente.&lt;/p&gt;
+        &lt;p&gt;74. La República de Austria replica que las mencionadas ZPE están protegidas de un modo conforme con las exigencias de los artículos 4, apartado 1 o 2, de la Directiva sobre las aves, así como 6, apartado 2, y 7 de la Directiva sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;75. No se discute que, al término del plazo fijado en el dictamen motivado, los lugares controvertidos en el presente asunto no habían sido clasificados como ZPE.&lt;/p&gt;
+        &lt;p&gt;76. En tales circunstancias, por la misma razón que la expuesta en el apartado 71 de la presente sentencia, procede desestimar la segunda imputación en la medida en que se refiere a la situación del Land de Viena.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta al Land de Carintia&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;77. En opinión de la Comisión, no puede considerarse que el estatuto jurídico de la zona europea de conservación de las aves de Flachwasserbiotop Neudenstein, la única ZPE clasificada antes de la expiración del plazo fijado en el dictamen motivado, otorgase una protección suficiente a esa zona, dado que la normativa interna no establece ni medidas ni objetivos de conservación específicos a las aves concretamente afectadas ni una representación cartográfica de dicha ZPE.&lt;/p&gt;
+        &lt;p&gt;78. La República de Austria se limita a confirmar la existencia de la mencionada ZPE.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;79. Al respecto, procede señalar que el artículo 2 del Reglamento del Gobierno del Land de Carintia, de 23 de mayo de 2005, relativo a dicha ZPE, establece que, en la medida en que los requisitos de protección establecidos en el artículo 2 del Reglamento de dicho Gobierno, de 8 de noviembre de 1994, publicado en el Diario Oficial de dicho Land nº 92/1994, garantizan una protección suficiente, no resulta necesario establecer con carácter adicional obligaciones, prohibiciones, restricciones de autorización y medidas de conservación para la zona europea de conservación de Flachwasserbiotop Neudenstein.&lt;/p&gt;
+        &lt;p&gt;80. Además, el artículo 3 de ese mismo Reglamento de 23 de mayo de 2005 dispone que tiene como objetivo la preservación, el desarrollo o el restablecimiento de un estado de conservación favorable de las especies protegidas mencionadas en el anexo.&lt;/p&gt;
+        &lt;p&gt;81. En ese contexto, debe desestimarse la imputación formulada por la Comisión sobre este punto, teniendo en cuenta las consideraciones que figuran en el apartado 65 de la presente sentencia y a falta de cualquier prueba que indique que la realización de los objetivos de conservación de las especies de aves contempladas en el artículo 4, apartados 1 y 2, de la Directiva sobre las aves, y que incluyen a las especies mencionadas en el anexo de dicho Reglamento, exige, en el presente asunto, disposiciones más detalladas que las adoptadas por el Gobierno del Land de Carintia.&lt;/p&gt;
+        &lt;p&gt;82. Respecto de la supuesta falta de representación cartográfica de dicha ZPE, procede señalar que, si bien una representación de ese tipo puede dar una delimitación clara de un lugar, no constituye sin embargo, como señala la Abogado General en el apartado 84 de sus conclusiones, la única forma posible y fiable de delimitación de un lugar.&lt;/p&gt;
+        &lt;p&gt;83. En consecuencia, también debe desestimarse la imputación formulada por la Comisión en este punto.&lt;/p&gt;
+        &lt;p&gt;84. Por tanto, procede desestimar la segunda imputación en la medida en que se refiere a la situación en el Land de Carintia.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta al Land de Alta Austria&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;85. La Comisión sostiene que el régimen de protección vigente en las once ZPE notificadas de dicho Land es insuficiente. Por una parte, no existe ninguna normativa relativa a las ZPE de Maltsch, de Wiesengebiete im Freiwald, de Pfeifer Anger, de Oberes Donautal y de Untere Traun. Por otra parte, la normativa aplicable a las ZPE de Traun-Donau-Auen, de Ettenau, de Frankinger Moos, de Dachstein, de Unterer Inn y de Nationalpark Kalkalpen no proporcionan una protección adecuada.&lt;/p&gt;
+        &lt;p&gt;86. La Comisión alega que, por lo que atañe a las ZPE de Ettenau, de Traun-Donau-Auen y de Frankinger Moos, existen reglamentos generales relativos a las reservas naturales que únicamente regulan, en los dos últimos casos, las intervenciones autorizadas. Respecto de las ZPE de Dachstein, de Unterer Inn y de Nationalpark Kalkalpen, están cubiertas por reglamentos específicos relativos a las zonas europeas de conservación que únicamente establecen, en sustancia, una prohibición general de intervención.&lt;/p&gt;
+        &lt;p&gt;87. La República de Austria señala que los reglamentos que faltan están siendo elaborados por el Gobierno del Land de Alta Austria. No obstante, rechaza la tesis de la Comisión según la cual todas las ZPE de dicho Land carecen de un estatuto de protección suficiente. De este modo, las ZPE actualmente protegidas como reservas naturales gozan, en virtud del artículo 25 de la Oö. Natur-und Landschaftsschutzgesetz 2001 (LGBl. nº 129/2001) (Ley de 2001 sobre la protección de la naturaleza y del paisaje de Alta Austria), de una protección absoluta que va más allá de las exigencias de la Directiva sobre las aves. Por otra parte, el Estado miembro cita, a modo de ejemplo de ZPE dotada de un estatuto de protección suficiente, las ZPE de Dachstein y de Nationalpark Kalkalpen, mencionando una serie de disposiciones internas que contienen un objetivo específico sobre la conservación de las aves.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;88. Por lo que respecta a las ZPE de Maltsch, de Wiesengebiete im Freiwald de Pfeifer Anger, de Oberes Donautal y de Untere Traun, resulta que no se ha comunicado a la Comisión ni se ha señalado durante el procedimiento ante el Tribunal de Justicia ninguna normativa pertinente. Por tanto, la imputación formulada por la Comisión relativa a la insuficiencia de la normativa sobre esas ZPE es fundada.&lt;/p&gt;
+        &lt;p&gt;89. En relación con el régimen jurídico de las otras ZPE, procede declarar que, por no haber justificado que, dada la situación concreta de cada zona, un régimen de ese tipo es insuficiente teniendo en cuenta las exigencias pertinentes de las Directivas sobre las aves y sobre los hábitats, la Comisión, mediante sus alegaciones insuficientemente detalladas, no aporta la prueba del fundamento de su imputación que, por tanto, debe desestimarse en este punto.&lt;/p&gt;
+        &lt;p&gt;90. De ello se desprende que la segunda imputación, en la medida en que se refiere a la situación en el Land de Alta Austria, sólo puede estimarse en la parte en que tiene por objeto las ZPE de Maltsch, de Wiesengebiete im Freiwald, de Pfeifer Anger, de Oberes Donautal y de Untere Traun.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta al Land de Vorarlberg&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;91. La Comisión alega que la normativa vigente en dicho Land no establece, para las ZPE, objetivos de protección y de conservación específicos ni medidas concretas, así como tampoco obligaciones o prohibiciones. En particular, la Comisión señala que la protección que el plan de gestión de los bosques adoptado por el Gobierno del Land de Vorarlberg otorga a la ZPE de Klostertaler Bergwälder es insuficiente. La ZPE de Verwall está protegida específicamente en virtud de un reglamento de dicho gobierno, adoptado no obstante tras la expiración del plazo fijado en el dictamen motivado, que contiene obligaciones, prohibiciones y disposiciones tendentes a la protección y a la conservación del lugar y de las especies protegidas presentes en éste.&lt;/p&gt;
+        &lt;p&gt;92. La República de Austria replica que las ZPE de Rheindelta, de Lauteracher Ried, de Bangser Ried y de Matschels están cubiertas por reglamentos de zona protegida que prohíben las medidas y usos que deterioran los hábitats naturales de las especies a las que están dedicadas esas zonas o que implican perturbaciones significativas para esas especies. Por lo que respecta a la ZPE de Klostertaler Bergwälder, el plan forestal relativo a la misma fue elaborado, con carácter vinculante, por orden de las autoridades con el fin de aplicar las medidas de conservación necesarias para mantener un estado de conservación favorable para las especies de aves a las que se refiere el anexo I de la Directiva sobre las aves y que están presentes en el lugar.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;93. Procede señalar que el artículo 13, apartado 2, del Reglamento sobre la protección de la naturaleza (LGBl. nº 36/2003) establece que el Gobierno del Land de Vorarlberg está obligado, en la medida en que sea necesario, a adoptar, mediante planes de gestión u otros convenios, o por medio de decisión o reglamento, las medidas de mantenimiento, de desarrollo y de conservación de las zonas afectadas de conformidad con las exigencias ecológicas, principalmente, de las especies de aves mencionadas en el anexo I de la Directiva sobre las aves y presentes en dichas zonas.&lt;/p&gt;
+        &lt;p&gt;94. El artículo 14 del mencionado Reglamento establece explícitamente una prohibición de deterioro, mientras que el artículo 15 de ese mismo Reglamento prevé un estudio de impacto y, en su caso, una obligación de autorización en relación con los objetivos de conservación que resulten de las exigencias relativas a un estado de conservación favorable de los hábitats naturales y de las especies, señaladas en el anexo, que sean determinantes para la designación de la zona.&lt;/p&gt;
+        &lt;p&gt;95. A ello se añaden, para las ZPE de Rheindelta, de Lauteracher Ried, de Bangser Ried, de Matschels y de Klostertaler Bergwälder, las medidas señaladas por la República de Austria que se mencionan en el apartado 92 de la presente sentencia.&lt;/p&gt;
+        &lt;p&gt;96. En ese contexto, debe desestimarse la imputación formulada por la Comisión en la medida en que se refiere a las ZPE mencionadas en el apartado anterior de la presente sentencia, habida cuenta, en particular, de las consideraciones que figuran en el apartado 65 de la presente sentencia y a falta de toda prueba que indique que la realización de los objetivos de conservación de las especies de aves a las que se refiere el artículo 4, apartado 1, de la Directiva sobre las aves exige, en el presente asunto, disposiciones más detallas que las adoptadas por el Gobierno del Land de Vorarlberg.&lt;/p&gt;
+        &lt;p&gt;97. No resulta que la ZPE de Verwall, a diferencia de las ZPE mencionadas en el apartado 95 de la presente sentencia, gozara de una protección jurídica particular al término del plazo fijado en el dictamen motivado. Por otra parte, como el mencionado Gobierno adoptó, poco después de que expirara dicho plazo, un reglamento que introducía una serie de medidas de protección específicas, procede considerar, en el presente asunto, que dicha ZPE no estaba suficientemente protegida hasta que se adoptaron dichas medidas. En consecuencia, el recurso está fundado en ese aspecto.&lt;/p&gt;
+        &lt;p&gt;98. Por consiguiente, debe estimarse la segunda imputación, en la medida en que se refiere a la situación en el Land de Vorarlberg, por lo que atañe a la ZPE de Verwall.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta al Land del Tirol&lt;/p&gt;
+        &lt;p&gt;– Alegaciones de las partes&lt;/p&gt;
+        &lt;p&gt;99. Según la Comisión, la normativa general vigente en dicho Land no establece un estatuto de protección suficiente para las ZPE situadas en el mismo. Si bien el Gobierno del Land del Tirol adoptó un reglamento que incluía una lista de once zonas Natura 2000, dicho acto no indicaba sin embargo ni las especies de aves protegidas, ni los objetivos de protección y conservación, así como tampoco las normas de comportamiento esenciales que debían respetarse. A falta de objetivos de conservación específicos, éstos se sustituyen, de modo general, por la protección de los hábitats y de las aves mencionadas en las fichas de datos técnicos standard, con arreglo al artículo 14, apartado 11, de la Ley de 1997 del Land del Tirol sobre la protección de la naturaleza, en su versión de 12 de mayo de 2004 (LGBl. nº 50/2004, en lo sucesivo, «TNSchG»). La Comisión alega, en particular, que el estatuto de protección de la ZPE de Tiroler Lechtal es insuficiente.&lt;/p&gt;
+        &lt;p&gt;100. La República de Austria señala que la aplicación de las Directivas sobre las aves y sobre los hábitats se incluyó en un sistema de protección ya desarrollado que comprendía, en concreto, reservas naturales, parques naturales, zonas de protección del paisaje, zonas de tranquilidad y lugares protegidos. Dicha aplicación consistió en añadir las normas de dichas Directivas a las existentes en las zonas de protección y en completarlas. Pues bien, en las mencionadas zonas de protección se imponen numerosas prohibiciones, obligaciones y sistemas de autorización.&lt;/p&gt;
+        &lt;p&gt;101. Sobre la base de un proyecto adoptado en diciembre de 2004, todas las ZPE del Land del Tirol están sujetas a una gestión coordinada cuyo fin es realizar los objetivos de protección fijados para cada una de las zonas y garantizar de modo duradero, principalmente, la conservación de las especies de aves existentes en cada zona de que se trata. La República de Austria sostiene que el régimen transitorio previsto en el artículo 14 de la TNSchG garantiza una protección suficiente de las ZPE hasta que un reglamento específico defina los objetivos de conservación.&lt;/p&gt;
+        &lt;p&gt;102. El Estado miembro demandado expone detalladamente el régimen de protección aplicable a la ZPE de Tiroler Lechtal y sostiene que es suficiente en vista de lo dispuesto en las Directivas sobre las aves y sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;– Apreciación del Tribunal de Justicia&lt;/p&gt;
+        &lt;p&gt;103. Procede señalar que, según el artículo 3, apartado 9, punto 9, de la TNSchG, los objetivos de conservación serán el mantenimiento y el restablecimiento de un estado de conservación favorable de las especies mencionadas en el anexo I de la Directiva sobre las aves y en su artículo 4, apartado 2, que están presentes en una zona europea de conservación de las aves y de sus hábitats.&lt;/p&gt;
+        &lt;p&gt;104. En virtud del artículo 14, apartado 3, de la TNSchG, el Gobierno del mencionado Land está obligado a fijar, mediante reglamentos, los objetivos de conservación para cada lugar Natura 2000 y, si fuera necesario, las disposiciones y medidas de conservación necesarias para obtener un estado de conservación favorable.&lt;/p&gt;
+        &lt;p&gt;105. El artículo 14, apartado 11, de la TNSchG establece, por lo que respecta al período transitorio que precede a la adopción de dichos reglamentos, que los objetivos de conservación se reemplazan provisionalmente por la protección de los hábitats y de la fauna y de la flora salvajes, entre las cuales están las aves, que figuran en los formularios standard de los datos.&lt;/p&gt;
+        &lt;p&gt;106. Pues bien, ese tipo de formulario, previsto por la Decisión 97/266/CE de la Comisión, de 18 diciembre de 1996, relativa a un formulario de información sobre un espacio propuesto para su inclusión en la red Natura 2000 (DO 1997, L 107, p. 1), y del que consta que, en virtud de la normativa pertinente del Land del Tirol, está publicado y es oponible a terceros, menciona las especies de aves que justificaron que el lugar de que se trata se clasificara como ZPE. Por otra parte, dicho formulario contiene también, entre otras cosas, una descripción del lugar, una sinopsis de la calidad y de la importancia de éste, habida cuenta de los objetivos de conservación de la Directiva sobre las aves, y una valoración del lugar para cada una de dichas especies.&lt;/p&gt;
+        &lt;p&gt;107. Además, las partes no discuten que, en cada una de las ZPE de dicho Land, se imponen numerosas prohibiciones, obligaciones y procedimientos de autorización, que, para cada una de esas zonas, se añaden a las obligaciones de autorización y a las prohibiciones legales generales.&lt;/p&gt;
+        &lt;p&gt;108. De ese modo, por ejemplo, de los autos se desprende que, en las reservas naturales, estarán prohibidos por principio la construcción, la edificación o la colocación de instalaciones, la construcción, la ampliación o el desplazamiento de carreteras o de caminos, la excavación o el relleno de terrenos distintos de los terrenos construidos cerrados, la creación de repoblaciones forestales nuevas, los aterrizajes y despegues en el campo, toda producción de ruidos considerables, la aportación de abonos, la utilización de productos tóxicos y la de vehículos automotores. En las ZPE, se añade a dichas prohibiciones una prohibición general de acceso.&lt;/p&gt;
+        &lt;p&gt;109. Habida cuenta de las consideraciones anteriores, no puede considerarse probado que el sistema de protección de las ZPE vigente en el Land del Tirol sea insuficiente a efectos de los artículos 4, apartado 1 o 2, de la Directiva sobre las aves y 6, apartado 2, de la Directiva sobre los hábitats, en relación con el 7 de ésta.&lt;/p&gt;
+        &lt;p&gt;110. Ése es el caso especialmente de la ZPE de Tiroler Lechtal, que también goza de la protección en calidad de parque natural, una parte del cual, a saber el «Tiroler Lech», fue clasificado como reserva natural.&lt;/p&gt;
+        &lt;p&gt;111. El hecho de que el artículo 14, apartado 3, de la TNSchG disponga que el Gobierno del Land del Tirol debe establecer mediante reglamento los objetivos de conservación para cada lugar Natura 2000 no puede poner en entredicho las conclusiones que aparecen en los dos apartados anteriores. En efecto, aunque un sistema de ese tipo puede mejorarse, no resulta, sin embargo, que en el presente caso el sistema existente en dicho Land sea insuficiente a efectos de las exigencias de conservación.&lt;/p&gt;
+        &lt;p&gt;112. Por consiguiente, procede desestimar la segunda imputación, en la medida en que se refiere al Land del Tirol.&lt;/p&gt;
+        &lt;p&gt;113. En relación con las ZPE de las que, en el presente asunto, se declara que no gozan de un estatuto jurídico de protección suficiente a efectos de las exigencias que derivan de las disposiciones pertinentes de las Directivas sobre las aves y sobre los hábitats, el Tribunal de Justicia no dispone de información para determinar si las especies en razón de las cuales se clasificaron dichas ZPE están incluidas a la vez en el ámbito de aplicación de los apartados 1 y 2 del artículo 4 de la Directiva sobre las aves o de uno solo de ellos.&lt;/p&gt;
+        &lt;p&gt;114. Por tanto, a este respecto procede referirse al artículo 4 de la Directiva sobre las aves.&lt;/p&gt;
+        &lt;p&gt;115. A la luz de todas las consideraciones anteriores, procede declarar que la República de Austria ha incumplido las obligaciones que le incumben en virtud de las Directivas sobre las aves y sobre los hábitats:&lt;/p&gt;
+        &lt;p&gt;– al no haber clasificado correctamente, sobre la base de criterios ornitológicos, como ZPE el lugar de Hanság, en el Land de Burgenland, y al no haber delimitado correctamente la ZPE de Niedere Tauern, en el Land de Estiria, con arreglo al artículo 4, apartado 1, de la Directiva sobre las aves, y&lt;/p&gt;
+        &lt;p&gt;– al no haber proporcionado a las ZPE de Maltsch, de Wiesengebiete im Freinwald, de Pfeifer Anger, de Oberes Donautal y de Untere Traun, en el Land de Alta Austria, y a la ZPE de Verwall, en el Land de Vorarlberg, una protección jurídica que cumpla las exigencias impuestas en los artículos 4 de la Directiva sobre las aves, y 6, apartado 2, en relación con el 7 de la Directiva sobre los hábitats.&lt;/p&gt;
+        &lt;p&gt;Costas &lt;/p&gt;
+        &lt;p&gt;116. A tenor del artículo 69, apartado 3, párrafo primero, del Reglamento de Procedimiento, cuando se estimen parcialmente las pretensiones de una y otra parte, el Tribunal de Justicia podrá repartir las costas o decidir que cada parte abone sus propias costas. En el caso de autos, al haberse estimado parcialmente las pretensiones de una y otra parte, procede decidir que cada parte abone sus propias costas.&lt;/p&gt;
+        &lt;p&gt;117. Con arreglo al artículo 69, apartado 4, del Reglamento de Procedimiento, la República Federal de Alemania, que ha intervenido como coadyuvante en el presente litigio, soportará sus propias costas.&lt;/p&gt;
+      &lt;/TXT_MO&gt;
+    </cdm:manifestation_case-law_grounds>
+        <cdm:manifestation_case-law_summary rdf:datatype="&rdf;XMLLiteral">
+      &lt;TXT_SM&gt;
+        &lt;p&gt;1. En el marco de un recurso con arreglo al artículo 226 CE, la existencia de un incumplimiento debe ser apreciada en función de la situación del Estado miembro tal como ésta se presentaba al final del plazo señalado en el dictamen motivado y los cambios ocurridos posteriormente no pueden ser tomados en cuenta por el Tribunal de Justicia.&lt;/p&gt;
+        &lt;p&gt;(véase el apartado 22)&lt;/p&gt;
+        &lt;p&gt;2. Como los regímenes jurídicos de las Directivas 79/409, relativa a la conservación de las aves silvestres, y 92/43, relativa a la conservación de los hábitats naturales y de la fauna y flora silvestres, son distintos, un Estado miembro no puede eludir las obligaciones que el incumben en virtud del artículo 4, apartados 1 y 2, de la Directiva 79/409 invocando medidas diferentes de las establecidas en ésta. Por otra parte, el hecho de que un lugar, en relación con el cual se impone a un Estado miembro una obligación de clasificación con arreglo a dicha Directiva, no haya sufrido deterioro no pone en entredicho la obligación de los Estados miembros de clasificar lugares como zonas de protección especial.&lt;/p&gt;
+        &lt;p&gt;(véase el apartado 24)&lt;/p&gt;
+        &lt;p&gt;3. El objeto del recurso por incumplimiento queda delimitado por el dictamen motivado de la Comisión, de forma que el recurso debe basarse en los mismos motivos y alegaciones que el citado dictamen. El escrito de requerimiento que la Comisión dirige al Estado miembro interesado y el dictamen motivado emitido por la Comisión delimitan el objeto del litigio y, en consecuencia, éste ya no puede ser ampliado. En efecto, la posibilidad de que el Estado miembro afectado presente observaciones constituye, aun cuando éste considere que no tiene el deber de utilizarla, una garantía esencial establecida por el Tratado y su observancia es un requisito sustancial de forma para la conformidad a Derecho del procedimiento por el que se declara un incumplimiento de un Estado miembro. Por consiguiente, el dictamen motivado y el recurso de la Comisión deben basarse en las mismas imputaciones que el escrito de requerimiento que inicia el procedimiento administrativo previo. De no ser así, no puede considerarse que tal irregularidad desaparezca por el hecho de que el Estado miembro demandado formule observaciones sobre el dictamen motivado.&lt;/p&gt;
+        &lt;p&gt;El dictamen motivado y el recurso deben exponer las imputaciones de forma coherente y precisa, a fin de permitir al Estado miembro y al Tribunal de Justicia comprender exactamente el alcance de la violación del Derecho de la Unión alegada, requisito éste necesario para que dicho Estado miembro pueda invocar oportunamente los motivos en los que basa su defensa y para que el Tribunal de Justicia pueda verificar la existencia del incumplimiento imputado.&lt;/p&gt;
+        &lt;p&gt;(véanse los apartados 40 a 42)&lt;/p&gt;
+        &lt;p&gt;4. Si bien el dictamen motivado debe contener una exposición coherente y detallada de las razones que han llevado a la Comisión a la convicción de que el Estado miembro de que se trate ha incumplido alguna de las obligaciones que le incumben en virtud del Tratado, la Comisión no está obligada a indicar en dicho dictamen las medidas que permitirían eliminar el incumplimiento imputado. Del mismo modo, la Comisión tampoco está obligada a indicar dichas medidas en el escrito de interposición del recurso.&lt;/p&gt;
+        &lt;p&gt;(véase el apartado 50)&lt;/p&gt;
+        &lt;p&gt;5. Si bien es cierto que la exactitud de la adaptación del ordenamiento jurídico interno a una directiva reviste especial importancia en relación con la Directiva 79/409, relativa a la conservación de las aves silvestres, en la medida en que la gestión del patrimonio común está confiada, para sus respectivos territorios, a los Estados miembros, no puede, en cualquier caso, imponer a éstos que incluyan las obligaciones y las prohibiciones, resultantes de los artículos 4, apartados 1 y 2, de dicha Directiva y 6, apartado 2, de la Directiva 92/43, relativa a la conservación de los hábitats naturales y de la fauna y flora silvestres, en el acto jurídico que establece, para cada zona de protección especial (ZPE), las especies y los hábitats protegidos, así como los objetivos de conservación.&lt;/p&gt;
+        &lt;p&gt;Respecto de las mencionadas obligaciones, la adopción de medidas positivas tendentes a conservar y a mejorar el estado de una ZPE no tiene carácter sistemático, sino que depende de la situación concreta de la ZPE de que se trate.&lt;/p&gt;
+        &lt;p&gt;Si bien es cierto, por ejemplo, que la protección de las ZPE contra las actividades de los particulares exige que con carácter preventivo se impida a éstos llevar a cabo actividades posiblemente perjudiciales, no resulta que la realización de dicho objetivo requiera necesariamente que se dicten prohibiciones específicas para cada ZPE ni tampoco para cada especie concreta.&lt;/p&gt;
+        &lt;p&gt;Por lo que respecta a la identificación de las especies y de los hábitats protegidos en cada ZPE, al igual que la delimitación de una ZPE debe tener necesariamente una indiscutible fuerza vinculante, la identificación de las especies que justificaron la clasificación de la mencionada ZPE debe responder a la misma exigencia. En efecto, de no ser así, podría no alcanzarse plenamente el objetivo de protección que resulta de los artículos 4, apartados 1 y 2, de la Directiva 79/409, y 6, apartado 2, en relación con el artículo 7 de ésta.&lt;/p&gt;
+        &lt;p&gt;En lo relativo a los objetivos de conservación, el estatuto jurídico de protección del que deben gozar las ZPE no implica que dichos objetivos deban ser específicos para cada especie considerada por separado. Por otra parte, no puede considerarse en ningún caso que los objetivos de conservación deban contenerse en el mismo acto jurídico que el que se refiere a las especies y los hábitats protegidos de una ZPE determinada.&lt;/p&gt;
+        &lt;p&gt;Por lo que atañe al estatuto jurídico de protección de las ZPE correspondientes a una reserva natural o a otro tipo de lugar clasificado existentes y protegidas por medidas nacionales o regionales, el artículo 4 de la Directiva 79/409 establece un régimen de protección dotado de un objetivo específico, y reforzado, tanto para las especies mencionadas en el anexo I como para las especies migratorias. Ésa es la especificidad del régimen de protección del que deben gozar las ZPE, a diferencia del régimen de protección general menos estricto previsto en el artículo 3 de dicha Directiva para todas las especies de aves a las que se refiere ésta. Sin embargo, de ello no se desprende que los lugares de ese tipo sólo puedan ser protegidos eficazmente mediante un régimen jurídico específicamente definido y aplicado para cada ZPE.&lt;/p&gt;
+        &lt;p&gt;(véanse los apartados 61 a 66)&lt;/p&gt;
+      &lt;/TXT_SM&gt;
+    </cdm:manifestation_case-law_summary>
+        <cdm:manifestation_type rdf:datatype="&xsd;string">txt</cdm:manifestation_type>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:manifestation_manifests_expression rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SWE -->
+
+    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SWE">
+        <rdf:type rdf:resource="&cdm;expression"/>
+        <cdm:expression_title rdf:datatype="&xsd;string">Domstolens dom (andra avdelningen) den 14 oktober 2010. # Europeiska kommissionen mot Republiken Österrike. # Fördragsbrott - Direktiv 79/409/EEG och 92/43/EEG - Bevarande av vilda fåglar - Särskilda skyddsområden har utsetts på ett felaktigt sätt och inte getts ett tillräckligt rättsligt skydd. # Mål C-535/07.</cdm:expression_title>
+        <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
+        <cdm:expression_title_alternative rdf:datatype="&xsd;string">kommissionen mot Österrike</cdm:expression_title_alternative>
+        <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
+        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SWE"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://publications.europa.eu/resource/authority/corporate-body/CURIA -->
+
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/authority/corporate-body/CURIA">
+        <rdf:type rdf:resource="&cdm;institution"/>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO -->
+
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO">
+        <rdf:type rdf:resource="&cdm;institution"/>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://publications.europa.eu/resource/authority/fd_110/AT -->
+
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/authority/fd_110/AT">
+        <rdf:type rdf:resource="&cdm;ATTO_FD_110"/>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/fd_110/"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://publications.europa.eu/resource/authority/fd_110/COMM -->
+
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/authority/fd_110/COMM">
+        <rdf:type rdf:resource="&cdm;ATTO_FD_110"/>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/fd_110/"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://publications.europa.eu/resource/authority/fd_110/EM -->
+
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/authority/fd_110/EM">
+        <rdf:type rdf:resource="&cdm;ATTO_FD_110"/>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/fd_110/"/>
+    </NamedIndividual>
+    
+
+
+    <!-- http://publications.europa.eu/resource/authority/fd_110/IC -->
+
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/authority/fd_110/IC">
+        <rdf:type rdf:resource="&cdm;ATTO_FD_110"/>
+        <skos:inScheme rdf:resource="http://publications.europa.eu/resource/authority/fd_110/"/>
+    </NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.3.1957) http://owlapi.sourceforge.net -->
+

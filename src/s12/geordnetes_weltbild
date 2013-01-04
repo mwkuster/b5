@@ -1,0 +1,43 @@
+<html>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#">
+    <title>OG Sample Object - Geordnetes Weltbild</title>
+
+    <meta property="fb:app_id" content="230196110444178" />
+    <meta property="fb:admins" content="100004654151051" />
+
+    <meta property="og:title" content="Geordnetes Weltbild" />
+    <meta property="og:image" content="http://www.budabe.de/img/geordnetes_weltbild_cover_1.jpg" />
+    <!--meta property="og:url" content="http://www.budabe.de/grammatologie/geordnetes_weltbild/" /-->
+<meta property="og:url" content="http://www.budabe.eu/static/geordnetes_weltbild" />
+    <meta property="og:type" content="book" />
+    <meta property="og:description" content="Marc Wilhelm Küster: Geordnetes Weltbild. Die Tradition des alphabetischen Sortierens von der Keilschrift bis zur EDV. Eine Kulturgeschichte. Niemeyer: Tübingen, 2006 (actually January 2007) 740 pages. 58 figures. EUR 74.– / SFr 127.–, ISBN 13: 978-3-484-10899-8, ISBN 10: 3-484-10899-1" />
+
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Geordnetes Weltbild</h1>
+      <table border="0" cellspacing="0">
+        <tr>
+          <th class="key">fb:app_id</th>
+          <td class="value">230196110444178</td>
+        </tr>
+        <tr>
+          <th class="key">og:title</th>
+          <td class="value">Geordnetes Weltbild</td>
+        </tr>
+        <tr>
+          <th class="key">og:image</th>
+          <td class="value"><img src="http://www.degruyter.com/doc/cover/9783110911848.jpg"/></td>
+        </tr>
+        <tr>
+          <th class="key">og:url</th>
+          <td class="value"><a href="http://www.budabe.de/grammatologie/geordnetes_weltbild/">Geordnetes Weltbild</a></td>
+        </tr>
+        <tr>
+          <th class="key">og:type</th>
+          <td class="value">book</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

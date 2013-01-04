@@ -8,4 +8,6 @@
                  [net.djpowell/b64 "0.1.0"]
                  [commons-codec/commons-codec "1.4"]
                  [clj-time "0.4.4"]
-                 [uritemplate-clj "1.0.0"]])
+                 [uritemplate-clj "1.0.0"]
+                 [xerces/xercesImpl "2.10.0"] ;; Direct download from Maven central
+                 [seabass "2.0"]])
