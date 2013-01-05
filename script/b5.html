@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-01-04 12:16:06 CET"/>
+<meta name="generated" content="2013-01-04 15:33:36 CET"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -189,6 +189,7 @@ lang="en" xml:lang="en">
 </ul>
 </li>
 <li><a href="#sec-9.3">9.3 Exercise: Markup of a web page </a></li>
+<li><a href="#sec-9.4">9.4 Facebook and RDFa: the Open Graph protocol </a></li>
 </ul>
 </li>
 <li><a href="#sec-10">10 Bibliography </a></li>
@@ -4045,6 +4046,9 @@ $ curl -v -XPUT -d '{"username": "johnsmith", "first_name" : "John", "last_name"
 
 
 
+<p>
+For the purpose of these tests we use a local callback function under <a href="http://localhost:3000/api/facebook-callback">http://localhost:3000/api/facebook-callback</a>.
+</p>
 
 
 
@@ -4768,12 +4772,8 @@ href (optional): a traditionally navigable IRI for expressing the partner resour
 inlist: An attribute used to indicate that the object associated with a rel or property attribute on the same element is to be added to the list for that predicate. The value of this attribute must be ignored. Presence of this attribute causes a list to be created if it does not already exist.
 </li>
 <li>
-prefix: a white space separated list of prefix-name IRI pairs of the form
+prefix: a white space separated list of prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI
 </li>
-</ul>
-
-<p>NCName ':' ' '+ xsd:anyURI
-</p><ul>
 <li>
 property: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either a resource object if given or some literal text (also a 'predicate');
 </li>
@@ -4816,7 +4816,202 @@ cf. also <a href="http://wiki.dbpedia.org/Ontology?v=194q">http://wiki.dbpedia.o
 </p>
 <p>
 <a href="#sec-9.3"><img src="img/the_hobbit_rdfa.png"/></a>
-</p></div>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-9.4" class="outline-3">
+<h3 id="sec-9.4"><span class="section-number-3">9.4</span> Facebook and RDFa: the Open Graph protocol </h3>
+<div class="outline-text-3" id="text-9.4">
+
+<p>Facebook uses RDFa to integrate with external webpages. The Open Graph protocol <a href="http://opengraphprotocol.org/">http://opengraphprotocol.org/</a> / <a href="http://ogp.me/">http://ogp.me/</a> defines a vocabulary that can be used to integrate metadata into a webpage. In fact, this vocabulary is itself defined in RDF and available under <a href="http://ogp.me/ns/ogp.me.ttl">http://ogp.me/ns/ogp.me.ttl</a>. It defines the following core properties ("basic metadata") that should always be present (cited after <a href="http://ogp.me/">http://ogp.me/</a>):
+</p>
+<ul>
+<li>
+<code>og:title</code> - The title of your object as it should appear within the graph, e.g., "The Rock".
+</li>
+<li>
+<code>og:type</code> - The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required.
+</li>
+<li>
+<code>og:image</code> - An image URL which should represent your object within the graph.
+</li>
+<li>
+<code>og:url</code> - The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "<a href="http://www.imdb.com/title/tt0117500/"">http://www.imdb.com/title/tt0117500/"</a>.
+
+</li>
+</ul>
+
+<p><code>og</code> stands for <a href="http://ogp.me/ns#">http://ogp.me/ns#</a>.
+</p>
+<p>
+This information should be given in metatags in the HTML header, though this is a Facebook restriction, not an RDFa one:
+</p>
+
+
+
+<pre class="example">&lt;html&gt;
+  &lt;head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#"&gt;
+    &lt;title&gt;OG Sample Object - Geordnetes Weltbild&lt;/title&gt;
+
+    &lt;meta property="og:title" content="Geordnetes Weltbild" /&gt;
+    &lt;meta property="og:image" content="http://www.budabe.de/img/geordnetes_weltbild_cover_1.jpg" /&gt;
+    &lt;meta property="og:url" content="http://www.budabe.eu/static/geordnetes_weltbild" /&gt;
+    &lt;meta property="og:type" content="book" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  ...
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+
+
+<p>
+In addition to these mandatory elements the following optional metadata elements are possible for all types of objects:
+</p>
+<ul>
+<li>
+og:audio - A URL to an audio file to accompany this object.
+</li>
+<li>
+og:description - A one to two sentence description of your object.
+</li>
+<li>
+og:determiner - The word that appears before this object's title in a sentence. An enum of (a, an, the, "", auto). If auto is chosen, the consumer of your data should chose between "a" or "an". Default is "" (blank).
+</li>
+<li>
+og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
+</li>
+<li>
+og:locale:alternate - An array of other locales this page is available in.
+</li>
+<li>
+og:site_name - If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., "IMDb".
+</li>
+<li>
+og:video - A URL to a video file that complements this object
+
+
+</li>
+</ul>
+
+<p>Individual types of objects can and often have more specific metadata in addition to the generic ones. A book for example can have the following metadata elements (namespace <a href="http://ogp.me/ns/book#">http://ogp.me/ns/book#</a>):
+</p>
+<ul>
+<li>
+book:author - profile array - Who wrote this book.
+</li>
+<li>
+book:isbn - string - The ISBN
+</li>
+<li>
+book:release_date - datetime - The date the book was released.
+</li>
+<li>
+book:tag - string array - Tag words associated with this book.
+
+</li>
+</ul>
+
+<p>The following types of objects are predefined (all of them have their own namespaces):
+</p><ul>
+<li>
+website
+</li>
+<li>
+music with subtypes music.song, music.album, music.playlist and music.radio_station
+</li>
+<li>
+video with subtypes video.movie, video.episode, video.tv_show, video.other
+</li>
+<li>
+article
+</li>
+<li>
+book
+</li>
+<li>
+profile
+
+</li>
+</ul>
+
+<p>In addition, Facebook itself defines a number of extensions in the <a href="http://ogp.me/ns/fb#">http://ogp.me/ns/fb#</a> namespace, notably:
+</p><ul>
+<li>
+  fb:app_id: the application id in Facebook, e.g. 230196110444178
+</li>
+<li>
+  fb:admins: one or more ids of Facebook users that can get administrative information on this object, e.g. 100004654151051
+
+</li>
+</ul>
+
+<p>Facebook can then directly use this metadata integrating information on a resource into Facebook itself, e.g. for the "liking" of resources. You can access this information by going through the like button with for the administrator(s) will now contain an additional link to this admin page.
+</p>
+<p>
+<a href="#sec-9.4"><img src="img/facebook_activities.png"/></a>
+</p>
+<p>
+In the application configuration, e.g. for <a href="https://developers.facebook.com/apps/230196110444178">https://developers.facebook.com/apps/230196110444178</a>, an application can even go beyond this. It can define action types (= object properties in OWL terms) e.g. to rate a book. For this it can either reuse existing object types or even define completely new ones. It can also define new object types (= classes in OWL terms).
+</p>
+<p>
+<a href="#sec-9.4"><img src="img/app_center_open_graph.png"/></a>
+</p>
+<p>
+An application can indicate its intention to publish things on Facebook through the like button:
+</p>
+
+
+
+<pre class="example">&lt;fb:like href="http://www.goodreads.com/book/show/13010670-programming-clojure" width="280" layout="standard" show_faces="true" action="like" colorscheme="light" font="arial" /&gt;
+</pre>
+
+
+
+
+
+<p>
+In all of these cases Facebook extracts metadata in the website to populate the information in Facebook. This metadata is precisely the one encoded in RDFa. To test this integration the company has created a debugger for metadata: <a href="http://developers.facebook.com/tools/debug/og/object">http://developers.facebook.com/tools/debug/og/object</a>. You can use it for example: <a href="http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402">http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402</a>. Google has a corresponding tool, <a href="http://www.google.com/webmasters/tools/richsnippets">http://www.google.com/webmasters/tools/richsnippets</a> that also supports the Open Graph Protocol.
+</p>
+<p>
+However, Facebook goes a step further. In the application center a developer can define new RDF objects based on the Open Graph Protocol with new elements inside. What is more, the system then automatically creates a sample website with RDFa data integrated, e.g. <a href="http://samples.ogp.me//199815506812566">http://samples.ogp.me//199815506812566</a> for a sample application on book rating. In other terms, Facebook permits to extend the existing ontology with new properties and classes:
+</p>
+<p>
+<a href="#sec-9.4"><img src="img/open_graph_new_properties.png"/></a>
+</p>
+<p>
+<a href="#sec-9.4"><img src="img/open_graph_new_class.png"/></a>
+</p>
+
+<p>
+What is more, the tool automatically generates a sample object, e. g. for book: <a href="https://graph.facebook.com/10151191340470101/">https://graph.facebook.com/10151191340470101/</a>, and instructions on how to call the corresponding web services that an application can use to post its entries directly to a user's timeline:
+</p>
+
+
+<pre class="example">curl -F 'access_token=AAADRXLVkRpIBAG9tKWsgcQXtWj307zZALlqtqNyLyCBHgsYfRBZAfH9oBLiYhKRYAW4FvhC7G7ohPKRLVSGacWk0Nr5sTHJQx60Ff8uodYYc3BD2iF'      -F 'book=http://samples.ogp.me/199815506812566'         'https://graph.facebook.com/me/worms-web:rate'
+
+curl -F 'access_token=AAADRXLVkRpIBAG9tKWsgcQXtWj307zZALlqtqNyLyCBHgsYfRBZAfH9oBLiYhKRYAW4FvhC7G7ohPKRLVSGacWk0Nr5sTHJQx60Ff8uodYYc3BD2iF'      -F 'book=https://dl.dropbox.com/u/1492659/geordnetes_weltbild.html'         'https://graph.facebook.com/me/worms-web:rate'
+</pre>
+
+
+
+
+<p>
+With aggregations it is possible to calculate numbers of smaller activities, e.g. this user has heard 200 songs last months.
+</p>
+<p>
+At this stage many of the big players from <a href="http://digg.com">http://digg.com</a>, <a href="https://www.spotify.com">https://www.spotify.com</a>, <a href="http://www.goodreads.com/">http://www.goodreads.com/</a> all integrate in this way with Facebook, using the Facebook authentication, sometimes amongst others such as the Twitter or Google authentication.
+</p>
+<p>
+<a href="http://youtu.be/TM-2fNtg7p8">http://youtu.be/TM-2fNtg7p8</a> and <a href="http://youtu.be/__FplazeKvU">http://youtu.be/__FplazeKvU</a> give a good idea on the business reasons that Facebook has to integrate Facebook with all sorts of objects outside it, making effectively a part of Facebook. This specific take on a semantic web of things that monitors a users activities &mdash; books, music, runs, whatever &mdash; is at the same time techically fascinating and obviously disquieting from a privacy point of view.
+</p>
+
+
+</div>
 </div>
 
 </div>
@@ -4840,7 +5035,7 @@ cf. also <a href="http://wiki.dbpedia.org/Ontology?v=194q">http://wiki.dbpedia.o
 <p class="author"> Author: Marc Wilhelm Küster
 <a href="mailto:marcwilhelmkuster@Budabe-2.local">&lt;marcwilhelmkuster@Budabe-2.local&gt;</a>
 </p>
-<p class="date"> Date: 2013-01-04 12:16:06 CET</p>
+<p class="date"> Date: 2013-01-04 15:33:36 CET</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>
