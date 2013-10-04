@@ -7,7 +7,7 @@
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">B5 "Web Services"</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Marc Wilhelm Küster</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/mwkuster/b5" rel="dct:source">https://github.com/mwkuster/b5</a>.
 #+END_HTML
 * Objectives and Formalia
-Session <2012-10-05 Fri>
+Session <2013-10-04 Fri>
 ** Course objectives
 Mastering the concepts and implementation of heterogeneous, loosely-coupled architectures using a substantial practical programming project
 
@@ -26,9 +26,9 @@ Precondition for participating in the practical programming project is regular p
 Repeating the exam means a second, new practical project followed by a second oral exam.
 
 ** Preconditions
-- Preconditions for this module:  B4, D4
 - Registration for course and exam within deadlines
 - Participating in the final exam depends on having successfully completed a practical programming project
+- Solid programming expertise
 - Exam: consists of a practical programming project followed by a presentation and an oral exam
   
 * RESTful Web Services and Resource Oriented Architectures
@@ -294,16 +294,11 @@ In contrast to the HTTP method the HTTP headers always follow the model: Header 
 
 The very same logic can also be used for more web-service type requests to deliberatedly ask for some languages or content types.
 
+*** Assignment
+1. Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with curl
+2. Do the same exercise directly using telnet [domain] 80
 
-*** Encryption and caching
-Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
-
-For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
-
-- ~Last-Modified~: Indicates when the resource was last changed. This is typically retrieved with a cheap ~HEAD~ request. If ~Last-Modified~ is newer than the latest cached version, the cache should be updated accordingly
-- ~ETag~: A response header to enable cache validation
-
-The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (http://www.squid-cache.org/), Varnish Cache (https://www.varnish-cache.org/about) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
+Copy the protocol of your terminal session into a text file and upload it. Hand in the assignment via the course's Moodle page.
 
 *** Command line tools such as curl and wget
 ~curl~ (http://curl.haxx.se/) is a standard tool to download websites via the command line or (through ~libcurl~) programmatically:
@@ -318,6 +313,17 @@ curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=
 #+END_EXAMPLE
 
 ~wget~ (http://www.gnu.org/software/wget/) has similar functionalities, though more targeted towards web crawling.
+
+
+*** Encryption and caching
+Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
+
+For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
+
+- ~Last-Modified~: Indicates when the resource was last changed. This is typically retrieved with a cheap ~HEAD~ request. If ~Last-Modified~ is newer than the latest cached version, the cache should be updated accordingly
+- ~ETag~: A response header to enable cache validation
+
+The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (http://www.squid-cache.org/), Varnish Cache (https://www.varnish-cache.org/about) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
 
 ** Design principles for RESTful systems
 
@@ -337,579 +343,9 @@ A ROA is characterized by the key tenents of RESTful systems, i.e.:
 
 
 
-** Assignment
-1. Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with ~curl~
-2. In. a programming language of your choice, write a program or script that sends a GET request to that website. Your program must not call ~curl~ or ~wget~
+* Excursion: Ruby
+cf. http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&utm_medium=copy&rc=ex0share
 
-Hand in the assignment via the course's Moodle page.
-
-* Excursion: Clojure and JVM
-Session <2012-10-06 Sat>
-
-
-** Why Clojure?
-Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
-
-At here two ultimatively simple examples:
-#+BEGIN_EXAMPLE
-user=> (+ 1 1)
-2
-user=> (println "Hello World!")
-Hello World!
-nil
-user=> 
-#+END_EXAMPLE
-
-Like other Lisps Clojure employs prefix notation for function calls. Things like ~+~ that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of ~+~ we have what is called a /pure/ function that does not produce side-effects. The ~println~ in turn does not return anything useful --- though it does return something, the value ~nil~ ---, but it triggers a side action, namely to print out a string on the console.
-
-Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
-
-#+BEGIN_EXAMPLE
-user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-#'user/all-lower?
-user=> (all-lower? "aBc")
-false
-user=> (all-lower? "abc")
-true
-#+END_EXAMPLE
-
-This short code defines boolean function --- a predicate --- with one parameter using ~defn~. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns ~true~, otherwise ~false~.
-
-Already this example is a typical use of functions that themselves call functions (higher-order functions). We can, however, use this function in turn in a larger context, e.g. to filter all all-lower-case strings from a list of strings
-#+BEGIN_EXAMPLE
-user=> (filter all-lower? '("aBc" "deF" "hij" "Klm" "nop" "QRS" "tuV" "WXy" "z"))
-("hij" "nop" "z")
-user=> 
-#+END_EXAMPLE
-
-That code demonstrates two things:
-- Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
-- Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
-
-Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
-#+BEGIN_SRC clojure
-(defn hello
-  ([]
-     (hello "Hello" "World"))
-  ([name]
-     (hello "Hello" name))
-  ([phrase name]
-     (str phrase ", " name)))
-#+END_SRC
-
-Based on the parameters given the right function is chosen:
-
-#+BEGIN_EXAMPLE
-user=> (hello)
-"Hello, World"
-user=> (hello "Worms")
-"Hello, Worms"
-user=> (hello "Hallo" "Worms")
-"Hallo, Worms"
-user=> 
-#+END_EXAMPLE
-
-
-
-
-On this basis we can now look at some more of the advantages:
-
-- Elegant and concise syntax
-- Largely immutable data structures
-- Excellent support for concurrent programming
-- Close JVM integration
-
-Recommended reading: {Halloway:2012ta}
-
-** Practicalities
-*** Tutorials
-A number of Clojure tutorials exist on the Web, both as written tutorials and as podcasts. In addition, a number of books have appeared:
-
-**** Books
-[1]	S. Halloway and A. Bedra, Programming Clojure, Second Edition. Pragmatic Bookshelf, 2012.
-[1]	C. Emerick, B. Carper, and C. Grand, “Clojure Programming - Practical LISP for the Java World.,” O'Reilly 2012, 
-
-**** Podcasts
-
-http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128
-
-http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262
-
-**** API
-The Clojure API is documented under http://clojure.github.com/clojure/
-
-*** Installation and integration with Emacs
-1. Download leiningen 2.0
-
-Download from http://leiningen.org/
-
-#+BEGIN_EXAMPLE
-  wget https://raw.github.com/technomancy/leiningen/preview/bin/lein
-
-  chmod 755 lein
-
-  ./lein self-install
-#+END_EXAMPLE
-
-then move lein to a place in the PATH
-
-2. Install package manager
-
-Only for Emacs 23: 
-
-Install the Marmalade package manager
-
-#+BEGIN_EXAMPLE
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
-#+END_EXAMPLE
-
-3. Install clojure-mode
-
-https://github.com/technomancy/clojure-mode
-
-4. Install nrepl
-
-https://github.com/kingtim/nrepl.el
-
-M-x package-install [RET] nrepl [RET]
-
-Configure in .emacs:
-#+BEGIN_SRC
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
-
-(require 'clojure-mode) ;;https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el
-
-(setq inferior-lisp-program "lein repl")
-(setq clojure-swank-command ;; https://github.com/pallet/ritz/tree/develop/swank
-  (if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
-    "lein ritz-in %s"
-    "echo \"lein ritz-in %s\" | $SHELL -l"))
-#+END_SRC
-
-5. Start nrepl
-
-M-x nrepl-jack-in
-
-For Eclipse users there is the Counterclockwise plugin that can be used instead (http://code.google.com/p/counterclockwise/). For installation instructions see there.
-
-*** Leiningen
-Leiningen (http://leiningen.org) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
-
-Like Maven projects Leiningen projects have a predefined directory structure:
-
-#+BEGIN_EXAMPLE
-project/src            Source code
-       /test           Unit tests
-       /project.clj    Dependency file
-#+END_EXAMPLE
-
-Project files with the dependency structure just list the packages and their desired versions:
-
-#+BEGIN_SRC clojure
-(defproject eu.budabe/eli-project "0.1" 
-  :dependencies [[org.clojure/clojure "1.4.0"]
-                 [clj-http "0.5.3"]
-                 [cheshire "4.0.2"]
-                 [org.clojure/data.zip "0.1.0"]])
-#+END_SRC
-
-Leiningen itself will then automatically download the necessary libraries and install them as necessary. Much like Python, Perl and Ruby Clojure has a universally accepted central repository http://clojars.org which hosts Clojure libraries. In addition, all "normal" Java libraries can also be used.
-
-Leiningen itself has a number of options, most of which are self-explanatory.
-
-#+BEGIN_EXAMPLE
-marcwilhelmkuster$ lein --help
-Leiningen is a tool for working with Clojure projects.
-
-Several tasks are available:
-check               Check syntax and warn on reflection.
-classpath           Write the classpath of the current project to output-file.
-clean               Remove all files from project's target-path.
-compile             Compile Clojure source into .class files.
-deploy              Build jar and deploy to remote repository.
-deps                Show details about dependencies.
-do                  Higher-order task to perform other tasks in succession.
-help                Display a list of tasks or help for a given task.
-install             Install current project to the local repository.
-jar                 Package up all the project's files into a jar file.
-javac               Compile Java source files.
-new                 Generate project scaffolding based on a template.
-plugin              DEPRECATED. Please use the :user profile instead.
-pom                 Write a pom.xml file to disk for Maven interoperability.
-repl                Start a repl session either with the current project or standalone.
-retest              Run only the test namespaces which failed last time around.
-ritz                Launch ritz server for Emacs to connect.
-ritz-in             Jack in to a ritz backed Clojure SLIME session from Emacs.
-run                 Run the project's -main function.
-search              Search remote maven repositories for matching jars.
-show-profiles       List all available profiles or display one if given an argument.
-test                Run the project's tests.
-trampoline          Run a task without nesting the project's JVM inside Leiningen's.
-uberjar             Package up the project files and all dependencies into a jar file.
-upgrade             Upgrade Leiningen to specified version or latest stable.
-version             Print version for Leiningen and the current JVM.
-with-profile        Apply the given task with the profile(s) specified.
-
-Run lein help $TASK for details.
-
-Aliases:
-
-See also: readme, faq, tutorial, news, sample, profiles,
-deploying and copying.
-#+END_EXAMPLE
-
-~lein repl~ starts a Clojure command shell with all dependencies loaded:
-#+BEGIN_EXAMPLE
-marcwilhelmkuster$ lein repl
-nREPL server started on port 55766
-REPL-y 0.1.0-beta10
-Clojure 1.4.0
-    Exit: Control+D or (exit) or (quit)
-Commands: (user/help)
-    Docs: (doc function-name-here)
-          (find-doc "part-of-name-here")
-  Source: (source function-name-here)
-          (user/sourcery function-name-here)
- Javadoc: (javadoc java-object-or-class-here)
-Examples from clojuredocs.org: [clojuredocs or cdoc]
-          (user/clojuredocs name-here)
-          (user/clojuredocs "ns-here" "name-here")
-user=> (+ 1 1)
-2
-user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-#'user/all-lower?
-user=> (all-lower? "aBc")
-false
-user=> (all-lower? "abc")
-true
-user=> 
-#+END_EXAMPLE
-
-~lein new PROJECT~ creates a new empty project structure with placeholders for all important files:
-
-#+BEGIN_EXAMPLE
-$ lein new b5
-Generating a project called b5 based on the 'default' template.
-To see other templates (app, lein plugin, etc), try `lein help new`.
-$ cd b5
-$ find . -name "*"
-.
-./.gitignore
-./doc
-./doc/intro.md
-./project.clj
-./README.md
-./src
-./src/b5
-./src/b5/core.clj
-./test
-./test/b5
-./test/b5/core_test.clj
-$ 
-#+END_EXAMPLE
-
-The Leiningen tutorial https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md illustrates all possible operations in detail.
-
-*** Syntax and data structures
-We have already seen examples of Clojure's syntax. Function calls are of the type:
-#+BEGIN_EXAMPLE
-user=> (function-name params listed)
-#+END_EXAMPLE
-
-
-Defining new functions is as simple:
-#+BEGIN_SRC clojure
-(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-#+END_SRC
-
-In total the following primitive data structures exist in Clojure:
-#+BEGIN_EXAMPLE
-Boolean: true | false
-Character: \a \b \c
-String: "abc"
-List: ("a" "b" "c") (all-lower? "abc")
-Map: {:key1 "Value1", :key2 "Value2"}
-Number: 1.23
-Set: #{ 1 2 3}
-Vector: [1 2 3]
-
-Symbol: eli/build-act
-Keywords: :keyword :name
-Nil: nil
-#+END_EXAMPLE
-
-**** Lists
-Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
-
-#+BEGIN_EXAMPLE
-user=> (list 1 2 3)
-(1 2 3)
-user=> (list 1 2 "a" "b")
-(1 2 "a" "b")
-user=> '(1 2 "a" "b")
-(1 2 "a" "b")
-user=> (quote (1 2 "a" "b"))
-(1 2 "a" "b")
-user=> (list 1 2 (+ 3 4))
-(1 2 7)
-user=> '(1 2 (+ 3 4))
-(1 2 (+ 3 4))
-user=> 
-#+END_EXAMPLE
-
-As we have seen, also function calls are lists:
-#+BEGIN_EXAMPLE
-user=> (all-lower? "abc")
-true
-#+END_EXAMPLE
-
-
-**** Vectors
-Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
-#+BEGIN_EXAMPLE
-user=> [1 2 3]
-[1 2 3]
-user=> (def v [1 2 3])
-#'user/v
-user=> (vector? v)
-true
-user=> (v 1)
-2
-user=> 
-user=> [1 2 "a" "b"]
-[1 2 "a" "b"]
-user=> 
-#+END_EXAMPLE
-
-Vectors themselves can be used as functions, taking the relevant index as a parameter.
-
-**** Maps
-Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
-
-#+BEGIN_EXAMPLE
-user=> {:first-name "Marc", :last-name "Kuester"}
-{:last-name "Kuester", :first-name "Marc"}
-user=> (def kuester {:first-name "Marc", :last-name "Kuester"})
-#'user/kuester
-user=> (:last-name kuester)
-"Kuester"
-user=> 
-#+END_EXAMPLE
-
-Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
-
-**** -defrecord-
-In addition, you can easily define new data structures in the form of records:
-#+BEGIN_EXAMPLE
-user=> (defrecord Teacher [first-name last-name office-no])
-user.Teacher
-user=> (->Teacher "Marc" "Kuester" 123)
-#user.Teacher{:first-name "Marc", :last-name "Kuester", :office-no 123}
-user=> (:first-name (->Teacher "Marc" "Kuester" 123))
-"Marc"
-user=> 
-#+END_EXAMPLE
-
-
-** Control structures
-Clojure has at its core only very simple comtrol structures: ~if~, ~do~ and ~loop~. Of these, however, you use only ~if~ regularly and directly:
-
-#+BEGIN_EXAMPLE
-user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-user=> (if (all-lower? "abc") "all lower case" "also capital letters")
-"all lower case"
-user=> 
-#+END_EXAMPLE
-
-The first branch is used if the condition is true ("then-branch"), the second one if it is false ("else-branch"). Incidentally, if is a function like all other functions, returning the then or else branch as the case may be.
-
-#+BEGIN_EXAMPLE
-user=> (def a (if (all-lower? "abc") "all lower case" "also capital letters"))
-#'user/a
-user=> a
-"all lower case"
-user=> (def b (if (all-lower? "aBc") "all lower case" "also capital letters"))
-#'user/b
-user=> b
-"also capital letters"
-user=> 
-#+END_EXAMPLE
-
-~do~ is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
-#+BEGIN_EXAMPLE
-user=>  (if (all-lower? "aBc") (do (println "then") "all lower case") (do (println "else") "also capital letters"))
-else
-"also capital letters"
-user=> 
-#+END_EXAMPLE
-
-
-~loop~ is hardly ever used directly. Here an example of a loop that calculates the squares of all even numbers:
-#+BEGIN_SRC clojure
-;;very complicated, do not use
-(loop [lst '(1 2 3 4 5 6) res '()]  
-(let [l (last lst)]
-(if (empty? lst)
-  res
-  (recur (drop-last lst) (if (even? l) (cons (* l l) res) res)))))
-#+END_SRC
-
-As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include ~for~ and ~when~. ~for~, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
-
-#+BEGIN_EXAMPLE
-user=> (for [i '(1 2 3 4 5 6) :when (even? i)] (* i i))
-(4 16 36)
-user=> 
-#+END_EXAMPLE
-
-Really, the use of explicit control structures is much rarer in Clojure than in traditional imperative languages. Instead, higher-order functions operating on sequences are the bread and butter of Clojure ans indeed of functional programming in general.
-
-So, instead of using the above idiom to output the squares of even numbers a even more idiomatic approach would be:
-
-#+BEGIN_EXAMPLE
-user=> (map (fn [i] (* i i)) (filter even? '(1 2 3 4 5 6)))
-(4 16 36)
-user=> 
-#+END_EXAMPLE
-
-or even shorter
-
-#+BEGIN_EXAMPLE
-user=> (map  #(* % %) (filter even? '(1 2 3 4 5 6)))
-(4 16 36)
-user=> 
-#+END_EXAMPLE
-
-This makes usually for much clearer code.
-
-** Lazy sequences
-However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
-#+BEGIN_EXAMPLE
-user=> (defn even-squares [] (map #(* % %) (filter even? (range))))
-#'user/even-squares
-user=> (take 10 (even-squares))
-(0 4 16 36 64 100 144 196 256 324)
-user=> (take 50 (even-squares))
-(0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
-user=> 
-#+END_EXAMPLE
-
-or even shorter
-
-#+BEGIN_EXAMPLE
-user=> (defn even-squares [] (map #(* % %)  (range 0 Double/POSITIVE_INFINITY 2)))
-#'user/even-squares
-user=> (take 10 (even-squares))
-(0 4 16 36 64 100 144 196 256 324)
-user=> 
-#+END_EXAMPLE
-
-
-This may look rather surprising --- how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated --- realized is the term --- only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
-
-Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
-
-** Assignment
-1. Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
-2. Write the same program in another programming language of your choice
-
-Hand in assignment via the course's Moodle page.
-
-
-** Principles of functional programming
-Session <2012-10-19 Fri>
-
-Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
-
-  - Immutable data
-  - Functions as data
-  - Pure Functions
-  - Higher-Order Functions
-  - Use of recursion
-
-We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
-
-The example of the "square of even numbers" functions is built on functions as data (~even?~, ~#(* % %)~ etc.) that are parameters to higher-order functions (~filter~, ~map~). All of these functions are pure in a mathematical sense.
-#+BEGIN_SRC clojure
-(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
-#+END_SRC 
-
-Clojure is less oriented towards explicit recursion as other languages such as Scheme, but they still play an important role. However, the concept of immutable data is at the core of Clojure. All the data structures that we have seen are immutable (and many are in addition lazy). Of course, it is still possible to handle mutable data, and in fact Clojure offers some powerful strategies to handle data updates in transactions (Software Transactional Memory or STM). Transactional references (Refs) make for safe mutable data. However, a detailed discussion of this is out of scope for this session.
-
-More information on Clojure and its API is available under http://clojure.org/ and http://clojuredocs.org/
-
-
-
-
-
-
-** Futures
-For long-running calculations Clojure has the concept of futures (http://clojuredocs.org/clojure_core/clojure.core/future). A future is calculated in a separate thread, but transparently to the user:
-
-#+BEGIN_SRC clojure
-(defn get-page [host port]
-  (let
-      [conn (Socket. host port)
-       in (.getInputStream conn)
-       out (.getOutputStream conn)]
-    (write-request out host)
-    (future (read-response in))))
-#+END_SRC 
-
-Assuming that ~read-response~ takes a considerable time to execute and would block further program execution for the time it takes, ~(future (read-response in))~ returns instead a /promise/ to the real value that it will contain. Once the calculation is complete, it will be transparently replaced by the final value, without blocking the current execution:
-
-#+BEGIN_EXAMPLE
-user> (def p (get-page "www.google.de" 80))
-GET / HTTP/1.1
-Host: www.google.de
-
-Request written
-#'user/p
-user> p
-#<core$future_call$reify__6110@2ca275d8: :pending>
-user> 
-user> p
-#<core$future_call$reify__6110@2ca275d8: :pending>
-user> @p
-[now execution blocks until the page is fully retrieved]
-#+END_EXAMPLE
-
-If you need the guarantee to have the value at a later stage, you can dereference the future by using the ~@~ reader macro, e.g. ~@p~. In this case program execution will block until the correct value is calculated, if that is not yet the case.
-
-** Multimethods: Polymorphism functional style
-
-Clojure has no native concept of objects (it does have an object concept for interfacing with Java). Instead, it offers named data structures --- records --- as well as functions that can dispatch on them and indeed on many other criteria. In the simplest of cases we have 
-
-#+BEGIN_SRC Clojure
-
-(defrecord Variable [text postfix])
-
-(defrecord Token [variables prefix])
-
-(defmulti handle-value 
-  "Handling of individual variables. Returns the variable replaced by the supplied values"
-  (fn [^Variable variable values separator encoding-fn]
-    (class (values (:text variable)))))
-
-(defmethod handle-value String [^Variable variable values separator encoding-fn]
- ;one strategy for strings
-)
-
-(defmethod handle-value java.util.Collection [^Variable variable values separator encoding-fn]
- ; another strategy to handle collections
-)
-; and so on
-#+END_SRC
-
-In the most frequent case dispatching is by data type or class, but it can be by anything else. ~defmulti~ defines in its implementation the strategy to be chosen by the individual ~defmethod~.
 
 * Programming RESTful Web Services: Client side web services
 In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. Afterwards we will actually write some Clojure programs to test this out.
@@ -2723,3 +2159,567 @@ http://youtu.be/TM-2fNtg7p8 and http://youtu.be/__FplazeKvU give a good idea on 
 
 
 * Bibliography
+* Excursion: Clojure and JVM
+** Why Clojure?
+Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
+
+At here two ultimatively simple examples:
+#+BEGIN_EXAMPLE
+user=> (+ 1 1)
+2
+user=> (println "Hello World!")
+Hello World!
+nil
+user=> 
+#+END_EXAMPLE
+
+Like other Lisps Clojure employs prefix notation for function calls. Things like ~+~ that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of ~+~ we have what is called a /pure/ function that does not produce side-effects. The ~println~ in turn does not return anything useful --- though it does return something, the value ~nil~ ---, but it triggers a side action, namely to print out a string on the console.
+
+Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
+
+#+BEGIN_EXAMPLE
+user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=> (all-lower? "aBc")
+false
+user=> (all-lower? "abc")
+true
+#+END_EXAMPLE
+
+This short code defines boolean function --- a predicate --- with one parameter using ~defn~. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns ~true~, otherwise ~false~.
+
+Already this example is a typical use of functions that themselves call functions (higher-order functions). We can, however, use this function in turn in a larger context, e.g. to filter all all-lower-case strings from a list of strings
+#+BEGIN_EXAMPLE
+user=> (filter all-lower? '("aBc" "deF" "hij" "Klm" "nop" "QRS" "tuV" "WXy" "z"))
+("hij" "nop" "z")
+user=> 
+#+END_EXAMPLE
+
+That code demonstrates two things:
+- Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
+- Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
+
+Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
+#+BEGIN_SRC clojure
+(defn hello
+  ([]
+     (hello "Hello" "World"))
+  ([name]
+     (hello "Hello" name))
+  ([phrase name]
+     (str phrase ", " name)))
+#+END_SRC
+
+Based on the parameters given the right function is chosen:
+
+#+BEGIN_EXAMPLE
+user=> (hello)
+"Hello, World"
+user=> (hello "Worms")
+"Hello, Worms"
+user=> (hello "Hallo" "Worms")
+"Hallo, Worms"
+user=> 
+#+END_EXAMPLE
+
+
+
+
+On this basis we can now look at some more of the advantages:
+
+- Elegant and concise syntax
+- Largely immutable data structures
+- Excellent support for concurrent programming
+- Close JVM integration
+
+Recommended reading: {Halloway:2012ta}
+
+** Practicalities
+*** Tutorials
+A number of Clojure tutorials exist on the Web, both as written tutorials and as podcasts. In addition, a number of books have appeared:
+
+**** Books
+[1]	S. Halloway and A. Bedra, Programming Clojure, Second Edition. Pragmatic Bookshelf, 2012.
+[1]	C. Emerick, B. Carper, and C. Grand, “Clojure Programming - Practical LISP for the Java World.,” O'Reilly 2012, 
+
+**** Podcasts
+
+http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128
+
+http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262
+
+**** API
+The Clojure API is documented under http://clojure.github.com/clojure/
+
+*** Installation and integration with Emacs
+1. Download leiningen 2.0
+
+Download from http://leiningen.org/
+
+#+BEGIN_EXAMPLE
+  wget https://raw.github.com/technomancy/leiningen/preview/bin/lein
+
+  chmod 755 lein
+
+  ./lein self-install
+#+END_EXAMPLE
+
+then move lein to a place in the PATH
+
+2. Install package manager
+
+Only for Emacs 23: 
+
+Install the Marmalade package manager
+
+#+BEGIN_EXAMPLE
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+#+END_EXAMPLE
+
+3. Install clojure-mode
+
+https://github.com/technomancy/clojure-mode
+
+4. Install nrepl
+
+https://github.com/kingtim/nrepl.el
+
+M-x package-install [RET] nrepl [RET]
+
+Configure in .emacs:
+#+BEGIN_SRC
+(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
+(require 'clojure-mode) ;;https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el
+
+(setq inferior-lisp-program "lein repl")
+(setq clojure-swank-command ;; https://github.com/pallet/ritz/tree/develop/swank
+  (if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
+    "lein ritz-in %s"
+    "echo \"lein ritz-in %s\" | $SHELL -l"))
+#+END_SRC
+
+5. Start nrepl
+
+M-x nrepl-jack-in
+
+For Eclipse users there is the Counterclockwise plugin that can be used instead (http://code.google.com/p/counterclockwise/). For installation instructions see there.
+
+*** Leiningen
+Leiningen (http://leiningen.org) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
+
+Like Maven projects Leiningen projects have a predefined directory structure:
+
+#+BEGIN_EXAMPLE
+project/src            Source code
+       /test           Unit tests
+       /project.clj    Dependency file
+#+END_EXAMPLE
+
+Project files with the dependency structure just list the packages and their desired versions:
+
+#+BEGIN_SRC clojure
+(defproject eu.budabe/eli-project "0.1" 
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [clj-http "0.5.3"]
+                 [cheshire "4.0.2"]
+                 [org.clojure/data.zip "0.1.0"]])
+#+END_SRC
+
+Leiningen itself will then automatically download the necessary libraries and install them as necessary. Much like Python, Perl and Ruby Clojure has a universally accepted central repository http://clojars.org which hosts Clojure libraries. In addition, all "normal" Java libraries can also be used.
+
+Leiningen itself has a number of options, most of which are self-explanatory.
+
+#+BEGIN_EXAMPLE
+marcwilhelmkuster$ lein --help
+Leiningen is a tool for working with Clojure projects.
+
+Several tasks are available:
+check               Check syntax and warn on reflection.
+classpath           Write the classpath of the current project to output-file.
+clean               Remove all files from project's target-path.
+compile             Compile Clojure source into .class files.
+deploy              Build jar and deploy to remote repository.
+deps                Show details about dependencies.
+do                  Higher-order task to perform other tasks in succession.
+help                Display a list of tasks or help for a given task.
+install             Install current project to the local repository.
+jar                 Package up all the project's files into a jar file.
+javac               Compile Java source files.
+new                 Generate project scaffolding based on a template.
+plugin              DEPRECATED. Please use the :user profile instead.
+pom                 Write a pom.xml file to disk for Maven interoperability.
+repl                Start a repl session either with the current project or standalone.
+retest              Run only the test namespaces which failed last time around.
+ritz                Launch ritz server for Emacs to connect.
+ritz-in             Jack in to a ritz backed Clojure SLIME session from Emacs.
+run                 Run the project's -main function.
+search              Search remote maven repositories for matching jars.
+show-profiles       List all available profiles or display one if given an argument.
+test                Run the project's tests.
+trampoline          Run a task without nesting the project's JVM inside Leiningen's.
+uberjar             Package up the project files and all dependencies into a jar file.
+upgrade             Upgrade Leiningen to specified version or latest stable.
+version             Print version for Leiningen and the current JVM.
+with-profile        Apply the given task with the profile(s) specified.
+
+Run lein help $TASK for details.
+
+Aliases:
+
+See also: readme, faq, tutorial, news, sample, profiles,
+deploying and copying.
+#+END_EXAMPLE
+
+~lein repl~ starts a Clojure command shell with all dependencies loaded:
+#+BEGIN_EXAMPLE
+marcwilhelmkuster$ lein repl
+nREPL server started on port 55766
+REPL-y 0.1.0-beta10
+Clojure 1.4.0
+    Exit: Control+D or (exit) or (quit)
+Commands: (user/help)
+    Docs: (doc function-name-here)
+          (find-doc "part-of-name-here")
+  Source: (source function-name-here)
+          (user/sourcery function-name-here)
+ Javadoc: (javadoc java-object-or-class-here)
+Examples from clojuredocs.org: [clojuredocs or cdoc]
+          (user/clojuredocs name-here)
+          (user/clojuredocs "ns-here" "name-here")
+user=> (+ 1 1)
+2
+user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=> (all-lower? "aBc")
+false
+user=> (all-lower? "abc")
+true
+user=> 
+#+END_EXAMPLE
+
+~lein new PROJECT~ creates a new empty project structure with placeholders for all important files:
+
+#+BEGIN_EXAMPLE
+$ lein new b5
+Generating a project called b5 based on the 'default' template.
+To see other templates (app, lein plugin, etc), try `lein help new`.
+$ cd b5
+$ find . -name "*"
+.
+./.gitignore
+./doc
+./doc/intro.md
+./project.clj
+./README.md
+./src
+./src/b5
+./src/b5/core.clj
+./test
+./test/b5
+./test/b5/core_test.clj
+$ 
+#+END_EXAMPLE
+
+The Leiningen tutorial https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md illustrates all possible operations in detail.
+
+*** Syntax and data structures
+We have already seen examples of Clojure's syntax. Function calls are of the type:
+#+BEGIN_EXAMPLE
+user=> (function-name params listed)
+#+END_EXAMPLE
+
+
+Defining new functions is as simple:
+#+BEGIN_SRC clojure
+(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#+END_SRC
+
+In total the following primitive data structures exist in Clojure:
+#+BEGIN_EXAMPLE
+Boolean: true | false
+Character: \a \b \c
+String: "abc"
+List: ("a" "b" "c") (all-lower? "abc")
+Map: {:key1 "Value1", :key2 "Value2"}
+Number: 1.23
+Set: #{ 1 2 3}
+Vector: [1 2 3]
+
+Symbol: eli/build-act
+Keywords: :keyword :name
+Nil: nil
+#+END_EXAMPLE
+
+**** Lists
+Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
+
+#+BEGIN_EXAMPLE
+user=> (list 1 2 3)
+(1 2 3)
+user=> (list 1 2 "a" "b")
+(1 2 "a" "b")
+user=> '(1 2 "a" "b")
+(1 2 "a" "b")
+user=> (quote (1 2 "a" "b"))
+(1 2 "a" "b")
+user=> (list 1 2 (+ 3 4))
+(1 2 7)
+user=> '(1 2 (+ 3 4))
+(1 2 (+ 3 4))
+user=> 
+#+END_EXAMPLE
+
+As we have seen, also function calls are lists:
+#+BEGIN_EXAMPLE
+user=> (all-lower? "abc")
+true
+#+END_EXAMPLE
+
+
+**** Vectors
+Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
+#+BEGIN_EXAMPLE
+user=> [1 2 3]
+[1 2 3]
+user=> (def v [1 2 3])
+#'user/v
+user=> (vector? v)
+true
+user=> (v 1)
+2
+user=> 
+user=> [1 2 "a" "b"]
+[1 2 "a" "b"]
+user=> 
+#+END_EXAMPLE
+
+Vectors themselves can be used as functions, taking the relevant index as a parameter.
+
+**** Maps
+Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
+
+#+BEGIN_EXAMPLE
+user=> {:first-name "Marc", :last-name "Kuester"}
+{:last-name "Kuester", :first-name "Marc"}
+user=> (def kuester {:first-name "Marc", :last-name "Kuester"})
+#'user/kuester
+user=> (:last-name kuester)
+"Kuester"
+user=> 
+#+END_EXAMPLE
+
+Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
+
+**** -defrecord-
+In addition, you can easily define new data structures in the form of records:
+#+BEGIN_EXAMPLE
+user=> (defrecord Teacher [first-name last-name office-no])
+user.Teacher
+user=> (->Teacher "Marc" "Kuester" 123)
+#user.Teacher{:first-name "Marc", :last-name "Kuester", :office-no 123}
+user=> (:first-name (->Teacher "Marc" "Kuester" 123))
+"Marc"
+user=> 
+#+END_EXAMPLE
+
+
+** Control structures
+Clojure has at its core only very simple comtrol structures: ~if~, ~do~ and ~loop~. Of these, however, you use only ~if~ regularly and directly:
+
+#+BEGIN_EXAMPLE
+user=> (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+user=> (if (all-lower? "abc") "all lower case" "also capital letters")
+"all lower case"
+user=> 
+#+END_EXAMPLE
+
+The first branch is used if the condition is true ("then-branch"), the second one if it is false ("else-branch"). Incidentally, if is a function like all other functions, returning the then or else branch as the case may be.
+
+#+BEGIN_EXAMPLE
+user=> (def a (if (all-lower? "abc") "all lower case" "also capital letters"))
+#'user/a
+user=> a
+"all lower case"
+user=> (def b (if (all-lower? "aBc") "all lower case" "also capital letters"))
+#'user/b
+user=> b
+"also capital letters"
+user=> 
+#+END_EXAMPLE
+
+~do~ is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
+#+BEGIN_EXAMPLE
+user=>  (if (all-lower? "aBc") (do (println "then") "all lower case") (do (println "else") "also capital letters"))
+else
+"also capital letters"
+user=> 
+#+END_EXAMPLE
+
+
+~loop~ is hardly ever used directly. Here an example of a loop that calculates the squares of all even numbers:
+#+BEGIN_SRC clojure
+;;very complicated, do not use
+(loop [lst '(1 2 3 4 5 6) res '()]  
+(let [l (last lst)]
+(if (empty? lst)
+  res
+  (recur (drop-last lst) (if (even? l) (cons (* l l) res) res)))))
+#+END_SRC
+
+As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include ~for~ and ~when~. ~for~, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
+
+#+BEGIN_EXAMPLE
+user=> (for [i '(1 2 3 4 5 6) :when (even? i)] (* i i))
+(4 16 36)
+user=> 
+#+END_EXAMPLE
+
+Really, the use of explicit control structures is much rarer in Clojure than in traditional imperative languages. Instead, higher-order functions operating on sequences are the bread and butter of Clojure ans indeed of functional programming in general.
+
+So, instead of using the above idiom to output the squares of even numbers a even more idiomatic approach would be:
+
+#+BEGIN_EXAMPLE
+user=> (map (fn [i] (* i i)) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=> 
+#+END_EXAMPLE
+
+or even shorter
+
+#+BEGIN_EXAMPLE
+user=> (map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=> 
+#+END_EXAMPLE
+
+This makes usually for much clearer code.
+
+** Lazy sequences
+However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
+#+BEGIN_EXAMPLE
+user=> (defn even-squares [] (map #(* % %) (filter even? (range))))
+#'user/even-squares
+user=> (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=> (take 50 (even-squares))
+(0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
+user=> 
+#+END_EXAMPLE
+
+or even shorter
+
+#+BEGIN_EXAMPLE
+user=> (defn even-squares [] (map #(* % %)  (range 0 Double/POSITIVE_INFINITY 2)))
+#'user/even-squares
+user=> (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=> 
+#+END_EXAMPLE
+
+
+This may look rather surprising --- how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated --- realized is the term --- only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
+
+Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
+
+** Assignment
+1. Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
+2. Write the same program in another programming language of your choice
+
+Hand in assignment via the course's Moodle page.
+
+
+** Principles of functional programming
+Session <2012-10-19 Fri>
+
+Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
+
+  - Immutable data
+  - Functions as data
+  - Pure Functions
+  - Higher-Order Functions
+  - Use of recursion
+
+We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
+
+The example of the "square of even numbers" functions is built on functions as data (~even?~, ~#(* % %)~ etc.) that are parameters to higher-order functions (~filter~, ~map~). All of these functions are pure in a mathematical sense.
+#+BEGIN_SRC clojure
+(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+#+END_SRC 
+
+Clojure is less oriented towards explicit recursion as other languages such as Scheme, but they still play an important role. However, the concept of immutable data is at the core of Clojure. All the data structures that we have seen are immutable (and many are in addition lazy). Of course, it is still possible to handle mutable data, and in fact Clojure offers some powerful strategies to handle data updates in transactions (Software Transactional Memory or STM). Transactional references (Refs) make for safe mutable data. However, a detailed discussion of this is out of scope for this session.
+
+More information on Clojure and its API is available under http://clojure.org/ and http://clojuredocs.org/
+
+
+
+
+
+
+** Futures
+For long-running calculations Clojure has the concept of futures (http://clojuredocs.org/clojure_core/clojure.core/future). A future is calculated in a separate thread, but transparently to the user:
+
+#+BEGIN_SRC clojure
+(defn get-page [host port]
+  (let
+      [conn (Socket. host port)
+       in (.getInputStream conn)
+       out (.getOutputStream conn)]
+    (write-request out host)
+    (future (read-response in))))
+#+END_SRC 
+
+Assuming that ~read-response~ takes a considerable time to execute and would block further program execution for the time it takes, ~(future (read-response in))~ returns instead a /promise/ to the real value that it will contain. Once the calculation is complete, it will be transparently replaced by the final value, without blocking the current execution:
+
+#+BEGIN_EXAMPLE
+user> (def p (get-page "www.google.de" 80))
+GET / HTTP/1.1
+Host: www.google.de
+
+Request written
+#'user/p
+user> p
+#<core$future_call$reify__6110@2ca275d8: :pending>
+user> 
+user> p
+#<core$future_call$reify__6110@2ca275d8: :pending>
+user> @p
+[now execution blocks until the page is fully retrieved]
+#+END_EXAMPLE
+
+If you need the guarantee to have the value at a later stage, you can dereference the future by using the ~@~ reader macro, e.g. ~@p~. In this case program execution will block until the correct value is calculated, if that is not yet the case.
+
+** Multimethods: Polymorphism functional style
+
+Clojure has no native concept of objects (it does have an object concept for interfacing with Java). Instead, it offers named data structures --- records --- as well as functions that can dispatch on them and indeed on many other criteria. In the simplest of cases we have 
+
+#+BEGIN_SRC Clojure
+
+(defrecord Variable [text postfix])
+
+(defrecord Token [variables prefix])
+
+(defmulti handle-value 
+  "Handling of individual variables. Returns the variable replaced by the supplied values"
+  (fn [^Variable variable values separator encoding-fn]
+    (class (values (:text variable)))))
+
+(defmethod handle-value String [^Variable variable values separator encoding-fn]
+ ;one strategy for strings
+)
+
+(defmethod handle-value java.util.Collection [^Variable variable values separator encoding-fn]
+ ; another strategy to handle collections
+)
+; and so on
+#+END_SRC
+
+In the most frequent case dispatching is by data type or class, but it can be by anything else. ~defmulti~ defines in its implementation the strategy to be chosen by the individual ~defmethod~.
