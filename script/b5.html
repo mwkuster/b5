@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-10-04 09:07:01 CEST"/>
+<meta name="generated" content="2013-10-05 10:01:38 CEST"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -93,33 +93,15 @@ lang="en" xml:lang="en">
 <li><a href="#sec-2.1.1">2.1.1 HTTP methods and their use </a></li>
 <li><a href="#sec-2.1.2">2.1.2 Error handling </a></li>
 <li><a href="#sec-2.1.3">2.1.3 Content negotiation </a></li>
-<li><a href="#sec-2.1.4">2.1.4 Encryption and caching </a></li>
+<li><a href="#sec-2.1.4">2.1.4 Assignment </a></li>
 <li><a href="#sec-2.1.5">2.1.5 Command line tools such as curl and wget </a></li>
+<li><a href="#sec-2.1.6">2.1.6 Encryption and caching </a></li>
 </ul>
 </li>
 <li><a href="#sec-2.2">2.2 Design principles for RESTful systems </a></li>
-<li><a href="#sec-2.3">2.3 Assignment </a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Excursion: Clojure and JVM </a>
-<ul>
-<li><a href="#sec-3.1">3.1 Why Clojure? </a></li>
-<li><a href="#sec-3.2">3.2 Practicalities </a>
-<ul>
-<li><a href="#sec-3.2.1">3.2.1 Tutorials </a></li>
-<li><a href="#sec-3.2.2">3.2.2 Installation and integration with Emacs </a></li>
-<li><a href="#sec-3.2.3">3.2.3 Leiningen </a></li>
-<li><a href="#sec-3.2.4">3.2.4 Syntax and data structures </a></li>
-</ul>
-</li>
-<li><a href="#sec-3.3">3.3 Control structures </a></li>
-<li><a href="#sec-3.4">3.4 Lazy sequences </a></li>
-<li><a href="#sec-3.5">3.5 Assignment </a></li>
-<li><a href="#sec-3.6">3.6 Principles of functional programming </a></li>
-<li><a href="#sec-3.7">3.7 Futures </a></li>
-<li><a href="#sec-3.8">3.8 Multimethods: Polymorphism functional style </a></li>
-</ul>
-</li>
+<li><a href="#sec-3">3 Excursion: Ruby </a></li>
 <li><a href="#sec-4">4 Programming RESTful Web Services: Client side web services </a>
 <ul>
 <li><a href="#sec-4.1">4.1 Design of URIs </a>
@@ -193,6 +175,25 @@ lang="en" xml:lang="en">
 </ul>
 </li>
 <li><a href="#sec-10">10 Bibliography </a></li>
+<li><a href="#sec-11">11 Excursion: Clojure and JVM </a>
+<ul>
+<li><a href="#sec-11.1">11.1 Why Clojure? </a></li>
+<li><a href="#sec-11.2">11.2 Practicalities </a>
+<ul>
+<li><a href="#sec-11.2.1">11.2.1 Tutorials </a></li>
+<li><a href="#sec-11.2.2">11.2.2 Installation and integration with Emacs </a></li>
+<li><a href="#sec-11.2.3">11.2.3 Leiningen </a></li>
+<li><a href="#sec-11.2.4">11.2.4 Syntax and data structures </a></li>
+</ul>
+</li>
+<li><a href="#sec-11.3">11.3 Control structures </a></li>
+<li><a href="#sec-11.4">11.4 Lazy sequences </a></li>
+<li><a href="#sec-11.5">11.5 Assignment </a></li>
+<li><a href="#sec-11.6">11.6 Principles of functional programming </a></li>
+<li><a href="#sec-11.7">11.7 Futures </a></li>
+<li><a href="#sec-11.8">11.8 Multimethods: Polymorphism functional style </a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -739,31 +740,25 @@ requests in the order of preference <code>text/html</code> and XHTML (<code>appl
 <p>
 The very same logic can also be used for more web-service type requests to deliberatedly ask for some languages or content types.
 </p>
-
 </div>
 
 </div>
 
 <div id="outline-container-2.1.4" class="outline-4">
-<h4 id="sec-2.1.4"><span class="section-number-4">2.1.4</span> Encryption and caching </h4>
+<h4 id="sec-2.1.4"><span class="section-number-4">2.1.4</span> Assignment </h4>
 <div class="outline-text-4" id="text-2.1.4">
 
-<p>Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
-</p>
-<p>
-For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
-</p>
-<ul>
+<ol>
 <li>
-<code>Last-Modified</code>: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If <code>Last-Modified</code> is newer than the latest cached version, the cache should be updated accordingly
+Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with curl
 </li>
 <li>
-<code>ETag</code>: A response header to enable cache validation
+Do the same exercise directly using telnet [domain] 80
 
 </li>
-</ul>
+</ol>
 
-<p>The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (<a href="http://www.squid-cache.org/">http://www.squid-cache.org/</a>), Varnish Cache (<a href="https://www.varnish-cache.org/about">https://www.varnish-cache.org/about</a>) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
+<p>Copy the protocol of your terminal session into a text file and upload it. Hand in the assignment via the course's Moodle page.
 </p>
 </div>
 
@@ -797,6 +792,32 @@ will return the German-language version of the webpage <code>http://www.budabe.e
 
 <p>
 <code>wget</code> (<a href="http://www.gnu.org/software/wget/">http://www.gnu.org/software/wget/</a>) has similar functionalities, though more targeted towards web crawling.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-2.1.6" class="outline-4">
+<h4 id="sec-2.1.6"><span class="section-number-4">2.1.6</span> Encryption and caching </h4>
+<div class="outline-text-4" id="text-2.1.6">
+
+<p>Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
+</p>
+<p>
+For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
+</p>
+<ul>
+<li>
+<code>Last-Modified</code>: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If <code>Last-Modified</code> is newer than the latest cached version, the cache should be updated accordingly
+</li>
+<li>
+<code>ETag</code>: A response header to enable cache validation
+
+</li>
+</ul>
+
+<p>The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (<a href="http://www.squid-cache.org/">http://www.squid-cache.org/</a>), Varnish Cache (<a href="https://www.varnish-cache.org/about">https://www.varnish-cache.org/about</a>) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
 </p>
 </div>
 </div>
@@ -839,968 +860,17 @@ Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:
 </li>
 </ul>
 </div>
-
-</div>
-
-<div id="outline-container-2.3" class="outline-3">
-<h3 id="sec-2.3"><span class="section-number-3">2.3</span> Assignment </h3>
-<div class="outline-text-3" id="text-2.3">
-
-<ol>
-<li>
-Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with <code>curl</code>
-</li>
-<li>
-In. a programming language of your choice, write a program or script that sends a GET request to that website. Your program must not call <code>curl</code> or <code>wget</code>
-
-</li>
-</ol>
-
-<p>Hand in the assignment via the course's Moodle page.
-</p>
-</div>
 </div>
 
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Excursion: Clojure and JVM </h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Excursion: Ruby </h2>
 <div class="outline-text-2" id="text-3">
 
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2013-10-05 Sat</span></span>
+<p>cf. <a href="http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&amp;utm_medium=copy&amp;rc=ex0share">http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&amp;utm_medium=copy&amp;rc=ex0share</a>
 </p>
 
-
-</div>
-
-<div id="outline-container-3.1" class="outline-3">
-<h3 id="sec-3.1"><span class="section-number-3">3.1</span> Why Clojure? </h3>
-<div class="outline-text-3" id="text-3.1">
-
-<p>Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
-</p>
-<p>
-At here two ultimatively simple examples:
-</p>
-
-
-<pre class="example">user=&gt; (+ 1 1)
-2
-user=&gt; (println "Hello World!")
-Hello World!
-nil
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-Like other Lisps Clojure employs prefix notation for function calls. Things like <code>+</code> that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of <code>+</code> we have what is called a <i>pure</i> function that does not produce side-effects. The <code>println</code> in turn does not return anything useful &mdash; though it does return something, the value <code>nil</code> &mdash;, but it triggers a side action, namely to print out a string on the console.
-</p>
-<p>
-Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
-</p>
-
-
-
-<pre class="example">user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-#'user/all-lower?
-user=&gt; (all-lower? "aBc")
-false
-user=&gt; (all-lower? "abc")
-true
-</pre>
-
-
-
-
-<p>
-This short code defines boolean function &mdash; a predicate &mdash; with one parameter using <code>defn</code>. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns <code>true</code>, otherwise <code>false</code>.
-</p>
-<p>
-Already this example is a typical use of functions that themselves call functions (higher-order functions). We can, however, use this function in turn in a larger context, e.g. to filter all all-lower-case strings from a list of strings
-</p>
-
-
-<pre class="example">user=&gt; (filter all-lower? '("aBc" "deF" "hij" "Klm" "nop" "QRS" "tuV" "WXy" "z"))
-("hij" "nop" "z")
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-That code demonstrates two things:
-</p><ul>
-<li>
-Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
-</li>
-<li>
-Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
-
-</li>
-</ul>
-
-<p>Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
-</p>
-
-
-<pre class="example">(defn hello
-  ([]
-     (hello "Hello" "World"))
-  ([name]
-     (hello "Hello" name))
-  ([phrase name]
-     (str phrase ", " name)))
-</pre>
-
-
-
-
-<p>
-Based on the parameters given the right function is chosen:
-</p>
-
-
-
-<pre class="example">user=&gt; (hello)
-"Hello, World"
-user=&gt; (hello "Worms")
-"Hello, Worms"
-user=&gt; (hello "Hallo" "Worms")
-"Hallo, Worms"
-user=&gt; 
-</pre>
-
-
-
-
-
-
-
-<p>
-On this basis we can now look at some more of the advantages:
-</p>
-<ul>
-<li>
-Elegant and concise syntax
-</li>
-<li>
-Largely immutable data structures
-</li>
-<li>
-Excellent support for concurrent programming
-</li>
-<li>
-Close JVM integration
-
-</li>
-</ul>
-
-<p>Recommended reading: {Halloway:2012ta}
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-3.2" class="outline-3">
-<h3 id="sec-3.2"><span class="section-number-3">3.2</span> Practicalities </h3>
-<div class="outline-text-3" id="text-3.2">
-
-
-</div>
-
-<div id="outline-container-3.2.1" class="outline-4">
-<h4 id="sec-3.2.1"><span class="section-number-4">3.2.1</span> Tutorials </h4>
-<div class="outline-text-4" id="text-3.2.1">
-
-<p>A number of Clojure tutorials exist on the Web, both as written tutorials and as podcasts. In addition, a number of books have appeared:
-</p>
-<ul>
-<li id="sec-3.2.1.1">Books <br/>
-
-</li>
-<li id="sec-3.2.1.2">Podcasts <br/>
-
-<p>
-<a href="http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128">http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128</a>
-</p>
-<p>
-<a href="http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262">http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262</a>
-</p>
-</li>
-<li id="sec-3.2.1.3">API <br/>
-The Clojure API is documented under <a href="http://clojure.github.com/clojure/">http://clojure.github.com/clojure/</a>
-
-</li>
-</ul>
-</div>
-
-</div>
-
-<div id="outline-container-3.2.2" class="outline-4">
-<h4 id="sec-3.2.2"><span class="section-number-4">3.2.2</span> Installation and integration with Emacs </h4>
-<div class="outline-text-4" id="text-3.2.2">
-
-<ol>
-<li>
-Download leiningen 2.0
-
-</li>
-</ol>
-
-<p>Download from <a href="http://leiningen.org/">http://leiningen.org/</a>
-</p>
-
-
-
-<pre class="example">wget https://raw.github.com/technomancy/leiningen/preview/bin/lein
-
-chmod 755 lein
-
-./lein self-install
-</pre>
-
-
-
-
-<p>
-then move lein to a place in the PATH
-</p>
-<ol>
-<li>
-Install package manager
-
-</li>
-</ol>
-
-<p>Only for Emacs 23: 
-</p>
-<p>
-Install the Marmalade package manager
-</p>
-
-
-
-<pre class="example">(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
-</pre>
-
-
-
-
-<ol>
-<li>
-Install clojure-mode
-
-</li>
-</ol>
-
-<p><a href="https://github.com/technomancy/clojure-mode">https://github.com/technomancy/clojure-mode</a>
-</p>
-<ol>
-<li>
-Install nrepl
-
-</li>
-</ol>
-
-<p><a href="https://github.com/kingtim/nrepl.el">https://github.com/kingtim/nrepl.el</a>
-</p>
-<p>
-M-x package-install [RET] nrepl [RET]
-</p>
-<p>
-Configure in .emacs:
-(require 'package)
-(add-to-list 'package-archives
-'("marmalade" . "<a href="http://marmalade-repo.org/packages/"">http://marmalade-repo.org/packages/"</a>) t)
-(add-to-list 'package-archives
-'("melpa" . "<a href="http://melpa.milkbox.net/packages/"">http://melpa.milkbox.net/packages/"</a>) t)
-(package-initialize)
-</p>
-<p>
-(require 'clojure-mode) ;;<a href="https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el">https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el</a>
-</p>
-<p>
-(setq inferior-lisp-program "lein repl")
-(setq clojure-swank-command ;; <a href="https://github.com/pallet/ritz/tree/develop/swank">https://github.com/pallet/ritz/tree/develop/swank</a>
-(if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
-"lein ritz-in %s"
-"echo \"lein ritz-in %s\" | $SHELL -l"))
-</p>
-<ol>
-<li>
-Start nrepl
-
-</li>
-</ol>
-
-<p>M-x nrepl-jack-in
-</p>
-<p>
-For Eclipse users there is the Counterclockwise plugin that can be used instead (<a href="http://code.google.com/p/counterclockwise/">http://code.google.com/p/counterclockwise/</a>). For installation instructions see there.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-3.2.3" class="outline-4">
-<h4 id="sec-3.2.3"><span class="section-number-4">3.2.3</span> Leiningen </h4>
-<div class="outline-text-4" id="text-3.2.3">
-
-<p>Leiningen (<a href="http://leiningen.org">http://leiningen.org</a>) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
-</p>
-<p>
-Like Maven projects Leiningen projects have a predefined directory structure:
-</p>
-
-
-
-<pre class="example">project/src            Source code
-       /test           Unit tests
-       /project.clj    Dependency file
-</pre>
-
-
-
-
-<p>
-Project files with the dependency structure just list the packages and their desired versions:
-</p>
-
-
-
-<pre class="example">(defproject eu.budabe/eli-project "0.1" 
-  :dependencies [[org.clojure/clojure "1.4.0"]
-                 [clj-http "0.5.3"]
-                 [cheshire "4.0.2"]
-                 [org.clojure/data.zip "0.1.0"]])
-</pre>
-
-
-
-
-<p>
-Leiningen itself will then automatically download the necessary libraries and install them as necessary. Much like Python, Perl and Ruby Clojure has a universally accepted central repository <a href="http://clojars.org">http://clojars.org</a> which hosts Clojure libraries. In addition, all "normal" Java libraries can also be used.
-</p>
-<p>
-Leiningen itself has a number of options, most of which are self-explanatory.
-</p>
-
-
-
-<pre class="example">marcwilhelmkuster$ lein --help
-Leiningen is a tool for working with Clojure projects.
-
-Several tasks are available:
-check               Check syntax and warn on reflection.
-classpath           Write the classpath of the current project to output-file.
-clean               Remove all files from project's target-path.
-compile             Compile Clojure source into .class files.
-deploy              Build jar and deploy to remote repository.
-deps                Show details about dependencies.
-do                  Higher-order task to perform other tasks in succession.
-help                Display a list of tasks or help for a given task.
-install             Install current project to the local repository.
-jar                 Package up all the project's files into a jar file.
-javac               Compile Java source files.
-new                 Generate project scaffolding based on a template.
-plugin              DEPRECATED. Please use the :user profile instead.
-pom                 Write a pom.xml file to disk for Maven interoperability.
-repl                Start a repl session either with the current project or standalone.
-retest              Run only the test namespaces which failed last time around.
-ritz                Launch ritz server for Emacs to connect.
-ritz-in             Jack in to a ritz backed Clojure SLIME session from Emacs.
-run                 Run the project's -main function.
-search              Search remote maven repositories for matching jars.
-show-profiles       List all available profiles or display one if given an argument.
-test                Run the project's tests.
-trampoline          Run a task without nesting the project's JVM inside Leiningen's.
-uberjar             Package up the project files and all dependencies into a jar file.
-upgrade             Upgrade Leiningen to specified version or latest stable.
-version             Print version for Leiningen and the current JVM.
-with-profile        Apply the given task with the profile(s) specified.
-
-Run lein help $TASK for details.
-
-Aliases:
-
-See also: readme, faq, tutorial, news, sample, profiles,
-deploying and copying.
-</pre>
-
-
-
-
-<p>
-<code>lein repl</code> starts a Clojure command shell with all dependencies loaded:
-</p>
-
-
-<pre class="example">marcwilhelmkuster$ lein repl
-nREPL server started on port 55766
-REPL-y 0.1.0-beta10
-Clojure 1.4.0
-    Exit: Control+D or (exit) or (quit)
-Commands: (user/help)
-    Docs: (doc function-name-here)
-          (find-doc "part-of-name-here")
-  Source: (source function-name-here)
-          (user/sourcery function-name-here)
- Javadoc: (javadoc java-object-or-class-here)
-Examples from clojuredocs.org: [clojuredocs or cdoc]
-          (user/clojuredocs name-here)
-          (user/clojuredocs "ns-here" "name-here")
-user=&gt; (+ 1 1)
-2
-user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-#'user/all-lower?
-user=&gt; (all-lower? "aBc")
-false
-user=&gt; (all-lower? "abc")
-true
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-<code>lein new PROJECT</code> creates a new empty project structure with placeholders for all important files:
-</p>
-
-
-
-<pre class="example">$ lein new b5
-Generating a project called b5 based on the 'default' template.
-To see other templates (app, lein plugin, etc), try `lein help new`.
-$ cd b5
-$ find . -name "*"
-.
-./.gitignore
-./doc
-./doc/intro.md
-./project.clj
-./README.md
-./src
-./src/b5
-./src/b5/core.clj
-./test
-./test/b5
-./test/b5/core_test.clj
-$ 
-</pre>
-
-
-
-
-<p>
-The Leiningen tutorial <a href="https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md">https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md</a> illustrates all possible operations in detail.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-3.2.4" class="outline-4">
-<h4 id="sec-3.2.4"><span class="section-number-4">3.2.4</span> Syntax and data structures </h4>
-<div class="outline-text-4" id="text-3.2.4">
-
-<p>We have already seen examples of Clojure's syntax. Function calls are of the type:
-</p>
-
-
-<pre class="example">user=&gt; (function-name params listed)
-</pre>
-
-
-
-
-
-<p>
-Defining new functions is as simple:
-</p>
-
-
-<pre class="example">(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-</pre>
-
-
-
-
-<p>
-In total the following primitive data structures exist in Clojure:
-</p>
-
-
-<pre class="example">Boolean: true | false
-Character: \a \b \c
-String: "abc"
-List: ("a" "b" "c") (all-lower? "abc")
-Map: {:key1 "Value1", :key2 "Value2"}
-Number: 1.23
-Set: #{ 1 2 3}
-Vector: [1 2 3]
-
-Symbol: eli/build-act
-Keywords: :keyword :name
-Nil: nil
-</pre>
-
-
-
-
-<ul>
-<li id="sec-3.2.4.1">Lists <br/>
-Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
-
-
-
-
-<pre class="example">user=&gt; (list 1 2 3)
-(1 2 3)
-user=&gt; (list 1 2 "a" "b")
-(1 2 "a" "b")
-user=&gt; '(1 2 "a" "b")
-(1 2 "a" "b")
-user=&gt; (quote (1 2 "a" "b"))
-(1 2 "a" "b")
-user=&gt; (list 1 2 (+ 3 4))
-(1 2 7)
-user=&gt; '(1 2 (+ 3 4))
-(1 2 (+ 3 4))
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-As we have seen, also function calls are lists:
-</p>
-
-
-<pre class="example">user=&gt; (all-lower? "abc")
-true
-</pre>
-
-
-
-
-
-</li>
-<li id="sec-3.2.4.2">Vectors <br/>
-Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
-
-
-
-<pre class="example">user=&gt; [1 2 3]
-[1 2 3]
-user=&gt; (def v [1 2 3])
-#'user/v
-user=&gt; (vector? v)
-true
-user=&gt; (v 1)
-2
-user=&gt; 
-user=&gt; [1 2 "a" "b"]
-[1 2 "a" "b"]
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-Vectors themselves can be used as functions, taking the relevant index as a parameter.
-</p>
-</li>
-<li id="sec-3.2.4.3">Maps <br/>
-Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
-
-
-
-
-<pre class="example">user=&gt; {:first-name "Marc", :last-name "Kuester"}
-{:last-name "Kuester", :first-name "Marc"}
-user=&gt; (def kuester {:first-name "Marc", :last-name "Kuester"})
-#'user/kuester
-user=&gt; (:last-name kuester)
-"Kuester"
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
-</p>
-</li>
-<li id="sec-3.2.4.4">-defrecord- <br/>
-In addition, you can easily define new data structures in the form of records:
-
-
-
-<pre class="example">user=&gt; (defrecord Teacher [first-name last-name office-no])
-user.Teacher
-user=&gt; (-&gt;Teacher "Marc" "Kuester" 123)
-#user.Teacher{:first-name "Marc", :last-name "Kuester", :office-no 123}
-user=&gt; (:first-name (-&gt;Teacher "Marc" "Kuester" 123))
-"Marc"
-user=&gt; 
-</pre>
-
-
-
-
-
-</li>
-</ul>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-3.3" class="outline-3">
-<h3 id="sec-3.3"><span class="section-number-3">3.3</span> Control structures </h3>
-<div class="outline-text-3" id="text-3.3">
-
-<p>Clojure has at its core only very simple comtrol structures: <code>if</code>, <code>do</code> and <code>loop</code>. Of these, however, you use only <code>if</code> regularly and directly:
-</p>
-
-
-
-<pre class="example">user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
-user=&gt; (if (all-lower? "abc") "all lower case" "also capital letters")
-"all lower case"
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-The first branch is used if the condition is true ("then-branch"), the second one if it is false ("else-branch"). Incidentally, if is a function like all other functions, returning the then or else branch as the case may be.
-</p>
-
-
-
-<pre class="example">user=&gt; (def a (if (all-lower? "abc") "all lower case" "also capital letters"))
-#'user/a
-user=&gt; a
-"all lower case"
-user=&gt; (def b (if (all-lower? "aBc") "all lower case" "also capital letters"))
-#'user/b
-user=&gt; b
-"also capital letters"
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-<code>do</code> is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
-</p>
-
-
-<pre class="example">user=&gt;  (if (all-lower? "aBc") (do (println "then") "all lower case") (do (println "else") "also capital letters"))
-else
-"also capital letters"
-user=&gt; 
-</pre>
-
-
-
-
-
-<p>
-<code>loop</code> is hardly ever used directly. Here an example of a loop that calculates the squares of all even numbers:
-</p>
-
-
-<pre class="example">;;very complicated, do not use
-(loop [lst '(1 2 3 4 5 6) res '()]  
-(let [l (last lst)]
-(if (empty? lst)
-  res
-  (recur (drop-last lst) (if (even? l) (cons (* l l) res) res)))))
-</pre>
-
-
-
-
-<p>
-As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include <code>for</code> and <code>when</code>. <code>for</code>, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
-</p>
-
-
-
-<pre class="example">user=&gt; (for [i '(1 2 3 4 5 6) :when (even? i)] (* i i))
-(4 16 36)
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-Really, the use of explicit control structures is much rarer in Clojure than in traditional imperative languages. Instead, higher-order functions operating on sequences are the bread and butter of Clojure ans indeed of functional programming in general.
-</p>
-<p>
-So, instead of using the above idiom to output the squares of even numbers a even more idiomatic approach would be:
-</p>
-
-
-
-<pre class="example">user=&gt; (map (fn [i] (* i i)) (filter even? '(1 2 3 4 5 6)))
-(4 16 36)
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-or even shorter
-</p>
-
-
-
-<pre class="example">user=&gt; (map  #(* % %) (filter even? '(1 2 3 4 5 6)))
-(4 16 36)
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-This makes usually for much clearer code.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-3.4" class="outline-3">
-<h3 id="sec-3.4"><span class="section-number-3">3.4</span> Lazy sequences </h3>
-<div class="outline-text-3" id="text-3.4">
-
-<p>However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
-</p>
-
-
-<pre class="example">user=&gt; (defn even-squares [] (map #(* % %) (filter even? (range))))
-#'user/even-squares
-user=&gt; (take 10 (even-squares))
-(0 4 16 36 64 100 144 196 256 324)
-user=&gt; (take 50 (even-squares))
-(0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
-user=&gt; 
-</pre>
-
-
-
-
-<p>
-or even shorter
-</p>
-
-
-
-<pre class="example">user=&gt; (defn even-squares [] (map #(* % %)  (range 0 Double/POSITIVE_INFINITY 2)))
-#'user/even-squares
-user=&gt; (take 10 (even-squares))
-(0 4 16 36 64 100 144 196 256 324)
-user=&gt; 
-</pre>
-
-
-
-
-
-<p>
-This may look rather surprising &mdash; how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated &mdash; realized is the term &mdash; only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
-</p>
-<p>
-Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-3.5" class="outline-3">
-<h3 id="sec-3.5"><span class="section-number-3">3.5</span> Assignment </h3>
-<div class="outline-text-3" id="text-3.5">
-
-<ol>
-<li>
-Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
-</li>
-<li>
-Write the same program in another programming language of your choice
-
-</li>
-</ol>
-
-<p>Hand in assignment via the course's Moodle page.
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-3.6" class="outline-3">
-<h3 id="sec-3.6"><span class="section-number-3">3.6</span> Principles of functional programming </h3>
-<div class="outline-text-3" id="text-3.6">
-
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-19 Fri</span></span>
-</p>
-<p>
-Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
-</p>
-<ul>
-<li>
-Immutable data
-</li>
-<li>
-Functions as data
-</li>
-<li>
-Pure Functions
-</li>
-<li>
-Higher-Order Functions
-</li>
-<li>
-Use of recursion
-
-</li>
-</ul>
-
-<p>We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
-</p>
-<p>
-The example of the "square of even numbers" functions is built on functions as data (<code>even?</code>, <code>#(* % %)</code> etc.) that are parameters to higher-order functions (<code>filter</code>, <code>map</code>). All of these functions are pure in a mathematical sense.
-</p>
-
-
-<pre class="example">(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
-</pre>
-
-
-
-
-<p>
-Clojure is less oriented towards explicit recursion as other languages such as Scheme, but they still play an important role. However, the concept of immutable data is at the core of Clojure. All the data structures that we have seen are immutable (and many are in addition lazy). Of course, it is still possible to handle mutable data, and in fact Clojure offers some powerful strategies to handle data updates in transactions (Software Transactional Memory or STM). Transactional references (Refs) make for safe mutable data. However, a detailed discussion of this is out of scope for this session.
-</p>
-<p>
-More information on Clojure and its API is available under <a href="http://clojure.org/">http://clojure.org/</a> and <a href="http://clojuredocs.org/">http://clojuredocs.org/</a>
-</p>
-
-
-
-
-
-</div>
-
-</div>
-
-<div id="outline-container-3.7" class="outline-3">
-<h3 id="sec-3.7"><span class="section-number-3">3.7</span> Futures </h3>
-<div class="outline-text-3" id="text-3.7">
-
-<p>For long-running calculations Clojure has the concept of futures (<a href="http://clojuredocs.org/clojure_core/clojure.core/future">http://clojuredocs.org/clojure_core/clojure.core/future</a>). A future is calculated in a separate thread, but transparently to the user:
-</p>
-
-
-
-<pre class="example">(defn get-page [host port]
-  (let
-      [conn (Socket. host port)
-       in (.getInputStream conn)
-       out (.getOutputStream conn)]
-    (write-request out host)
-    (future (read-response in))))
-</pre>
-
-
-
-
-<p>
-Assuming that <code>read-response</code> takes a considerable time to execute and would block further program execution for the time it takes, <code>(future (read-response in))</code> returns instead a <i>promise</i> to the real value that it will contain. Once the calculation is complete, it will be transparently replaced by the final value, without blocking the current execution:
-</p>
-
-
-
-<pre class="example">user&gt; (def p (get-page "www.google.de" 80))
-GET / HTTP/1.1
-Host: www.google.de
-
-Request written
-#'user/p
-user&gt; p
-#&lt;core$future_call$reify__6110@2ca275d8: :pending&gt;
-user&gt; 
-user&gt; p
-#&lt;core$future_call$reify__6110@2ca275d8: :pending&gt;
-user&gt; @p
-[now execution blocks until the page is fully retrieved]
-</pre>
-
-
-
-
-<p>
-If you need the guarantee to have the value at a later stage, you can dereference the future by using the <code>@</code> reader macro, e.g. <code>@p</code>. In this case program execution will block until the correct value is calculated, if that is not yet the case.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-3.8" class="outline-3">
-<h3 id="sec-3.8"><span class="section-number-3">3.8</span> Multimethods: Polymorphism functional style </h3>
-<div class="outline-text-3" id="text-3.8">
-
-
-<p>
-Clojure has no native concept of objects (it does have an object concept for interfacing with Java). Instead, it offers named data structures &mdash; records &mdash; as well as functions that can dispatch on them and indeed on many other criteria. In the simplest of cases we have 
-</p>
-
-
-
-<pre class="example">
-(defrecord Variable [text postfix])
-
-(defrecord Token [variables prefix])
-
-(defmulti handle-value 
-  "Handling of individual variables. Returns the variable replaced by the supplied values"
-  (fn [^Variable variable values separator encoding-fn]
-    (class (values (:text variable)))))
-
-(defmethod handle-value String [^Variable variable values separator encoding-fn]
- ;one strategy for strings
-)
-
-(defmethod handle-value java.util.Collection [^Variable variable values separator encoding-fn]
- ; another strategy to handle collections
-)
-; and so on
-</pre>
-
-
-
-
-<p>
-In the most frequent case dispatching is by data type or class, but it can be by anything else. <code>defmulti</code> defines in its implementation the strategy to be chosen by the individual <code>defmethod</code>.
-</p>
-</div>
 </div>
 
 </div>
@@ -5021,6 +4091,944 @@ At this stage many of the big players from <a href="http://imdb.com">http://imdb
 <div class="outline-text-2" id="text-10">
 
 </div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Excursion: Clojure and JVM </h2>
+<div class="outline-text-2" id="text-11">
+
+
+</div>
+
+<div id="outline-container-11.1" class="outline-3">
+<h3 id="sec-11.1"><span class="section-number-3">11.1</span> Why Clojure? </h3>
+<div class="outline-text-3" id="text-11.1">
+
+<p>Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
+</p>
+<p>
+At here two ultimatively simple examples:
+</p>
+
+
+<pre class="example">user=&gt; (+ 1 1)
+2
+user=&gt; (println "Hello World!")
+Hello World!
+nil
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Like other Lisps Clojure employs prefix notation for function calls. Things like <code>+</code> that in other languages are separate operators are ordinary functions, following the same logic as any other function. In the case of <code>+</code> we have what is called a <i>pure</i> function that does not produce side-effects. The <code>println</code> in turn does not return anything useful &mdash; though it does return something, the value <code>nil</code> &mdash;, but it triggers a side action, namely to print out a string on the console.
+</p>
+<p>
+Before we elaborate more on the advantages let's have a look at some slightly more complex Clojure code (example inspired by , p.3):
+</p>
+
+
+
+<pre class="example">user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=&gt; (all-lower? "aBc")
+false
+user=&gt; (all-lower? "abc")
+true
+</pre>
+
+
+
+
+<p>
+This short code defines boolean function &mdash; a predicate &mdash; with one parameter using <code>defn</code>. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns <code>true</code>, otherwise <code>false</code>.
+</p>
+<p>
+Already this example is a typical use of functions that themselves call functions (higher-order functions). We can, however, use this function in turn in a larger context, e.g. to filter all all-lower-case strings from a list of strings
+</p>
+
+
+<pre class="example">user=&gt; (filter all-lower? '("aBc" "deF" "hij" "Klm" "nop" "QRS" "tuV" "WXy" "z"))
+("hij" "nop" "z")
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+That code demonstrates two things:
+</p><ul>
+<li>
+Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
+</li>
+<li>
+Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
+
+</li>
+</ul>
+
+<p>Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
+</p>
+
+
+<pre class="example">(defn hello
+  ([]
+     (hello "Hello" "World"))
+  ([name]
+     (hello "Hello" name))
+  ([phrase name]
+     (str phrase ", " name)))
+</pre>
+
+
+
+
+<p>
+Based on the parameters given the right function is chosen:
+</p>
+
+
+
+<pre class="example">user=&gt; (hello)
+"Hello, World"
+user=&gt; (hello "Worms")
+"Hello, Worms"
+user=&gt; (hello "Hallo" "Worms")
+"Hallo, Worms"
+user=&gt; 
+</pre>
+
+
+
+
+
+
+
+<p>
+On this basis we can now look at some more of the advantages:
+</p>
+<ul>
+<li>
+Elegant and concise syntax
+</li>
+<li>
+Largely immutable data structures
+</li>
+<li>
+Excellent support for concurrent programming
+</li>
+<li>
+Close JVM integration
+
+</li>
+</ul>
+
+<p>Recommended reading: {Halloway:2012ta}
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11.2" class="outline-3">
+<h3 id="sec-11.2"><span class="section-number-3">11.2</span> Practicalities </h3>
+<div class="outline-text-3" id="text-11.2">
+
+
+</div>
+
+<div id="outline-container-11.2.1" class="outline-4">
+<h4 id="sec-11.2.1"><span class="section-number-4">11.2.1</span> Tutorials </h4>
+<div class="outline-text-4" id="text-11.2.1">
+
+<p>A number of Clojure tutorials exist on the Web, both as written tutorials and as podcasts. In addition, a number of books have appeared:
+</p>
+<ul>
+<li id="sec-11.2.1.1">Books <br/>
+
+</li>
+<li id="sec-11.2.1.2">Podcasts <br/>
+
+<p>
+<a href="http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128">http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128</a>
+</p>
+<p>
+<a href="http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262">http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262</a>
+</p>
+</li>
+<li id="sec-11.2.1.3">API <br/>
+The Clojure API is documented under <a href="http://clojure.github.com/clojure/">http://clojure.github.com/clojure/</a>
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-11.2.2" class="outline-4">
+<h4 id="sec-11.2.2"><span class="section-number-4">11.2.2</span> Installation and integration with Emacs </h4>
+<div class="outline-text-4" id="text-11.2.2">
+
+<ol>
+<li>
+Download leiningen 2.0
+
+</li>
+</ol>
+
+<p>Download from <a href="http://leiningen.org/">http://leiningen.org/</a>
+</p>
+
+
+
+<pre class="example">wget https://raw.github.com/technomancy/leiningen/preview/bin/lein
+
+chmod 755 lein
+
+./lein self-install
+</pre>
+
+
+
+
+<p>
+then move lein to a place in the PATH
+</p>
+<ol>
+<li>
+Install package manager
+
+</li>
+</ol>
+
+<p>Only for Emacs 23: 
+</p>
+<p>
+Install the Marmalade package manager
+</p>
+
+
+
+<pre class="example">(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(package-initialize)
+</pre>
+
+
+
+
+<ol>
+<li>
+Install clojure-mode
+
+</li>
+</ol>
+
+<p><a href="https://github.com/technomancy/clojure-mode">https://github.com/technomancy/clojure-mode</a>
+</p>
+<ol>
+<li>
+Install nrepl
+
+</li>
+</ol>
+
+<p><a href="https://github.com/kingtim/nrepl.el">https://github.com/kingtim/nrepl.el</a>
+</p>
+<p>
+M-x package-install [RET] nrepl [RET]
+</p>
+<p>
+Configure in .emacs:
+(require 'package)
+(add-to-list 'package-archives
+'("marmalade" . "<a href="http://marmalade-repo.org/packages/"">http://marmalade-repo.org/packages/"</a>) t)
+(add-to-list 'package-archives
+'("melpa" . "<a href="http://melpa.milkbox.net/packages/"">http://melpa.milkbox.net/packages/"</a>) t)
+(package-initialize)
+</p>
+<p>
+(require 'clojure-mode) ;;<a href="https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el">https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el</a>
+</p>
+<p>
+(setq inferior-lisp-program "lein repl")
+(setq clojure-swank-command ;; <a href="https://github.com/pallet/ritz/tree/develop/swank">https://github.com/pallet/ritz/tree/develop/swank</a>
+(if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
+"lein ritz-in %s"
+"echo \"lein ritz-in %s\" | $SHELL -l"))
+</p>
+<ol>
+<li>
+Start nrepl
+
+</li>
+</ol>
+
+<p>M-x nrepl-jack-in
+</p>
+<p>
+For Eclipse users there is the Counterclockwise plugin that can be used instead (<a href="http://code.google.com/p/counterclockwise/">http://code.google.com/p/counterclockwise/</a>). For installation instructions see there.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11.2.3" class="outline-4">
+<h4 id="sec-11.2.3"><span class="section-number-4">11.2.3</span> Leiningen </h4>
+<div class="outline-text-4" id="text-11.2.3">
+
+<p>Leiningen (<a href="http://leiningen.org">http://leiningen.org</a>) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
+</p>
+<p>
+Like Maven projects Leiningen projects have a predefined directory structure:
+</p>
+
+
+
+<pre class="example">project/src            Source code
+       /test           Unit tests
+       /project.clj    Dependency file
+</pre>
+
+
+
+
+<p>
+Project files with the dependency structure just list the packages and their desired versions:
+</p>
+
+
+
+<pre class="example">(defproject eu.budabe/eli-project "0.1" 
+  :dependencies [[org.clojure/clojure "1.4.0"]
+                 [clj-http "0.5.3"]
+                 [cheshire "4.0.2"]
+                 [org.clojure/data.zip "0.1.0"]])
+</pre>
+
+
+
+
+<p>
+Leiningen itself will then automatically download the necessary libraries and install them as necessary. Much like Python, Perl and Ruby Clojure has a universally accepted central repository <a href="http://clojars.org">http://clojars.org</a> which hosts Clojure libraries. In addition, all "normal" Java libraries can also be used.
+</p>
+<p>
+Leiningen itself has a number of options, most of which are self-explanatory.
+</p>
+
+
+
+<pre class="example">marcwilhelmkuster$ lein --help
+Leiningen is a tool for working with Clojure projects.
+
+Several tasks are available:
+check               Check syntax and warn on reflection.
+classpath           Write the classpath of the current project to output-file.
+clean               Remove all files from project's target-path.
+compile             Compile Clojure source into .class files.
+deploy              Build jar and deploy to remote repository.
+deps                Show details about dependencies.
+do                  Higher-order task to perform other tasks in succession.
+help                Display a list of tasks or help for a given task.
+install             Install current project to the local repository.
+jar                 Package up all the project's files into a jar file.
+javac               Compile Java source files.
+new                 Generate project scaffolding based on a template.
+plugin              DEPRECATED. Please use the :user profile instead.
+pom                 Write a pom.xml file to disk for Maven interoperability.
+repl                Start a repl session either with the current project or standalone.
+retest              Run only the test namespaces which failed last time around.
+ritz                Launch ritz server for Emacs to connect.
+ritz-in             Jack in to a ritz backed Clojure SLIME session from Emacs.
+run                 Run the project's -main function.
+search              Search remote maven repositories for matching jars.
+show-profiles       List all available profiles or display one if given an argument.
+test                Run the project's tests.
+trampoline          Run a task without nesting the project's JVM inside Leiningen's.
+uberjar             Package up the project files and all dependencies into a jar file.
+upgrade             Upgrade Leiningen to specified version or latest stable.
+version             Print version for Leiningen and the current JVM.
+with-profile        Apply the given task with the profile(s) specified.
+
+Run lein help $TASK for details.
+
+Aliases:
+
+See also: readme, faq, tutorial, news, sample, profiles,
+deploying and copying.
+</pre>
+
+
+
+
+<p>
+<code>lein repl</code> starts a Clojure command shell with all dependencies loaded:
+</p>
+
+
+<pre class="example">marcwilhelmkuster$ lein repl
+nREPL server started on port 55766
+REPL-y 0.1.0-beta10
+Clojure 1.4.0
+    Exit: Control+D or (exit) or (quit)
+Commands: (user/help)
+    Docs: (doc function-name-here)
+          (find-doc "part-of-name-here")
+  Source: (source function-name-here)
+          (user/sourcery function-name-here)
+ Javadoc: (javadoc java-object-or-class-here)
+Examples from clojuredocs.org: [clojuredocs or cdoc]
+          (user/clojuredocs name-here)
+          (user/clojuredocs "ns-here" "name-here")
+user=&gt; (+ 1 1)
+2
+user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+#'user/all-lower?
+user=&gt; (all-lower? "aBc")
+false
+user=&gt; (all-lower? "abc")
+true
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+<code>lein new PROJECT</code> creates a new empty project structure with placeholders for all important files:
+</p>
+
+
+
+<pre class="example">$ lein new b5
+Generating a project called b5 based on the 'default' template.
+To see other templates (app, lein plugin, etc), try `lein help new`.
+$ cd b5
+$ find . -name "*"
+.
+./.gitignore
+./doc
+./doc/intro.md
+./project.clj
+./README.md
+./src
+./src/b5
+./src/b5/core.clj
+./test
+./test/b5
+./test/b5/core_test.clj
+$ 
+</pre>
+
+
+
+
+<p>
+The Leiningen tutorial <a href="https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md">https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md</a> illustrates all possible operations in detail.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11.2.4" class="outline-4">
+<h4 id="sec-11.2.4"><span class="section-number-4">11.2.4</span> Syntax and data structures </h4>
+<div class="outline-text-4" id="text-11.2.4">
+
+<p>We have already seen examples of Clojure's syntax. Function calls are of the type:
+</p>
+
+
+<pre class="example">user=&gt; (function-name params listed)
+</pre>
+
+
+
+
+
+<p>
+Defining new functions is as simple:
+</p>
+
+
+<pre class="example">(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+</pre>
+
+
+
+
+<p>
+In total the following primitive data structures exist in Clojure:
+</p>
+
+
+<pre class="example">Boolean: true | false
+Character: \a \b \c
+String: "abc"
+List: ("a" "b" "c") (all-lower? "abc")
+Map: {:key1 "Value1", :key2 "Value2"}
+Number: 1.23
+Set: #{ 1 2 3}
+Vector: [1 2 3]
+
+Symbol: eli/build-act
+Keywords: :keyword :name
+Nil: nil
+</pre>
+
+
+
+
+<ul>
+<li id="sec-11.2.4.1">Lists <br/>
+Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
+
+
+
+
+<pre class="example">user=&gt; (list 1 2 3)
+(1 2 3)
+user=&gt; (list 1 2 "a" "b")
+(1 2 "a" "b")
+user=&gt; '(1 2 "a" "b")
+(1 2 "a" "b")
+user=&gt; (quote (1 2 "a" "b"))
+(1 2 "a" "b")
+user=&gt; (list 1 2 (+ 3 4))
+(1 2 7)
+user=&gt; '(1 2 (+ 3 4))
+(1 2 (+ 3 4))
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+As we have seen, also function calls are lists:
+</p>
+
+
+<pre class="example">user=&gt; (all-lower? "abc")
+true
+</pre>
+
+
+
+
+
+</li>
+<li id="sec-11.2.4.2">Vectors <br/>
+Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
+
+
+
+<pre class="example">user=&gt; [1 2 3]
+[1 2 3]
+user=&gt; (def v [1 2 3])
+#'user/v
+user=&gt; (vector? v)
+true
+user=&gt; (v 1)
+2
+user=&gt; 
+user=&gt; [1 2 "a" "b"]
+[1 2 "a" "b"]
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Vectors themselves can be used as functions, taking the relevant index as a parameter.
+</p>
+</li>
+<li id="sec-11.2.4.3">Maps <br/>
+Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
+
+
+
+
+<pre class="example">user=&gt; {:first-name "Marc", :last-name "Kuester"}
+{:last-name "Kuester", :first-name "Marc"}
+user=&gt; (def kuester {:first-name "Marc", :last-name "Kuester"})
+#'user/kuester
+user=&gt; (:last-name kuester)
+"Kuester"
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
+</p>
+</li>
+<li id="sec-11.2.4.4">-defrecord- <br/>
+In addition, you can easily define new data structures in the form of records:
+
+
+
+<pre class="example">user=&gt; (defrecord Teacher [first-name last-name office-no])
+user.Teacher
+user=&gt; (-&gt;Teacher "Marc" "Kuester" 123)
+#user.Teacher{:first-name "Marc", :last-name "Kuester", :office-no 123}
+user=&gt; (:first-name (-&gt;Teacher "Marc" "Kuester" 123))
+"Marc"
+user=&gt; 
+</pre>
+
+
+
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-11.3" class="outline-3">
+<h3 id="sec-11.3"><span class="section-number-3">11.3</span> Control structures </h3>
+<div class="outline-text-3" id="text-11.3">
+
+<p>Clojure has at its core only very simple comtrol structures: <code>if</code>, <code>do</code> and <code>loop</code>. Of these, however, you use only <code>if</code> regularly and directly:
+</p>
+
+
+
+<pre class="example">user=&gt; (defn all-lower? [s] (every? #(Character/isLowerCase %) s))
+user=&gt; (if (all-lower? "abc") "all lower case" "also capital letters")
+"all lower case"
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+The first branch is used if the condition is true ("then-branch"), the second one if it is false ("else-branch"). Incidentally, if is a function like all other functions, returning the then or else branch as the case may be.
+</p>
+
+
+
+<pre class="example">user=&gt; (def a (if (all-lower? "abc") "all lower case" "also capital letters"))
+#'user/a
+user=&gt; a
+"all lower case"
+user=&gt; (def b (if (all-lower? "aBc") "all lower case" "also capital letters"))
+#'user/b
+user=&gt; b
+"also capital letters"
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+<code>do</code> is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
+</p>
+
+
+<pre class="example">user=&gt;  (if (all-lower? "aBc") (do (println "then") "all lower case") (do (println "else") "also capital letters"))
+else
+"also capital letters"
+user=&gt; 
+</pre>
+
+
+
+
+
+<p>
+<code>loop</code> is hardly ever used directly. Here an example of a loop that calculates the squares of all even numbers:
+</p>
+
+
+<pre class="example">;;very complicated, do not use
+(loop [lst '(1 2 3 4 5 6) res '()]  
+(let [l (last lst)]
+(if (empty? lst)
+  res
+  (recur (drop-last lst) (if (even? l) (cons (* l l) res) res)))))
+</pre>
+
+
+
+
+<p>
+As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include <code>for</code> and <code>when</code>. <code>for</code>, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
+</p>
+
+
+
+<pre class="example">user=&gt; (for [i '(1 2 3 4 5 6) :when (even? i)] (* i i))
+(4 16 36)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+Really, the use of explicit control structures is much rarer in Clojure than in traditional imperative languages. Instead, higher-order functions operating on sequences are the bread and butter of Clojure ans indeed of functional programming in general.
+</p>
+<p>
+So, instead of using the above idiom to output the squares of even numbers a even more idiomatic approach would be:
+</p>
+
+
+
+<pre class="example">user=&gt; (map (fn [i] (* i i)) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+or even shorter
+</p>
+
+
+
+<pre class="example">user=&gt; (map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+(4 16 36)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+This makes usually for much clearer code.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11.4" class="outline-3">
+<h3 id="sec-11.4"><span class="section-number-3">11.4</span> Lazy sequences </h3>
+<div class="outline-text-3" id="text-11.4">
+
+<p>However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
+</p>
+
+
+<pre class="example">user=&gt; (defn even-squares [] (map #(* % %) (filter even? (range))))
+#'user/even-squares
+user=&gt; (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=&gt; (take 50 (even-squares))
+(0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
+user=&gt; 
+</pre>
+
+
+
+
+<p>
+or even shorter
+</p>
+
+
+
+<pre class="example">user=&gt; (defn even-squares [] (map #(* % %)  (range 0 Double/POSITIVE_INFINITY 2)))
+#'user/even-squares
+user=&gt; (take 10 (even-squares))
+(0 4 16 36 64 100 144 196 256 324)
+user=&gt; 
+</pre>
+
+
+
+
+
+<p>
+This may look rather surprising &mdash; how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated &mdash; realized is the term &mdash; only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
+</p>
+<p>
+Lazy sequences make for elegant code also for finite, but potentially large sequences. Results of database queries can be of considerable size and often necessitate paging to treat batches of results one after the other. Lazy sequences can abstract from this detail without loading all results into memory. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11.5" class="outline-3">
+<h3 id="sec-11.5"><span class="section-number-3">11.5</span> Assignment </h3>
+<div class="outline-text-3" id="text-11.5">
+
+<ol>
+<li>
+Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
+</li>
+<li>
+Write the same program in another programming language of your choice
+
+</li>
+</ol>
+
+<p>Hand in assignment via the course's Moodle page.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-11.6" class="outline-3">
+<h3 id="sec-11.6"><span class="section-number-3">11.6</span> Principles of functional programming </h3>
+<div class="outline-text-3" id="text-11.6">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-19 Fri</span></span>
+</p>
+<p>
+Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
+</p>
+<ul>
+<li>
+Immutable data
+</li>
+<li>
+Functions as data
+</li>
+<li>
+Pure Functions
+</li>
+<li>
+Higher-Order Functions
+</li>
+<li>
+Use of recursion
+
+</li>
+</ul>
+
+<p>We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
+</p>
+<p>
+The example of the "square of even numbers" functions is built on functions as data (<code>even?</code>, <code>#(* % %)</code> etc.) that are parameters to higher-order functions (<code>filter</code>, <code>map</code>). All of these functions are pure in a mathematical sense.
+</p>
+
+
+<pre class="example">(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
+</pre>
+
+
+
+
+<p>
+Clojure is less oriented towards explicit recursion as other languages such as Scheme, but they still play an important role. However, the concept of immutable data is at the core of Clojure. All the data structures that we have seen are immutable (and many are in addition lazy). Of course, it is still possible to handle mutable data, and in fact Clojure offers some powerful strategies to handle data updates in transactions (Software Transactional Memory or STM). Transactional references (Refs) make for safe mutable data. However, a detailed discussion of this is out of scope for this session.
+</p>
+<p>
+More information on Clojure and its API is available under <a href="http://clojure.org/">http://clojure.org/</a> and <a href="http://clojuredocs.org/">http://clojuredocs.org/</a>
+</p>
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-11.7" class="outline-3">
+<h3 id="sec-11.7"><span class="section-number-3">11.7</span> Futures </h3>
+<div class="outline-text-3" id="text-11.7">
+
+<p>For long-running calculations Clojure has the concept of futures (<a href="http://clojuredocs.org/clojure_core/clojure.core/future">http://clojuredocs.org/clojure_core/clojure.core/future</a>). A future is calculated in a separate thread, but transparently to the user:
+</p>
+
+
+
+<pre class="example">(defn get-page [host port]
+  (let
+      [conn (Socket. host port)
+       in (.getInputStream conn)
+       out (.getOutputStream conn)]
+    (write-request out host)
+    (future (read-response in))))
+</pre>
+
+
+
+
+<p>
+Assuming that <code>read-response</code> takes a considerable time to execute and would block further program execution for the time it takes, <code>(future (read-response in))</code> returns instead a <i>promise</i> to the real value that it will contain. Once the calculation is complete, it will be transparently replaced by the final value, without blocking the current execution:
+</p>
+
+
+
+<pre class="example">user&gt; (def p (get-page "www.google.de" 80))
+GET / HTTP/1.1
+Host: www.google.de
+
+Request written
+#'user/p
+user&gt; p
+#&lt;core$future_call$reify__6110@2ca275d8: :pending&gt;
+user&gt; 
+user&gt; p
+#&lt;core$future_call$reify__6110@2ca275d8: :pending&gt;
+user&gt; @p
+[now execution blocks until the page is fully retrieved]
+</pre>
+
+
+
+
+<p>
+If you need the guarantee to have the value at a later stage, you can dereference the future by using the <code>@</code> reader macro, e.g. <code>@p</code>. In this case program execution will block until the correct value is calculated, if that is not yet the case.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-11.8" class="outline-3">
+<h3 id="sec-11.8"><span class="section-number-3">11.8</span> Multimethods: Polymorphism functional style </h3>
+<div class="outline-text-3" id="text-11.8">
+
+
+<p>
+Clojure has no native concept of objects (it does have an object concept for interfacing with Java). Instead, it offers named data structures &mdash; records &mdash; as well as functions that can dispatch on them and indeed on many other criteria. In the simplest of cases we have 
+</p>
+
+
+
+<pre class="example">
+(defrecord Variable [text postfix])
+
+(defrecord Token [variables prefix])
+
+(defmulti handle-value 
+  "Handling of individual variables. Returns the variable replaced by the supplied values"
+  (fn [^Variable variable values separator encoding-fn]
+    (class (values (:text variable)))))
+
+(defmethod handle-value String [^Variable variable values separator encoding-fn]
+ ;one strategy for strings
+)
+
+(defmethod handle-value java.util.Collection [^Variable variable values separator encoding-fn]
+ ; another strategy to handle collections
+)
+; and so on
+</pre>
+
+
+
+
+<p>
+In the most frequent case dispatching is by data type or class, but it can be by anything else. <code>defmulti</code> defines in its implementation the strategy to be chosen by the individual <code>defmethod</code>.
+</p></div>
+</div>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
@@ -5035,7 +5043,7 @@ At this stage many of the big players from <a href="http://imdb.com">http://imdb
 <p class="author"> Author: Marc Wilhelm Küster
 <a href="mailto:marcwilhelmkuster@Budabe-2.local">&lt;marcwilhelmkuster@Budabe-2.local&gt;</a>
 </p>
-<p class="date"> Date: 2013-10-04 09:07:01 CEST</p>
+<p class="date"> Date: 2013-10-05 10:01:38 CEST</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>

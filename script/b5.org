@@ -344,7 +344,7 @@ A ROA is characterized by the key tenents of RESTful systems, i.e.:
 
 
 * Excursion: Ruby
-cf. http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&utm_medium=copy&rc=ex0share
+More details on Ruby in the Prezi http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&utm_medium=copy&rc=ex0share and online in various tutorials
 
 
 * Programming RESTful Web Services: Client side web services
@@ -486,7 +486,7 @@ The semantics of these template components is well defined within the Council Co
 Concrete URI templates for European Legislation can look like this:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 #+END_EXAMPLE
 
 The type of legislation is in this case identified by a language-independent code, e.g. ~reg~ for ~regulation~ or ~dir~ for directive. Likewise, ~agent~ can be the code for zero to many actors in the European legislative process, e.g. ~ep~ for the European Parliament or ~consil~ for the Council of the European Union. ~year~ is the year in which the legislation was passed and the natural identifier is typically a running number given to a specific type of legislation. The optional ~version~ can identify if this specific act is a corrigendum, e.g. ~R1~. ~language~ optionally identifies a language version of an act.
@@ -494,29 +494,27 @@ The type of legislation is in this case identified by a language-independent cod
 So, for the Public Sector Information Directive 2003/98/EC of the European Parliament and of the Council of 17 November 2003 in English the ELI would be as follows:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 
 type := "dir"
-agent := ("ep", "consil")
 year := 2003
 natural_identifier := 98
 language := "ENG"
 -->
-http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/ENG
+http://eurlex.europa.eu/eli/dir/2003/98/ENG
 #+END_EXAMPLE
 
 The third corrigendum of the same act in Spanish has the ELI:
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/agent*}{/year}{/natural_identifier,version,language}
+http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 
 type := "dir"
-agent := ("ep", "consil")
 year := 2003
 natural_identifier := 98
 version := "R3"
 language := "SPA"
 -->
-http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
+http://eurlex.europa.eu/eli/dir/2003/98/R3/SPA
 #+END_EXAMPLE
 
 ELIs follow a logic of search: individual legal resources have metadata elements such as ~type~ or ~agent~, an ELI identifies the resource that corresponds to that combination of metadata. By construction, there is maximally one such resource.
@@ -549,18 +547,90 @@ http://eurlex.europa.eu/eli{/year}
 
 And finally all legal resources of a given type from one or more given agents:
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/agent*}
+http://eurlex.europa.eu/eli{/type}
 #+END_EXAMPLE
 
-*** Handling URITemplates in Clojure
+Note: Previous  drafts of the ELI specification used multiple agents (= authors) in the URI as follows:
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}
 
-The URITemplates implementation in Clojure, ~uritemplates-clj~ (https://github.com/mwkuster/uritemplate-clj), that I have prepared for this purpose has an extremely simple interface. It exposes a single method, ~uritemplate~, taking the URI template and a map of values as input and returning the URI with the filled in template:
+type := "dir"
+agent := ("ep", "consil")
+year := 2003
+natural_identifier := 98
+language := "ENG"
+-->
+http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/ENG
+#+END_EXAMPLE
+
+The third corrigendum of the same act in Spanish had then the ELI:
+#+BEGIN_EXAMPLE
+http://eurlex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}
+
+type := "dir"
+agent := ("ep", "consil")
+year := 2003
+natural_identifier := 98
+version := "R3"
+language := "SPA"
+-->
+http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
+#+END_EXAMPLE
+
+*** URITemplates in Ruby
+
+Multiple Ruby libraries exist to handle URI Templates up to level 4. I use here Addressable: http://addressable.rubyforge.org/ and http://rubyforge.org/projects/addressable/. The API documentation of addressable is available under http://addressable.rubyforge.org/api/
+
+Addressable must be installed as a normal Ruby gem:
+
+#+BEGIN_EXAMPLE
+sudo gem install addressable
+#+END_EXAMPLE
+
+Addressable is at its source a URI handling library that goes beyond the standard Ruby URI class and includes amongst others URI templates. Using the library works as follows:
+#+BEGIN_EXAMPLE
+#Taken from http://addressable.rubyforge.org/api/
+require "addressable/uri"
+
+uri = Addressable::URI.parse("http://example.com/path/to/resource/")
+uri.scheme
+#=> "http"
+uri.host
+#=> "example.com"
+uri.path
+#=> "/path/to/resource/"
+
+require "addressable/template"
+
+template = Addressable::Template.new("http://example.com/{-list|+|query}/")
+template.expand({
+  "query" => "an example query".split(" ")
+})
+#+END_EXAMPLE
+
+For ELI URI templates the example according to the old ELI draft looks then like this:
+
+#+BEGIN_EXAMPLE
+require "addressable/template"
+
+template = Addressable::Template.new("http://eurlex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}")
+template.expand({
+"type" => "dir", "agents" => ["ep", "consil"], "year" => 2003, "natural_identifier" => 98
+})
+#=> #<Addressable::URI:0x3fea68d21c24 URI:http://eurlex.europa.eu/eli/dir/ep/consil/2003/98>
+uri.to_s
+#=> "http://eurlex.europa.eu/eli/dir/ep/consil/2003/98"
+#+END_EXAMPLE
+
+*** Excursion: Handling URITemplates in Clojure
+
+The URITemplates implementation in Clojure, ~uritemplates-clj~ (https://github.com/mwkuster/uritemplate-clj), that I have developed for this purpose, has an extremely simple interface. It exposes a single method, ~uritemplate~, taking the URI template and a map of values as input and returning the URI with the filled in template:
 
 #+BEGIN_EXAMPLE
 user=> (ns test
   #_=> (:require [uritemplate-clj.core :as templ]))
 nil
-test=> (templ/uritemplate "http://example.org/abc{/type}{/agent*}{/year}{/natural_identifier,version,language}" {"type" "dir", 
+test=> (templ/uritemplate "http://example.org/abc{/type}{/year}{/natural_identifier,version,language}" {"type" "dir", 
   #_=>                "agent"  ["ep" "consil"], 
   #_=>                "year"  "2003",
   #_=>                "natural_identifier" "98"})
@@ -568,7 +638,7 @@ test=> (templ/uritemplate "http://example.org/abc{/type}{/agent*}{/year}{/natura
 test=> 
 #+END_EXAMPLE
 
-** JSON and cheshire
+** JSON 
 The JavaScript Object Notation or JSON (=
 http://tools.ietf.org/html/rfc4627) at its simplest is just a subset
 of JavaScript concerning only data. JSON uses UTF-8 and supports the
@@ -647,6 +717,21 @@ For many languages and especially for dynamic languages JSON maps directly into 
 
 Incidentally, the order of attributes in an object is undefined.
 
+*** JSON and Ruby
+JSON support is part of the Ruby standard library. It is essentionally centred around the two methods ~parse~ to parse received JSON structures into Ruby data structures and ~generate~ to generate JSON structures from Ruby's data structures:
+
+#+BEGIN_SRC Ruby
+test_obj = {:a => "a", "b" => "cd", 1 => "z", 2 => [1,2,3,4], 3 => {"i" => 7}}
+
+j = JSON::generate(test_obj)
+#=> "{\"a\":\"a\",\"b\":\"cd\",\"1\":\"z\",\"2\":[1,2,3,4],\"3\":{\"i\":7}}"
+
+obj = JSON::parse(j)
+#=> {"a"=>"a", "b"=>"cd", "1"=>"z", "2"=>[1, 2, 3, 4], "3"=>{"i"=>7}}
+#+END_SRC
+
+
+*** Excursion: JSON and Clojure
 There are a number of Clojure libraries for JSON handling. The one we use here is Cheshire (https://clojars.org/cheshire), build on the Open Source Java Jackson library (http://wiki.fasterxml.com/JacksonHome). It is extremely easy to use:
 
 #+BEGIN_SRC Clojure
