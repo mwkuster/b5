@@ -616,13 +616,18 @@ For ELI URI templates the example according to the old ELI draft looks then like
 require "addressable/template"
 
 template = Addressable::Template.new("http://eur-lex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}")
-template.expand({
+uri = template.expand({
 "type" => "dir", "agents" => ["ep", "consil"], "year" => 2003, "natural_identifier" => 98
 })
 #=> #<Addressable::URI:0x3fea68d21c24 URI:http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98>
 uri.to_s
 #=> "http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98"
 #+END_EXAMPLE
+
+A corresponding example for the Google query API and executed in TextMate 2.0:
+
+[[img/google_query_executed_in_textmate.png]]
+
 
 *** Excursion: Handling URITemplates in Clojure
 
