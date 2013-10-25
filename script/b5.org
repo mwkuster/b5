@@ -348,7 +348,9 @@ More details on Ruby in the Prezi http://prezi.com/_vwryy7ngvj6/?utm_campaign=sh
 
 
 * Programming RESTful Web Services: Client side web services
-In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. Afterwards we will actually write some Clojure programs to test this out.
+Session: <2013-10-25 Fri>
+
+In our first session we've learned about the HTTP protocol as the technical underpinning for RESTful Web Services. In fact, on the protocol level RESTful Web Services just operate HTTP request / response pairs, using the full set of HTTP methods. In this second phase we're going into more details on other aspects of the design of RESTful Web Services as well as the "RESTful" philosophy. 
 
 ** Design of URIs
 Maybe the most overlooked aspect of RESTful Web Services is the need for "cool URIs". "A cool URI is one which does not change" ({BernersLee:1998ui}):
@@ -486,7 +488,7 @@ The semantics of these template components is well defined within the Council Co
 Concrete URI templates for European Legislation can look like this:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
+http://eur-lex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 #+END_EXAMPLE
 
 The type of legislation is in this case identified by a language-independent code, e.g. ~reg~ for ~regulation~ or ~dir~ for directive. Likewise, ~agent~ can be the code for zero to many actors in the European legislative process, e.g. ~ep~ for the European Parliament or ~consil~ for the Council of the European Union. ~year~ is the year in which the legislation was passed and the natural identifier is typically a running number given to a specific type of legislation. The optional ~version~ can identify if this specific act is a corrigendum, e.g. ~R1~. ~language~ optionally identifies a language version of an act.
@@ -494,19 +496,19 @@ The type of legislation is in this case identified by a language-independent cod
 So, for the Public Sector Information Directive 2003/98/EC of the European Parliament and of the Council of 17 November 2003 in English the ELI would be as follows:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
+http://eur-lex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 
 type := "dir"
 year := 2003
 natural_identifier := 98
 language := "ENG"
 -->
-http://eurlex.europa.eu/eli/dir/2003/98/ENG
+http://eur-lex.europa.eu/eli/dir/2003/98/ENG
 #+END_EXAMPLE
 
 The third corrigendum of the same act in Spanish has the ELI:
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
+http://eur-lex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 
 type := "dir"
 year := 2003
@@ -514,7 +516,7 @@ natural_identifier := 98
 version := "R3"
 language := "SPA"
 -->
-http://eurlex.europa.eu/eli/dir/2003/98/R3/SPA
+http://eur-lex.europa.eu/eli/dir/2003/98/R3/SPA
 #+END_EXAMPLE
 
 ELIs follow a logic of search: individual legal resources have metadata elements such as ~type~ or ~agent~, an ELI identifies the resource that corresponds to that combination of metadata. By construction, there is maximally one such resource.
@@ -524,35 +526,35 @@ This logic, however, generalizes also to URI templates that identify a set of re
 All legal resources of a given type in a year with its natural identifier regardless of their creating agent:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
+http://eur-lex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 #+END_EXAMPLE
 
 All legal resources of a given type in a given year:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/year}
+http://eur-lex.europa.eu/eli{/type}{/year}
 #+END_EXAMPLE
 
 All legal resources of a given type:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}
+http://eur-lex.europa.eu/eli{/type}
 #+END_EXAMPLE
 
 All legal resources in a given year regardless of its type:
 
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/year}
+http://eur-lex.europa.eu/eli{/year}
 #+END_EXAMPLE
 
 And finally all legal resources of a given type from one or more given agents:
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}
+http://eur-lex.europa.eu/eli{/type}
 #+END_EXAMPLE
 
 Note: Previous  drafts of the ELI specification used multiple agents (= authors) in the URI as follows:
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}
+http://eur-lex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}
 
 type := "dir"
 agent := ("ep", "consil")
@@ -560,12 +562,12 @@ year := 2003
 natural_identifier := 98
 language := "ENG"
 -->
-http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/ENG
+http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98/ENG
 #+END_EXAMPLE
 
 The third corrigendum of the same act in Spanish had then the ELI:
 #+BEGIN_EXAMPLE
-http://eurlex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}
+http://eur-lex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}
 
 type := "dir"
 agent := ("ep", "consil")
@@ -574,7 +576,7 @@ natural_identifier := 98
 version := "R3"
 language := "SPA"
 -->
-http://eurlex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
+http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
 #+END_EXAMPLE
 
 *** URITemplates in Ruby
@@ -613,13 +615,13 @@ For ELI URI templates the example according to the old ELI draft looks then like
 #+BEGIN_EXAMPLE
 require "addressable/template"
 
-template = Addressable::Template.new("http://eurlex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}")
+template = Addressable::Template.new("http://eur-lex.europa.eu/eli{/type}{/agents*}{/year}{/natural_identifier,version,language}")
 template.expand({
 "type" => "dir", "agents" => ["ep", "consil"], "year" => 2003, "natural_identifier" => 98
 })
-#=> #<Addressable::URI:0x3fea68d21c24 URI:http://eurlex.europa.eu/eli/dir/ep/consil/2003/98>
+#=> #<Addressable::URI:0x3fea68d21c24 URI:http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98>
 uri.to_s
-#=> "http://eurlex.europa.eu/eli/dir/ep/consil/2003/98"
+#=> "http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98"
 #+END_EXAMPLE
 
 *** Excursion: Handling URITemplates in Clojure
@@ -769,9 +771,11 @@ Hand in via the course's Moodle page the:
 - URI pattern defined
 - script used to test that pattern
 - list of at least 15 URIs generated and subsequently tested
-
-
+  
+  
 ** ATOM and related standards
+Session <2013-10-26 Sat>
+
 ATOM / RFC 4287 (= http://www.ietf.org/rfc/rfc4287.txt), which was incidentally created by the same person as the URI template specification, is next to RSS the most popular standard for content syndication. It is at the same time much more popular than RSS for machine-to-machine communication:
 #+BEGIN_QUOTE
 Atom is an XML-based document format that describes lists of related
@@ -847,7 +851,35 @@ ATOM uses the namespace ~http://www.w3.org/2005/Atom~. Some information is provi
 
 ATOM is in this paradigmatic for RESTful design. It is transported via HTTP, is both machine and (with suitable readers) human readable and provides links to further pages that the reader, whether a machien or a human, can follow.
 
-*** Rome and ~clj-rome~
+*** Ruby and ATOM
+A number of ATOM and RSS libraries exist for Ruby. For the purpose of this course we use the Feedzirra library (https://www.ruby-toolbox.com/projects/feedzirra, documentation http://rubydoc.info/gems/feedzirra/0.2.1/frames). Feedzirra is a library building on the Nokogiri XML library to handle a number of feed formats.
+
+#+BEGIN_EXAMPLE
+sudo gem1.9 install feedzirra
+#+END_EXAMPLE
+
+#+BEGIN_SRC Ruby
+require 'feedzirra'
+
+# fetching a single feed
+feed = Feedzirra::Feed.fetch_and_parse("http://ilovemyburger.blogspot.com/feeds/posts/default")
+#"the quest for the best burger in Luxembourg"
+feed.entries.each { |e| puts e.title}
+#Outputs a lot of titles
+
+entry_urls = feed.entries.collect { |e| e.url}
+#Returns list of URLs
+entry_urls = feed.entries.collect { |e| e.title.sanitized}
+#Returns list of sanitized URLs
+#+END_SRC
+
+The library also permits to refetch the Feed with only updated entries:
+#+BEGIN_SRC Ruby
+updated_feed = Feedzirra::Feed.update(feed)
+#+END_SRC
+
+
+*** Excursion: Clojure, Rome and ~clj-rome~
 "ROME is a set of RSS and Atom Utilities for Java that is open source under the Apache 2.0 license" (https://rometools.jira.com/wiki/display/ROME/Home). It is one of the most popular libraries for handling of (not only) ATOM in the Java world. ~clj-rome~ (https://clojars.org/clj-rome / https://github.com/ngrunwald/clj-rome) is a Clojure wrapper to the ROME library:
 
 #+BEGIN_EXAMPLE
@@ -869,8 +901,59 @@ b5=>
 
 In these examples Clojure returns as usual a map that can be manipulated with the usual higher-order functions. ~:entries~ then contains a sequence of maps with the data for the individual entries.
 
+**  Ruby Libraries for client-side RESTful web services
+Ruby comes prepackaged with most libraries that are needed for running client-side RESTful webservices. The main involved packages are ~net/http~ and ~uri~, the latter potentially replaced by the ~addressable~ gem. Of these ~net/http~ and ~uri~ are by far the most commonly used libraries.
 
-** Libraries for RESTful web services
+#+BEGIN_SRC Ruby
+require 'net/http'
+resp = Net::HTTP.get_response(URI("http://www.dradio.de/"))
+#<Net::HTTPOK 200 OK readbody=true>
+resp.code
+#"200"
+resp.body
+#A lot of HTML
+#+END_SRC
+
+The library offers a number of convenience functions such as ~Net::HTTP.get_print~ (directly outputs the result to stdout) and ~Net::HTTP.get~ (returns the result as a string). For most control it is advisable to inspect the result, though.
+
+The library has support for the other HTTP methods just as well:
+
+- ~head~
+- ~post~ and ~post_form~
+- ~delete~
+
+Sending ~PUT~ is a bit more complicated:
+
+#+BEGIN_SRC Ruby
+require 'net/http'
+
+port = 8080
+host = "www.example.com"
+path = "/example/path"
+
+req = Net::HTTP::Put.new(path, initheader = { 'Content-Type' => 'text/plain'})
+req.body = "some text"
+response = Net::HTTP.new(host, port).start {|http| http.request(req) }
+#+END_SRC
+
+The same logic can if needed also be used for all other HTTP methods.
+
+All methods in their full form can take http headers:
+
+#+BEGIN_SRC Ruby
+require 'net/http'
+
+req = Net::HTTP::Get.new("/", initheader = {"Accept-Language" => "de"})
+resp = Net::HTTP.new("www.google.com", 80).start { |http| http.request(req)}
+#Returns a 302 with a redirect to www.google.de
+#+END_SRC
+
+The library also has full proxy support.
+
+
+
+
+** Libraries for RESTful web services for Java and Clojure
 
 Session <2012-10-20 Sat>
 - Popular JVM libraries for RESTful web services
@@ -1017,7 +1100,11 @@ lein run ACCESS-KEY MODE PARAMETER1 PARAMETER2...
 
 Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
 
-** Neo4j: a RESTful Database
+* Testing RESTful Web Services
+
+TODO
+
+* Neo4j: a RESTful Database
 Session <2012-11-02 Fri>
 
 *** What is Neo4j?
@@ -1034,7 +1121,7 @@ Installation of Neo4j is trivial:
 3. ~cd~ to that directory and execute ~bin/neo4j start~ or the corresponding command under Windows
 4. Check with http://localhost:7474/webadmin that the database is up
 
-*** Neo4j's admin interface
+** Neo4j's admin interface
 Neo4j’s admin interface also has one of the more innovative graph UIs that is currently available in an off-the-shelf database.
 
 
@@ -1066,7 +1153,7 @@ It features:
 #+END_QUOTE
 
 
-*** Neo4j's RESTful interface
+** Neo4j's RESTful interface
 Like many of the new developments in the NoSQL scene, Neo4j exposes a RESTful interface, though in this specific case Neo4j also has a powerful admin interface that gives access to many of its features, including its query language, Cypher. It is also possible to directly embed Neo4j in an application, though we will not look at this case here. 
 
 Already our examples before have given some first impressions of Neo4j's RESTful web service interface:
@@ -1336,12 +1423,12 @@ and more
 
 Properties are typed and support largely "classical" atomic types: boolean, byte, int, short, long, float, double, char and String.
 
-*** Cypher
+** Cypher
 Cypher is the name of Neo4j's query language. It is fully specified in chapter 15 of Neo4j's user manual.
 
 A Cypher query can find nodes and relationships, create, update  and delete them and extract parts of them.
 
-*** Neocons
+** Neocons
 
 With neocons {Klishin:uc} Neo4j has an intuitive Clojure interface that permits at the same time  to store, update and query the graph inside the database.
 
