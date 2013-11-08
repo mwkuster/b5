@@ -1100,7 +1100,7 @@ Details of the calendar API are documented under https://developers.google.com/g
 
 or with curl:
 #+BEGIN_EXAMPLE
-curl -v --header "Authorization: OAuth ya29.AHES6ZSut6nn_NOLgfrnOJ2HueUGgyO0iE5pLPH7Cco6nw" https://www.googleapis.com/calendar/v3/calendars/webservices.worms@googlemail.com/events
+curl -v --header "Authorization: OAuth ya29.AHES6ZSut6nn_NOLgfrnOJ2HueUGgyO0iE5pLPH7Cco6nw" https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events
 #+END_EXAMPLE
 
 or in Ruby:
@@ -1265,7 +1265,7 @@ Prezy on Sinatra
 
 ** The Giant Global Graph: Facebook
 
-The development uses a Facebook account specifically created for this purpose with the login / email webservices.worms@googlemail.com and the username Web Worms.
+The development uses a Facebook account specifically created for this purpose with the login / email XXXXX@googlemail.com and the username Web Worms.
 
 http://www.facebook.com/web.worms.7?sk=timeline
 
