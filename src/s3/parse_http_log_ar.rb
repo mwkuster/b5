@@ -15,7 +15,6 @@ require 'sqlite3'
 #rake1.9
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'log2.sqlite3')
 
-
 class LoggedRequest  < ActiveRecord::Base
   def self.parse_line(line)
     #Typische Zeile:
@@ -29,7 +28,6 @@ class LoggedRequest  < ActiveRecord::Base
     
     LoggedRequest.create(:date => date, :ps => ps, :psid => psid, :accept => accept, :accept_language => accept_language, :not_modified => not_modified)
   end
-
 end
 
 log = File.open(ARGV[0], "r")
