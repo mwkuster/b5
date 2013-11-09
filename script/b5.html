@@ -7,7 +7,7 @@ lang="en" xml:lang="en">
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-11-08 12:12:44 CET"/>
+<meta name="generated" content="2013-11-09 11:40:13 CET"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -2181,7 +2181,7 @@ or in Ruby:
 
 
 <pre class="example">require 'addressable/template'
-require 'rest_client' #neue Bibliothek
+require 'rest_client' #new library
 
 calendar_name = "XXXXX@googlemail.com"
 template =
@@ -2196,6 +2196,34 @@ if resp.code == 200 then
 else
   raise "Habe den Code #{resp.code} zurueckbekommen"
 end
+</pre>
+
+
+
+
+<p>
+The RestClient gem <a href="http://rubydoc.info/gems/rest-client/1.6.7/frames">http://rubydoc.info/gems/rest-client/1.6.7/frames</a> is an abstraction on top of the <code>net/http</code>
+standard library that offers a much more friendly alternative to the
+relatively low-level operations of <code>net/http</code>:
+</p>
+
+
+
+<pre class="example">require 'rest_client'
+
+RestClient.get 'http://example.com/resource'
+
+RestClient.get 'http://example.com/resource', {:params =&gt; {:id =&gt; 50, 'foo' =&gt; 'bar'}}
+
+RestClient.get 'https://user:password@example.com/private/resource', {:accept =&gt; :json}
+
+RestClient.post 'http://example.com/resource', :param1 =&gt; 'one', :nested =&gt; { :param2 =&gt; 'two' }
+
+RestClient.post "http://example.com/resource", { 'x' =&gt; 1 }.to_json, :content_type =&gt; :json, :accept =&gt; :json
+
+RestClient.delete 'http://example.com/resource'
+
+#taken from http://rubydoc.info/gems/rest-client/1.6.7/frames
 </pre>
 
 
@@ -2249,6 +2277,7 @@ JSON::parse(response.body)["id"]
 
 
 
+
 <p>
 If successful the method returns a 200 JSON struture repeating the full information about the created entry. Most importantly, it also returns the event id that can afterwards be used to modify the created entry.
 </p>
@@ -2282,14 +2311,17 @@ or in Ruby:
 
 
 <pre class="example">require 'json'
-require 'net/http'
+require 'rest_client'
+require 'addressable/template'
+
 event_new = {"summary" =&gt; "B5 Lecture tomorrow", "location" =&gt; "O103", "start" =&gt; {"dateTime" =&gt; "2013-11-08T10:00:00.000-01:00"}, "end" =&gt; {"dateTime" =&gt; "2013-11-08T15:00:00.000-01:00"}, "attendees" =&gt; ["abc@xy.de"]}
 
-http = Net::HTTP.new("www.googleapis.com", 443)
-http.use_ssl = true
 
-response =
- http.send_request('PUT', '/calendar/v3/calendars/XXXXX@googlemail.com/events/78ke4lb9jqcs8sn7829offthbg', event_new.to_json, initheader = {"Authorization" =&gt; "OAuth ya29.AHES6ZQpWRLZV_4MpKdILjJuNv7sqeF1xOn4MwQDwxBuZbnTsJVk", "Content-Type" =&gt; "application/json"})
+template = Addressable::Template.new "https://www.googleapis.com/calendar/v3/calendars/{+calendar_id}/events/{event_id}"
+uri = template.expand({ "calendar_id" =&gt; "XXXXX@googlemail.com", "event_id" =&gt; "61t660boqd8cmgsboeqi8792dg"})
+oauth_access_code = "ya29.AHES6ZTDhXSjOULxdJpo46lfewJ8zNg7RxXLLUM6yrjJIeIISROc"
+response = RestClient.put uri.to_s, event_new.to_json, :content_type =&gt; :json, "Authorization" =&gt; "OAuth #{oauth_access_code}"
+puts response.code
 </pre>
 
 
@@ -2313,13 +2345,8 @@ or in Ruby:
 </p>
 
 
-<pre class="example">http = Net::HTTP.new("www.googleapis.com", 443)
-http.use_ssl = true
-
-http = Net::HTTP.new("www.googleapis.com", 443)
-http.use_ssl = true
-
-response = http.delete('/calendar/v3/calendars/XXXXX@googlemail.com/events/78ke4lb9jqcs8sn7829offthbg', initheader = {"Authorization" =&gt; "OAuth ya29.AHES6ZTKgpCtB5ibRUBfIVxO0xDFERs7RO_06WCJCHaZmkYT-v4N"})
+<pre class="example">require 'rest_client'
+response = RestClient.delete 'https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/qeg945oge19n8naea4l2r8unvs', "Authorization" =&gt; "OAuth ya29.AHES6ZTDhXSjOULxdJpo46lfewJ8zNg7RxXLLUM6yrjJIeIISROc"
 </pre>
 
 
@@ -2335,7 +2362,7 @@ response = http.delete('/calendar/v3/calendars/XXXXX@googlemail.com/events/78ke4
 <h3 id="sec-4.8"><span class="section-number-3">4.8</span> OAuth2 </h3>
 <div class="outline-text-3" id="text-4.8">
 
-<p>The OAuth 2.0 Authorization Framework RFC 6750 (<a href="http://tools.ietf.org/html/rfc6750">http://tools.ietf.org/html/rfc6750</a>) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0). Unfortunately, it is rather complex as it necessitates a lot of interactions between an application and the identity provider, Facebook in our case:
+<p>The OAuth 2.0 Authorization Framework RFC 6750 (<a href="http://tools.ietf.org/html/rfc6750">http://tools.ietf.org/html/rfc6750</a>) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0):
 </p>
 
 
@@ -2378,8 +2405,24 @@ $ curl -XGET "https://graph.facebook.com/me?access_token=AAADRXLVkRpIBAOVAWRhWUQ
 
 
 
+<p>
+or for Google OAuth:
+</p>
 
 
+
+<pre class="example">$curl -v
+"https://accounts.google.com/o/oauth2/auth?client_id=XXXXXX&amp;redirect_uri=http://localhost:3000/api/google-callback&amp;response_type=code&amp;scope=https://www.googleapis.com/auth/calendar"
+--&gt; Asks user for authorization, gives code
+--&gt; Now how to handle callback?
+</pre>
+
+
+
+
+<p>
+For Ruby Google provides a standard library with OAuth implemented: <a href="https://github.com/google/google-api-ruby-client">https://github.com/google/google-api-ruby-client</a>
+</p>
 </div>
 
 </div>
@@ -2456,7 +2499,7 @@ Sinatra, a Ruby web application framework
 <h3 id="sec-5.1"><span class="section-number-3">5.1</span> Sinatra </h3>
 <div class="outline-text-3" id="text-5.1">
 
-<p>Prezy on Sinatra
+<p>Prezy on Sinatra: <a href="http://prezi.com/nwvj2wrstfro/?utm_campaign=share&amp;utm_medium=copy">http://prezi.com/nwvj2wrstfro/?utm_campaign=share&amp;utm_medium=copy</a>
 </p>
 </div>
 
@@ -5527,7 +5570,7 @@ In the most frequent case dispatching is by data type or class, but it can be by
 <p class="author"> Author: Marc Wilhelm Küster
 <a href="mailto:kuester@client-183-99.eduroam.fh-worms.de">&lt;kuester@client-183-99.eduroam.fh-worms.de&gt;</a>
 </p>
-<p class="date"> Date: 2013-11-08 12:12:44 CET</p>
+<p class="date"> Date: 2013-11-09 11:40:13 CET</p>
 <p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
 </div>
 </div>

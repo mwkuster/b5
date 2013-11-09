@@ -1106,7 +1106,7 @@ curl -v --header "Authorization: OAuth ya29.AHES6ZSut6nn_NOLgfrnOJ2HueUGgyO0iE5p
 or in Ruby:
 #+BEGIN_SRC clojure
 require 'addressable/template'
-require 'rest_client' #neue Bibliothek
+require 'rest_client' #new library
 
 calendar_name = "XXXXX@googlemail.com"
 template =
@@ -1122,6 +1122,28 @@ else
   raise "Habe den Code #{resp.code} zurueckbekommen"
 end
 #+END_SRC
+
+The RestClient gem http://rubydoc.info/gems/rest-client/1.6.7/frames is an abstraction on top of the ~net/http~
+standard library that offers a much more friendly alternative to the
+relatively low-level operations of ~net/http~:
+
+#+BEGIN_EXAMPLE
+require 'rest_client'
+
+RestClient.get 'http://example.com/resource'
+
+RestClient.get 'http://example.com/resource', {:params => {:id => 50, 'foo' => 'bar'}}
+
+RestClient.get 'https://user:password@example.com/private/resource', {:accept => :json}
+
+RestClient.post 'http://example.com/resource', :param1 => 'one', :nested => { :param2 => 'two' }
+
+RestClient.post "http://example.com/resource", { 'x' => 1 }.to_json, :content_type => :json, :accept => :json
+
+RestClient.delete 'http://example.com/resource'
+
+#taken from http://rubydoc.info/gems/rest-client/1.6.7/frames
+#+END_EXAMPLE
 
 The same mechanism can then also be used to add new events by sending a suitable JSON request:
 
@@ -1153,6 +1175,7 @@ JSON::parse(response.body)["id"]
 #+END_SRC
 
 
+
 If successful the method returns a 200 JSON struture repeating the full information about the created entry. Most importantly, it also returns the event id that can afterwards be used to modify the created entry.
 
 #+BEGIN_EXAMPLE
@@ -1171,14 +1194,17 @@ or in Ruby:
 
 #+BEGIN_SRC Ruby
 require 'json'
-require 'net/http'
+require 'rest_client'
+require 'addressable/template'
+
 event_new = {"summary" => "B5 Lecture tomorrow", "location" => "O103", "start" => {"dateTime" => "2013-11-08T10:00:00.000-01:00"}, "end" => {"dateTime" => "2013-11-08T15:00:00.000-01:00"}, "attendees" => ["abc@xy.de"]}
 
-http = Net::HTTP.new("www.googleapis.com", 443)
-http.use_ssl = true
 
-response =
- http.send_request('PUT', '/calendar/v3/calendars/XXXXX@googlemail.com/events/78ke4lb9jqcs8sn7829offthbg', event_new.to_json, initheader = {"Authorization" => "OAuth ya29.AHES6ZQpWRLZV_4MpKdILjJuNv7sqeF1xOn4MwQDwxBuZbnTsJVk", "Content-Type" => "application/json"})
+template = Addressable::Template.new "https://www.googleapis.com/calendar/v3/calendars/{+calendar_id}/events/{event_id}"
+uri = template.expand({ "calendar_id" => "XXXXX@googlemail.com", "event_id" => "61t660boqd8cmgsboeqi8792dg"})
+oauth_access_code = "ya29.AHES6ZTDhXSjOULxdJpo46lfewJ8zNg7RxXLLUM6yrjJIeIISROc"
+response = RestClient.put uri.to_s, event_new.to_json, :content_type => :json, "Authorization" => "OAuth #{oauth_access_code}"
+puts response.code
 #+END_SRC
 
 or even delete it again
@@ -1190,18 +1216,13 @@ or even delete it again
 
 or in Ruby:
 #+BEGIN_SRC Ruby
-http = Net::HTTP.new("www.googleapis.com", 443)
-http.use_ssl = true
-
-http = Net::HTTP.new("www.googleapis.com", 443)
-http.use_ssl = true
-
-response = http.delete('/calendar/v3/calendars/XXXXX@googlemail.com/events/78ke4lb9jqcs8sn7829offthbg', initheader = {"Authorization" => "OAuth ya29.AHES6ZTKgpCtB5ibRUBfIVxO0xDFERs7RO_06WCJCHaZmkYT-v4N"})
+require 'rest_client'
+response = RestClient.delete 'https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/qeg945oge19n8naea4l2r8unvs', "Authorization" => "OAuth ya29.AHES6ZTDhXSjOULxdJpo46lfewJ8zNg7RxXLLUM6yrjJIeIISROc"
 #+END_SRC
 
 
 ** OAuth2
-The OAuth 2.0 Authorization Framework RFC 6750 (http://tools.ietf.org/html/rfc6750) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0). Unfortunately, it is rather complex as it necessitates a lot of interactions between an application and the identity provider, Facebook in our case:
+The OAuth 2.0 Authorization Framework RFC 6750 (http://tools.ietf.org/html/rfc6750) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0):
 
 #+BEGIN_EXAMPLE
      +--------+                               +---------------+
@@ -1235,7 +1256,16 @@ access_token=AAADRXLVkRpIBAOVAWRhWUQzITBsLbZCkRUgxxpakh8YJIo1jOiqw5nWp82SSiGRo41
 $ curl -XGET "https://graph.facebook.com/me?access_token=AAADRXLVkRpIBAOVAWRhWUQzITBsLbZCkRUgxxpakh8YJIo1jOiqw5nWp82SSiGRo41TLFarO6StOROjbCBf9RHZBQJCzFaBCRxwsjIYwZDZD"
 #+END_EXAMPLE
 
+or for Google OAuth:
 
+#+BEGIN_EXAMPLE
+$curl -v
+"https://accounts.google.com/o/oauth2/auth?client_id=XXXXXX&redirect_uri=http://localhost:3000/api/google-callback&response_type=code&scope=https://www.googleapis.com/auth/calendar"
+--> Asks user for authorization, gives code
+--> Now how to handle callback?
+#+END_EXAMPLE
+
+For Ruby Google provides a standard library with OAuth implemented: https://github.com/google/google-api-ruby-client
 
 ** Assignment
 
@@ -1261,7 +1291,7 @@ Session <2013-11-09 Sat>
   - Sinatra, a Ruby web application framework
 
 ** Sinatra
-Prezy on Sinatra
+Prezy on Sinatra: http://prezi.com/nwvj2wrstfro/?utm_campaign=share&utm_medium=copy
 
 ** The Giant Global Graph: Facebook
 
