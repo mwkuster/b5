@@ -101,7 +101,7 @@ The GET method means retrieve whatever information (in the form of an entity) is
 
 **** HEAD-method
 "The HEAD method is identical to GET except that the server MUST NOT return a message-body in the response" ({Fielding:1999ub}, 9.4):
-#+BEGIN_EXAMPLE$ curl -v -XHEAD  http://www.budabe.eu/research/
+#+BEGIN_EXAMPLE
 $ curl -v -XHEAD  http://www.budabe.eu/research/ 
 -->
 > HEAD /research/ HTTP/1.1
@@ -1293,6 +1293,69 @@ Session <2013-11-09 Sat>
 ** Sinatra
 Prezy on Sinatra: http://prezi.com/nwvj2wrstfro/?utm_campaign=share&utm_medium=copy
 
+** The OAuth2 callback
+Above we've seen the first part of an OAuth2 process:
+
+#+BEGIN_EXAMPLE
+$curl -v
+"https://accounts.google.com/o/oauth2/auth?client_id=XXXXXX&redirect_uri=http://localhost:3000/api/google-callback&response_type=code&scope=https://www.googleapis.com/auth/calendar"
+#+END_EXAMPLE
+
+So, let's implement the callback in Sinatra:
+
+#+BEGIN_SRC ruby
+require 'sinatra'
+
+get '/login' do
+  ...
+end
+
+get '/api/google-callback' do
+  ...
+end
+#+END_SRC ruby
+
+The first call from the browser either redirects to the Google login
+page (code 302) or returns a 200 with a suitable website
+
+#+BEGIN_EXAMPLE
+<HTML>
+<HEAD>
+<TITLE>Moved Temporarily</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000">
+<H1>Moved Temporarily</H1>
+The document has moved <A HREF="https://accounts.google.com/ServiceLogin?service=lso&amp;passive=1209600&amp;continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/calendar%26response_type%3Dcode%26redirect_uri%3Dhttp://localhost:3000/api/google-callback%26client_id%3D885816396662-jl12d9jv94mq0fedljhrnocuh627hlkp.apps.googleusercontent.com%26hl%3Dde%26from_login%3D1%26as%3D-2d9194dbdab4f580&amp;ltmpl=popup&amp;shdf=CoIBCxIRdGhpcmRQYXJ0eUxvZ29VcmwaAAwLEhV0aGlyZFBhcnR5RGlzcGxheU5hbWUaEUdvb2dsZSBEZXZlbG9wZXJzDAsSBmRvbWFpbhoRR29vZ2xlIERldmVsb3BlcnMMCxIVdGhpcmRQYXJ0eURpc3BsYXlUeXBlGgdERUZBVUxUDBIDbHNvIhR6PfGvbfOD6Sn3mGvNlSCTg32tCCgBMhRonpKQUW4FsL78fOvZvp_bKFYrrA&amp;sarp=1&amp;scc=1">here</A>.
+</BODY>
+</HTML>
+#+END_EXAMPLE
+
+After user approval this returns the authorization code:
+
+The authorization code can then be exchanged against the acces token itself. At the pure protocol level this looks like this:
+
+#+BEGIN_EXAMPLE
+POST /o/oauth2/token HTTP/1.1
+Host: accounts.google.com
+Content-length: 250
+content-type: application/x-www-form-urlencoded
+user-agent: google-oauth-playground
+
+code=4%2FElED3539swnLWrVwEyYZj9Ug7iMV.wlNc8__DJiEZYKs_1NgQtmWzjwBFhQI&redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&client_id=407408718192.apps.googleusercontent.com&scope=&client_secret=************&grant_type=authorization_code
+#+END_EXAMPLE
+
+This returns a little JSON structure with the access token and related information:
+#+BEGIN_EXAMPLE
+{ "access_token" : "ya29.1.AADtN_WN4K_mNR7UYVxfU_a2u_Mtj4X6HkJwD8GkGtq0ol3vJuBiF4ZDQv0m", "token_type" : "Bearer", "expires_in" : 3600 }
+#+END_EXAMPLE
+
+Translated into Ruby this is:
+
+#+BEGIN_SRC ruby
+response = RestClient.post "https://accounts.google.com/o/oauth2/token", {:code => code, :client_id => client_id, :client_secret => client_secret, :redirect_uri => "http://localhost:4567/api/google-callback", :grant_type => "authorization_code"}, :content_type => "application/x-www-form-urlencoded"
+#+END_SRC ruby
+
+
 ** The Giant Global Graph: Facebook
 
 The development uses a Facebook account specifically created for this purpose with the login / email XXXXX@googlemail.com and the username Web Worms.
@@ -1462,11 +1525,468 @@ Work in teams of two, but hand in the results individually via the project's Moo
 
 
 
+* The Semantic Web
+Sessions <2012-12-14 Fri> and <2012-12-15 Sat>
+- What are Ontologies? Ontologies and Us
+- Ontologies and Technology
+  - Standards
+    - RDF
+    - RDF-S
+    - OWL
+    - SPARQL:
+      http://data.gov.uk/sparql
+      http://jena.apache.org/tutorials/sparql.html
+      http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29
+  - Object identity
+  - Tools
+    - Protégé
+    - Semantic Stores
+- Linked Open Data
+- Semantic Web Services
+
+http://data.gov.uk/sparql
+
+cf. presentation stored in Moodle.
+
+* Preparing the Practical Programming Projects
+Sessions <2014-01-03 Fri>
+
+cf. https://moodle.fh-worms.de/moodle/mod/page/view.php?id=28017
+
+
+* Web Services and the Semantic Web
+Session <2014-01-03 Fri>
+
+** RDF Serialization formats
+Logically, all RDF is triples of subject, predicate and object, and indeed that is how it is often represtend internally inside triple stores. However, triples can be serialized and exchanged in a variety of different formats. Some of these such as Turtle are very close to the triple philosophy, others need more interpretation.
+
+*** Turtle 
+One of the simplest forms to encode semantic information is Turtle. Turtle essentially lists the triples. Individual triples are separated by dots (~.~), but in order to avoid long lists of full triples those triples that share the same subject and predicateonly list the different objects, separated by ~,~, whereas those only sharing the same subject are  compacted by using ~;~.
+
+#+BEGIN_EXAMPLE
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix cdm: <http://publications.europa.eu/ontology/cdm#> .
+@prefix cdm-annotation: <http://publications.europa.eu/ontology/annotation#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+<http://example.org/resource/celex/61960CC0002> rdf:type cdm:case-law ,
+                                                         cdm:document_cjeu ,
+                                                         cdm:opinion_advocate-general ,
+                                                         cdm:resource_legal ,
+                                                         cdm:work ,
+                                                 cdm:resource_legal_number_natural_celex "0002"^^xsd:positiveInteger ;
+ cdm:resource_legal_year "1960"^^xsd:gYear .
+
+<http://example.org/resource/celex/61960CC0002.BUL> rdf:type cdm:expression .                                              
+#+END_EXAMPLE
+
+The mimetype of Turtle is ~application/x-turtle~, the typical file extension ~TTL~ (cf. also above for the treatment in the seabass library).
+
+*** RDF/XML
+Probably the most frequent pure RDF encoding is ~RDF/XML~ which is, as the name suggests, an XML-based serialization format for RDF: 
+
+#+BEGIN_EXAMPLE
+<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:cdm="http://publications.europa.eu/ontology/cdm#"
+     xmlns:cdm-annotation="http://publications.europa.eu/ontology/annotation#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+  <cdm:judgement rdf:about="http://example.org/resource/celex/62007CJ0535">
+        <rdf:type rdf:resource="&cdm;document_cjeu"/>
+        <rdf:type rdf:resource="&cdm;judgement"/>
+        <cdm:resource_legal_number_natural_celex rdf:datatype="&xsd;positiveInteger">0535</cdm:resource_legal_number_natural_celex>
+        <cdm:resource_legal_year rdf:datatype="&xsd;gYear">2007</cdm:resource_legal_year>    
+  </cdm:judgement>
+
+  <cdm:expression rdf:about="http://example.org/resource/celex/62007CJ0535.ITA">
+        <cdm:expression_title rdf:datatype="&xsd;string">Sentenza della Corte (Seconda Sezione) del 14 ottobre 2010. # Commissione europea contro Repubblica d&apos;Austria. # Inadempimento di uno Stato - Direttive 79/409/CEE e 92/43/CEE - Conservazione degli uccelli selvatici - Designazione erronea e tutela giuridica insufficiente delle zone di protezione speciale. # Causa C-535/07.</cdm:expression_title>
+        <cdm:expression_belongs_to_work rdf:resource="http://example.org/resource/celex/62007CJ0535"/>
+        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ITA"/>
+    </cdm:expression>
+</rdf:RDF>
+#+END_EXAMPLE
+
+In all of these cases the subject can also be indicated by the ~rdf:Description~ element with an explicit ~rdf:type~ that indicates the correct type. This example uses an abbreviation that uses (one of) the types as the class name.
+
+The subject is always indicated by the ~rdf:about~ attribute, the predicate as the element name (e.g. ~cdm:expression_title~), the object by the ~rdf:resource~ attribute. In the case of data properties, ~rdf:datatype~ can be used ot indicate the correct datatype.
+
+In order to mark up common concepts such as the Italian language in this example, the RDF examples refer to codes defined elsewhere in authority tables.
+
+*** RDFa
+RDFa is, in the words if the W3C recommendation http://www.w3.org/TR/rdfa-syntax/, "Syntax and processing rules for embedding RDF through attributes" into a markup language, virtually always (X)HTML. The same webpage is then both human-readable and machine-readable.
+
+RDFa largely operates through attributes that either already exist in HTML or are newly added. In fact, RDFa means "RDF in Attributes".
+
+For the ~property~ and ~rel~ attributes this looks as follows (all examples taken directly from the RDFa 1.1 specification http://www.w3.org/TR/rdfa-syntax/):
+
+#+BEGIN_EXAMPLE
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>My home-page</title>
+    <meta property="http://purl.org/dc/terms/creator" content="Mark Birbeck" />
+    <link rel="http://xmlns.com/foaf/0.1/topic" href="http://www.example.com/#us" />
+  </head>
+  <body>...</body>
+</html>
+#+END_EXAMPLE
+
+This means that the data property ~http://purl.org/dc/terms/creator~, in this case defined by the Dublin Core specification, has the value ~Mark Birbeck~. The link to ~http://www.example.com/#us~ is to be interpreted as a Friend of a Friend (FOAF) topic ~http://xmlns.com/foaf/0.1/topic~.
+
+Just like for Turtle it is possible to define abbreviations through prefixes. The following is exactly equivalent to the previous example:
+
+#+BEGIN_EXAMPLE
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="foaf: http://xmlns.com/foaf/0.1/
+          dc: http://purl.org/dc/terms/"
+  >
+  <head>
+    <title>My home-page</title>
+    <meta property="dc:creator" content="Mark Birbeck" />
+    <link rel="foaf:topic" href="http://www.example.com/#us" />
+  </head>
+  <body>...</body>
+</html>
+#+END_EXAMPLE
+
+In principle, the ~prefix~ attribute can be used on any element (though in reality this is rarely used).
+
+If the content is already present on the human readable page, it can just be reused and an explicit ~content~ attribute is not needed:
+
+#+BEGIN_EXAMPLE
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="dc: http://purl.org/dc/terms/"
+  >
+  <head><title>My Home Page</title></head>
+  <body>
+    <h1 property="dc:title">My home-page</h1>
+    <p>Last modified: 16 September 2015</p>
+  </body>
+</html>
+#+END_EXAMPLE
+
+If necessary, the information on the content can be explicitly typed using the ~datatype~ property:
+#+BEGIN_EXAMPLE
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="xsd: http://www.w3.org/2001/XMLSchema#
+          dc: http://purl.org/dc/terms/"
+  >
+  <head><title>My Home Page</title></head>
+  <body>
+    <h1 property="dc:title">My home-page</h1>
+    <p>Last modified: <span property="dc:modified"
+            content="2015-09-16T16:00:00-05:00"
+            datatype="xsd:dateTime">16 September 2015</span>.</p>
+  </body>
+</html>
+#+END_EXAMPLE
+
+
+
+
+In all these cases the subject of the triples is implicitly the webpage itself. RDFa also permits to indicate explicit information on other subjects using the ~about~ property:
+
+#+BEGIN_EXAMPLE
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="bibo: http://purl.org/ontology/bibo/
+          dc: http://purl.org/dc/terms/"
+  >
+  <head>
+    <title>Books by Marco Pierre White</title>
+  </head>
+  <body>
+    I think White's book
+    '<span about="urn:ISBN:0091808189" 
+           property="dc:title">Canteen Cuisine</span>'
+    is well worth getting since although it's quite advanced stuff, he
+    makes it pretty easy to follow. You might also like
+    <span 
+     about="urn:ISBN:1596913614" 
+     property="dc:description"
+     >White's autobiography</span>.
+  </body>
+</html>
+#+END_EXAMPLE
+
+If really needed, ~rdf:type~ can be indicated through the ~typeof~ attribute.
+
+Finally, it is possible to markup also the object of a triple explicitly, indicating in this example that Albert Einstein lived, in terms of the DBpedia ontology, both in the German empire and in Switzerland:
+
+#+BEGIN_EXAMPLE
+<div about="http://dbpedia.org/resource/Albert_Einstein" rel="dbp-owl:residence">
+  <span about="http://dbpedia.org/resource/German_Empire"></span>
+  <span about="http://dbpedia.org/resource/Switzerland"></span>
+</div>
+#+END_EXAMPLE
+
+In full, the following attributes are defined in the RDFa recommendation, section 5:
+
+- about: a SafeCURIEorCURIEorIRI, used for stating what the data is about (a 'subject' in RDF terminology);
+- content: a CDATA string, for supplying machine-readable content for a literal (a 'literal object', in RDF terminology);
+- datatype: a TERMorCURIEorAbsIRI representing a datatype, to express the datatype of a literal;
+- href (optional): a traditionally navigable IRI for expressing the partner resource of a relationship (a 'resource object', in RDF terminology);
+- inlist: An attribute used to indicate that the object associated with a rel or property attribute on the same element is to be added to the list for that predicate. The value of this attribute must be ignored. Presence of this attribute causes a list to be created if it does not already exist.
+- prefix: a white space separated list of prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI
+- property: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either a resource object if given or some literal text (also a 'predicate');
+- rel: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between two resources ('predicates' in RDF terminology);
+- resource: a SafeCURIEorCURIEorIRI for expressing the partner resource of a relationship that is not intended to be navigable (e.g., a 'clickable' link) (also an 'object');
+- rev: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing reverse relationships between two resources (also 'predicates');
+- src (optional): an IRI for expressing the partner resource of a relationship when the resource is embedded (also a 'resource object');
+- typeof: a white space separated list of TERMorCURIEorAbsIRIs that indicate the RDF type(s) to associate with a subject;
+- vocab: A IRI that defines the mapping to use when a TERM is referenced in an attribute value. 
+
+CURIes in this context are "compact URI expressions", essentially abbreviated URIs. 
+
+** Exercise: Markup of a web page
+Markup a Wikipedia page, e.g. http://en.wikipedia.org/wiki/The_hobbit, with the DBpedia ontology
+
+cf. also http://wiki.dbpedia.org/Ontology?v=194q for the ontology and http://dbpedia.org/page/The_Hobbit for the "solution" of dbpedia
+
+[[img/the_hobbit_rdfa.png]]
+
+** SPARQL
+Existing tutorials:
+-  http://jena.apache.org/tutorials/sparql.html
+-  http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29
+
+Existing endpoints for example:
+
+- British law: http://openuplabs.tso.co.uk/sparql/gov-legislation
+- DBPedia: http://dbpedia.org/sparql
+- Open Data EU: http://open-data.europa.eu/de/linked-data
+
+** Programming the Semantic Web in Ruby
+The main library for handling RDF in Ruby is the Open Source library ~RDF.rb~
+(http://rdf.rubyforge.org/) with a considerable number of satellite
+libraries including:
+
+- rdf-rdfxml (http://rubygems.org/gems/rdf-rdfxml), an RDF/XML reader
+  and writer for the RDF.rb library suite
+- rdf-xsd (http://rubygems.org/gems/rdf-xsd), adds RDF::Literal
+  subclasses for extended XSD datatypes
+- rdf-rdfa (http://rubygems.org/gems/rdf-rdfa), an RDFa reader/writer
+  for Ruby using the RDF.rb library suite
+- rdf-n3 (http://rubygems.org/gems/rdf-n3), an Notation-3
+  reader/writer for the RDF.rb library suite
+- json-ld (http://rubygems.org/gems/json-ld), parses and serializes
+  JSON-LD into RDF 
+- sparql-client (http://rubygems.org/gems/sparql-client), executes
+  SPARQL queries and updates against a remote SPARQL 1.0 or 1.1
+  endpoint, or against a local repository
+- rdf-isomorphic (http://rubygems.org/gems/rdf-isomorphic), plugin for
+  graph bijections and isomorphic equivalence
+- rdf-turtle (http://rubygems.org/gems/rdf-turtle), an Turtle
+  reader/writer for the RDF.rb library suite
+- rdf-json (http://rubygems.org/gems/rdf-json), plugin for
+  parsing/serializing RDF/JSON data
+- sparql (http://rubygems.org/gems/sparql), implements SPARQL grammar
+  parsing to SPARQL Algebra, SPARQL Algebra processing and includes
+  SPARQL Client for accessing remote repositories
+
+All of these libraries are available as Ruby gems:
+
+#+BEGIN_SRC ruby
+gem install rdf
+gem install rdf-rdfxml
+gem install rdf-n3
+gem install sparql
+etc.
+#+END_SRC
+
+Usage is simple:
+
+#+BEGIN_SRC ruby
+require 'rdf'
+require 'sparql'
+require 'rdf/turtle'
+require 'rdf/rdfxml'
+
+repo = RDF::Repository.new
+repo.load("62007CJ0535.rdf", :format => :rdfxml)
+repo.load("61960CC0002.ttl", :format => :turtle)
+
+#Just for debugging: show the contents of the repository
+repo.each_statement { |statement| puts statement }
+#+END_SRC
+
+
+** Programming the Semantic Web in Clojure
+
+A large number of libraries exist for handling RDF including well-established Open Source Java libraries such as Sesame and Jena. For Clojure, Seabass (https://clojars.org/seabass) offers a small wrapper around the Jena library, making it easy to treat RDF in Clojure. Similar libraries exist for other platforms.
+
+As dependencies you add:
+#+BEGIN_SRC clojure
+[xerces/xercesImpl "2.10.0"] ;; Direct download from Maven central
+[seabass "2.0"]
+#+END_SRC
+
+
+This will also download the Jena libraries which do most of the work.
+
+Once seabass is installed, using it is simple: 
+
+You ~build~ a model, essentially a local database containing ~seabass.core~ triples you just load one or more files in one of the possible RDF serialzation formats (cf. below):
+#+BEGIN_SRC clojure
+(def model 
+  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
+         ["src/s12/61960CC0002.ttl" "TTL"]))
+#+END_SRC
+
+In addition, you can also indicate URIs from which these files should be downloaded. You can also integrate data from external SPARQL endpoints using ~CONSTRUCT~ queries and the ~pull~ command:
+
+
+#+BEGIN_SRC clojure
+(def model 
+  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
+         ["src/s12/61960CC0002.ttl" "TTL"]))
+
+;;Query is
+;;construct {?institution ?p ?o} {?institution a <http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion> . 
+?institution ?p ?o
+} LIMIT 10000")
+(def model (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
+         ["src/s12/61960CC0002.ttl" "TTL"]
+         (pull "construct {?institution ?p ?o} {?institution a <http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion> . 
+?institution ?p ?o
+} LIMIT 10000" "http://dbpedia.org/sparql")))
+ #+END_SRC
+
+You can then execute queries against a model using the ~bounce~ function that takes the SPARQL ~SELECT~ query as a first parameter and a model as the second, e.g.:
+#+BEGIN_SRC clojure
+(bounce 
+"PREFIX cdm: <http://publications.europa.eu/ontology/cdm#> 
+select ?expr ?title ?lang
+{?work cdm:resource_legal_id_celex \"62007CJ0535\"^^xsd:string .
+ ?expr cdm:expression_belongs_to_work ?work .
+ ?expr cdm:expression_title ?title .
+ ?expr cdm:expression_uses_language ?lang .
+ }" model)
+#+END_SRC
+
+The result is returnd as a Clojure map with all the results in the ~:data~ field:
+#+BEGIN_SRC clojure
+{:vars (:expr :title :lang), :data ({:lang "http://publications.europa.eu/resource/authority/language/FRA", :title "Arrêt de la Cour (deuxième chambre) du 14 octobre 2010. # Commission européenne contre République d'Autriche. # Manquement d’État - Directives 79/409/CEE et 92/43/CEE - Conservation des oiseaux sauvages - Désignation incorrecte et protection juridique insuffisante des zones de protection spéciale. # Affaire C-535/07.", :expr "http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA"}...)}
+#+END_SRC
+
+You can handle those results like any other Clojure map
+#+BEGIN_SRC clojure
+(filter #(= (:lang %) "http://publications.europa.eu/resource/authority/language/ENG")  (:data (get-titles-by-celex "61960CC0002")))
+#+END_SRC
+
+
+
+** Excursion: Facebook and RDFa: the Open Graph protocol
+Facebook uses RDFa to integrate with external webpages. The Open Graph protocol http://opengraphprotocol.org/ / http://ogp.me/ defines a vocabulary that can be used to integrate metadata into a webpage. In fact, this vocabulary is itself defined in RDF and available under http://ogp.me/ns/ogp.me.ttl. It defines the following core properties ("basic metadata") that should always be present (cited after http://ogp.me/):
+
+- ~og:title~ - The title of your object as it should appear within the graph, e.g., "The Rock".
+- ~og:type~ - The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required.
+- ~og:image~ - An image URL which should represent your object within the graph.
+- ~og:url~ - The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "http://www.imdb.com/title/tt0117500/".
+
+~og~ stands for http://ogp.me/ns#.
+
+This information should be given in metatags in the HTML header, though this is a Facebook restriction, not an RDFa one:
+
+#+BEGIN_EXAMPLE
+<html>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#">
+    <title>OG Sample Object - Geordnetes Weltbild</title>
+
+    <meta property="og:title" content="Geordnetes Weltbild" />
+    <meta property="og:image" content="http://www.budabe.de/img/geordnetes_weltbild_cover_1.jpg" />
+    <meta property="og:url" content="http://www.budabe.eu/static/geordnetes_weltbild" />
+    <meta property="og:type" content="book" />
+  </head>
+  <body>
+  ...
+  </body>
+</html>
+#+END_EXAMPLE
+
+In addition to these mandatory elements the following optional metadata elements are possible for all types of objects:
+
+- og:audio - A URL to an audio file to accompany this object.
+- og:description - A one to two sentence description of your object.
+- og:determiner - The word that appears before this object's title in a sentence. An enum of (a, an, the, "", auto). If auto is chosen, the consumer of your data should chose between "a" or "an". Default is "" (blank).
+- og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
+- og:locale:alternate - An array of other locales this page is available in.
+- og:site_name - If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., "IMDb".
+- og:video - A URL to a video file that complements this object
+
+
+Individual types of objects can and often have more specific metadata in addition to the generic ones. A book for example can have the following metadata elements (namespace http://ogp.me/ns/book#):
+
+- book:author - profile array - Who wrote this book.
+- book:isbn - string - The ISBN
+- book:release_date - datetime - The date the book was released.
+- book:tag - string array - Tag words associated with this book.
+
+The following types of objects are predefined (all of them have their own namespaces):
+- website
+- music with subtypes music.song, music.album, music.playlist and music.radio_station
+- video with subtypes video.movie, video.episode, video.tv_show, video.other
+- article
+- book
+- profile
+
+In addition, Facebook itself defines a number of extensions in the http://ogp.me/ns/fb# namespace, notably:
+-   fb:app_id: the application id in Facebook, e.g. 230196110444178
+-   fb:admins: one or more ids of Facebook users that can get administrative information on this object, e.g. 100004654151051
+
+Facebook can then directly use this metadata integrating information on a resource into Facebook itself, e.g. for the "liking" of resources. You can access this information by going through the like button with for the administrator(s) will now contain an additional link to this admin page.
+
+[[img/facebook_activities.png]]
+
+In the application configuration, e.g. for https://developers.facebook.com/apps/230196110444178, an application can even go beyond this. It can define action types (= object properties in OWL terms) e.g. to rate a book. For this it can either reuse existing object types or even define completely new ones. It can also define new object types (= classes in OWL terms).
+
+[[img/app_center_open_graph.png]]
+
+An application can indicate its intention to publish things on Facebook through the like button:
+
+#+BEGIN_EXAMPLE
+<fb:like href="http://www.goodreads.com/book/show/13010670-programming-clojure" width="280" layout="standard" show_faces="true" action="like" colorscheme="light" font="arial" />
+#+END_EXAMPLE
+
+
+In all of these cases Facebook extracts metadata in the website to populate the information in Facebook. This metadata is precisely the one encoded in RDFa. To test this integration the company has created a debugger for metadata: http://developers.facebook.com/tools/debug/og/object. You can use it for example: http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402. Google has a corresponding tool, http://www.google.com/webmasters/tools/richsnippets that also supports the Open Graph Protocol.
+
+However, Facebook goes a step further. In the application center a developer can define new RDF objects based on the Open Graph Protocol with new elements inside. What is more, the system then automatically creates a sample website with RDFa data integrated, e.g. http://samples.ogp.me//199815506812566 for a sample application on book rating. In other terms, Facebook permits to extend the existing ontology with new properties and classes:
+
+[[img/open_graph_new_properties.png]]
+
+[[img/open_graph_new_class.png]]
+
+
+What is more, the tool automatically generates a sample object, e. g. for book: https://graph.facebook.com/10151191340470101/, and instructions on how to call the corresponding web services that an application can use to post its entries directly to a user's timeline:
+#+BEGIN_EXAMPLE
+curl -F 'access_token=XXXXX'      -F 'book=http://samples.ogp.me/199815506812566'         'https://graph.facebook.com/me/worms-web:rate'
+
+curl -F 'access_token=XXXX'      -F 'book=https://www.budabe.eu/static/geordnetes_weltbild'         'https://graph.facebook.com/me/worms-web:rate'
+#+END_EXAMPLE
+
+With aggregations it is possible to calculate numbers of smaller activities, e.g. this user has heard 200 songs last months.
+
+At this stage many of the big players from http://imdb.com, http://www.amazon.com, http://digg.com, https://www.spotify.com, http://www.goodreads.com/ all integrate in this way with Facebook, using the Facebook authentication, sometimes amongst others such as the Twitter or Google authentication.
+
+http://youtu.be/TM-2fNtg7p8 and http://youtu.be/__FplazeKvU give a good idea on the business reasons that Facebook has to integrate Facebook with all sorts of objects outside it, making effectively a part of Facebook. This specific take on a semantic web of things that monitors a users activities --- books, music, runs, whatever --- is at the same time techically fascinating and obviously disquieting from a privacy point of view.
+
+
 * Testing RESTful Web Services
+<2014-01-04 Sat>
 
 TODO
 
-* Neo4j: a RESTful Database
+* Bibliography
+TODO
+* Excursion: Neo4j: a RESTful Database
 Session <2012-11-02 Fri>
 
 *** What is Neo4j?
@@ -2057,432 +2577,6 @@ Again, it is possible to filter with ~x-emc-tags~.
 *** Assignment
 Continue yesterday's assignment, but devise namespaces to actually store the corresponding entries in the ATMOS developer acount (for a few examples). Have Neo4j store those references as content references.
 
-* The Semantic Web
-Sessions <2012-12-14 Fri> and <2012-12-15 Sat>
-- What are Ontologies? Ontologies and Us
-- Ontologies and Technology
-  - Standards
-    - RDF
-    - RDF-S
-    - OWL
-    - SPARQL:
-      http://data.gov.uk/sparql
-      http://jena.apache.org/tutorials/sparql.html
-      http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29
-  - Object identity
-  - Tools
-    - Protégé
-    - Semantic Stores
-- Linked Open Data
-- Semantic Web Services
-
-http://data.gov.uk/sparql
-
-cf. presentation stored in Moodle.
-
-* Preparing the Practical Programming Projects
-Sessions <2012-12-15 Sat>
-
-cf. https://moodle.fh-worms.de/moodle/mod/page/view.php?id=17310
-
-* Social media and the Semantic Web
-Session <2013-01-04 Fri>
-
-** Programming the Semantic Web
-
-A large number of libraries exist for handling RDF including well-established Open Source Java libraries such as Sesame and Jena. For Clojure, Seabass (https://clojars.org/seabass) offers a small wrapper around the Jena library, making it easy to treat RDF in Clojure. Similar libraries exist for other platforms.
-
-As dependencies you add:
-#+BEGIN_SRC clojure
-[xerces/xercesImpl "2.10.0"] ;; Direct download from Maven central
-[seabass "2.0"]
-#+END_SRC
-
-
-This will also download the Jena libraries which do most of the work.
-
-Once seabass is installed, using it is simple: 
-
-You ~build~ a model, essentially a local database containing ~seabass.core~ triples you just load one or more files in one of the possible RDF serialzation formats (cf. below):
-#+BEGIN_SRC clojure
-(def model 
-  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
-         ["src/s12/61960CC0002.ttl" "TTL"]))
-#+END_SRC
-
-In addition, you can also indicate URIs from which these files should be downloaded. You can also integrate data from external SPARQL endpoints using ~CONSTRUCT~ queries and the ~pull~ command:
-
-
-#+BEGIN_SRC clojure
-(def model 
-  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
-         ["src/s12/61960CC0002.ttl" "TTL"]))
-
-;;Query is
-;;construct {?institution ?p ?o} {?institution a <http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion> . 
-?institution ?p ?o
-} LIMIT 10000")
-(def model (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
-         ["src/s12/61960CC0002.ttl" "TTL"]
-         (pull "construct {?institution ?p ?o} {?institution a <http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion> . 
-?institution ?p ?o
-} LIMIT 10000" "http://dbpedia.org/sparql")))
- #+END_SRC
-
-You can then execute queries against a model using the ~bounce~ function that takes the SPARQL ~SELECT~ query as a first parameter and a model as the second, e.g.:
-#+BEGIN_SRC clojure
-(bounce 
-"PREFIX cdm: <http://publications.europa.eu/ontology/cdm#> 
-select ?expr ?title ?lang
-{?work cdm:resource_legal_id_celex \"62007CJ0535\"^^xsd:string .
- ?expr cdm:expression_belongs_to_work ?work .
- ?expr cdm:expression_title ?title .
- ?expr cdm:expression_uses_language ?lang .
- }" model)
-#+END_SRC
-
-The result is returnd as a Clojure map with all the results in the ~:data~ field:
-#+BEGIN_SRC clojure
-{:vars (:expr :title :lang), :data ({:lang "http://publications.europa.eu/resource/authority/language/FRA", :title "Arrêt de la Cour (deuxième chambre) du 14 octobre 2010. # Commission européenne contre République d'Autriche. # Manquement d’État - Directives 79/409/CEE et 92/43/CEE - Conservation des oiseaux sauvages - Désignation incorrecte et protection juridique insuffisante des zones de protection spéciale. # Affaire C-535/07.", :expr "http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA"}...)}
-#+END_SRC
-
-You can handle those results like any other Clojure map
-#+BEGIN_SRC clojure
-(filter #(= (:lang %) "http://publications.europa.eu/resource/authority/language/ENG")  (:data (get-titles-by-celex "61960CC0002")))
-#+END_SRC
-
-** RDF Serialization formats
-Logically, all RDF is triples of subject, predicate and object, and indeed that is how it is often represtend internally inside triple stores. However, triples can be serialized and exchanged in a variety of different formats. Some of these such as Turtle are very close to the triple philosophy, others need more interpretation.
-
-*** Turtle 
-One of the simplest forms to encode semantic information is Turtle. Turtle essentially lists the triples. Individual triples are separated by dots (~.~), but in order to avoid long lists of full triples those triples that share the same subject and predicateonly list the different objects, separated by ~,~, whereas those only sharing the same subject are  compacted by using ~;~.
-
-#+BEGIN_EXAMPLE
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix cdm: <http://publications.europa.eu/ontology/cdm#> .
-@prefix cdm-annotation: <http://publications.europa.eu/ontology/annotation#> .
-@base <http://www.w3.org/2002/07/owl#> .
-
-<http://example.org/resource/celex/61960CC0002> rdf:type cdm:case-law ,
-                                                         cdm:document_cjeu ,
-                                                         cdm:opinion_advocate-general ,
-                                                         cdm:resource_legal ,
-                                                         cdm:work ,
-                                                 cdm:resource_legal_number_natural_celex "0002"^^xsd:positiveInteger ;
- cdm:resource_legal_year "1960"^^xsd:gYear .
-
-<http://example.org/resource/celex/61960CC0002.BUL> rdf:type cdm:expression .                                              
-#+END_EXAMPLE
-
-The mimetype of Turtle is ~application/x-turtle~, the typical file extension ~TTL~ (cf. also above for the treatment in the seabass library).
-
-*** RDF/XML
-Probably the most frequent pure RDF encoding is ~RDF/XML~ which is, as the name suggests, an XML-based serialization format for RDF: 
-
-#+BEGIN_EXAMPLE
-<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://www.w3.org/2002/07/owl"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:cdm="http://publications.europa.eu/ontology/cdm#"
-     xmlns:cdm-annotation="http://publications.europa.eu/ontology/annotation#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
-  <cdm:judgement rdf:about="http://example.org/resource/celex/62007CJ0535">
-        <rdf:type rdf:resource="&cdm;document_cjeu"/>
-        <rdf:type rdf:resource="&cdm;judgement"/>
-        <cdm:resource_legal_number_natural_celex rdf:datatype="&xsd;positiveInteger">0535</cdm:resource_legal_number_natural_celex>
-        <cdm:resource_legal_year rdf:datatype="&xsd;gYear">2007</cdm:resource_legal_year>    
-  </cdm:judgement>
-
-  <cdm:expression rdf:about="http://example.org/resource/celex/62007CJ0535.ITA">
-        <cdm:expression_title rdf:datatype="&xsd;string">Sentenza della Corte (Seconda Sezione) del 14 ottobre 2010. # Commissione europea contro Repubblica d&apos;Austria. # Inadempimento di uno Stato - Direttive 79/409/CEE e 92/43/CEE - Conservazione degli uccelli selvatici - Designazione erronea e tutela giuridica insufficiente delle zone di protezione speciale. # Causa C-535/07.</cdm:expression_title>
-        <cdm:expression_belongs_to_work rdf:resource="http://example.org/resource/celex/62007CJ0535"/>
-        <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ITA"/>
-    </cdm:expression>
-</rdf:RDF>
-#+END_EXAMPLE
-
-In all of these cases the subject can also be indicated by the ~rdf:Description~ element with an explicit ~rdf:type~ that indicates the correct type. This example uses an abbreviation that uses (one of) the types as the class name.
-
-The subject is always indicated by the ~rdf:about~ attribute, the predicate as the element name (e.g. ~cdm:expression_title~), the object by the ~rdf:resource~ attribute. In the case of data properties, ~rdf:datatype~ can be used ot indicate the correct datatype.
-
-In order to mark up common concepts such as the Italian language in this example, the RDF examples refer to codes defined elsewhere in authority tables.
-
-*** RDFa
-RDFa is, in the words if the W3C recommendation http://www.w3.org/TR/rdfa-syntax/, "Syntax and processing rules for embedding RDF through attributes" into a markup language, virtually always (X)HTML. The same webpage is then both human-readable and machine-readable.
-
-RDFa largely operates through attributes that either already exist in HTML or are newly added. In fact, RDFa means "RDF in Attributes".
-
-For the ~property~ and ~rel~ attributes this looks as follows (all examples taken directly from the RDFa 1.1 specification http://www.w3.org/TR/rdfa-syntax/):
-
-#+BEGIN_EXAMPLE
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>My home-page</title>
-    <meta property="http://purl.org/dc/terms/creator" content="Mark Birbeck" />
-    <link rel="http://xmlns.com/foaf/0.1/topic" href="http://www.example.com/#us" />
-  </head>
-  <body>...</body>
-</html>
-#+END_EXAMPLE
-
-This means that the data property ~http://purl.org/dc/terms/creator~, in this case defined by the Dublin Core specification, has the value ~Mark Birbeck~. The link to ~http://www.example.com/#us~ is to be interpreted as a Friend of a Friend (FOAF) topic ~http://xmlns.com/foaf/0.1/topic~.
-
-Just like for Turtle it is possible to define abbreviations through prefixes. The following is exactly equivalent to the previous example:
-
-#+BEGIN_EXAMPLE
-<html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="foaf: http://xmlns.com/foaf/0.1/
-          dc: http://purl.org/dc/terms/"
-  >
-  <head>
-    <title>My home-page</title>
-    <meta property="dc:creator" content="Mark Birbeck" />
-    <link rel="foaf:topic" href="http://www.example.com/#us" />
-  </head>
-  <body>...</body>
-</html>
-#+END_EXAMPLE
-
-In principle, the ~prefix~ attribute can be used on any element (though in reality this is rarely used).
-
-If the content is already present on the human readable page, it can just be reused and an explicit ~content~ attribute is not needed:
-
-#+BEGIN_EXAMPLE
-<html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="dc: http://purl.org/dc/terms/"
-  >
-  <head><title>My Home Page</title></head>
-  <body>
-    <h1 property="dc:title">My home-page</h1>
-    <p>Last modified: 16 September 2015</p>
-  </body>
-</html>
-#+END_EXAMPLE
-
-If necessary, the information on the content can be explicitly typed using the ~datatype~ property:
-#+BEGIN_EXAMPLE
-<html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="xsd: http://www.w3.org/2001/XMLSchema#
-          dc: http://purl.org/dc/terms/"
-  >
-  <head><title>My Home Page</title></head>
-  <body>
-    <h1 property="dc:title">My home-page</h1>
-    <p>Last modified: <span property="dc:modified"
-            content="2015-09-16T16:00:00-05:00"
-            datatype="xsd:dateTime">16 September 2015</span>.</p>
-  </body>
-</html>
-#+END_EXAMPLE
-
-
-
-
-In all these cases the subject of the triples is implicitly the webpage itself. RDFa also permits to indicate explicit information on other subjects using the ~about~ property:
-
-#+BEGIN_EXAMPLE
-<html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="bibo: http://purl.org/ontology/bibo/
-          dc: http://purl.org/dc/terms/"
-  >
-  <head>
-    <title>Books by Marco Pierre White</title>
-  </head>
-  <body>
-    I think White's book
-    '<span about="urn:ISBN:0091808189" 
-           property="dc:title">Canteen Cuisine</span>'
-    is well worth getting since although it's quite advanced stuff, he
-    makes it pretty easy to follow. You might also like
-    <span 
-     about="urn:ISBN:1596913614" 
-     property="dc:description"
-     >White's autobiography</span>.
-  </body>
-</html>
-#+END_EXAMPLE
-
-If really needed, ~rdf:type~ can be indicated through the ~typeof~ attribute.
-
-Finally, it is possible to markup also the object of a triple explicitly, indicating in this example that Albert Einstein lived, in terms of the DBpedia ontology, both in the German empire and in Switzerland:
-
-#+BEGIN_EXAMPLE
-<div about="http://dbpedia.org/resource/Albert_Einstein" rel="dbp-owl:residence">
-  <span about="http://dbpedia.org/resource/German_Empire"></span>
-  <span about="http://dbpedia.org/resource/Switzerland"></span>
-</div>
-#+END_EXAMPLE
-
-In full, the following attributes are defined in the RDFa recommendation, section 5:
-
-- about: a SafeCURIEorCURIEorIRI, used for stating what the data is about (a 'subject' in RDF terminology);
-- content: a CDATA string, for supplying machine-readable content for a literal (a 'literal object', in RDF terminology);
-- datatype: a TERMorCURIEorAbsIRI representing a datatype, to express the datatype of a literal;
-- href (optional): a traditionally navigable IRI for expressing the partner resource of a relationship (a 'resource object', in RDF terminology);
-- inlist: An attribute used to indicate that the object associated with a rel or property attribute on the same element is to be added to the list for that predicate. The value of this attribute must be ignored. Presence of this attribute causes a list to be created if it does not already exist.
-- prefix: a white space separated list of prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI
-- property: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either a resource object if given or some literal text (also a 'predicate');
-- rel: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between two resources ('predicates' in RDF terminology);
-- resource: a SafeCURIEorCURIEorIRI for expressing the partner resource of a relationship that is not intended to be navigable (e.g., a 'clickable' link) (also an 'object');
-- rev: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing reverse relationships between two resources (also 'predicates');
-- src (optional): an IRI for expressing the partner resource of a relationship when the resource is embedded (also a 'resource object');
-- typeof: a white space separated list of TERMorCURIEorAbsIRIs that indicate the RDF type(s) to associate with a subject;
-- vocab: A IRI that defines the mapping to use when a TERM is referenced in an attribute value. 
-
-CURIes in this context are "compact URI expressions", essentially abbreviated URIs. 
-
-** Exercise: Markup of a web page
-Markup a Wikipedia page, e.g. http://en.wikipedia.org/wiki/The_hobbit, with the DBpedia ontology
-
-cf. also http://wiki.dbpedia.org/Ontology?v=194q for the ontology and http://dbpedia.org/page/The_Hobbit for the "solution" of dbpedia
-
-[[img/the_hobbit_rdfa.png]]
-
-** Facebook and RDFa: the Open Graph protocol
-Facebook uses RDFa to integrate with external webpages. The Open Graph protocol http://opengraphprotocol.org/ / http://ogp.me/ defines a vocabulary that can be used to integrate metadata into a webpage. In fact, this vocabulary is itself defined in RDF and available under http://ogp.me/ns/ogp.me.ttl. It defines the following core properties ("basic metadata") that should always be present (cited after http://ogp.me/):
-
-- ~og:title~ - The title of your object as it should appear within the graph, e.g., "The Rock".
-- ~og:type~ - The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required.
-- ~og:image~ - An image URL which should represent your object within the graph.
-- ~og:url~ - The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "http://www.imdb.com/title/tt0117500/".
-
-~og~ stands for http://ogp.me/ns#.
-
-This information should be given in metatags in the HTML header, though this is a Facebook restriction, not an RDFa one:
-
-#+BEGIN_EXAMPLE
-<html>
-  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#">
-    <title>OG Sample Object - Geordnetes Weltbild</title>
-
-    <meta property="og:title" content="Geordnetes Weltbild" />
-    <meta property="og:image" content="http://www.budabe.de/img/geordnetes_weltbild_cover_1.jpg" />
-    <meta property="og:url" content="http://www.budabe.eu/static/geordnetes_weltbild" />
-    <meta property="og:type" content="book" />
-  </head>
-  <body>
-  ...
-  </body>
-</html>
-#+END_EXAMPLE
-
-In addition to these mandatory elements the following optional metadata elements are possible for all types of objects:
-
-- og:audio - A URL to an audio file to accompany this object.
-- og:description - A one to two sentence description of your object.
-- og:determiner - The word that appears before this object's title in a sentence. An enum of (a, an, the, "", auto). If auto is chosen, the consumer of your data should chose between "a" or "an". Default is "" (blank).
-- og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
-- og:locale:alternate - An array of other locales this page is available in.
-- og:site_name - If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., "IMDb".
-- og:video - A URL to a video file that complements this object
-
-
-Individual types of objects can and often have more specific metadata in addition to the generic ones. A book for example can have the following metadata elements (namespace http://ogp.me/ns/book#):
-
-- book:author - profile array - Who wrote this book.
-- book:isbn - string - The ISBN
-- book:release_date - datetime - The date the book was released.
-- book:tag - string array - Tag words associated with this book.
-
-The following types of objects are predefined (all of them have their own namespaces):
-- website
-- music with subtypes music.song, music.album, music.playlist and music.radio_station
-- video with subtypes video.movie, video.episode, video.tv_show, video.other
-- article
-- book
-- profile
-
-In addition, Facebook itself defines a number of extensions in the http://ogp.me/ns/fb# namespace, notably:
--   fb:app_id: the application id in Facebook, e.g. 230196110444178
--   fb:admins: one or more ids of Facebook users that can get administrative information on this object, e.g. 100004654151051
-
-Facebook can then directly use this metadata integrating information on a resource into Facebook itself, e.g. for the "liking" of resources. You can access this information by going through the like button with for the administrator(s) will now contain an additional link to this admin page.
-
-[[img/facebook_activities.png]]
-
-In the application configuration, e.g. for https://developers.facebook.com/apps/230196110444178, an application can even go beyond this. It can define action types (= object properties in OWL terms) e.g. to rate a book. For this it can either reuse existing object types or even define completely new ones. It can also define new object types (= classes in OWL terms).
-
-[[img/app_center_open_graph.png]]
-
-An application can indicate its intention to publish things on Facebook through the like button:
-
-#+BEGIN_EXAMPLE
-<fb:like href="http://www.goodreads.com/book/show/13010670-programming-clojure" width="280" layout="standard" show_faces="true" action="like" colorscheme="light" font="arial" />
-#+END_EXAMPLE
-
-
-In all of these cases Facebook extracts metadata in the website to populate the information in Facebook. This metadata is precisely the one encoded in RDFa. To test this integration the company has created a debugger for metadata: http://developers.facebook.com/tools/debug/og/object. You can use it for example: http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402. Google has a corresponding tool, http://www.google.com/webmasters/tools/richsnippets that also supports the Open Graph Protocol.
-
-However, Facebook goes a step further. In the application center a developer can define new RDF objects based on the Open Graph Protocol with new elements inside. What is more, the system then automatically creates a sample website with RDFa data integrated, e.g. http://samples.ogp.me//199815506812566 for a sample application on book rating. In other terms, Facebook permits to extend the existing ontology with new properties and classes:
-
-[[img/open_graph_new_properties.png]]
-
-[[img/open_graph_new_class.png]]
-
-
-What is more, the tool automatically generates a sample object, e. g. for book: https://graph.facebook.com/10151191340470101/, and instructions on how to call the corresponding web services that an application can use to post its entries directly to a user's timeline:
-#+BEGIN_EXAMPLE
-curl -F 'access_token=XXXXX'      -F 'book=http://samples.ogp.me/199815506812566'         'https://graph.facebook.com/me/worms-web:rate'
-
-curl -F 'access_token=XXXX'      -F 'book=https://www.budabe.eu/static/geordnetes_weltbild'         'https://graph.facebook.com/me/worms-web:rate'
-#+END_EXAMPLE
-
-With aggregations it is possible to calculate numbers of smaller activities, e.g. this user has heard 200 songs last months.
-
-At this stage many of the big players from http://imdb.com, http://www.amazon.com, http://digg.com, https://www.spotify.com, http://www.goodreads.com/ all integrate in this way with Facebook, using the Facebook authentication, sometimes amongst others such as the Twitter or Google authentication.
-
-http://youtu.be/TM-2fNtg7p8 and http://youtu.be/__FplazeKvU give a good idea on the business reasons that Facebook has to integrate Facebook with all sorts of objects outside it, making effectively a part of Facebook. This specific take on a semantic web of things that monitors a users activities --- books, music, runs, whatever --- is at the same time techically fascinating and obviously disquieting from a privacy point of view.
-
-
-
-* Excursion: Web Services in .NET
-Special guest: Lukas Georgieff, talking about SOAP-based and RESTful web services on the .NET platform using C#
-
-Session <2012-11-30 Fri>
-- .Net-Framework
-- Windows Communication Foundation
-  - Architecture
-  - Contracts and Description
-  - Service Runtime
-  - Messaging
-  - Hosting and Activation
-- SOAP and WCF
-  - Music Store (Service)
-    - Requirements
-    - Implementation
-      - Create a Visual Studio WCF-Project
-      - Service and Operation Contracts
-      - Message and Data Contracts
-      - loginUser and postUserImage
-      - Binding
-    - Live Coding: Echo Service
-  - Music Store (Client): Implementation
-    - Service-Reference
-    - Calling Stub-Methods
-
-Session <2012-12-01 Sat>
-- RESTful and WCF
-   - Music Store (Service)
-     - Implementation
-       - Service and Operation Contracts
-       - UriTemplate, WebGet and WebInvoke
-       - Data Contracts
-       - loginUser, postUserImage and WebOperationContext
-       - Binding
-    - Live Coding: Echo Service
-    - Music Store (Client): Implementation
-      - WebChannelFactory
-      - Implementing a RESTful Stub
-
-* Bibliography
 * Excursion: Clojure and JVM
 ** Why Clojure?
 Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
@@ -2596,7 +2690,7 @@ Only for Emacs 23:
 
 Install the Marmalade package manager
 
-#+BEGIN_EXAMPLE
+#+BEGIN_EXAMPLE emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -2614,7 +2708,7 @@ https://github.com/kingtim/nrepl.el
 M-x package-install [RET] nrepl [RET]
 
 Configure in .emacs:
-#+BEGIN_SRC
+#+BEGIN_SRC emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)

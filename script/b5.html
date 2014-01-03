@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>B5: Web Services </title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="title" content="B5: Web Services "/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-11-09 11:40:13 CET"/>
+<meta name="generated" content="2014-01-03T09:59+0100"/>
 <meta name="author" content="Marc Wilhelm Küster"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -21,6 +21,9 @@ lang="en" xml:lang="en">
   .target { }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
   p.verse { margin-left: 3% }
   pre {
 	border: 1pt solid #AEBDCC;
@@ -31,10 +34,23 @@ lang="en" xml:lang="en">
         overflow:auto;
   }
   table { border-collapse: collapse; }
-  td, th { vertical-align: top; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
   dt { font-weight: bold; }
   div.figure { padding: 0.5em; }
   div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
   .linenr { font-size:smaller }
   .code-highlighted {background-color:#ffff00;}
   .org-info-js_info-navigation { border-style:none; }
@@ -45,6 +61,30 @@ lang="en" xml:lang="en">
   /*]]>*/-->
 </style>
 <script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
  {
@@ -66,10 +106,15 @@ lang="en" xml:lang="en">
  }
 /*]]>*///-->
 </script>
+
 </head>
 <body>
-<div id="content">
 
+<div id="preamble">
+
+</div>
+
+<div id="content">
 <h1 class="title">B5: Web Services </h1>
 
 
@@ -79,136 +124,138 @@ lang="en" xml:lang="en">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Objectives and Formalia </a>
+<li><a href="#sec-1">1 Objectives and Formalia</a>
 <ul>
-<li><a href="#sec-1.1">1.1 Course objectives </a></li>
-<li><a href="#sec-1.2">1.2 Programming project </a></li>
-<li><a href="#sec-1.3">1.3 Preconditions </a></li>
+<li><a href="#sec-1-1">1.1 Course objectives</a></li>
+<li><a href="#sec-1-2">1.2 Programming project</a></li>
+<li><a href="#sec-1-3">1.3 Preconditions</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 RESTful Web Services and Resource Oriented Architectures </a>
+<li><a href="#sec-2">2 RESTful Web Services and Resource Oriented Architectures</a>
 <ul>
-<li><a href="#sec-2.1">2.1 The HTTP protocol </a>
+<li><a href="#sec-2-1">2.1 The HTTP protocol</a>
 <ul>
-<li><a href="#sec-2.1.1">2.1.1 HTTP methods and their use </a></li>
-<li><a href="#sec-2.1.2">2.1.2 Error handling </a></li>
-<li><a href="#sec-2.1.3">2.1.3 Content negotiation </a></li>
-<li><a href="#sec-2.1.4">2.1.4 Assignment </a></li>
-<li><a href="#sec-2.1.5">2.1.5 Command line tools such as curl and wget </a></li>
-<li><a href="#sec-2.1.6">2.1.6 Encryption and caching </a></li>
+<li><a href="#sec-2-1-1">2.1.1 HTTP methods and their use</a></li>
+<li><a href="#sec-2-1-2">2.1.2 Error handling</a></li>
+<li><a href="#sec-2-1-3">2.1.3 Content negotiation</a></li>
+<li><a href="#sec-2-1-4">2.1.4 Assignment</a></li>
+<li><a href="#sec-2-1-5">2.1.5 Command line tools such as curl and wget</a></li>
+<li><a href="#sec-2-1-6">2.1.6 Encryption and caching</a></li>
 </ul>
 </li>
-<li><a href="#sec-2.2">2.2 Design principles for RESTful systems </a></li>
+<li><a href="#sec-2-2">2.2 Design principles for RESTful systems</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Excursion: Ruby </a></li>
-<li><a href="#sec-4">4 Programming RESTful Web Services: Client side web services </a>
+<li><a href="#sec-3">3 Excursion: Ruby</a></li>
+<li><a href="#sec-4">4 Programming RESTful Web Services: Client side web services</a>
 <ul>
-<li><a href="#sec-4.1">4.1 Design of URIs </a>
+<li><a href="#sec-4-1">4.1 Design of URIs</a>
 <ul>
-<li><a href="#sec-4.1.1">4.1.1 URI Templates </a></li>
-<li><a href="#sec-4.1.2">4.1.2 The case of the European Legislation Identifier (ELI) </a></li>
-<li><a href="#sec-4.1.3">4.1.3 URITemplates in Ruby </a></li>
-<li><a href="#sec-4.1.4">4.1.4 Excursion: Handling URITemplates in Clojure </a></li>
+<li><a href="#sec-4-1-1">4.1.1 URI Templates</a></li>
+<li><a href="#sec-4-1-2">4.1.2 The case of the European Legislation Identifier (ELI)</a></li>
+<li><a href="#sec-4-1-3">4.1.3 URITemplates in Ruby</a></li>
+<li><a href="#sec-4-1-4">4.1.4 Excursion: Handling URITemplates in Clojure</a></li>
 </ul>
 </li>
-<li><a href="#sec-4.2">4.2 JSON </a>
+<li><a href="#sec-4-2">4.2 JSON</a>
 <ul>
-<li><a href="#sec-4.2.1">4.2.1 JSON and Ruby </a></li>
-<li><a href="#sec-4.2.2">4.2.2 Excursion: JSON and Clojure </a></li>
+<li><a href="#sec-4-2-1">4.2.1 JSON and Ruby</a></li>
+<li><a href="#sec-4-2-2">4.2.2 Excursion: JSON and Clojure</a></li>
 </ul>
 </li>
-<li><a href="#sec-4.3">4.3 Assignment </a></li>
-<li><a href="#sec-4.4">4.4 ATOM and related standards </a>
+<li><a href="#sec-4-3">4.3 Assignment</a></li>
+<li><a href="#sec-4-4">4.4 ATOM and related standards</a>
 <ul>
-<li><a href="#sec-4.4.1">4.4.1 Ruby and ATOM </a></li>
-<li><a href="#sec-4.4.2">4.4.2 Excursion: Clojure, Rome and <code>clj-rome</code> </a></li>
+<li><a href="#sec-4-4-1">4.4.1 Ruby and ATOM</a></li>
+<li><a href="#sec-4-4-2">4.4.2 Excursion: Clojure, Rome and <code>clj-rome</code></a></li>
 </ul>
 </li>
-<li><a href="#sec-4.5">4.5 Ruby Libraries for client-side RESTful web services </a></li>
-<li><a href="#sec-4.6">4.6 Libraries for RESTful web services for Java and Clojure </a></li>
-<li><a href="#sec-4.7">4.7 Web Services the Google way </a>
+<li><a href="#sec-4-5">4.5 Ruby Libraries for client-side RESTful web services</a></li>
+<li><a href="#sec-4-6">4.6 Libraries for RESTful web services for Java and Clojure</a></li>
+<li><a href="#sec-4-7">4.7 Web Services the Google way</a>
 <ul>
-<li><a href="#sec-4.7.1">4.7.1 Account and authentication </a></li>
-<li><a href="#sec-4.7.2">4.7.2 Accessing the API </a></li>
+<li><a href="#sec-4-7-1">4.7.1 Account and authentication</a></li>
+<li><a href="#sec-4-7-2">4.7.2 Accessing the API</a></li>
 </ul>
 </li>
-<li><a href="#sec-4.8">4.8 OAuth2 </a></li>
-<li><a href="#sec-4.9">4.9 Assignment </a></li>
+<li><a href="#sec-4-8">4.8 OAuth2</a></li>
+<li><a href="#sec-4-9">4.9 Assignment</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Server-side REST </a>
+<li><a href="#sec-5">5 Server-side REST</a>
 <ul>
-<li><a href="#sec-5.1">5.1 Sinatra </a></li>
-<li><a href="#sec-5.2">5.2 The Giant Global Graph: Facebook </a></li>
-<li><a href="#sec-5.3">5.3 Assignment </a></li>
-<li><a href="#sec-5.4">5.4 <code>budabe-graph</code> </a></li>
-<li><a href="#sec-5.5">5.5 Creating a Facebook application </a></li>
-<li><a href="#sec-5.6">5.6 Assignment </a></li>
-<li><a href="#sec-5.7">5.7 Facebook and graphs </a></li>
+<li><a href="#sec-5-1">5.1 Sinatra</a></li>
+<li><a href="#sec-5-2">5.2 The OAuth2 callback</a></li>
+<li><a href="#sec-5-3">5.3 The Giant Global Graph: Facebook</a></li>
+<li><a href="#sec-5-4">5.4 Assignment</a></li>
+<li><a href="#sec-5-5">5.5 <code>budabe-graph</code></a></li>
+<li><a href="#sec-5-6">5.6 Creating a Facebook application</a></li>
+<li><a href="#sec-5-7">5.7 Assignment</a></li>
+<li><a href="#sec-5-8">5.8 Facebook and graphs</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6 Testing RESTful Web Services </a></li>
-<li><a href="#sec-7">7 Neo4j: a RESTful Database </a>
+<li><a href="#sec-6">6 The Semantic Web</a></li>
+<li><a href="#sec-7">7 Preparing the Practical Programming Projects</a></li>
+<li><a href="#sec-8">8 Web Services and the Semantic Web</a>
+<ul>
+<li><a href="#sec-8-1">8.1 RDF Serialization formats</a>
+<ul>
+<li><a href="#sec-8-1-1">8.1.1 Turtle</a></li>
+<li><a href="#sec-8-1-2">8.1.2 RDF/XML</a></li>
+<li><a href="#sec-8-1-3">8.1.3 RDFa</a></li>
+</ul>
+</li>
+<li><a href="#sec-8-2">8.2 Exercise: Markup of a web page</a></li>
+<li><a href="#sec-8-3">8.3 SPARQL</a></li>
+<li><a href="#sec-8-4">8.4 Programming the Semantic Web in Ruby</a></li>
+<li><a href="#sec-8-5">8.5 Programming the Semantic Web in Clojure</a></li>
+<li><a href="#sec-8-6">8.6 Excursion: Facebook and RDFa: the Open Graph protocol</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9 Testing RESTful Web Services</a></li>
+<li><a href="#sec-10">10 Bibliography</a></li>
+<li><a href="#sec-11">11 Excursion: Neo4j: a RESTful Database</a>
 <ul>
 <li>
 <ul>
-<li><a href="#sec-7.1">7.1 What is Neo4j? </a></li>
+<li><a href="#sec-11-1">11.1 What is Neo4j?</a></li>
 </ul>
 </li>
-<li><a href="#sec-7.1">7.1 Neo4j's admin interface </a></li>
-<li><a href="#sec-7.2">7.2 Neo4j's RESTful interface </a></li>
-<li><a href="#sec-7.3">7.3 Cypher </a></li>
-<li><a href="#sec-7.4">7.4 Neocons </a>
+<li><a href="#sec-11-1">11.1 Neo4j's admin interface</a></li>
+<li><a href="#sec-11-2">11.2 Neo4j's RESTful interface</a></li>
+<li><a href="#sec-11-3">11.3 Cypher</a></li>
+<li><a href="#sec-11-4">11.4 Neocons</a>
 <ul>
-<li><a href="#sec-7.4.1">7.4.1 Assignment </a></li>
+<li><a href="#sec-11-4-1">11.4.1 Assignment</a></li>
 </ul>
 </li>
-<li><a href="#sec-7.5">7.5 Accessing RESTful storage </a>
+<li><a href="#sec-11-5">11.5 Accessing RESTful storage</a>
 <ul>
-<li><a href="#sec-7.5.1">7.5.1 Security </a></li>
-<li><a href="#sec-7.5.2">7.5.2 Creating an object </a></li>
-<li><a href="#sec-7.5.3">7.5.3 Atmosfox </a></li>
-<li><a href="#sec-7.5.4">7.5.4 Handling of Metadata </a></li>
-<li><a href="#sec-7.5.5">7.5.5 Assignment </a></li>
+<li><a href="#sec-11-5-1">11.5.1 Security</a></li>
+<li><a href="#sec-11-5-2">11.5.2 Creating an object</a></li>
+<li><a href="#sec-11-5-3">11.5.3 Atmosfox</a></li>
+<li><a href="#sec-11-5-4">11.5.4 Handling of Metadata</a></li>
+<li><a href="#sec-11-5-5">11.5.5 Assignment</a></li>
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-8">8 The Semantic Web </a></li>
-<li><a href="#sec-9">9 Preparing the Practical Programming Projects </a></li>
-<li><a href="#sec-10">10 Social media and the Semantic Web </a>
+<li><a href="#sec-12">12 Excursion: Clojure and JVM</a>
 <ul>
-<li><a href="#sec-10.1">10.1 Programming the Semantic Web </a></li>
-<li><a href="#sec-10.2">10.2 RDF Serialization formats </a>
+<li><a href="#sec-12-1">12.1 Why Clojure?</a></li>
+<li><a href="#sec-12-2">12.2 Practicalities</a>
 <ul>
-<li><a href="#sec-10.2.1">10.2.1 Turtle </a></li>
-<li><a href="#sec-10.2.2">10.2.2 RDF/XML </a></li>
-<li><a href="#sec-10.2.3">10.2.3 RDFa </a></li>
+<li><a href="#sec-12-2-1">12.2.1 Tutorials</a></li>
+<li><a href="#sec-12-2-2">12.2.2 Installation and integration with Emacs</a></li>
+<li><a href="#sec-12-2-3">12.2.3 Leiningen</a></li>
+<li><a href="#sec-12-2-4">12.2.4 Syntax and data structures</a></li>
 </ul>
 </li>
-<li><a href="#sec-10.3">10.3 Exercise: Markup of a web page </a></li>
-<li><a href="#sec-10.4">10.4 Facebook and RDFa: the Open Graph protocol </a></li>
-</ul>
-</li>
-<li><a href="#sec-11">11 Excursion: Web Services in .NET </a></li>
-<li><a href="#sec-12">12 Bibliography </a></li>
-<li><a href="#sec-13">13 Excursion: Clojure and JVM </a>
-<ul>
-<li><a href="#sec-13.1">13.1 Why Clojure? </a></li>
-<li><a href="#sec-13.2">13.2 Practicalities </a>
-<ul>
-<li><a href="#sec-13.2.1">13.2.1 Tutorials </a></li>
-<li><a href="#sec-13.2.2">13.2.2 Installation and integration with Emacs </a></li>
-<li><a href="#sec-13.2.3">13.2.3 Leiningen </a></li>
-<li><a href="#sec-13.2.4">13.2.4 Syntax and data structures </a></li>
-</ul>
-</li>
-<li><a href="#sec-13.3">13.3 Control structures </a></li>
-<li><a href="#sec-13.4">13.4 Lazy sequences </a></li>
-<li><a href="#sec-13.5">13.5 Assignment </a></li>
-<li><a href="#sec-13.6">13.6 Principles of functional programming </a></li>
-<li><a href="#sec-13.7">13.7 Futures </a></li>
-<li><a href="#sec-13.8">13.8 Multimethods: Polymorphism functional style </a></li>
+<li><a href="#sec-12-3">12.3 Control structures</a></li>
+<li><a href="#sec-12-4">12.4 Lazy sequences</a></li>
+<li><a href="#sec-12-5">12.5 Assignment</a></li>
+<li><a href="#sec-12-6">12.6 Principles of functional programming</a></li>
+<li><a href="#sec-12-7">12.7 Futures</a></li>
+<li><a href="#sec-12-8">12.8 Multimethods: Polymorphism functional style</a></li>
 </ul>
 </li>
 </ul>
@@ -216,16 +263,16 @@ lang="en" xml:lang="en">
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Objectives and Formalia </h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Objectives and Formalia</h2>
 <div class="outline-text-2" id="text-1">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2013-10-04 Fri</span></span>
 </p>
 </div>
 
-<div id="outline-container-1.1" class="outline-3">
-<h3 id="sec-1.1"><span class="section-number-3">1.1</span> Course objectives </h3>
-<div class="outline-text-3" id="text-1.1">
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Course objectives</h3>
+<div class="outline-text-3" id="text-1-1">
 
 <p>Mastering the concepts and implementation of heterogeneous, loosely-coupled architectures using a substantial practical programming project
 </p>
@@ -234,9 +281,9 @@ lang="en" xml:lang="en">
 
 </div>
 
-<div id="outline-container-1.2" class="outline-3">
-<h3 id="sec-1.2"><span class="section-number-3">1.2</span> Programming project </h3>
-<div class="outline-text-3" id="text-1.2">
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Programming project</h3>
+<div class="outline-text-3" id="text-1-2">
 
 <p>Course success is measured through a practical programming project,
 followed by a short oral exam. This project can be started after the
@@ -257,44 +304,41 @@ Repeating the exam means a second, new practical project followed by a second or
 
 </div>
 
-<div id="outline-container-1.3" class="outline-3">
-<h3 id="sec-1.3"><span class="section-number-3">1.3</span> Preconditions </h3>
-<div class="outline-text-3" id="text-1.3">
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Preconditions</h3>
+<div class="outline-text-3" id="text-1-3">
 
 <ul>
-<li>
-Registration for course and exam within deadlines
+<li>Registration for course and exam within deadlines
 </li>
-<li>
-Participating in the final exam depends on having successfully completed a practical programming project
+<li>Participating in the final exam depends on having successfully completed a practical programming project
 </li>
-<li>
-Solid programming expertise
+<li>Solid programming expertise
 </li>
-<li>
-Exam: consists of a practical programming project followed by a presentation and an oral exam
-
+<li>Exam: consists of a practical programming project followed by a presentation and an oral exam
 </li>
 </ul>
+
+
 </div>
 </div>
 
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> RESTful Web Services and Resource Oriented Architectures </h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> RESTful Web Services and Resource Oriented Architectures</h2>
 <div class="outline-text-2" id="text-2">
 
 
 </div>
 
-<div id="outline-container-2.1" class="outline-3">
-<h3 id="sec-2.1"><span class="section-number-3">2.1</span> The HTTP protocol </h3>
-<div class="outline-text-3" id="text-2.1">
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> The HTTP protocol</h3>
+<div class="outline-text-3" id="text-2-1">
 
 <p>The Hypertext Transfer Protocol (HTTP) or RFC 2616 is next to the Uniform Resource Identifier (URI) the most important standard for the Web as we know it. Whenever we access anything on the web through a browser, we trigger at least one HTTP request, typically many. And not only through a browser: any mobile device uses HTTP requests, as do many software tools that are not browsers at all. 
 </p>
-<p>
+<p>               
 In this session we will learn more about this specification and how it is used. Fortunately, the specification {Fielding:1999ub} itself is very clear and readable. It sets out with the HTTP's overall objective:
 </p>
 <blockquote>
@@ -304,10 +348,11 @@ In this session we will learn more about this specification and how it is used. 
 </blockquote>
 
 
-<p>
+
+<p>               
 The key phrase &mdash; and probably the main technical reason for HTTP's success &mdash; is <i>stateless</i>. Generally, HTTP operates on pairs of request and response. Once a request has received its response, the protocol keeps no memory of the interaction, making each interaction independent. Of course, an HTTP request can very well change the state of the recipient, for example by adding a resource &mdash; we'll shortly see how &mdash;, but this remains transparent for the next request / response pair. The next interaction has no inherent knowledge if the state of the server has just been changed a millisecond earlier, was changed a month ago or has always been in this state: "interaction is stateless between requests" ({Fielding:2000vh}, 5.3.1). The server also has no need to keep a state related to the concrete set of interactions, nor even which sequence of interactions come from the same sender. "Session state is therefore kept entirely on the client" ({Fielding:2000vh}, 5.1.3).
 </p>
-<p>
+<p>               
 If this sounds abstract, at the core it means that a sender &mdash; let's say, the browser &mdash; asks a server for a webpage, giving a URI to identify that page:
 </p>
 
@@ -321,8 +366,6 @@ If this sounds abstract, at the core it means that a sender &mdash; let's say, t
 </pre>
 
 
-
-
 <p>
 In reply, the server sends back the content of that website to the browser, and that's it.
 </p>
@@ -332,12 +375,12 @@ Of course, there's a bit more to it, though the principle does not change.
 
 </div>
 
-<div id="outline-container-2.1.1" class="outline-4">
-<h4 id="sec-2.1.1"><span class="section-number-4">2.1.1</span> HTTP methods and their use </h4>
-<div class="outline-text-4" id="text-2.1.1">
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> HTTP methods and their use</h4>
+<div class="outline-text-4" id="text-2-1-1">
 
 <ul>
-<li id="sec-2.1.1.1">GET-method <br/>
+<li id="sec-2-1-1-1">GET-method<br/>
 In the easiest scenario, the client just wants to get some content from the server. In this case sends a request that is in fact just called <code>GET</code>:
 
 
@@ -349,8 +392,6 @@ User-Agent: curl/7.27.0
 Host: www.budabe.eu
 Accept: */*
 </pre>
-
-
 
 
 <p>
@@ -377,8 +418,6 @@ Research
 </pre>
 
 
-
-
 <p>
 Again, this says pretty much what it seems to say: On a given date the server sends back an html-page (-Content-Type: text/htm-) encoded in Unicode and more precisely UTF-8. The most cryptic and at the same time the most important part of this is the <code>200</code> part, though, that says that the request has succeeded. The <code>200</code> return code is specified RFC 2616 alongside 37 others. We'll come back to these codes below.
 </p>
@@ -396,14 +435,19 @@ Formally, <code>GET</code> is defined as:
 <code>GET</code> returns existing webpages or more abstractly resources, if they exist, but it does not modify it. You can execute it any number of times, it will always return the resource. For this reason, it is called an idempotent method.
 </p>
 </li>
-<li id="sec-2.1.1.2">HEAD-method <br/>
+</ul>
+<ul>
+<li id="sec-2-1-1-2">HEAD-method<br/>
 "The HEAD method is identical to GET except that the server MUST NOT return a message-body in the response" ({Fielding:1999ub}, 9.4):
-$ curl -v -XHEAD  <a href="http://www.budabe.eu/research/">http://www.budabe.eu/research/</a> 
-&ndash;&gt;
-&gt; HEAD <i>research</i> HTTP/1.1
+
+
+
+<pre class="example">$ curl -v -XHEAD  http://www.budabe.eu/research/ 
+--&gt;
+&gt; HEAD /research/ HTTP/1.1
 &gt; User-Agent: curl/7.27.0
 &gt; Host: www.budabe.eu
-&gt; Accept: <b>/</b>
+&gt; Accept: */*
 &gt; 
 &lt; HTTP/1.1 200 OK
 &lt; Date: Sat, 22 Sep 2012 15:31:18 GMT
@@ -411,14 +455,18 @@ $ curl -v -XHEAD  <a href="http://www.budabe.eu/research/">http://www.budabe.eu/
 &lt; Vary: Accept-Language,Cookie,Accept-Encoding
 &lt; Content-Language: de-de
 &lt; Content-Type: text/html; charset=utf-8
-no chunk, no close, no size. Assume close to signal end
+ no chunk, no close, no size. Assume close to signal end
 &lt; 
+</pre>
+
 
 <p>
 Since the server does not return data, it is a quick way to test if a resource exists, is accessible and / or has recently been modified. Like <code>GET</code> <code>HEAD</code> is also idempotent.
 </p>
 </li>
-<li id="sec-2.1.1.3">DELETE-method <br/>
+</ul>
+<ul>
+<li id="sec-2-1-1-3">DELETE-method<br/>
 Another idempotent method is <code>DELETE</code> that does exactly what you'd assume it does: "The DELETE method requests that the origin server delete the resource identified by the Request-URI" ({Fielding:1999ub}, 9.7):
 
 
@@ -432,8 +480,6 @@ Another idempotent method is <code>DELETE</code> that does exactly what you'd as
 &gt; Accept: */*
 &gt; 
 </pre>
-
-
 
 
 <p>
@@ -452,13 +498,13 @@ Of course, this does not mean that the sender has necessarily the right to do th
 </pre>
 
 
-
-
 <p>
 <code>DELETE</code> is also idempotent in that we can issue it any number of times, the result will always be the same (i.e. given necessary rights the resource will have disappeared).
 </p>
 </li>
-<li id="sec-2.1.1.4">PUT-method <br/>
+</ul>
+<ul>
+<li id="sec-2-1-1-4">PUT-method<br/>
 Another idempotent method is the <code>PUT</code> method. It "requests that the enclosed entity be stored under the supplied Request-URI. If the Request-URI refers to an already existing resource, the enclosed entity SHOULD be considered as a modified version of the one residing on the origin server. If the Request-URI does not point to an existing resource, and that URI is capable of being defined as a new resource by the requesting user agent, the origin server can create the resource with that URI. If a new resource is created, the origin server MUST inform the user agent via the 201 (Created) response" ({Fielding:1999ub}, 9.6). In other words, the client asks the server to generate a new resource or update an existing one for a given URI. The server has no leaway, it must create or update the resource under that URI or refuse the action.
 
 <p>
@@ -480,8 +526,6 @@ In the following example the server is requested to create a page <code>/researc
 </pre>
 
 
-
-
 <p>
 As a payload, the string "Data for this new resource", which has a length of 26 bytes, is sent along.
 </p>
@@ -499,8 +543,6 @@ Of course, as always the fact that you can send a <code>PUT</code> request to th
 &lt; Transfer-Encoding: chunked
 &lt; Content-Type: text/html
 </pre>
-
-
 
 
 <p>
@@ -522,8 +564,6 @@ Similarly, the following request asks for an update to an existing resource with
 </pre>
 
 
-
-
 <p>
 If this had succeeded, the (existing) page <a href="http://www.budabe.eu/research/">http://www.budabe.eu/research/</a> would now have the new content.
 </p>
@@ -534,7 +574,9 @@ Since the precondition for <code>PUT</code> is that the client knows the URI to 
 If you had the rights, the answer would obligatorily have been <code>201</code> in both cases.
 </p>
 </li>
-<li id="sec-2.1.1.5">POST-method <br/>
+</ul>
+<ul>
+<li id="sec-2-1-1-5">POST-method<br/>
 If <code>PUT</code> normally updates existing resources, <code>POST</code> ist used to create new resources under a given URI. The client does not know in advance what the new URI will be, but will be informed by the server about this when things go according to plan. The server has a certain flexibility in interpreting the right action:
 
 <blockquote>
@@ -548,174 +590,135 @@ If <code>PUT</code> normally updates existing resources, <code>POST</code> ist u
 Possible positive responses are:
 </p>
 <ul>
-<li>
-200 (OK) or 204 (No Content) if no resource was created, but the action want OK
+<li>200 (OK) or 204 (No Content) if no resource was created, but the action want OK
 </li>
-<li>
-201 (Created) with a reference to the new resource if a new resource was created
-
-
+<li>201 (Created) with a reference to the new resource if a new resource was created
 </li>
 </ul>
+
+
+
 </li>
 </ul>
 </div>
 
 </div>
 
-<div id="outline-container-2.1.2" class="outline-4">
-<h4 id="sec-2.1.2"><span class="section-number-4">2.1.2</span> Error handling </h4>
-<div class="outline-text-4" id="text-2.1.2">
+<div id="outline-container-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2"><span class="section-number-4">2.1.2</span> Error handling</h4>
+<div class="outline-text-4" id="text-2-1-2">
 
 <p>One of the strenghts of the HTTP protocol is that it has a clear semantics for handling possible errors through well-defined response codes. Leaving aside the hardly-ever used 1xx series of responses we have:
 </p>
 <ul>
-<li>
-Successful 2xx 
+<li>Successful 2xx 
 <ul>
-<li>
-200 OK 
+<li>200 OK 
 </li>
-<li>
-201 Created 
+<li>201 Created 
 </li>
-<li>
-202 Accepted 
+<li>202 Accepted 
 </li>
-<li>
-203 Non-Authoritative Information 
+<li>203 Non-Authoritative Information 
 </li>
-<li>
-204 No Content 
+<li>204 No Content 
 </li>
-<li>
-205 Reset Content 
+<li>205 Reset Content 
 </li>
-<li>
-206 Partial Content 
+<li>206 Partial Content 
 </li>
 </ul>
+
 </li>
-<li>
-Redirection 3xx 
+<li>Redirection 3xx 
 <ul>
-<li>
-300 Multiple Choices 
+<li>300 Multiple Choices 
 </li>
-<li>
-301 Moved Permanently 
+<li>301 Moved Permanently 
 </li>
-<li>
-302 Found 
+<li>302 Found 
 </li>
-<li>
-303 See Other 
+<li>303 See Other 
 </li>
-<li>
-304 Not Modified 
+<li>304 Not Modified 
 </li>
-<li>
-305 Use Proxy 
+<li>305 Use Proxy 
 </li>
-<li>
-306 (Unused) 
+<li>306 (Unused) 
 </li>
-<li>
-307 Temporary Redirect 
+<li>307 Temporary Redirect 
 </li>
 </ul>
+
 </li>
-<li>
-Client Error 4xx 
+<li>Client Error 4xx 
 <ul>
-<li>
-400 Bad Request 
+<li>400 Bad Request 
 </li>
-<li>
-401 Unauthorized 
+<li>401 Unauthorized 
 </li>
-<li>
-402 Payment Required 
+<li>402 Payment Required 
 </li>
-<li>
-403 Forbidden 
+<li>403 Forbidden 
 </li>
-<li>
-404 Not Found 
+<li>404 Not Found 
 </li>
-<li>
-405 Method Not Allowed 
+<li>405 Method Not Allowed 
 </li>
-<li>
-406 Not Acceptable 
+<li>406 Not Acceptable 
 </li>
-<li>
-407 Proxy Authentication Required 
+<li>407 Proxy Authentication Required 
 </li>
-<li>
-408 Request Timeout 
+<li>408 Request Timeout 
 </li>
-<li>
-409 Conflict 
+<li>409 Conflict 
 </li>
-<li>
-410 Gone 
+<li>410 Gone 
 </li>
-<li>
-411 Length Required 
+<li>411 Length Required 
 </li>
-<li>
-412 Precondition Failed 
+<li>412 Precondition Failed 
 </li>
-<li>
-413 Request Entity Too Large 
+<li>413 Request Entity Too Large 
 </li>
-<li>
-414 Request-URI Too Long 
+<li>414 Request-URI Too Long 
 </li>
-<li>
-415 Unsupported Media Type 
+<li>415 Unsupported Media Type 
 </li>
-<li>
-416 Requested Range Not Satisfiable 
+<li>416 Requested Range Not Satisfiable 
 </li>
-<li>
-417 Expectation Failed 
+<li>417 Expectation Failed 
 </li>
 </ul>
+
 </li>
-<li>
-Server Error 5xx 
+<li>Server Error 5xx 
 <ul>
-<li>
-500 Internal Server Error 
+<li>500 Internal Server Error 
 </li>
-<li>
-501 Not Implemented 
+<li>501 Not Implemented 
 </li>
-<li>
-502 Bad Gateway 
+<li>502 Bad Gateway 
 </li>
-<li>
-503 Service Unavailable 
+<li>503 Service Unavailable 
 </li>
-<li>
-504 Gateway Timeout 
+<li>504 Gateway Timeout 
 </li>
-<li>
-505 HTTP Version Not Supported 
+<li>505 HTTP Version Not Supported 
+</li>
+</ul>
 
 </li>
 </ul>
-</li>
-</ul>
+
+
 </div>
 
 </div>
 
-<div id="outline-container-2.1.3" class="outline-4">
-<h4 id="sec-2.1.3"><span class="section-number-4">2.1.3</span> Content negotiation </h4>
-<div class="outline-text-4" id="text-2.1.3">
+<div id="outline-container-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3"><span class="section-number-4">2.1.3</span> Content negotiation</h4>
+<div class="outline-text-4" id="text-2-1-3">
 
 <p>So far we have seen only requests with the HTTP header <code>Accept: */*</code>, which essentially says that you have no preference for the type of content to get back. However, normally clients have preferences for some type of content in some language over other types of content. In a typical browser session we see sequences like this:
 </p>
@@ -745,14 +748,12 @@ Transfer-Encoding: chunked
 Content-Type: text/html; charset=utf-8
 </pre>
 
-
-
 <p>
 (protocol of a live session taken with the Live HTTP headers plugin in Firefox)
 </p>
 <p>
 In contrast to the HTTP method the HTTP headers always follow the model: Header name ':' value of the header followed by a newline (theoretically a line continuation is possible, but rarely seen) (cf. {Fielding:1999ub}, 2.2 for the details of the BNF rules). In particular, <code>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</code>
-requests in the order of preference <code>text/html</code> and XHTML (<code>application/xhtml+xml</code>), then other formats. The server is expected to honour these requests. Similarly, <code>Accept-Language</code> specifies a preference for German (<code>de</code>) over English (<code>en</code>). More languages are possible.
+ requests in the order of preference <code>text/html</code> and XHTML (<code>application/xhtml+xml</code>), then other formats. The server is expected to honour these requests. Similarly, <code>Accept-Language</code> specifies a preference for German (<code>de</code>) over English (<code>en</code>). More languages are possible.
 </p>
 <p>
 The very same logic can also be used for more web-service type requests to deliberatedly ask for some languages or content types.
@@ -761,29 +762,28 @@ The very same logic can also be used for more web-service type requests to delib
 
 </div>
 
-<div id="outline-container-2.1.4" class="outline-4">
-<h4 id="sec-2.1.4"><span class="section-number-4">2.1.4</span> Assignment </h4>
-<div class="outline-text-4" id="text-2.1.4">
+<div id="outline-container-2-1-4" class="outline-4">
+<h4 id="sec-2-1-4"><span class="section-number-4">2.1.4</span> Assignment</h4>
+<div class="outline-text-4" id="text-2-1-4">
 
 <ol>
-<li>
-Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with curl
+<li>Pick a website of your choice and download it using curl. Execute then DELETE, PUT and POST requests with curl
 </li>
-<li>
-Do the same exercise directly using telnet [domain] 80
-
+<li>Do the same exercise directly using telnet [domain] 80
 </li>
 </ol>
 
-<p>Copy the protocol of your terminal session into a text file and upload it. Hand in the assignment via the course's Moodle page.
+
+<p>
+Copy the protocol of your terminal session into a text file and upload it. Hand in the assignment via the course's Moodle page.
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-2.1.5" class="outline-4">
-<h4 id="sec-2.1.5"><span class="section-number-4">2.1.5</span> Command line tools such as curl and wget </h4>
-<div class="outline-text-4" id="text-2.1.5">
+<div id="outline-container-2-1-5" class="outline-4">
+<h4 id="sec-2-1-5"><span class="section-number-4">2.1.5</span> Command line tools such as curl and wget</h4>
+<div class="outline-text-4" id="text-2-1-5">
 
 <p><code>curl</code> (<a href="http://curl.haxx.se/">http://curl.haxx.se/</a>) is a standard tool to download websites via the command line or (through <code>libcurl</code>) programmatically:
 </p>
@@ -791,8 +791,6 @@ Do the same exercise directly using telnet [domain] 80
 
 <pre class="example">curl -v -L -H "Host:www.budabe.eu" -H "Accept:application/xhtml+xml,text/html;q=1.0,text/xml;q=0.9" -H "Accept-Language:de" "http://www.budabe.eu/research"
 </pre>
-
-
 
 
 <p>
@@ -805,8 +803,6 @@ will return the German-language version of the webpage <code>http://www.budabe.e
 </pre>
 
 
-
-
 <p>
 <code>wget</code> (<a href="http://www.gnu.org/software/wget/">http://www.gnu.org/software/wget/</a>) has similar functionalities, though more targeted towards web crawling.
 </p>
@@ -815,9 +811,9 @@ will return the German-language version of the webpage <code>http://www.budabe.e
 
 </div>
 
-<div id="outline-container-2.1.6" class="outline-4">
-<h4 id="sec-2.1.6"><span class="section-number-4">2.1.6</span> Encryption and caching </h4>
-<div class="outline-text-4" id="text-2.1.6">
+<div id="outline-container-2-1-6" class="outline-4">
+<h4 id="sec-2-1-6"><span class="section-number-4">2.1.6</span> Encryption and caching</h4>
+<div class="outline-text-4" id="text-2-1-6">
 
 <p>Because of its statelessness HTTP is easy to combine with encryption and caching. For encryption the by far most frequent way is HTTP over Secure Sockets Layer (SSL) or Transport Layer Security (TLS). From the perspective of the HTTP protocol this encryption is transparent.
 </p>
@@ -825,25 +821,24 @@ will return the German-language version of the webpage <code>http://www.budabe.e
 For caching, HTTP foresees a set of explicit HTTP headers for this purpose:
 </p>
 <ul>
-<li>
-<code>Last-Modified</code>: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If <code>Last-Modified</code> is newer than the latest cached version, the cache should be updated accordingly
+<li><code>Last-Modified</code>: Indicates when the resource was last changed. This is typically retrieved with a cheap <code>HEAD</code> request. If <code>Last-Modified</code> is newer than the latest cached version, the cache should be updated accordingly
 </li>
-<li>
-<code>ETag</code>: A response header to enable cache validation
-
+<li><code>ETag</code>: A response header to enable cache validation
 </li>
 </ul>
 
-<p>The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (<a href="http://www.squid-cache.org/">http://www.squid-cache.org/</a>), Varnish Cache (<a href="https://www.varnish-cache.org/about">https://www.varnish-cache.org/about</a>) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
+
+<p>
+The details of cache handling are beyond this script, cf. {Fielding:1999ub}, chapter 13 for all the details. There are a number of Open Source and proprietary caching solution out there including Squid (<a href="http://www.squid-cache.org/">http://www.squid-cache.org/</a>), Varnish Cache (<a href="https://www.varnish-cache.org/about">https://www.varnish-cache.org/about</a>) and many others. In modern architectures, very often also Non-SQL databases are used for this prupose.
 </p>
 </div>
 </div>
 
 </div>
 
-<div id="outline-container-2.2" class="outline-3">
-<h3 id="sec-2.2"><span class="section-number-3">2.2</span> Design principles for RESTful systems </h3>
-<div class="outline-text-3" id="text-2.2">
+<div id="outline-container-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Design principles for RESTful systems</h3>
+<div class="outline-text-3" id="text-2-2">
 
 
 
@@ -860,29 +855,26 @@ A Resource Oriented Architecture (ROA) is "an arrangement of URIs, HTTP, and XML
 A ROA is characterized by the key tenents of RESTful systems, i.e.:
 </p>
 <ul>
-<li>
-Addressable: each resource is addresable through a URI
+<li>Addressable: each resource is addresable through a URI
 </li>
-<li>
-Stateless: each HTTP request standard for itself. It contains all information that the server needs to process the request (it can change the server's resource state, though)
+<li>Stateless: each HTTP request standard for itself. It contains all information that the server needs to process the request (it can change the server's resource state, though)
 </li>
-<li>
-Links: Links point to possible new states of this or another application
+<li>Links: Links point to possible new states of this or another application
 </li>
-<li>
-Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:2007hb})
-
-
-
+<li>Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:2007hb})
 </li>
 </ul>
+
+
+
+
 </div>
 </div>
 
 </div>
 
 <div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Excursion: Ruby </h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Excursion: Ruby</h2>
 <div class="outline-text-2" id="text-3">
 
 <p>More details on Ruby in the Prezi <a href="http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&amp;utm_medium=copy&amp;rc=ex0share">http://prezi.com/_vwryy7ngvj6/?utm_campaign=share&amp;utm_medium=copy&amp;rc=ex0share</a> and online in various tutorials
@@ -893,7 +885,7 @@ Uniform interface, i.e. the HTTP methods (polymorphism of HTTP methods, {Dillon:
 </div>
 
 <div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Programming RESTful Web Services: Client side web services </h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> Programming RESTful Web Services: Client side web services</h2>
 <div class="outline-text-2" id="text-4">
 
 <p>Session: <span class="timestamp-wrapper"> <span class="timestamp">2013-10-25 Fri</span></span>
@@ -904,9 +896,9 @@ In our first session we've learned about the HTTP protocol as the technical unde
 
 </div>
 
-<div id="outline-container-4.1" class="outline-3">
-<h3 id="sec-4.1"><span class="section-number-3">4.1</span> Design of URIs </h3>
-<div class="outline-text-3" id="text-4.1">
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Design of URIs</h3>
+<div class="outline-text-3" id="text-4-1">
 
 <p>Maybe the most overlooked aspect of RESTful Web Services is the need for "cool URIs". "A cool URI is one which does not change" ({BernersLee:1998ui}):
 </p><blockquote>
@@ -919,49 +911,42 @@ In our first session we've learned about the HTTP protocol as the technical unde
 <p>
 Berners-Lee proposes that a good URI must remain stable over time. For this it should leave out of the URIs:
 </p><ul>
-<li>
-Author's names
+<li>Author's names
 </li>
-<li>
-Subject classifications
+<li>Subject classifications
 </li>
-<li>
-Status information (old, new etc.)
+<li>Status information (old, new etc.)
 </li>
-<li>
-Access rights
+<li>Access rights
 </li>
-<li>
-File name extensions
+<li>File name extensions
 </li>
-<li>
-Implementation details (e.g. <code>/cgi-bin/</code> or similar)
-
+<li>Implementation details (e.g. <code>/cgi-bin/</code> or similar)
 </li>
 </ul>
 
-<p>Instead, he proposes to use stable information such as the original creation date. 
+
+<p>
+Instead, he proposes to use stable information such as the original creation date. 
 </p>
 <p>
 For URIs referring to real-life objects such as persons, {Anonymous:2008vd}, 4.5 proposes to follow three design goals:
 </p><ul>
-<li>
-Simplicity
+<li>Simplicity
 </li>
-<li>
-Stability
+<li>Stability
 </li>
-<li>
-Manageability
-
+<li>Manageability
 </li>
 </ul>
 
+
+
 </div>
 
-<div id="outline-container-4.1.1" class="outline-4">
-<h4 id="sec-4.1.1"><span class="section-number-4">4.1.1</span> URI Templates </h4>
-<div class="outline-text-4" id="text-4.1.1">
+<div id="outline-container-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> URI Templates</h4>
+<div class="outline-text-4" id="text-4-1-1">
 
 <p>Remains the question on how to transpose these principles into concrete URIs and how to document the resulting URI patterns. RFC 6570 "URI templates" (<a href="http://tools.ietf.org/html/rfc6570">http://tools.ietf.org/html/rfc6570</a> / {Gregorio:2012vo}) defines a template language to document and automatically fill URI templates. The specification defines four levels of compliance. At its simplest, URI templates define string substitutions (compliance level 1):
 </p>
@@ -976,8 +961,6 @@ subsection := "DigitalHumanities"
 --&gt;
 http://www.budabe.eu/research/DigitalHumanities
 </pre>
-
-
 
 
 <p>
@@ -1002,8 +985,6 @@ http://www.budabe.eu/research/Digital%20Humanities
 </pre>
 
 
-
-
 <p>
 Similarly, if the first character is a hash (<code>#</code>), the resulting string contains the hash:
 </p>
@@ -1015,8 +996,6 @@ section := "Digital Humanities"
 --&gt;
 http://www.budabe.eu/#Digital%20Humanities
 </pre>
-
-
 
 
 <p>
@@ -1033,8 +1012,6 @@ http://www.budabe.eu/research,Digital%20Humanities
 </pre>
 
 
-
-
 <p>
 Similarly, if the first character is a <code>/</code>, the template is treated as a path (and, in the case of <code>#</code> as an anchor):
 </p>
@@ -1048,8 +1025,6 @@ subsection := "Digital Humanities"
 --&gt;
 http://www.budabe.eu/research/Digital%20Humanities
 </pre>
-
-
 
 
 <p>
@@ -1069,8 +1044,6 @@ http://www.budabe.eu/Digital%20Humanities
 </pre>
 
 
-
-
 <p>
 The same applies if the first character is a <code>?</code> or <code>&amp;</code>, in which case all arguments are treated as query string parameters. 
 </p>
@@ -1086,8 +1059,6 @@ http://www.budabe.eu/rese
 </pre>
 
 
-
-
 <p>
 Likewise, a <code>*</code> at the end permits the handling of multiple values in lists or similar:
 </p>
@@ -1099,8 +1070,6 @@ section := ("research", "Digital Humanities")
 --&gt;
 http://www.budabe.eu/research,Digital%20Humanities
 </pre>
-
-
 
 
 <p>
@@ -1116,8 +1085,6 @@ http://www.budabe.eu/research/Digital%20Humanities
 </pre>
 
 
-
-
 <p>
 RFC 6570 also has a semi-official test suite <a href="https://github.com/uri-templates/uritemplate-test">https://github.com/uri-templates/uritemplate-test</a>. The examples given in this test suite help to understand many of the edge cases.
 </p>
@@ -1125,9 +1092,9 @@ RFC 6570 also has a semi-official test suite <a href="https://github.com/uri-tem
 
 </div>
 
-<div id="outline-container-4.1.2" class="outline-4">
-<h4 id="sec-4.1.2"><span class="section-number-4">4.1.2</span> The case of the European Legislation Identifier (ELI) </h4>
-<div class="outline-text-4" id="text-4.1.2">
+<div id="outline-container-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> The case of the European Legislation Identifier (ELI)</h4>
+<div class="outline-text-4" id="text-4-1-2">
 
 <p>The European Legislation Identifier (ELI / <a href="http://register.consilium.europa.eu/pdf/en/12/st13/st13401.en12.pdf">http://register.consilium.europa.eu/pdf/en/12/st13/st13401.en12.pdf</a>, cf. also <a href="http://europa.eu/rapid/pressReleasesAction.do?reference=IP/12/1040&amp;format=HTML&amp;aged=0&amp;language=EN&amp;guiLanguage=en">http://europa.eu/rapid/pressReleasesAction.do?reference=IP/12/1040&amp;format=HTML&amp;aged=0&amp;language=EN&amp;guiLanguage=en</a>), published as a Council Conclusions 13401/12,  is a scheme to express laws through URIs. Every member state can flexibly express their own online resources for legislation, however using common variables that can be used to build concrete URI templates. The following variables are in principle foreseen:
 </p>
@@ -1136,8 +1103,6 @@ RFC 6570 also has a semi-official test suite <a href="https://github.com/uri-tem
 
 <pre class="example">{jurisdiction} {agent} {sub-agent} {year} {month} {day } {type} {natural identifier} {level 1…} {point in time} {version} {language}
 </pre>
-
-
 
 
 <p>
@@ -1151,8 +1116,6 @@ Concrete URI templates for European Legislation can look like this:
 
 <pre class="example">http://eur-lex.europa.eu/eli{/type}{/year}{/natural_identifier,version,language}
 </pre>
-
-
 
 
 <p>
@@ -1175,8 +1138,6 @@ http://eur-lex.europa.eu/eli/dir/2003/98/ENG
 </pre>
 
 
-
-
 <p>
 The third corrigendum of the same act in Spanish has the ELI:
 </p>
@@ -1192,8 +1153,6 @@ language := "SPA"
 --&gt;
 http://eur-lex.europa.eu/eli/dir/2003/98/R3/SPA
 </pre>
-
-
 
 
 <p>
@@ -1212,8 +1171,6 @@ All legal resources of a given type in a year with its natural identifier regard
 </pre>
 
 
-
-
 <p>
 All legal resources of a given type in a given year:
 </p>
@@ -1222,8 +1179,6 @@ All legal resources of a given type in a given year:
 
 <pre class="example">http://eur-lex.europa.eu/eli{/type}{/year}
 </pre>
-
-
 
 
 <p>
@@ -1236,8 +1191,6 @@ All legal resources of a given type:
 </pre>
 
 
-
-
 <p>
 All legal resources in a given year regardless of its type:
 </p>
@@ -1248,8 +1201,6 @@ All legal resources in a given year regardless of its type:
 </pre>
 
 
-
-
 <p>
 And finally all legal resources of a given type from one or more given agents:
 </p>
@@ -1257,8 +1208,6 @@ And finally all legal resources of a given type from one or more given agents:
 
 <pre class="example">http://eur-lex.europa.eu/eli{/type}
 </pre>
-
-
 
 
 <p>
@@ -1276,8 +1225,6 @@ language := "ENG"
 --&gt;
 http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98/ENG
 </pre>
-
-
 
 
 <p>
@@ -1298,15 +1245,13 @@ http://eur-lex.europa.eu/eli/dir/ep/consil/2003/98/R3/SPA
 </pre>
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-4.1.3" class="outline-4">
-<h4 id="sec-4.1.3"><span class="section-number-4">4.1.3</span> URITemplates in Ruby </h4>
-<div class="outline-text-4" id="text-4.1.3">
+<div id="outline-container-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3"><span class="section-number-4">4.1.3</span> URITemplates in Ruby</h4>
+<div class="outline-text-4" id="text-4-1-3">
 
 
 <p>
@@ -1320,8 +1265,6 @@ Addressable must be installed as a normal Ruby gem:
 
 <pre class="example">sudo gem install addressable
 </pre>
-
-
 
 
 <p>
@@ -1349,8 +1292,6 @@ template.expand({
 </pre>
 
 
-
-
 <p>
 For ELI URI templates the example according to the old ELI draft looks then like this:
 </p>
@@ -1369,22 +1310,20 @@ uri.to_s
 </pre>
 
 
-
-
 <p>
 A corresponding example for the Google query API and executed in TextMate 2.0:
 </p>
 <p>
-<a href="#sec-4.1.3"><img src="img/google_query_executed_in_textmate.png"/></a>
+<a href="#img-google_query_executed_in_textmate.png">img/google_query_executed_in_textmate.png</a>
 </p>
 
 </div>
 
 </div>
 
-<div id="outline-container-4.1.4" class="outline-4">
-<h4 id="sec-4.1.4"><span class="section-number-4">4.1.4</span> Excursion: Handling URITemplates in Clojure </h4>
-<div class="outline-text-4" id="text-4.1.4">
+<div id="outline-container-4-1-4" class="outline-4">
+<h4 id="sec-4-1-4"><span class="section-number-4">4.1.4</span> Excursion: Handling URITemplates in Clojure</h4>
+<div class="outline-text-4" id="text-4-1-4">
 
 
 <p>
@@ -1405,16 +1344,14 @@ test=&gt;
 </pre>
 
 
-
-
 </div>
 </div>
 
 </div>
 
-<div id="outline-container-4.2" class="outline-3">
-<h3 id="sec-4.2"><span class="section-number-3">4.2</span> JSON </h3>
-<div class="outline-text-3" id="text-4.2">
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> JSON</h3>
+<div class="outline-text-3" id="text-4-2">
 
 <p>The JavaScript Object Notation or JSON (=
 <a href="http://tools.ietf.org/html/rfc4627">http://tools.ietf.org/html/rfc4627</a>) at its simplest is just a subset
@@ -1424,28 +1361,23 @@ string, or one of the following three literal names: false null true" (2.1). Con
 </p>
 
 <ul>
-<li>
-Number: an integer component that   may be prefixed with an optional minus sign, which may be followed by  a fraction part and/or an exponent part. Octal and hex forms are not allowed.  Leading zeros are not allowed
+<li>Number: an integer component that   may be prefixed with an optional minus sign, which may be followed by  a fraction part and/or an exponent part. Octal and hex forms are not allowed.  Leading zeros are not allowed
 </li>
-<li>
-String: string begins and ends with  quotation marks.  All Unicode characters may be placed within the   quotation marks except for the characters that must be escaped:   quotation mark, reverse solidus, and the control characters (U+0000   through U+001F). The string is encoded in UTF-8
+<li>String: string begins and ends with  quotation marks.  All Unicode characters may be placed within the   quotation marks except for the characters that must be escaped:   quotation mark, reverse solidus, and the control characters (U+0000   through U+001F). The string is encoded in UTF-8
 </li>
-<li>
-Boolean: true or false
+<li>Boolean: true or false
 </li>
-<li>
-Array: square brackets surrounding zero or more values (or elements).  Elements are separated by commas
+<li>Array: square brackets surrounding zero or more values (or elements).  Elements are separated by commas
 </li>
-<li>
-Object: a pair of curly brackets   surrounding zero or more name/value pairs (or members).  A name is a   string.  A single colon comes after each name, separating the name   from the value. 
+<li>Object: a pair of curly brackets   surrounding zero or more name/value pairs (or members).  A name is a   string.  A single colon comes after each name, separating the name   from the value. 
 </li>
-<li>
-null (empty)
-
+<li>null (empty)
 </li>
 </ul>
 
-<p>We see many of these in action in the following extract taken from <a href="https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json:">https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json:</a>
+
+<p>
+We see many of these in action in the following extract taken from <a href="https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json">https://github.com/uri-templates/uritemplate-test/blob/master/extended-tests.json</a>:
 </p>
 
 
@@ -1478,8 +1410,6 @@ null (empty)
         }
 }
 </pre>
-
-
 
 
 <p>
@@ -1516,17 +1446,15 @@ For many languages and especially for dynamic languages JSON maps directly into 
 </pre>
 
 
-
-
 <p>
 Incidentally, the order of attributes in an object is undefined.
 </p>
 
 </div>
 
-<div id="outline-container-4.2.1" class="outline-4">
-<h4 id="sec-4.2.1"><span class="section-number-4">4.2.1</span> JSON and Ruby </h4>
-<div class="outline-text-4" id="text-4.2.1">
+<div id="outline-container-4-2-1" class="outline-4">
+<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> JSON and Ruby</h4>
+<div class="outline-text-4" id="text-4-2-1">
 
 <p>JSON support is part of the Ruby standard library. It is essentionally centred around the two methods <code>parse</code> to parse received JSON structures into Ruby data structures and <code>generate</code> to generate JSON structures from Ruby's data structures:
 </p>
@@ -1544,15 +1472,13 @@ obj = JSON::parse(j)
 
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-4.2.2" class="outline-4">
-<h4 id="sec-4.2.2"><span class="section-number-4">4.2.2</span> Excursion: JSON and Clojure </h4>
-<div class="outline-text-4" id="text-4.2.2">
+<div id="outline-container-4-2-2" class="outline-4">
+<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> Excursion: JSON and Clojure</h4>
+<div class="outline-text-4" id="text-4-2-2">
 
 <p>There are a number of Clojure libraries for JSON handling. The one we use here is Cheshire (<a href="https://clojars.org/cheshire">https://clojars.org/cheshire</a>), build on the Open Source Java Jackson library (<a href="http://wiki.fasterxml.com/JacksonHome">http://wiki.fasterxml.com/JacksonHome</a>). It is extremely easy to use:
 </p>
@@ -1566,8 +1492,6 @@ obj = JSON::parse(j)
  (cheshire.core/parse-stream 
     (clojure.java.io/reader "test/uritemplate_clj/extended-tests.json")))
 </pre>
-
-
 
 
 <p>
@@ -1585,62 +1509,54 @@ Similarly, Cheshire can easily map native Clojure maps to JSON:
 </pre>
 
 
-
-
 </div>
 </div>
 
 </div>
 
-<div id="outline-container-4.3" class="outline-3">
-<h3 id="sec-4.3"><span class="section-number-3">4.3</span> Assignment </h3>
-<div class="outline-text-3" id="text-4.3">
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Assignment</h3>
+<div class="outline-text-3" id="text-4-3">
 
 <p>Take at your choice and depending on your language skills one of the websites
 </p>
 <ul>
-<li>
-<a href="http://www.legilux.public.lu/">http://www.legilux.public.lu/</a>  (Luxembourg, in French)
+<li><a href="http://www.legilux.public.lu/">http://www.legilux.public.lu/</a>  (Luxembourg, in French)
 </li>
-<li>
-<a href="http://legimobile.fr/">http://legimobile.fr/</a> (France)
+<li><a href="http://legimobile.fr/">http://legimobile.fr/</a> (France)
 </li>
-<li>
-<a href="http://www.belgielex.be/">http://www.belgielex.be/</a> (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
+<li><a href="http://www.belgielex.be/">http://www.belgielex.be/</a> (Belgium, in French, Dutch, German and English, do search in "Législation belge", then check for frame source to see the links)
 </li>
-<li>
-<a href="http://legislation.gov.uk/">http://legislation.gov.uk/</a>  (UK)
+<li><a href="http://legislation.gov.uk/">http://legislation.gov.uk/</a>  (UK)
 </li>
-<li>
-<a href="http://www.normattiva.it/ricerca/semplice">http://www.normattiva.it/ricerca/semplice</a> (Italy)
-
+<li><a href="http://www.normattiva.it/ricerca/semplice">http://www.normattiva.it/ricerca/semplice</a> (Italy)
 </li>
 </ul>
 
-<p>and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
+
+<p>
+and define a URI template for it. Test the pattern using the uritemplate-clj library or another URITemplate library of your choice and verify for at least 15 different URIs that the URIs that you generate actually exist.
 </p>
 <p>
 Hand in via the course's Moodle page the:
 </p><ul>
-<li>
-URI pattern defined
+<li>URI pattern defined
 </li>
-<li>
-script used to test that pattern
+<li>script used to test that pattern
 </li>
-<li>
-list of at least 15 URIs generated and subsequently tested
-
-
+<li>list of at least 15 URIs generated and subsequently tested
 </li>
 </ul>
-</div>
+
+
 
 </div>
 
-<div id="outline-container-4.4" class="outline-3">
-<h3 id="sec-4.4"><span class="section-number-3">4.4</span> ATOM and related standards </h3>
-<div class="outline-text-3" id="text-4.4">
+</div>
+
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> ATOM and related standards</h3>
+<div class="outline-text-3" id="text-4-4">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2013-10-26 Sat</span></span>
 </p>
@@ -1687,8 +1603,6 @@ The following extract is taken directly from the RFC:
 </pre>
 
 
-
-
 <p>
 ATOM feeds exist for many blogs, often alongside feeds in RSS. For further examples we will use  <a href="http://planet.clojure.in/atom.xml">http://planet.clojure.in/atom.xml</a>, but we could have used any number of other blogs.
 </p>
@@ -1730,8 +1644,6 @@ ATOM feeds exist for many blogs, often alongside feeds in RSS. For further examp
 </pre>
 
 
-
-
 <p>
 ATOM uses the namespace <code>http://www.w3.org/2005/Atom</code>. Some information is provided on the Feed level, notably the feed's title, an identifier (<code>id</code>), a link to the Atom feed itself (<code>link</code> with rel="self") and possibly to its website and, most crucially, the last update data <code>updated</code> that allows a feed reader to decide if it needs to check for added or updated entries without downloading everything. The real content is then inside the individual <code>entry</code> elements, bringing the entry <code>title</code>, a link to the corresponding web page, again the last <code>updated</code> timestamp for this entry and a summary (<code>content</code>), in this case formatted in basic HTML. Planet Clojure is special in that it is a feed of feeds that aggregates entries from a lot of smaller blogs. For this reason, it indicates the source of that information, together with links and ids.
 </p>
@@ -1741,9 +1653,9 @@ ATOM is in this paradigmatic for RESTful design. It is transported via HTTP, is 
 
 </div>
 
-<div id="outline-container-4.4.1" class="outline-4">
-<h4 id="sec-4.4.1"><span class="section-number-4">4.4.1</span> Ruby and ATOM </h4>
-<div class="outline-text-4" id="text-4.4.1">
+<div id="outline-container-4-4-1" class="outline-4">
+<h4 id="sec-4-4-1"><span class="section-number-4">4.4.1</span> Ruby and ATOM</h4>
+<div class="outline-text-4" id="text-4-4-1">
 
 <p>A number of ATOM and RSS libraries exist for Ruby. For the purpose of this course we use the Feedzirra library (<a href="https://www.ruby-toolbox.com/projects/feedzirra">https://www.ruby-toolbox.com/projects/feedzirra</a>, documentation <a href="http://rubydoc.info/gems/feedzirra/0.2.1/frames">http://rubydoc.info/gems/feedzirra/0.2.1/frames</a>). Feedzirra is a library building on the Nokogiri XML library to handle a number of feed formats.
 </p>
@@ -1752,8 +1664,6 @@ ATOM is in this paradigmatic for RESTful design. It is transported via HTTP, is 
 
 <pre class="example">sudo gem1.9 install feedzirra
 </pre>
-
-
 
 
 
@@ -1772,8 +1682,6 @@ entry_urls = feed.entries.collect { |e| e.title.sanitized}
 </pre>
 
 
-
-
 <p>
 The library also permits to refetch the Feed with only updated entries:
 </p>
@@ -1784,15 +1692,13 @@ The library also permits to refetch the Feed with only updated entries:
 
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-4.4.2" class="outline-4">
-<h4 id="sec-4.4.2"><span class="section-number-4">4.4.2</span> Excursion: Clojure, Rome and <code>clj-rome</code> </h4>
-<div class="outline-text-4" id="text-4.4.2">
+<div id="outline-container-4-4-2" class="outline-4">
+<h4 id="sec-4-4-2"><span class="section-number-4">4.4.2</span> Excursion: Clojure, Rome and <code>clj-rome</code></h4>
+<div class="outline-text-4" id="text-4-4-2">
 
 <p>"ROME is a set of RSS and Atom Utilities for Java that is open source under the Apache 2.0 license" (<a href="https://rometools.jira.com/wiki/display/ROME/Home">https://rometools.jira.com/wiki/display/ROME/Home</a>). It is one of the most popular libraries for handling of (not only) ATOM in the Java world. <code>clj-rome</code> (<a href="https://clojars.org/clj-rome">https://clojars.org/clj-rome</a> / <a href="https://github.com/ngrunwald/clj-rome">https://github.com/ngrunwald/clj-rome</a>) is a Clojure wrapper to the ROME library:
 </p>
@@ -1816,8 +1722,6 @@ b5=&gt;
 </pre>
 
 
-
-
 <p>
 In these examples Clojure returns as usual a map that can be manipulated with the usual higher-order functions. <code>:entries</code> then contains a sequence of maps with the data for the individual entries.
 </p>
@@ -1826,9 +1730,9 @@ In these examples Clojure returns as usual a map that can be manipulated with th
 
 </div>
 
-<div id="outline-container-4.5" class="outline-3">
-<h3 id="sec-4.5"><span class="section-number-3">4.5</span> Ruby Libraries for client-side RESTful web services </h3>
-<div class="outline-text-3" id="text-4.5">
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Ruby Libraries for client-side RESTful web services</h3>
+<div class="outline-text-3" id="text-4-5">
 
 <p>Ruby comes prepackaged with most libraries that are needed for running client-side RESTful webservices. The main involved packages are <code>net/http</code> and <code>uri</code>, the latter potentially replaced by the <code>addressable</code> gem. Of these <code>net/http</code> and <code>uri</code> are by far the most commonly used libraries.
 </p>
@@ -1845,8 +1749,6 @@ resp.body
 </pre>
 
 
-
-
 <p>
 The library offers a number of convenience functions such as <code>Net::HTTP.get_print</code> (directly outputs the result to stdout) and <code>Net::HTTP.get</code> (returns the result as a string). For most control it is advisable to inspect the result, though.
 </p>
@@ -1854,19 +1756,17 @@ The library offers a number of convenience functions such as <code>Net::HTTP.get
 The library has support for the other HTTP methods just as well:
 </p>
 <ul>
-<li>
-<code>head</code>
+<li><code>head</code>
 </li>
-<li>
-<code>post</code> and <code>post_form</code>
+<li><code>post</code> and <code>post_form</code>
 </li>
-<li>
-<code>delete</code>
-
+<li><code>delete</code>
 </li>
 </ul>
 
-<p>Sending <code>PUT</code> is a bit more complicated:
+
+<p>
+Sending <code>PUT</code> is a bit more complicated:
 </p>
 
 
@@ -1881,8 +1781,6 @@ req = Net::HTTP::Put.new(path, initheader = { 'Content-Type' =&gt; 'text/plain'}
 req.body = "some text"
 response = Net::HTTP.new(host, port).start {|http| http.request(req) }
 </pre>
-
-
 
 
 <p>
@@ -1902,8 +1800,6 @@ resp = Net::HTTP.new("www.google.com", 80).start { |http| http.request(req)}
 </pre>
 
 
-
-
 <p>
 The library also has full proxy support.
 </p>
@@ -1911,35 +1807,32 @@ The library also has full proxy support.
 
 </div>
 
-<div id="outline-container-4.6" class="outline-3">
-<h3 id="sec-4.6"><span class="section-number-3">4.6</span> Libraries for RESTful web services for Java and Clojure </h3>
-<div class="outline-text-3" id="text-4.6">
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Libraries for RESTful web services for Java and Clojure</h3>
+<div class="outline-text-3" id="text-4-6">
 
 
 <p>
 Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-20 Sat</span></span>
 </p><ul>
-<li>
-Popular JVM libraries for RESTful web services
+<li>Popular JVM libraries for RESTful web services
 </li>
-<li>
-Client-side programming
+<li>Client-side programming
 <ul>
-<li>
-Apache HttpComponents
+<li>Apache HttpComponents
 </li>
-<li>
-clj-http as wrapper for HttpComponents
-</li>
-</ul>
-</li>
-<li>
-Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
-
+<li>clj-http as wrapper for HttpComponents
 </li>
 </ul>
 
-<p>RESTful web services are easy to use with most modern http libraries. For client-side Clojure the most common solution is <code>clj-http</code> (<a href="https://clojars.org/clj-http">https://clojars.org/clj-http</a> / <a href="https://github.com/dakrone/clj-http/">https://github.com/dakrone/clj-http/</a>) which in turn is based on the poplular Apache HttpComponents libraries.
+</li>
+<li>Programming popular RESTful Web-Service Interfaces by  Google and Amazon in Clojure
+</li>
+</ul>
+
+
+<p>
+RESTful web services are easy to use with most modern http libraries. For client-side Clojure the most common solution is <code>clj-http</code> (<a href="https://clojars.org/clj-http">https://clojars.org/clj-http</a> / <a href="https://github.com/dakrone/clj-http/">https://github.com/dakrone/clj-http/</a>) which in turn is based on the poplular Apache HttpComponents libraries.
 </p>
 <p>
 Using <code>clj-http</code> is straightforward:
@@ -1953,8 +1846,6 @@ Using <code>clj-http</code> is straightforward:
 </pre>
 
 
-
-
 <p>
 The return value comes as a standard Clojure map:
 </p>
@@ -1966,8 +1857,6 @@ The return value comes as a standard Clojure map:
 [...]
 }
 </pre>
-
-
 
 
 <p>
@@ -1986,15 +1875,13 @@ In combination with URITemplates it is possible to run gets:
 </pre>
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-4.7" class="outline-3">
-<h3 id="sec-4.7"><span class="section-number-3">4.7</span> Web Services the Google way </h3>
-<div class="outline-text-3" id="text-4.7">
+<div id="outline-container-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> Web Services the Google way</h3>
+<div class="outline-text-3" id="text-4-7">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2013-11-08 Fri</span></span>
 </p>
@@ -2007,11 +1894,11 @@ The web service we are specifically using here is the Calendar API. We will see 
 
 </div>
 
-<div id="outline-container-4.7.1" class="outline-4">
-<h4 id="sec-4.7.1"><span class="section-number-4">4.7.1</span> Account and authentication </h4>
-<div class="outline-text-4" id="text-4.7.1">
+<div id="outline-container-4-7-1" class="outline-4">
+<h4 id="sec-4-7-1"><span class="section-number-4">4.7.1</span> Account and authentication</h4>
+<div class="outline-text-4" id="text-4-7-1">
 
-<p>In a first stage you need to create a test account that is associated ot an email address (not necessarily a GMail account, though), obviously coupled to a password. With this we can look into the Google Console at <a href="https://code.google.com/apis/console:">https://code.google.com/apis/console:</a>
+<p>In a first stage you need to create a test account that is associated ot an email address (not necessarily a GMail account, though), obviously coupled to a password. With this we can look into the Google Console at <a href="https://code.google.com/apis/console">https://code.google.com/apis/console</a>:
 </p>
 
 <div class="figure">
@@ -2034,12 +1921,8 @@ Authentication APIs are defined in <a href="https://developers.google.com/accoun
 
 
 
-
-
 <pre class="example">(client/get "https://www.googleapis.com/calendar/v3/users/me/calendarList" {:headers {"Authorization" "OAuth ya29.AHES6ZTUrYlO37e8qKFpKVPsCd-4Vd52sFtpR3MSeYB9Php1DZEr"}})
 </pre>
-
-
 
 
 <p>
@@ -2074,15 +1957,13 @@ end
 </pre>
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-4.7.2" class="outline-4">
-<h4 id="sec-4.7.2"><span class="section-number-4">4.7.2</span> Accessing the API </h4>
-<div class="outline-text-4" id="text-4.7.2">
+<div id="outline-container-4-7-2" class="outline-4">
+<h4 id="sec-4-7-2"><span class="section-number-4">4.7.2</span> Accessing the API</h4>
+<div class="outline-text-4" id="text-4-7-2">
 
 <p>I assume that we've obtained via OAuth2, e.g. using the OAuth 2.0 Playground, a valid access token.
 </p>
@@ -2094,8 +1975,6 @@ end
 --&gt;
 {"kind" "calendar#calendarList", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/e3lCLkYVmdQwpp-Hfz7EeWMNxPA\"", "items" [{"defaultReminders" [{"method" "popup", "minutes" 30}], "foregroundColor" "#000000", "summary" "Web Services", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/rr4G0y99XbqGdzSe2AOgZd0x12s\"", "backgroundColor" "#d06b64", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "XXXXX@googlemail.com", "colorId" "2"} {"foregroundColor" "#000000", "summary" "Privat", "kind" "calendar#calendarListEntry", "etag" "\"940AbKLY6Usoo_WM4FY1utLF0hE/16xw2sMaLL8vMyKzEGcRcZFPZBE\"", "backgroundColor" "#f691b2", "location" "Worms", "timeZone" "Europe/Berlin", "accessRole" "owner", "id" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com", "description" "Privater Kalender", "colorId" "22"}]}
 </pre>
-
-
 
 
 <p>
@@ -2110,8 +1989,6 @@ puts calendar_list
 </pre>
 
 
-
-
 <p>
 We can then process the return value using standard Clojure operations:
 </p>
@@ -2121,8 +1998,6 @@ We can then process the return value using standard Clojure operations:
 ("XXXXX@googlemail.com" "u2nkrgh7m4hqvofv2nfn9jgnb8@group.calendar.google.com")
 b5&gt; 
 </pre>
-
-
 
 
 <p>
@@ -2143,8 +2018,6 @@ calendar_list["items"].collect { |item| item["id"] }
 
 
 
-
-
 <p>
 This information can now be used to attack individual calendars and e.g. read all events stored in them.
 </p>
@@ -2162,8 +2035,6 @@ Details of the calendar API are documented under <a href="https://developers.goo
 </pre>
 
 
-
-
 <p>
 or with curl:
 </p>
@@ -2171,8 +2042,6 @@ or with curl:
 
 <pre class="example">curl -v --header "Authorization: OAuth ya29.AHES6ZSut6nn_NOLgfrnOJ2HueUGgyO0iE5pLPH7Cco6nw" https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events
 </pre>
-
-
 
 
 <p>
@@ -2197,8 +2066,6 @@ else
   raise "Habe den Code #{resp.code} zurueckbekommen"
 end
 </pre>
-
-
 
 
 <p>
@@ -2227,8 +2094,6 @@ RestClient.delete 'http://example.com/resource'
 </pre>
 
 
-
-
 <p>
 The same mechanism can then also be used to add new events by sending a suitable JSON request:
 </p>
@@ -2237,8 +2102,6 @@ The same mechanism can then also be used to add new events by sending a suitable
 
 <pre class="example">{"start":{"dateTime":"2012-10-20T10:00:00.000-01:00"},"summary":"B5 Lecture today","location":"A126","attendees":["abc@xy.de"],"end":{"dateTime":"2012-10-20T15:00:00.000-01:00"}}
 </pre>
-
-
 
 
 <p>
@@ -2251,8 +2114,6 @@ In Clojure the corresponding code looks like this:
 
 (client/post "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body event}) 
 </pre>
-
-
 
 
 <p>
@@ -2276,8 +2137,6 @@ JSON::parse(response.body)["id"]
 
 
 
-
-
 <p>
 If successful the method returns a 200 JSON struture repeating the full information about the created entry. Most importantly, it also returns the event id that can afterwards be used to modify the created entry.
 </p>
@@ -2290,8 +2149,6 @@ If successful the method returns a 200 JSON struture repeating the full informat
 </pre>
 
 
-
-
 <p>
 With this information we can update (= <code>PUT</code>) the event:
 </p>
@@ -2300,8 +2157,6 @@ With this information we can update (= <code>PUT</code>) the event:
 <pre class="example">(def modified-event (cheshire.core/generate-string {"summary" "B5 Lecture today, prolonged", "location" "A126", "start"  {"dateTime" "2012-10-20T10:00:00.000-01:00"}, "end" {"dateTime" "2012-10-20T16:00:00.000-01:00"}, "attendees" ["abc@xy.de"]}))
 (client/put "https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60" {:headers {"Authorization" "OAuth ya29.AHES6ZQ_OFaA6RX0VqilLznX6DJOKGBvCChoFB_Mff8"} :content-type :json :body modified-event})
 </pre>
-
-
 
 
 <p>
@@ -2325,8 +2180,6 @@ puts response.code
 </pre>
 
 
-
-
 <p>
 or even delete it again
 </p>
@@ -2336,8 +2189,6 @@ or even delete it again
 --&gt;
 {:trace-redirects ["https://www.googleapis.com/calendar/v3/calendars/XXXXX@googlemail.com/events/74bvi6025o76q1ffpalst8ih60"], :request-time 586, :status 204, :headers {"cache-control" "no-cache, no-store, max-age=0, must-revalidate", "pragma" "no-cache", "expires" "Fri, 01 Jan 1990 00:00:00 GMT", "date" "Fri, 19 Oct 2012 17:27:54 GMT", "etag" "\"xuTtQAt8DDsZ3NJgXaKj-AnoGow/W6k8nbDP-T9StSHXQg5D9u2ieE8\"", "server" "GSE", "connection" "close"}, :body nil}
 </pre>
-
-
 
 
 <p>
@@ -2351,16 +2202,14 @@ response = RestClient.delete 'https://www.googleapis.com/calendar/v3/calendars/X
 
 
 
-
-
 </div>
 </div>
 
 </div>
 
-<div id="outline-container-4.8" class="outline-3">
-<h3 id="sec-4.8"><span class="section-number-3">4.8</span> OAuth2 </h3>
-<div class="outline-text-3" id="text-4.8">
+<div id="outline-container-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> OAuth2</h3>
+<div class="outline-text-3" id="text-4-8">
 
 <p>The OAuth 2.0 Authorization Framework RFC 6750 (<a href="http://tools.ietf.org/html/rfc6750">http://tools.ietf.org/html/rfc6750</a>) becomes more and more the default standard for RESTful authorization. It is supported by most of the major players including Google, Facebook and Github (most of those that remain use the predecessor standard OAuth 1.0):
 </p>
@@ -2372,11 +2221,13 @@ response = RestClient.delete 'https://www.googleapis.com/calendar/v3/calendars/X
      |        |                               |     Owner     |
      |        |&lt;-(B)-- Authorization Grant ---|               |
      |        |                               +---------------+
+     |        |
      |        |                               +---------------+
      |        |--(C)-- Authorization Grant --&gt;| Authorization |
      | Client |                               |     Server    |
      |        |&lt;-(D)----- Access Token -------|               |
      |        |                               +---------------+
+     |        |
      |        |                               +---------------+
      |        |--(E)----- Access Token ------&gt;|    Resource   |
      |        |                               |     Server    |
@@ -2384,8 +2235,6 @@ response = RestClient.delete 'https://www.googleapis.com/calendar/v3/calendars/X
      +--------+                               +---------------+
 (Source: RFC 6750)
 </pre>
-
-
 
 
 <p>
@@ -2403,8 +2252,6 @@ $ curl -XGET "https://graph.facebook.com/me?access_token=AAADRXLVkRpIBAOVAWRhWUQ
 </pre>
 
 
-
-
 <p>
 or for Google OAuth:
 </p>
@@ -2418,8 +2265,6 @@ or for Google OAuth:
 </pre>
 
 
-
-
 <p>
 For Ruby Google provides a standard library with OAuth implemented: <a href="https://github.com/google/google-api-ruby-client">https://github.com/google/google-api-ruby-client</a>
 </p>
@@ -2427,48 +2272,43 @@ For Ruby Google provides a standard library with OAuth implemented: <a href="htt
 
 </div>
 
-<div id="outline-container-4.9" class="outline-3">
-<h3 id="sec-4.9"><span class="section-number-3">4.9</span> Assignment </h3>
-<div class="outline-text-3" id="text-4.9">
+<div id="outline-container-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> Assignment</h3>
+<div class="outline-text-3" id="text-4-9">
 
 
 <ol>
-<li>
-Develop a command line application in Clojure that takes as parameter an access token, a mode (create, update, delete) and 
+<li>Develop a command line application in Clojure that takes as parameter an access token, a mode (create, update, delete) and 
 <ul>
-<li>
-for create: a title, a start and an end date, and a list of participants as email addresses
+<li>for create: a title, a start and an end date, and a list of participants as email addresses
 </li>
-<li>
-for update: an event id, a title, a start and an end date, and a list of participants as email addresses
+<li>for update: an event id, a title, a start and an end date, and a list of participants as email addresses
 </li>
-<li>
-for delete: an event id
+<li>for delete: an event id
 
 </li>
 </ul>
 
-<p>The application inserts / modifies / deletes the event in the Calendar. To simpliy things you can assume that you always get all parameters in the sequence mentioned above on the command line, e.g.:
-</p>
-
-</li>
+<p>   The application inserts / modifies / deletes the event in the Calendar. To simpliy things you can assume that you always get all parameters in the sequence mentioned above on the command line, e.g.:
+</p></li>
 </ol>
+
+
+
 
 
 <pre class="example">ruby google_calendar.rb ACCESS-KEY MODE PARAMETER1 PARAMETER2...
 </pre>
 
 
-
-
 <ol>
-<li>
-Enhance the command line application so that it lists all of today's events
-
+<li>Enhance the command line application so that it lists all of today's events
 </li>
 </ol>
 
-<p>Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
+
+<p>
+Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
 </p>
 
 </div>
@@ -2477,27 +2317,27 @@ Enhance the command line application so that it lists all of today's events
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Server-side REST </h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> Server-side REST</h2>
 <div class="outline-text-2" id="text-5">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2013-11-09 Sat</span></span>
 </p><ul>
-<li>
-Server-side programming 
+<li>Server-side programming 
 <ul>
-<li>
-Sinatra, a Ruby web application framework
+<li>Sinatra, a Ruby web application framework
+</li>
+</ul>
 
 </li>
 </ul>
-</li>
-</ul>
+
+
 
 </div>
 
-<div id="outline-container-5.1" class="outline-3">
-<h3 id="sec-5.1"><span class="section-number-3">5.1</span> Sinatra </h3>
-<div class="outline-text-3" id="text-5.1">
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Sinatra</h3>
+<div class="outline-text-3" id="text-5-1">
 
 <p>Prezy on Sinatra: <a href="http://prezi.com/nwvj2wrstfro/?utm_campaign=share&amp;utm_medium=copy">http://prezi.com/nwvj2wrstfro/?utm_campaign=share&amp;utm_medium=copy</a>
 </p>
@@ -2505,9 +2345,103 @@ Sinatra, a Ruby web application framework
 
 </div>
 
-<div id="outline-container-5.2" class="outline-3">
-<h3 id="sec-5.2"><span class="section-number-3">5.2</span> The Giant Global Graph: Facebook </h3>
-<div class="outline-text-3" id="text-5.2">
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> The OAuth2 callback</h3>
+<div class="outline-text-3" id="text-5-2">
+
+<p>Above we've seen the first part of an OAuth2 process:
+</p>
+
+
+
+<pre class="example">$curl -v
+"https://accounts.google.com/o/oauth2/auth?client_id=XXXXXX&amp;redirect_uri=http://localhost:3000/api/google-callback&amp;response_type=code&amp;scope=https://www.googleapis.com/auth/calendar"
+</pre>
+
+
+<p>
+So, let's implement the callback in Sinatra:
+</p>
+
+
+
+<pre class="example">require 'sinatra'
+
+get '/login' do
+  ...
+end
+
+get '/api/google-callback' do
+  ...
+end
+</pre>
+
+
+<p>
+The first call from the browser either redirects to the Google login
+page (code 302) or returns a 200 with a suitable website
+</p>
+
+
+
+<pre class="example">&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt;Moved Temporarily&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY BGCOLOR="#FFFFFF" TEXT="#000000"&gt;
+&lt;H1&gt;Moved Temporarily&lt;/H1&gt;
+The document has moved &lt;A HREF="https://accounts.google.com/ServiceLogin?service=lso&amp;amp;passive=1209600&amp;amp;continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/calendar%26response_type%3Dcode%26redirect_uri%3Dhttp://localhost:3000/api/google-callback%26client_id%3D885816396662-jl12d9jv94mq0fedljhrnocuh627hlkp.apps.googleusercontent.com%26hl%3Dde%26from_login%3D1%26as%3D-2d9194dbdab4f580&amp;amp;ltmpl=popup&amp;amp;shdf=CoIBCxIRdGhpcmRQYXJ0eUxvZ29VcmwaAAwLEhV0aGlyZFBhcnR5RGlzcGxheU5hbWUaEUdvb2dsZSBEZXZlbG9wZXJzDAsSBmRvbWFpbhoRR29vZ2xlIERldmVsb3BlcnMMCxIVdGhpcmRQYXJ0eURpc3BsYXlUeXBlGgdERUZBVUxUDBIDbHNvIhR6PfGvbfOD6Sn3mGvNlSCTg32tCCgBMhRonpKQUW4FsL78fOvZvp_bKFYrrA&amp;amp;sarp=1&amp;amp;scc=1"&gt;here&lt;/A&gt;.
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+</pre>
+
+
+<p>
+After user approval this returns the authorization code:
+</p>
+<p>
+The authorization code can then be exchanged against the acces token itself. At the pure protocol level this looks like this:
+</p>
+
+
+
+<pre class="example">POST /o/oauth2/token HTTP/1.1
+Host: accounts.google.com
+Content-length: 250
+content-type: application/x-www-form-urlencoded
+user-agent: google-oauth-playground
+
+code=4%2FElED3539swnLWrVwEyYZj9Ug7iMV.wlNc8__DJiEZYKs_1NgQtmWzjwBFhQI&amp;redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&amp;client_id=407408718192.apps.googleusercontent.com&amp;scope=&amp;client_secret=************&amp;grant_type=authorization_code
+</pre>
+
+
+<p>
+This returns a little JSON structure with the access token and related information:
+</p>
+
+
+<pre class="example">{ "access_token" : "ya29.1.AADtN_WN4K_mNR7UYVxfU_a2u_Mtj4X6HkJwD8GkGtq0ol3vJuBiF4ZDQv0m", "token_type" : "Bearer", "expires_in" : 3600 }
+</pre>
+
+
+<p>
+Translated into Ruby this is:
+</p>
+
+
+
+<pre class="example">response = RestClient.post "https://accounts.google.com/o/oauth2/token", {:code =&gt; code, :client_id =&gt; client_id, :client_secret =&gt; client_secret, :redirect_uri =&gt; "http://localhost:4567/api/google-callback", :grant_type =&gt; "authorization_code"}, :content_type =&gt; "application/x-www-form-urlencoded"
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> The Giant Global Graph: Facebook</h3>
+<div class="outline-text-3" id="text-5-3">
 
 
 <p>
@@ -2541,8 +2475,6 @@ Some properties such as <code>id</code>, <code>name</code>, <code>first_name</co
 
 
 
-
-
 <p>
 It is simple to access public information in machine readable format, concretely JSON, for any user:
 </p>
@@ -2553,19 +2485,17 @@ It is simple to access public information in machine readable format, concretely
 </pre>
 
 
-
-
 <p>
 In fact, all (or almost all) of the Facebook functionality is exposed via RESTful webservices. However, only some of the information is publicly accessible, for the remainder we need a login. Given the right permissions you can then get an access-token to see much more information. However, how to integrate a login programmatically via OAuth is the subject of another session. 
 </p>
 <p>
-For now we can use the Facebook Graph API tool allows to test the environment: <a href="http://developers.facebook.com/tools/explorer?method=GET&amp;path=me?fields=likes.offset%285000%29.limit%285000%29">http://developers.facebook.com/tools/explorer?method=GET&amp;path=me%3Ffields%3Dlikes.offset%285000%29.limit%285000%29</a>
+For now we can use the Facebook Graph API tool allows to test the environment: <a href="http://developers.facebook.com/tools/explorer?method=GET&amp;path=me?fields=likes.offset(5000).limit(5000)">http://developers.facebook.com/tools/explorer?method=GET&amp;path=me%3Ffields%3Dlikes.offset%285000%29.limit%285000%29</a>
 </p>
 <p>
-<a href="#sec-5.2"><img src="img/facebook_permissions.png"/></a>
+<a href="#img-facebook_permissions.png">img/facebook_permissions.png</a>
 </p>
 <p>
-<a href="#sec-5.2"><img src="img/facebook_graph_api.png"/></a>
+<a href="#img-facebook_graph_api.png">img/facebook_graph_api.png</a>
 </p>
 
 <p>
@@ -2575,28 +2505,27 @@ Via the Graph API tool you can easily <code>GET</code> information, <code>POST</
 
 </div>
 
-<div id="outline-container-5.3" class="outline-3">
-<h3 id="sec-5.3"><span class="section-number-3">5.3</span> Assignment </h3>
-<div class="outline-text-3" id="text-5.3">
+<div id="outline-container-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Assignment</h3>
+<div class="outline-text-3" id="text-5-4">
 
-<p>Based on the first steps in <a href="https://github.com/mwkuster/budabe-graph:">https://github.com/mwkuster/budabe-graph:</a>
+<p>Based on the first steps in <a href="https://github.com/mwkuster/budabe-graph">https://github.com/mwkuster/budabe-graph</a>:
 </p>
 <ul>
-<li>
-Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under <a href="https://developers.facebook.com/docs/reference/fql/">https://developers.facebook.com/docs/reference/fql/</a>)
+<li>Define a FQL query to find a given user and all its friends via the Facebook Graph API Explorer (FQL is documented under <a href="https://developers.facebook.com/docs/reference/fql/">https://developers.facebook.com/docs/reference/fql/</a>)
 </li>
-<li>
-Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
-
+<li>Extend budabe-graph.core both for the implementation and tests to handle connections between objects (possibly taking into account the experience with the Facebook query)
 </li>
 </ul>
-</div>
+
 
 </div>
 
-<div id="outline-container-5.4" class="outline-3">
-<h3 id="sec-5.4"><span class="section-number-3">5.4</span> <code>budabe-graph</code> </h3>
-<div class="outline-text-3" id="text-5.4">
+</div>
+
+<div id="outline-container-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> <code>budabe-graph</code></h3>
+<div class="outline-text-3" id="text-5-5">
 
 <p>Session: <span class="timestamp-wrapper"> <span class="timestamp">2012-11-17 Sat</span></span>
 </p>
@@ -2623,8 +2552,6 @@ The two key libraries in this space are <code>ring</code> and <code>compojure</c
 </pre>
 
 
-
-
 <p>
 <code>ring</code> (<a href="https://clojars.org/ring">https://clojars.org/ring</a>) self-describes itself as a "Clojure web applications library". Ring offers a number of functionalities, but as its core it defines a set of standards for Clojure structure, low-level handling HTTP requests as well as a means to define handlers for those requests. <code>compojure</code> offers a means to define routes to map concrete URIs and HTTP methods on these handlers. 
 </p>
@@ -2640,8 +2567,6 @@ The two key libraries in this space are <code>ring</code> and <code>compojure</c
   (GET "/:username" [username] (get-user-by-username username))
   (route/not-found "Page not found"))
 </pre>
-
-
 
 
 <p>
@@ -2661,15 +2586,13 @@ $ curl -v -XPUT -d '{"username": "johnsmith", "first_name" : "John", "last_name"
 
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-5.5" class="outline-3">
-<h3 id="sec-5.5"><span class="section-number-3">5.5</span> Creating a Facebook application </h3>
-<div class="outline-text-3" id="text-5.5">
+<div id="outline-container-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Creating a Facebook application</h3>
+<div class="outline-text-3" id="text-5-6">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-17 Sat</span></span>
 </p>
@@ -2677,7 +2600,7 @@ $ curl -v -XPUT -d '{"username": "johnsmith", "first_name" : "John", "last_name"
 In order to create a new application that integrates with Facebook, you have to be log  into Facebook and then go to <a href="https://developers.facebook.com/">https://developers.facebook.com/</a> to create a basic application. In a first stage you must register as an application developer, having to give unfortunately also a GSM number (you can delete it afterwards). After some more screens you can choose an application name, here WormsB5, to develop the application:
 </p>
 <p>
-<a href="#sec-5.5"><img src="img/facebook_screenshot.png"/></a>
+<a href="#img-facebook_screenshot.png">img/facebook_screenshot.png</a>
 </p>
 <p>
 In the end you get the real information:
@@ -2691,31 +2614,27 @@ App Secret:     XXXX
 </pre>
 
 
-
-
 <p>
 In a permission screen you can request which permissions the application needs to work. In this case I have requested the same rights as a friend for a number of fields including email:
 </p>
 <p>
-<a href="#sec-5.5"><img src="img/facebook_permission_tab.png"/></a>
+<a href="#img-facebook_permission_tab.png">img/facebook_permission_tab.png</a>
 </p>
 <p>
 "As with any other OAuth-enabled app, to get started you’ll need to acquire an application ID and secret to use for authorization, opt into the developer community, and create an application" ({Russell:2011vv}, p. 272). For this purpose you need the App ID and the App Secret to log in. For this it needs
 </p>
 <ul>
-<li>
-the application ID
+<li>the application ID
 </li>
-<li>
-the application secret
+<li>the application secret
 </li>
-<li>
-a callback URL
-
+<li>a callback URL
 </li>
 </ul>
 
-<p>that all need to be configure in the Facebook app centre.
+
+<p>
+that all need to be configure in the Facebook app centre.
 </p>
 <p>
 A Facebook user wanting to use this application then needs to grant it access.
@@ -2731,15 +2650,13 @@ The overall flow is described in <img src="http://dragon.ak.fbcdn.net/cfs-ak-ash
 
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-5.6" class="outline-3">
-<h3 id="sec-5.6"><span class="section-number-3">5.6</span> Assignment </h3>
-<div class="outline-text-3" id="text-5.6">
+<div id="outline-container-5-7" class="outline-3">
+<h3 id="sec-5-7"><span class="section-number-3">5.7</span> Assignment</h3>
+<div class="outline-text-3" id="text-5-7">
 
 <p>Build on yesterday's assignment use your query to build up the network of a person (<code>https://graph.facebook.com/me</code>) and his / her friends and other connections (friends, likes&hellip;) in Neo4j. For this purpose either change or enhance the existing RESTful interface to ensure that the objects and connections that you have retrieved from Facebook is loaded as nodes and their relationships into Neo4j.
 </p>
@@ -2750,34 +2667,784 @@ Work in teams of two, but hand in the results individually via the project's Moo
 
 </div>
 
-<div id="outline-container-5.7" class="outline-3">
-<h3 id="sec-5.7"><span class="section-number-3">5.7</span> Facebook and graphs </h3>
-<div class="outline-text-3" id="text-5.7">
+<div id="outline-container-5-8" class="outline-3">
+<h3 id="sec-5-8"><span class="section-number-3">5.8</span> Facebook and graphs</h3>
+<div class="outline-text-3" id="text-5-8">
 
 <ul>
-<li>
-Show implementation of assignment
+<li>Show implementation of assignment
 </li>
-<li>
-RDFa to embed information
-
-
-
-
-
-
+<li>RDFa to embed information
 </li>
 </ul>
+
+
+
+
+
+
+
 </div>
 </div>
 
 </div>
 
 <div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Testing RESTful Web Services </h2>
+<h2 id="sec-6"><span class="section-number-2">6</span> The Semantic Web</h2>
 <div class="outline-text-2" id="text-6">
 
+<p>Sessions <span class="timestamp-wrapper"> <span class="timestamp">2012-12-14 Fri</span></span> and <span class="timestamp-wrapper"> <span class="timestamp">2012-12-15 Sat</span></span>
+</p><ul>
+<li>What are Ontologies? Ontologies and Us
+</li>
+<li>Ontologies and Technology
+<ul>
+<li>Standards
+<ul>
+<li>RDF
+</li>
+<li>RDF-S
+</li>
+<li>OWL
+</li>
+<li>SPARQL:
+      <a href="http://data.gov.uk/sparql">http://data.gov.uk/sparql</a>
+      <a href="http://jena.apache.org/tutorials/sparql.html">http://jena.apache.org/tutorials/sparql.html</a>
+      <a href="http://www.cambridgesemantics.com/semantic-university/sparql-by-example#(1)">http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29</a>
+</li>
+</ul>
 
+</li>
+<li>Object identity
+</li>
+<li>Tools
+<ul>
+<li>Protégé
+</li>
+<li>Semantic Stores
+</li>
+</ul>
+
+</li>
+</ul>
+
+</li>
+<li>Linked Open Data
+</li>
+<li>Semantic Web Services
+</li>
+</ul>
+
+
+<p>
+<a href="http://data.gov.uk/sparql">http://data.gov.uk/sparql</a>
+</p>
+<p>
+cf. presentation stored in Moodle.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Preparing the Practical Programming Projects</h2>
+<div class="outline-text-2" id="text-7">
+
+<p>Sessions <span class="timestamp-wrapper"> <span class="timestamp">2014-01-03 Fri</span></span>
+</p>
+<p>
+cf. <a href="https://moodle.fh-worms.de/moodle/mod/page/view.php?id=28017">https://moodle.fh-worms.de/moodle/mod/page/view.php?id=28017</a>
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Web Services and the Semantic Web</h2>
+<div class="outline-text-2" id="text-8">
+
+<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2014-01-03 Fri</span></span>
+</p>
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> RDF Serialization formats</h3>
+<div class="outline-text-3" id="text-8-1">
+
+<p>Logically, all RDF is triples of subject, predicate and object, and indeed that is how it is often represtend internally inside triple stores. However, triples can be serialized and exchanged in a variety of different formats. Some of these such as Turtle are very close to the triple philosophy, others need more interpretation.
+</p>
+
+</div>
+
+<div id="outline-container-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1"><span class="section-number-4">8.1.1</span> Turtle</h4>
+<div class="outline-text-4" id="text-8-1-1">
+
+<p>One of the simplest forms to encode semantic information is Turtle. Turtle essentially lists the triples. Individual triples are separated by dots (<code>.</code>), but in order to avoid long lists of full triples those triples that share the same subject and predicateonly list the different objects, separated by ~,~, whereas those only sharing the same subject are  compacted by using <code>;</code>.
+</p>
+
+
+
+<pre class="example">@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt; .
+@prefix cdm-annotation: &lt;http://publications.europa.eu/ontology/annotation#&gt; .
+@base &lt;http://www.w3.org/2002/07/owl#&gt; .
+
+&lt;http://example.org/resource/celex/61960CC0002&gt; rdf:type cdm:case-law ,
+                                                         cdm:document_cjeu ,
+                                                         cdm:opinion_advocate-general ,
+                                                         cdm:resource_legal ,
+                                                         cdm:work ,
+                                                 cdm:resource_legal_number_natural_celex "0002"^^xsd:positiveInteger ;
+ cdm:resource_legal_year "1960"^^xsd:gYear .
+
+&lt;http://example.org/resource/celex/61960CC0002.BUL&gt; rdf:type cdm:expression .                                              
+</pre>
+
+
+<p>
+The mimetype of Turtle is <code>application/x-turtle</code>, the typical file extension <code>TTL</code> (cf. also above for the treatment in the seabass library).
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8-1-2" class="outline-4">
+<h4 id="sec-8-1-2"><span class="section-number-4">8.1.2</span> RDF/XML</h4>
+<div class="outline-text-4" id="text-8-1-2">
+
+<p>Probably the most frequent pure RDF encoding is <code>RDF/XML</code> which is, as the name suggests, an XML-based serialization format for RDF: 
+</p>
+
+
+
+<pre class="example">&lt;rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.w3.org/2002/07/owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:cdm="http://publications.europa.eu/ontology/cdm#"
+     xmlns:cdm-annotation="http://publications.europa.eu/ontology/annotation#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;
+  &lt;cdm:judgement rdf:about="http://example.org/resource/celex/62007CJ0535"&gt;
+        &lt;rdf:type rdf:resource="&amp;cdm;document_cjeu"/&gt;
+        &lt;rdf:type rdf:resource="&amp;cdm;judgement"/&gt;
+        &lt;cdm:resource_legal_number_natural_celex rdf:datatype="&amp;xsd;positiveInteger"&gt;0535&lt;/cdm:resource_legal_number_natural_celex&gt;
+        &lt;cdm:resource_legal_year rdf:datatype="&amp;xsd;gYear"&gt;2007&lt;/cdm:resource_legal_year&gt;    
+  &lt;/cdm:judgement&gt;
+
+  &lt;cdm:expression rdf:about="http://example.org/resource/celex/62007CJ0535.ITA"&gt;
+        &lt;cdm:expression_title rdf:datatype="&amp;xsd;string"&gt;Sentenza della Corte (Seconda Sezione) del 14 ottobre 2010. # Commissione europea contro Repubblica d&amp;apos;Austria. # Inadempimento di uno Stato - Direttive 79/409/CEE e 92/43/CEE - Conservazione degli uccelli selvatici - Designazione erronea e tutela giuridica insufficiente delle zone di protezione speciale. # Causa C-535/07.&lt;/cdm:expression_title&gt;
+        &lt;cdm:expression_belongs_to_work rdf:resource="http://example.org/resource/celex/62007CJ0535"/&gt;
+        &lt;cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ITA"/&gt;
+    &lt;/cdm:expression&gt;
+&lt;/rdf:RDF&gt;
+</pre>
+
+
+<p>
+In all of these cases the subject can also be indicated by the <code>rdf:Description</code> element with an explicit <code>rdf:type</code> that indicates the correct type. This example uses an abbreviation that uses (one of) the types as the class name.
+</p>
+<p>
+The subject is always indicated by the <code>rdf:about</code> attribute, the predicate as the element name (e.g. <code>cdm:expression_title</code>), the object by the <code>rdf:resource</code> attribute. In the case of data properties, <code>rdf:datatype</code> can be used ot indicate the correct datatype.
+</p>
+<p>
+In order to mark up common concepts such as the Italian language in this example, the RDF examples refer to codes defined elsewhere in authority tables.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8-1-3" class="outline-4">
+<h4 id="sec-8-1-3"><span class="section-number-4">8.1.3</span> RDFa</h4>
+<div class="outline-text-4" id="text-8-1-3">
+
+<p>RDFa is, in the words if the W3C recommendation <a href="http://www.w3.org/TR/rdfa-syntax/">http://www.w3.org/TR/rdfa-syntax/</a>, "Syntax and processing rules for embedding RDF through attributes" into a markup language, virtually always (X)HTML. The same webpage is then both human-readable and machine-readable.
+</p>
+<p>
+RDFa largely operates through attributes that either already exist in HTML or are newly added. In fact, RDFa means "RDF in Attributes".
+</p>
+<p>
+For the <code>property</code> and <code>rel</code> attributes this looks as follows (all examples taken directly from the RDFa 1.1 specification <a href="http://www.w3.org/TR/rdfa-syntax/">http://www.w3.org/TR/rdfa-syntax/</a>):
+</p>
+
+
+
+<pre class="example">&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;title&gt;My home-page&lt;/title&gt;
+    &lt;meta property="http://purl.org/dc/terms/creator" content="Mark Birbeck" /&gt;
+    &lt;link rel="http://xmlns.com/foaf/0.1/topic" href="http://www.example.com/#us" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<p>
+This means that the data property <code>http://purl.org/dc/terms/creator</code>, in this case defined by the Dublin Core specification, has the value <code>Mark Birbeck</code>. The link to <code>http://www.example.com/#us</code> is to be interpreted as a Friend of a Friend (FOAF) topic <code>http://xmlns.com/foaf/0.1/topic</code>.
+</p>
+<p>
+Just like for Turtle it is possible to define abbreviations through prefixes. The following is exactly equivalent to the previous example:
+</p>
+
+
+
+<pre class="example">&lt;html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="foaf: http://xmlns.com/foaf/0.1/
+          dc: http://purl.org/dc/terms/"
+  &gt;
+  &lt;head&gt;
+    &lt;title&gt;My home-page&lt;/title&gt;
+    &lt;meta property="dc:creator" content="Mark Birbeck" /&gt;
+    &lt;link rel="foaf:topic" href="http://www.example.com/#us" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<p>
+In principle, the <code>prefix</code> attribute can be used on any element (though in reality this is rarely used).
+</p>
+<p>
+If the content is already present on the human readable page, it can just be reused and an explicit <code>content</code> attribute is not needed:
+</p>
+
+
+
+<pre class="example">&lt;html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="dc: http://purl.org/dc/terms/"
+  &gt;
+  &lt;head&gt;&lt;title&gt;My Home Page&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 property="dc:title"&gt;My home-page&lt;/h1&gt;
+    &lt;p&gt;Last modified: 16 September 2015&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<p>
+If necessary, the information on the content can be explicitly typed using the <code>datatype</code> property:
+</p>
+
+
+<pre class="example">&lt;html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="xsd: http://www.w3.org/2001/XMLSchema#
+          dc: http://purl.org/dc/terms/"
+  &gt;
+  &lt;head&gt;&lt;title&gt;My Home Page&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 property="dc:title"&gt;My home-page&lt;/h1&gt;
+    &lt;p&gt;Last modified: &lt;span property="dc:modified"
+            content="2015-09-16T16:00:00-05:00"
+            datatype="xsd:dateTime"&gt;16 September 2015&lt;/span&gt;.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+
+
+
+<p>
+In all these cases the subject of the triples is implicitly the webpage itself. RDFa also permits to indicate explicit information on other subjects using the <code>about</code> property:
+</p>
+
+
+
+<pre class="example">&lt;html
+  xmlns="http://www.w3.org/1999/xhtml"
+  prefix="bibo: http://purl.org/ontology/bibo/
+          dc: http://purl.org/dc/terms/"
+  &gt;
+  &lt;head&gt;
+    &lt;title&gt;Books by Marco Pierre White&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    I think White's book
+    '&lt;span about="urn:ISBN:0091808189" 
+           property="dc:title"&gt;Canteen Cuisine&lt;/span&gt;'
+    is well worth getting since although it's quite advanced stuff, he
+    makes it pretty easy to follow. You might also like
+    &lt;span 
+     about="urn:ISBN:1596913614" 
+     property="dc:description"
+     &gt;White's autobiography&lt;/span&gt;.
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<p>
+If really needed, <code>rdf:type</code> can be indicated through the <code>typeof</code> attribute.
+</p>
+<p>
+Finally, it is possible to markup also the object of a triple explicitly, indicating in this example that Albert Einstein lived, in terms of the DBpedia ontology, both in the German empire and in Switzerland:
+</p>
+
+
+
+<pre class="example">&lt;div about="http://dbpedia.org/resource/Albert_Einstein" rel="dbp-owl:residence"&gt;
+  &lt;span about="http://dbpedia.org/resource/German_Empire"&gt;&lt;/span&gt;
+  &lt;span about="http://dbpedia.org/resource/Switzerland"&gt;&lt;/span&gt;
+&lt;/div&gt;
+</pre>
+
+
+<p>
+In full, the following attributes are defined in the RDFa recommendation, section 5:
+</p>
+<ul>
+<li>about: a SafeCURIEorCURIEorIRI, used for stating what the data is about (a 'subject' in RDF terminology);
+</li>
+<li>content: a CDATA string, for supplying machine-readable content for a literal (a 'literal object', in RDF terminology);
+</li>
+<li>datatype: a TERMorCURIEorAbsIRI representing a datatype, to express the datatype of a literal;
+</li>
+<li>href (optional): a traditionally navigable IRI for expressing the partner resource of a relationship (a 'resource object', in RDF terminology);
+</li>
+<li>inlist: An attribute used to indicate that the object associated with a rel or property attribute on the same element is to be added to the list for that predicate. The value of this attribute must be ignored. Presence of this attribute causes a list to be created if it does not already exist.
+</li>
+<li>prefix: a white space separated list of prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI
+</li>
+<li>property: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either a resource object if given or some literal text (also a 'predicate');
+</li>
+<li>rel: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between two resources ('predicates' in RDF terminology);
+</li>
+<li>resource: a SafeCURIEorCURIEorIRI for expressing the partner resource of a relationship that is not intended to be navigable (e.g., a 'clickable' link) (also an 'object');
+</li>
+<li>rev: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing reverse relationships between two resources (also 'predicates');
+</li>
+<li>src (optional): an IRI for expressing the partner resource of a relationship when the resource is embedded (also a 'resource object');
+</li>
+<li>typeof: a white space separated list of TERMorCURIEorAbsIRIs that indicate the RDF type(s) to associate with a subject;
+</li>
+<li>vocab: A IRI that defines the mapping to use when a TERM is referenced in an attribute value. 
+</li>
+</ul>
+
+
+<p>
+CURIes in this context are "compact URI expressions", essentially abbreviated URIs. 
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Exercise: Markup of a web page</h3>
+<div class="outline-text-3" id="text-8-2">
+
+<p>Markup a Wikipedia page, e.g. <a href="http://en.wikipedia.org/wiki/The_hobbit">http://en.wikipedia.org/wiki/The_hobbit</a>, with the DBpedia ontology
+</p>
+<p>
+cf. also <a href="http://wiki.dbpedia.org/Ontology?v=194q">http://wiki.dbpedia.org/Ontology?v=194q</a> for the ontology and <a href="http://dbpedia.org/page/The_Hobbit">http://dbpedia.org/page/The_Hobbit</a> for the "solution" of dbpedia
+</p>
+<p>
+<a href="#img-the_hobbit_rdfa.png">img/the_hobbit_rdfa.png</a>
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> SPARQL</h3>
+<div class="outline-text-3" id="text-8-3">
+
+<p>Existing tutorials:
+</p><ul>
+<li><a href="http://jena.apache.org/tutorials/sparql.html">http://jena.apache.org/tutorials/sparql.html</a>
+</li>
+<li><a href="http://www.cambridgesemantics.com/semantic-university/sparql-by-example#(1)">http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29</a>
+</li>
+</ul>
+
+
+<p>
+Existing endpoints for example:
+</p>
+<ul>
+<li>British law: <a href="http://openuplabs.tso.co.uk/sparql/gov-legislation">http://openuplabs.tso.co.uk/sparql/gov-legislation</a>
+</li>
+<li>DBPedia: <a href="http://dbpedia.org/sparql">http://dbpedia.org/sparql</a>
+</li>
+<li>Open Data EU: <a href="http://open-data.europa.eu/de/linked-data">http://open-data.europa.eu/de/linked-data</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> Programming the Semantic Web in Ruby</h3>
+<div class="outline-text-3" id="text-8-4">
+
+<p>The main library for handling RDF in Ruby is the Open Source library <code>RDF.rb</code>
+(<a href="http://rdf.rubyforge.org/">http://rdf.rubyforge.org/</a>) with a considerable number of satellite
+libraries including:
+</p>
+<ul>
+<li>rdf-rdfxml (<a href="http://rubygems.org/gems/rdf-rdfxml">http://rubygems.org/gems/rdf-rdfxml</a>), an RDF/XML reader
+  and writer for the RDF.rb library suite
+</li>
+<li>rdf-xsd (<a href="http://rubygems.org/gems/rdf-xsd">http://rubygems.org/gems/rdf-xsd</a>), adds RDF::Literal
+  subclasses for extended XSD datatypes
+</li>
+<li>rdf-rdfa (<a href="http://rubygems.org/gems/rdf-rdfa">http://rubygems.org/gems/rdf-rdfa</a>), an RDFa reader/writer
+  for Ruby using the RDF.rb library suite
+</li>
+<li>rdf-n3 (<a href="http://rubygems.org/gems/rdf-n3">http://rubygems.org/gems/rdf-n3</a>), an Notation-3
+  reader/writer for the RDF.rb library suite
+</li>
+<li>json-ld (<a href="http://rubygems.org/gems/json-ld">http://rubygems.org/gems/json-ld</a>), parses and serializes
+  JSON-LD into RDF 
+</li>
+<li>sparql-client (<a href="http://rubygems.org/gems/sparql-client">http://rubygems.org/gems/sparql-client</a>), executes
+  SPARQL queries and updates against a remote SPARQL 1.0 or 1.1
+  endpoint, or against a local repository
+</li>
+<li>rdf-isomorphic (<a href="http://rubygems.org/gems/rdf-isomorphic">http://rubygems.org/gems/rdf-isomorphic</a>), plugin for
+  graph bijections and isomorphic equivalence
+</li>
+<li>rdf-turtle (<a href="http://rubygems.org/gems/rdf-turtle">http://rubygems.org/gems/rdf-turtle</a>), an Turtle
+  reader/writer for the RDF.rb library suite
+</li>
+<li>rdf-json (<a href="http://rubygems.org/gems/rdf-json">http://rubygems.org/gems/rdf-json</a>), plugin for
+  parsing/serializing RDF/JSON data
+</li>
+<li>sparql (<a href="http://rubygems.org/gems/sparql">http://rubygems.org/gems/sparql</a>), implements SPARQL grammar
+  parsing to SPARQL Algebra, SPARQL Algebra processing and includes
+  SPARQL Client for accessing remote repositories
+</li>
+</ul>
+
+
+<p>
+All of these libraries are available as Ruby gems:
+</p>
+
+
+
+<pre class="example">gem install rdf
+gem install rdf-rdfxml
+gem install rdf-n3
+gem install sparql
+etc.
+</pre>
+
+
+<p>
+Usage is simple:
+</p>
+
+
+
+<pre class="example">require 'rdf'
+require 'sparql'
+require 'rdf/turtle'
+require 'rdf/rdfxml'
+
+repo = RDF::Repository.new
+repo.load("62007CJ0535.rdf", :format =&gt; :rdfxml)
+repo.load("61960CC0002.ttl", :format =&gt; :turtle)
+
+#Just for debugging: show the contents of the repository
+repo.each_statement { |statement| puts statement }
+</pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8-5" class="outline-3">
+<h3 id="sec-8-5"><span class="section-number-3">8.5</span> Programming the Semantic Web in Clojure</h3>
+<div class="outline-text-3" id="text-8-5">
+
+
+<p>
+A large number of libraries exist for handling RDF including well-established Open Source Java libraries such as Sesame and Jena. For Clojure, Seabass (<a href="https://clojars.org/seabass">https://clojars.org/seabass</a>) offers a small wrapper around the Jena library, making it easy to treat RDF in Clojure. Similar libraries exist for other platforms.
+</p>
+<p>
+As dependencies you add:
+</p>
+
+
+<pre class="example">[xerces/xercesImpl "2.10.0"] ;; Direct download from Maven central
+[seabass "2.0"]
+</pre>
+
+
+
+<p>
+This will also download the Jena libraries which do most of the work.
+</p>
+<p>
+Once seabass is installed, using it is simple: 
+</p>
+<p>
+You <code>build</code> a model, essentially a local database containing <code>seabass.core</code> triples you just load one or more files in one of the possible RDF serialzation formats (cf. below):
+</p>
+
+
+<pre class="example">(def model 
+  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
+         ["src/s12/61960CC0002.ttl" "TTL"]))
+</pre>
+
+
+<p>
+In addition, you can also indicate URIs from which these files should be downloaded. You can also integrate data from external SPARQL endpoints using <code>CONSTRUCT</code> queries and the <code>pull</code> command:
+</p>
+
+
+
+
+<pre class="example">(def model 
+  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
+         ["src/s12/61960CC0002.ttl" "TTL"]))
+
+;;Query is
+;;construct {?institution ?p ?o} {?institution a &lt;http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion&gt; . 
+?institution ?p ?o
+} LIMIT 10000")
+(def model (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
+         ["src/s12/61960CC0002.ttl" "TTL"]
+         (pull "construct {?institution ?p ?o} {?institution a &lt;http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion&gt; . 
+?institution ?p ?o
+} LIMIT 10000" "http://dbpedia.org/sparql")))
+</pre>
+
+
+<p>
+You can then execute queries against a model using the <code>bounce</code> function that takes the SPARQL <code>SELECT</code> query as a first parameter and a model as the second, e.g.:
+</p>
+
+
+<pre class="example">(bounce 
+"PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt; 
+select ?expr ?title ?lang
+{?work cdm:resource_legal_id_celex \"62007CJ0535\"^^xsd:string .
+ ?expr cdm:expression_belongs_to_work ?work .
+ ?expr cdm:expression_title ?title .
+ ?expr cdm:expression_uses_language ?lang .
+ }" model)
+</pre>
+
+
+<p>
+The result is returnd as a Clojure map with all the results in the <code>:data</code> field:
+</p>
+
+
+<pre class="example">{:vars (:expr :title :lang), :data ({:lang "http://publications.europa.eu/resource/authority/language/FRA", :title "Arrêt de la Cour (deuxième chambre) du 14 octobre 2010. # Commission européenne contre République d'Autriche. # Manquement d’État - Directives 79/409/CEE et 92/43/CEE - Conservation des oiseaux sauvages - Désignation incorrecte et protection juridique insuffisante des zones de protection spéciale. # Affaire C-535/07.", :expr "http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA"}...)}
+</pre>
+
+
+<p>
+You can handle those results like any other Clojure map
+</p>
+
+
+<pre class="example">(filter #(= (:lang %) "http://publications.europa.eu/resource/authority/language/ENG")  (:data (get-titles-by-celex "61960CC0002")))
+</pre>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8-6" class="outline-3">
+<h3 id="sec-8-6"><span class="section-number-3">8.6</span> Excursion: Facebook and RDFa: the Open Graph protocol</h3>
+<div class="outline-text-3" id="text-8-6">
+
+<p>Facebook uses RDFa to integrate with external webpages. The Open Graph protocol <a href="http://opengraphprotocol.org/">http://opengraphprotocol.org/</a> / <a href="http://ogp.me/">http://ogp.me/</a> defines a vocabulary that can be used to integrate metadata into a webpage. In fact, this vocabulary is itself defined in RDF and available under <a href="http://ogp.me/ns/ogp.me.ttl">http://ogp.me/ns/ogp.me.ttl</a>. It defines the following core properties ("basic metadata") that should always be present (cited after <a href="http://ogp.me/">http://ogp.me/</a>):
+</p>
+<ul>
+<li><code>og:title</code> - The title of your object as it should appear within the graph, e.g., "The Rock".
+</li>
+<li><code>og:type</code> - The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required.
+</li>
+<li><code>og:image</code> - An image URL which should represent your object within the graph.
+</li>
+<li><code>og:url</code> - The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "<a href="http://www.imdb.com/title/tt0117500/">http://www.imdb.com/title/tt0117500/</a>".
+</li>
+</ul>
+
+
+<p>
+<code>og</code> stands for <a href="http://ogp.me/ns">http://ogp.me/ns</a>#.
+</p>
+<p>
+This information should be given in metatags in the HTML header, though this is a Facebook restriction, not an RDFa one:
+</p>
+
+
+
+<pre class="example">&lt;html&gt;
+  &lt;head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#"&gt;
+    &lt;title&gt;OG Sample Object - Geordnetes Weltbild&lt;/title&gt;
+
+    &lt;meta property="og:title" content="Geordnetes Weltbild" /&gt;
+    &lt;meta property="og:image" content="http://www.budabe.de/img/geordnetes_weltbild_cover_1.jpg" /&gt;
+    &lt;meta property="og:url" content="http://www.budabe.eu/static/geordnetes_weltbild" /&gt;
+    &lt;meta property="og:type" content="book" /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  ...
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+
+<p>
+In addition to these mandatory elements the following optional metadata elements are possible for all types of objects:
+</p>
+<ul>
+<li>og:audio - A URL to an audio file to accompany this object.
+</li>
+<li>og:description - A one to two sentence description of your object.
+</li>
+<li>og:determiner - The word that appears before this object's title in a sentence. An enum of (a, an, the, "", auto). If auto is chosen, the consumer of your data should chose between "a" or "an". Default is "" (blank).
+</li>
+<li>og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
+</li>
+<li>og:locale:alternate - An array of other locales this page is available in.
+</li>
+<li>og:site_name - If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., "IMDb".
+</li>
+<li>og:video - A URL to a video file that complements this object
+</li>
+</ul>
+
+
+
+<p>
+Individual types of objects can and often have more specific metadata in addition to the generic ones. A book for example can have the following metadata elements (namespace <a href="http://ogp.me/ns/book">http://ogp.me/ns/book</a>#):
+</p>
+<ul>
+<li>book:author - profile array - Who wrote this book.
+</li>
+<li>book:isbn - string - The ISBN
+</li>
+<li>book:release_date - datetime - The date the book was released.
+</li>
+<li>book:tag - string array - Tag words associated with this book.
+</li>
+</ul>
+
+
+<p>
+The following types of objects are predefined (all of them have their own namespaces):
+</p><ul>
+<li>website
+</li>
+<li>music with subtypes music.song, music.album, music.playlist and music.radio_station
+</li>
+<li>video with subtypes video.movie, video.episode, video.tv_show, video.other
+</li>
+<li>article
+</li>
+<li>book
+</li>
+<li>profile
+</li>
+</ul>
+
+
+<p>
+In addition, Facebook itself defines a number of extensions in the <a href="http://ogp.me/ns/fb">http://ogp.me/ns/fb</a># namespace, notably:
+</p><ul>
+<li>fb:app_id: the application id in Facebook, e.g. 230196110444178
+</li>
+<li>fb:admins: one or more ids of Facebook users that can get administrative information on this object, e.g. 100004654151051
+</li>
+</ul>
+
+
+<p>
+Facebook can then directly use this metadata integrating information on a resource into Facebook itself, e.g. for the "liking" of resources. You can access this information by going through the like button with for the administrator(s) will now contain an additional link to this admin page.
+</p>
+<p>
+<a href="#img-facebook_activities.png">img/facebook_activities.png</a>
+</p>
+<p>
+In the application configuration, e.g. for <a href="https://developers.facebook.com/apps/230196110444178">https://developers.facebook.com/apps/230196110444178</a>, an application can even go beyond this. It can define action types (= object properties in OWL terms) e.g. to rate a book. For this it can either reuse existing object types or even define completely new ones. It can also define new object types (= classes in OWL terms).
+</p>
+<p>
+<a href="#img-app_center_open_graph.png">img/app_center_open_graph.png</a>
+</p>
+<p>
+An application can indicate its intention to publish things on Facebook through the like button:
+</p>
+
+
+
+<pre class="example">&lt;fb:like href="http://www.goodreads.com/book/show/13010670-programming-clojure" width="280" layout="standard" show_faces="true" action="like" colorscheme="light" font="arial" /&gt;
+</pre>
+
+
+
+<p>
+In all of these cases Facebook extracts metadata in the website to populate the information in Facebook. This metadata is precisely the one encoded in RDFa. To test this integration the company has created a debugger for metadata: <a href="http://developers.facebook.com/tools/debug/og/object">http://developers.facebook.com/tools/debug/og/object</a>. You can use it for example: <a href="http://developers.facebook.com/tools/debug/og/object?q=http://www.goodreads.com/review/show/488396402">http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402</a>. Google has a corresponding tool, <a href="http://www.google.com/webmasters/tools/richsnippets">http://www.google.com/webmasters/tools/richsnippets</a> that also supports the Open Graph Protocol.
+</p>
+<p>
+However, Facebook goes a step further. In the application center a developer can define new RDF objects based on the Open Graph Protocol with new elements inside. What is more, the system then automatically creates a sample website with RDFa data integrated, e.g. <a href="http://samples.ogp.me//199815506812566">http://samples.ogp.me//199815506812566</a> for a sample application on book rating. In other terms, Facebook permits to extend the existing ontology with new properties and classes:
+</p>
+<p>
+<a href="#img-open_graph_new_properties.png">img/open_graph_new_properties.png</a>
+</p>
+<p>
+<a href="#img-open_graph_new_class.png">img/open_graph_new_class.png</a>
+</p>
+
+<p>
+What is more, the tool automatically generates a sample object, e. g. for book: <a href="https://graph.facebook.com/10151191340470101/">https://graph.facebook.com/10151191340470101/</a>, and instructions on how to call the corresponding web services that an application can use to post its entries directly to a user's timeline:
+</p>
+
+
+<pre class="example">curl -F 'access_token=XXXXX'      -F 'book=http://samples.ogp.me/199815506812566'         'https://graph.facebook.com/me/worms-web:rate'
+
+curl -F 'access_token=XXXX'      -F 'book=https://www.budabe.eu/static/geordnetes_weltbild'         'https://graph.facebook.com/me/worms-web:rate'
+</pre>
+
+
+<p>
+With aggregations it is possible to calculate numbers of smaller activities, e.g. this user has heard 200 songs last months.
+</p>
+<p>
+At this stage many of the big players from <a href="http://imdb.com">http://imdb.com</a>, <a href="http://www.amazon.com">http://www.amazon.com</a>, <a href="http://digg.com">http://digg.com</a>, <a href="https://www.spotify.com">https://www.spotify.com</a>, <a href="http://www.goodreads.com/">http://www.goodreads.com/</a> all integrate in this way with Facebook, using the Facebook authentication, sometimes amongst others such as the Twitter or Google authentication.
+</p>
+<p>
+<a href="http://youtu.be/TM-2fNtg7p8">http://youtu.be/TM-2fNtg7p8</a> and <a href="http://youtu.be/__FplazeKvU">http://youtu.be/__FplazeKvU</a> give a good idea on the business reasons that Facebook has to integrate Facebook with all sorts of objects outside it, making effectively a part of Facebook. This specific take on a semantic web of things that monitors a users activities &mdash; books, music, runs, whatever &mdash; is at the same time techically fascinating and obviously disquieting from a privacy point of view.
+</p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Testing RESTful Web Services</h2>
+<div class="outline-text-2" id="text-9">
+
+<p> <span class="timestamp-wrapper"> <span class="timestamp">2014-01-04 Sat</span></span><br/>
+</p>
 <p>
 TODO
 </p>
@@ -2785,18 +3452,27 @@ TODO
 
 </div>
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Neo4j: a RESTful Database </h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Bibliography</h2>
+<div class="outline-text-2" id="text-10">
+
+<p>TODO
+</p></div>
+
+</div>
+
+<div id="outline-container-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Excursion: Neo4j: a RESTful Database</h2>
+<div class="outline-text-2" id="text-11">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-02 Fri</span></span>
 </p>
 
 </div>
 
-<div id="outline-container-7.1" class="outline-4">
-<h4 id="sec-7.1"><span class="section-number-4">7.1</span> What is Neo4j? </h4>
-<div class="outline-text-4" id="text-7.1">
+<div id="outline-container-11-1" class="outline-4">
+<h4 id="sec-11-1"><span class="section-number-4">11.1</span> What is Neo4j?</h4>
+<div class="outline-text-4" id="text-11-1">
 
 <p>The Open Source database Neo4j (<a href="http://www.neo4j.org">http://www.neo4j.org</a>) is an example of the growing segment of NoSQL databases. It is a graph database that centres around two Topic Map {ISOIEC:2002uf} like concepts, nodes and relationships. Nodes and relationships have unique identifiers, but can have arbitrary properties besides. If Neo4j speaks of graphs, it is directed graphs that it thinks of, so each relationship must have a start and an end node. Otherwise, relationships are database objects just like nodes that can be created, updated and deleted, be queried and have properties just like nodes.
 </p>
@@ -2804,33 +3480,30 @@ TODO
 A graph database assumes that we want to model the world as a directed graph &mdash; {Redmond:2012wd} uses the term "whiteboard-friendly modelling":
 </p>
 <p>
-<a href="#sec-7.1"><img src="img/neo4j_graph.png"/></a>
+<a href="#img-neo4j_graph.png">img/neo4j_graph.png</a>
 </p>
 <p>
 Installation of Neo4j is trivial:
 </p>
 <ol>
-<li>
-Download the latest version from <a href="http://neo4j.org/download/">http://neo4j.org/download/</a>
+<li>Download the latest version from <a href="http://neo4j.org/download/">http://neo4j.org/download/</a>
 </li>
-<li>
-Unpack it to a suitable directory
+<li>Unpack it to a suitable directory
 </li>
-<li>
-<code>cd</code> to that directory and execute <code>bin/neo4j start</code> or the corresponding command under Windows
+<li><code>cd</code> to that directory and execute <code>bin/neo4j start</code> or the corresponding command under Windows
 </li>
-<li>
-Check with <a href="http://localhost:7474/webadmin">http://localhost:7474/webadmin</a> that the database is up
-
+<li>Check with <a href="http://localhost:7474/webadmin">http://localhost:7474/webadmin</a> that the database is up
 </li>
 </ol>
-</div>
+
 
 </div>
 
-<div id="outline-container-7.1" class="outline-3">
-<h3 id="sec-7.1"><span class="section-number-3">7.1</span> Neo4j's admin interface </h3>
-<div class="outline-text-3" id="text-7.1">
+</div>
+
+<div id="outline-container-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> Neo4j's admin interface</h3>
+<div class="outline-text-3" id="text-11-1">
 
 <p>Neo4j’s admin interface also has one of the more innovative graph UIs that is currently available in an off-the-shelf database.
 </p>
@@ -2839,7 +3512,7 @@ Check with <a href="http://localhost:7474/webadmin">http://localhost:7474/webadm
 The graph we have just seen can be translated as is into Neo4j, using e.g. the +Node and +Relationship features of the Neo4j data browser that is part of the admin interface:
 </p>
 <p>
-<a href="#sec-7.1"><img src="img/neo4j_databrowser.png"/></a>
+<a href="#img-neo4j_databrowser.png">img/neo4j_databrowser.png</a>
 </p>
 <p>
 The node and its relationships can then also be visualized:
@@ -2858,8 +3531,6 @@ RETURN n;
 </pre>
 
 
-
-
 <p>
 Neo4j positions itself for enterprise use and seems to currently see significant uptake:
 </p>
@@ -2868,20 +3539,18 @@ Neo4j positions itself for enterprise use and seems to currently see significant
 <p>As a robust, scalable and high-performance database, Neo4j is suitable for full enterprise deployment or a subset of the full server can be used in lightweight projects.
 It features:
 </p><ul>
-<li>
-true ACID transactions
+<li>true ACID transactions
 </li>
-<li>
-high availability
+<li>high availability
 </li>
 </ul>
 
 <p>. scales to billions of nodes and relationships
 </p><ul>
-<li>
-high speed querying through traversals {Neojorg:2012tu}
+<li>high speed querying through traversals {Neojorg:2012tu}
 </li>
 </ul>
+
 
 
 </blockquote>
@@ -2892,9 +3561,9 @@ high speed querying through traversals {Neojorg:2012tu}
 
 </div>
 
-<div id="outline-container-7.2" class="outline-3">
-<h3 id="sec-7.2"><span class="section-number-3">7.2</span> Neo4j's RESTful interface </h3>
-<div class="outline-text-3" id="text-7.2">
+<div id="outline-container-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> Neo4j's RESTful interface</h3>
+<div class="outline-text-3" id="text-11-2">
 
 <p>Like many of the new developments in the NoSQL scene, Neo4j exposes a RESTful interface, though in this specific case Neo4j also has a powerful admin interface that gives access to many of its features, including its query language, Cypher. It is also possible to directly embed Neo4j in an application, though we will not look at this case here. 
 </p>
@@ -2914,8 +3583,6 @@ A search for this relationship: http://localhost:7474/webadmin/#/data/search/rel
 
 A query: http://localhost:7474/webadmin/#/data/search/START%20n%20%3D%20node(*)%0AWHERE%20has(n.name)%20and%20n.name%20%3D%20%22B5%22%0ARETURN%20n%3B/
 </pre>
-
-
 
 
 
@@ -2955,8 +3622,6 @@ These URIs work also programmatically as expected and return a JSON representati
 </pre>
 
 
-
-
 <p>
 or for relationships:
 </p>
@@ -2981,13 +3646,11 @@ or for relationships:
 
 
 
-
-
 <p>
 In best REST-way the interface exposes links to further representations of related objects (outgoing_relationships, incoming_relationships and all_relationships).
 </p>
 <p>
-Of course, there is not only <code>GET</code>: With <code>PUT</code> you can update properties, though with a slight twist in that you must go against the list of <a href="http://localhost:7474/db/data/node/20991/properties:">http://localhost:7474/db/data/node/20991/properties:</a> 
+Of course, there is not only <code>GET</code>: With <code>PUT</code> you can update properties, though with a slight twist in that you must go against the list of <a href="http://localhost:7474/db/data/node/20991/properties">http://localhost:7474/db/data/node/20991/properties</a>: 
 </p>
 
 
@@ -3019,8 +3682,6 @@ $  curl -XGET http://localhost:7474/db/data/node/20991/properties
 </pre>
 
 
-
-
 <p>
 As we see in this example, this operation replaces the current properties completely
 </p>
@@ -3050,8 +3711,6 @@ And there's still delete, first on the property level:
 $  curl -XGET http://localhost:7474/db/data/node/20991/properties
 $
 </pre>
-
-
 
 
 <p>
@@ -3087,8 +3746,6 @@ $  curl -XGET http://localhost:7474/db/data/node/20991/properties{
 </pre>
 
 
-
-
 <p>
 And also update individual properties:
 </p>
@@ -3120,8 +3777,6 @@ $  curl -XGET http://localhost:7474/db/data/node/20991/properties{
   "name" : "New B5-2"
 }
 </pre>
-
-
 
 
 <p>
@@ -3178,8 +3833,6 @@ And finally we can <code>Post</code> a new node complete with properties:
 </pre>
 
 
-
-
 <p>
 In the <code>Location</code> response header the node identifies itself with its URI, as it foreseen in for ~POST~s.
 </p>
@@ -3209,33 +3862,27 @@ Finally, we can also <code>DELETE</code> the node again:
 </pre>
 
 
-
-
 <p>
 The next <code>GET</code> to this resource returns new a 404.
 </p>
 <p>
 In general, Neo4j's  RESTful interface allows to 
 </p><ul>
-<li>
-access nodes and relationships
+<li>access nodes and relationships
 </li>
-<li>
-create, update and delete nodes and relationships
+<li>create, update and delete nodes and relationships
 </li>
-<li>
-traverse the graph by following outcoming and incoming relationships of a node by following links
+<li>traverse the graph by following outcoming and incoming relationships of a node by following links
 </li>
-<li>
-executing Cypher queries
+<li>executing Cypher queries
 </li>
-<li>
-creating and modifying indexes
-
+<li>creating and modifying indexes
 </li>
 </ul>
 
-<p>and more
+
+<p>
+and more
 </p>
 <p>
 Properties are typed and support largely "classical" atomic types: boolean, byte, int, short, long, float, double, char and String.
@@ -3244,9 +3891,9 @@ Properties are typed and support largely "classical" atomic types: boolean, byte
 
 </div>
 
-<div id="outline-container-7.3" class="outline-3">
-<h3 id="sec-7.3"><span class="section-number-3">7.3</span> Cypher </h3>
-<div class="outline-text-3" id="text-7.3">
+<div id="outline-container-11-3" class="outline-3">
+<h3 id="sec-11-3"><span class="section-number-3">11.3</span> Cypher</h3>
+<div class="outline-text-3" id="text-11-3">
 
 <p>Cypher is the name of Neo4j's query language. It is fully specified in chapter 15 of Neo4j's user manual.
 </p>
@@ -3257,9 +3904,9 @@ A Cypher query can find nodes and relationships, create, update  and delete them
 
 </div>
 
-<div id="outline-container-7.4" class="outline-3">
-<h3 id="sec-7.4"><span class="section-number-3">7.4</span> Neocons </h3>
-<div class="outline-text-3" id="text-7.4">
+<div id="outline-container-11-4" class="outline-3">
+<h3 id="sec-11-4"><span class="section-number-3">11.4</span> Neocons</h3>
+<div class="outline-text-3" id="text-11-4">
 
 
 <p>
@@ -3277,13 +3924,11 @@ Dependencies are:
 </pre>
 
 
-
-
 <p>
 Neocons is well documented with most tutorials available under <a href="http://clojureneo4j.info/">http://clojureneo4j.info/</a>
 </p>
 <ul>
-<li id="sec-7.4.1">Initializing the connection <br/>
+<li id="sec-11-4-1">Initializing the connection<br/>
 
 
 
@@ -3293,14 +3938,14 @@ Neocons is well documented with most tutorials available under <a href="http://c
 </pre>
 
 
-
-
 <p>
 Neocons can handle only one connection at a time, but that is sufficient for our needs.
 </p>
 
 </li>
-<li id="sec-7.4.2">Creating nodes and relationships <br/>
+</ul>
+<ul>
+<li id="sec-11-4-2">Creating nodes and relationships<br/>
 The <code>create</code> method unsurprisingly creates nodes:
 
 
@@ -3308,8 +3953,6 @@ The <code>create</code> method unsurprisingly creates nodes:
 
 <pre class="example">(clojurewerkz.neocons.rest.nodes/create {:name "Name" :prop1 "Some value"})
 </pre>
-
-
 
 
 <p>
@@ -3325,13 +3968,13 @@ Similarly,
 </pre>
 
 
-
-
 <p>
 creates a new relationship and return it.
 </p>
 </li>
-<li id="sec-7.4.3">Updating nodes and relationships <br/>
+</ul>
+<ul>
+<li id="sec-11-4-3">Updating nodes and relationships<br/>
 Updating properties of nodes works via an update function (like for the REST interface there is no update of nodes per se):
 
 
@@ -3343,8 +3986,6 @@ Updating properties of nodes works via an update function (like for the REST int
 For a single property:
 (clojurewerkz.neocons.rest.nodes/set-property (:id node-to-be-updated) :prop1 "Some value")
 </pre>
-
-
 
 
 <p>
@@ -3359,10 +4000,10 @@ and the same for relationships:
 </pre>
 
 
-
-
 </li>
-<li id="sec-7.4.4">Creating indexes <br/>
+</ul>
+<ul>
+<li id="sec-11-4-4">Creating indexes<br/>
 
 <p>
 Like all databases Neo4j also supports indexes, typically on some properties. Creating and handling those indexes is a bit unusual, though, in that you have to ensure that individual entries are added to the index.
@@ -3379,8 +4020,6 @@ There are two types of indexes, one for nodes and one for relationships:
 </pre>
 
 
-
-
 <p>
 The name is later referred to when adding individual entries to the index:
 </p>
@@ -3393,10 +4032,10 @@ The name is later referred to when adding individual entries to the index:
 </pre>
 
 
-
-
 </li>
-<li id="sec-7.4.5">Finding nodes and relationships <br/>
+</ul>
+<ul>
+<li id="sec-11-4-5">Finding nodes and relationships<br/>
 Assuming that we have an index "idx" created, we can use it to retrieve it again:
 
 
@@ -3408,8 +4047,6 @@ Assuming that we have an index "idx" created, we can use it to retrieve it again
 ;Find the node (maximum one) where name-of-property has value
 (clojurewerkz.neocons.rest.nodes/find-one "idx" property-keyword  value)
 </pre>
-
-
 
 
 <p>
@@ -3426,8 +4063,6 @@ and the same for relationships:
 </pre>
 
 
-
-
 <p>
 In addition, we can run Cypher queries using:
 </p>
@@ -3436,8 +4071,6 @@ In addition, we can run Cypher queries using:
 <pre class="example">
 (clojurewerkz.neocons.rest.cypher/tquery "START n = node(*) WHERE has(n.name) and n.name = \"B5\" RETURN n;")
 </pre>
-
-
 
 
 <p>
@@ -3452,32 +4085,28 @@ In addition, we can traverse the graph, but that we will not cover here.
 
 </div>
 
-<div id="outline-container-7.4.1" class="outline-4">
-<h4 id="sec-7.4.1"><span class="section-number-4">7.4.1</span> Assignment </h4>
-<div class="outline-text-4" id="text-7.4.1">
+<div id="outline-container-11-4-1" class="outline-4">
+<h4 id="sec-11-4-1"><span class="section-number-4">11.4.1</span> Assignment</h4>
+<div class="outline-text-4" id="text-11-4-1">
 
 <p>Read an aggregated ATOM feeds such as Planet Clojure using the clj-rome library. The feed contains pointers to various other feeds. Extract the feed, its entries and the references to the original feeds and build a graph in Neo4j that has
 </p>
 <ul>
-<li>
-a node for the aggregated feed
+<li>a node for the aggregated feed
 </li>
-<li>
-a node for each feed entry
+<li>a node for each feed entry
 </li>
-<li>
-a node for each source feed
+<li>a node for each source feed
 </li>
-<li>
-a link from the entry node to its aggregated feed
+<li>a link from the entry node to its aggregated feed
 </li>
-<li>
-a link from the entry node to its source feed
-
+<li>a link from the entry node to its source feed
 </li>
 </ul>
 
-<p>This graph also is a social graph of interactions between feeds in a given domain.
+
+<p>
+This graph also is a social graph of interactions between feeds in a given domain.
 </p>
 <p>
 Work in teams of two, but hand in the results individually via the project's Moodle page. Indicate in the comments your team partner.
@@ -3488,9 +4117,9 @@ Work in teams of two, but hand in the results individually via the project's Moo
 
 </div>
 
-<div id="outline-container-7.5" class="outline-3">
-<h3 id="sec-7.5"><span class="section-number-3">7.5</span> Accessing RESTful storage </h3>
-<div class="outline-text-3" id="text-7.5">
+<div id="outline-container-11-5" class="outline-3">
+<h3 id="sec-11-5"><span class="section-number-3">11.5</span> Accessing RESTful storage</h3>
+<div class="outline-text-3" id="text-11-5">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-03 Sat</span></span>
 </p>
@@ -3517,22 +4146,20 @@ The reason to explain RESTful APIs for cloud storage  with EMC2 ATMOS is you can
 
 </div>
 
-<div id="outline-container-7.5.1" class="outline-4">
-<h4 id="sec-7.5.1"><span class="section-number-4">7.5.1</span> Security </h4>
-<div class="outline-text-4" id="text-7.5.1">
+<div id="outline-container-11-5-1" class="outline-4">
+<h4 id="sec-11-5-1"><span class="section-number-4">11.5.1</span> Security</h4>
+<div class="outline-text-4" id="text-11-5-1">
 
 <p>The Atmos Online Programmers Guide 2.01 specifies on p. 99 the details on how to handle security:
 </p>
 <ul>
-<li id="sec-7.5.1.1">Calculate a hash of the core http request itself <br/>
+<li id="sec-11-5-1-1">Calculate a hash of the core http request itself<br/>
 Dependencies on 
 
 
 
 <pre class="example">[commons-codec/commons-codec "1.4"]
 </pre>
-
-
 
 
 <p>
@@ -3549,13 +4176,13 @@ The overall formula to calculate a signature is:
 </pre>
 
 
-
-
 <p>
 where <code>CanonicalizedResource</code> is the path and query part of the request-URI, in lower-case and <code>CanonicalizedEMCHeaders</code> are EMC-specific HTTP headers, prepared according to a given algorithm.
 </p>
 </li>
-<li id="sec-7.5.1.2">Signing a request <br/>
+</ul>
+<ul>
+<li id="sec-11-5-1-2">Signing a request<br/>
 
 <p>
 The signature of the request is itself transmitted as a custom http header <code>x-emc-signature</code>:
@@ -3569,8 +4196,6 @@ For a request like:
 </pre>
 
 
-
-
 <p>
 with <code>POST</code> as method on <a href="https://api.atmosonline.com/rest/objects">https://api.atmosonline.com/rest/objects</a> and a secret key of <code>LJLuryj6zs8ste6Y3jTGQp71xq0=</code> (these are the values for UID and secret key given as an example in the manual) the result is a signature is <code>mIAtBPko+OFST0l0hKsgFxA3/4s=</code>:
 </p>
@@ -3580,8 +4205,6 @@ with <code>POST</code> as method on <a href="https://api.atmosonline.com/rest/ob
 <pre class="example">(s6.atmos/sign "LJLuryj6zs8ste6Y3jTGQp71xq0" "POST" "rest/objects" {"x-emc-uid" "33115732f3b7455d9d2344ddd235f4b9/user1", "content-type" "application/octet-stream", "x-emc-date" "Fri, 02 Nov 2012 14:15:19 GMT", "x-emc-useracl" "user1"})
 --&gt; "mIAtBPko+OFST0l0hKsgFxA3/4s="
 </pre>
-
-
 
 
 <p>
@@ -3594,8 +4217,6 @@ giving the complete set of headers:
 </pre>
 
 
-
-
 <p>
 To prevent replay attacks <code>x-emc-date</code> must be recent (within 5 minutes of the server time), otherwise a request is rejected.
 </p>
@@ -3605,9 +4226,9 @@ To prevent replay attacks <code>x-emc-date</code> must be recent (within 5 minut
 
 </div>
 
-<div id="outline-container-7.5.2" class="outline-4">
-<h4 id="sec-7.5.2"><span class="section-number-4">7.5.2</span> Creating an object </h4>
-<div class="outline-text-4" id="text-7.5.2">
+<div id="outline-container-11-5-2" class="outline-4">
+<h4 id="sec-11-5-2"><span class="section-number-4">11.5.2</span> Creating an object</h4>
+<div class="outline-text-4" id="text-11-5-2">
 
 <p>Objects are as usual created via <code>POST</code> requests:
 </p>
@@ -3615,8 +4236,6 @@ To prevent replay attacks <code>x-emc-date</code> must be recent (within 5 minut
 
 <pre class="example">curl -v -XPOST -d "ATMOS, here I come" --header "x-emc-uid: UID" --header "content-type: application/octet-stream" --header "x-emc-date: Fri, 02 Nov 2012 14:15:19 GMT" --header "x-emc-useracl: A60284312655ec6780c9" --header "x-emc-signature: 6WqDxVWWvbOC3ZQGGD+hkvK+8sk=" https://api.atmosonline.com/rest/objects
 </pre>
-
-
 
 
 <p>
@@ -3629,8 +4248,6 @@ If successful, the request returns a <code>201</code> and contains amongst other
 </pre>
 
 
-
-
 <p>
 Alternatively, objects can also be created in a "logical" namespace by <code>POST~ing to ~/rest/namespace</code> with a URI afterwards that is interpreted as a directory:
 </p>
@@ -3639,8 +4256,6 @@ Alternatively, objects can also be created in a "logical" namespace by <code>POS
 
 <pre class="example">(create-object-in-namespace UUID SECRET USERID "/results/res3.xml" (slurp "/tmp/res3.xml") "author=ABC,date=2012-11-02")
 </pre>
-
-
 
 
 <p>
@@ -3653,15 +4268,13 @@ resulting in the object and its tag structure being created. However, again the 
 </pre>
 
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-7.5.3" class="outline-4">
-<h4 id="sec-7.5.3"><span class="section-number-4">7.5.3</span> Atmosfox </h4>
-<div class="outline-text-4" id="text-7.5.3">
+<div id="outline-container-11-5-3" class="outline-4">
+<h4 id="sec-11-5-3"><span class="section-number-4">11.5.3</span> Atmosfox</h4>
+<div class="outline-text-4" id="text-11-5-3">
 
 <p>A Firefox plugin, Atmosfox, allows to navigate remote files in somewhat Norton-commander-style.
 </p>
@@ -3669,24 +4282,24 @@ resulting in the object and its tag structure being created. However, again the 
 In the following screenshots we see the restults of the previous command, as shown in Atmosfox in object view:
 </p>
 <p>
-<a href="#sec-7.5.3"><img src="img/atmosfox_files.png"/></a>
+<a href="#img-atmosfox_files.png">img/atmosfox_files.png</a>
 </p>
 <p>
-<a href="#sec-7.5.3"><img src="img/atmosfox_author_date.png"/></a>
+<a href="#img-atmosfox_author_date.png">img/atmosfox_author_date.png</a>
 </p>
 <p>
 and the same in namespace view:
 </p>
 <p>
-<a href="#sec-7.5.3"><img src="img/atmosfox_namespace_view.png"/></a>
+<a href="#img-atmosfox_namespace_view.png">img/atmosfox_namespace_view.png</a>
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-7.5.4" class="outline-4">
-<h4 id="sec-7.5.4"><span class="section-number-4">7.5.4</span> Handling of Metadata </h4>
-<div class="outline-text-4" id="text-7.5.4">
+<div id="outline-container-11-5-4" class="outline-4">
+<h4 id="sec-11-5-4"><span class="section-number-4">11.5.4</span> Handling of Metadata</h4>
+<div class="outline-text-4" id="text-11-5-4">
 
 
 <p>
@@ -3707,8 +4320,6 @@ or
 </pre>
 
 
-
-
 <p>
 This gives for example:
 </p>
@@ -3718,8 +4329,6 @@ This gives for example:
 <pre class="example">(get-system-metadata UUID SECRET-KEY "4ee696e4a31f549604f0b753961dcc0509435479c09f")
 {:trace-redirects ["https://api.atmosonline.com/rest/objects/4ee696e4a31f549604f0b753961dcc0509435479c09f?metadata/system"], :request-time 2703, :status 200, :headers {"date" "Sat, 03 Nov 2012 07:20:11 GMT", "server" "Apache", "x-emc-policy" "_int", "x-emc-meta" "atime=2012-11-02T21:04:07Z, mtime=2012-11-02T21:04:07Z, ctime=2012-11-02T21:04:07Z, itime=2012-11-02T21:04:07Z, type=regular, uid=A60284312655ec6780c9, gid=apache, objectid=4ee696e4a31f549604f0b753961dcc0509435479c09f, objname=res3.xml, size=1957, nlink=1, policyname=default", "content-length" "0", "connection" "close", "content-type" "text/plain; charset=UTF-8"}, :body ""}
 </pre>
-
-
 
 
 <p>
@@ -3737,8 +4346,6 @@ or
 </pre>
 
 
-
-
 <p>
 giving for example:
 </p>
@@ -3750,8 +4357,6 @@ giving for example:
 </pre>
 
 
-
-
 <p>
 Again, it is possible to filter with <code>x-emc-tags</code>.
 </p>
@@ -3759,9 +4364,9 @@ Again, it is possible to filter with <code>x-emc-tags</code>.
 
 </div>
 
-<div id="outline-container-7.5.5" class="outline-4">
-<h4 id="sec-7.5.5"><span class="section-number-4">7.5.5</span> Assignment </h4>
-<div class="outline-text-4" id="text-7.5.5">
+<div id="outline-container-11-5-5" class="outline-4">
+<h4 id="sec-11-5-5"><span class="section-number-4">11.5.5</span> Assignment</h4>
+<div class="outline-text-4" id="text-11-5-5">
 
 <p>Continue yesterday's assignment, but devise namespaces to actually store the corresponding entries in the ATMOS developer acount (for a few examples). Have Neo4j store those references as content references.
 </p>
@@ -3771,866 +4376,16 @@ Again, it is possible to filter with <code>x-emc-tags</code>.
 
 </div>
 
-<div id="outline-container-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> The Semantic Web </h2>
-<div class="outline-text-2" id="text-8">
-
-<p>Sessions <span class="timestamp-wrapper"> <span class="timestamp">2012-12-14 Fri</span></span> and <span class="timestamp-wrapper"> <span class="timestamp">2012-12-15 Sat</span></span>
-</p><ul>
-<li>
-What are Ontologies? Ontologies and Us
-</li>
-<li>
-Ontologies and Technology
-<ul>
-<li>
-Standards
-<ul>
-<li>
-RDF
-</li>
-<li>
-RDF-S
-</li>
-<li>
-OWL
-</li>
-<li>
-SPARQL:
-<a href="http://data.gov.uk/sparql">http://data.gov.uk/sparql</a>
-<a href="http://jena.apache.org/tutorials/sparql.html">http://jena.apache.org/tutorials/sparql.html</a>
-<a href="http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29">http://www.cambridgesemantics.com/semantic-university/sparql-by-example#%281%29</a>
-</li>
-</ul>
-</li>
-<li>
-Object identity
-</li>
-<li>
-Tools
-<ul>
-<li>
-Protégé
-</li>
-<li>
-Semantic Stores
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-Linked Open Data
-</li>
-<li>
-Semantic Web Services
-
-</li>
-</ul>
-
-<p><a href="http://data.gov.uk/sparql">http://data.gov.uk/sparql</a>
-</p>
-<p>
-cf. presentation stored in Moodle.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Preparing the Practical Programming Projects </h2>
-<div class="outline-text-2" id="text-9">
-
-<p>Sessions <span class="timestamp-wrapper"> <span class="timestamp">2012-12-15 Sat</span></span>
-</p>
-<p>
-cf. <a href="https://moodle.fh-worms.de/moodle/mod/page/view.php?id=17310">https://moodle.fh-worms.de/moodle/mod/page/view.php?id=17310</a>
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> Social media and the Semantic Web </h2>
-<div class="outline-text-2" id="text-10">
-
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2013-01-04 Fri</span></span>
-</p>
-
-</div>
-
-<div id="outline-container-10.1" class="outline-3">
-<h3 id="sec-10.1"><span class="section-number-3">10.1</span> Programming the Semantic Web </h3>
-<div class="outline-text-3" id="text-10.1">
-
-
-<p>
-A large number of libraries exist for handling RDF including well-established Open Source Java libraries such as Sesame and Jena. For Clojure, Seabass (<a href="https://clojars.org/seabass">https://clojars.org/seabass</a>) offers a small wrapper around the Jena library, making it easy to treat RDF in Clojure. Similar libraries exist for other platforms.
-</p>
-<p>
-As dependencies you add:
-</p>
-
-
-<pre class="example">[xerces/xercesImpl "2.10.0"] ;; Direct download from Maven central
-[seabass "2.0"]
-</pre>
-
-
-
-
-
-<p>
-This will also download the Jena libraries which do most of the work.
-</p>
-<p>
-Once seabass is installed, using it is simple: 
-</p>
-<p>
-You <code>build</code> a model, essentially a local database containing <code>seabass.core</code> triples you just load one or more files in one of the possible RDF serialzation formats (cf. below):
-</p>
-
-
-<pre class="example">(def model 
-  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
-         ["src/s12/61960CC0002.ttl" "TTL"]))
-</pre>
-
-
-
-
-<p>
-In addition, you can also indicate URIs from which these files should be downloaded. You can also integrate data from external SPARQL endpoints using <code>CONSTRUCT</code> queries and the <code>pull</code> command:
-</p>
-
-
-
-
-<pre class="example">(def model 
-  (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
-         ["src/s12/61960CC0002.ttl" "TTL"]))
-
-;;Query is
-;;construct {?institution ?p ?o} {?institution a &lt;http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion&gt; . 
-?institution ?p ?o
-} LIMIT 10000")
-(def model (build ["src/s12/62007CJ0535.rdf" "RDF/XML"]
-         ["src/s12/61960CC0002.ttl" "TTL"]
-         (pull "construct {?institution ?p ?o} {?institution a &lt;http://dbpedia.org/class/yago/InstitutionsOfTheEuropeanUnion&gt; . 
-?institution ?p ?o
-} LIMIT 10000" "http://dbpedia.org/sparql")))
-</pre>
-
-
-
-
-<p>
-You can then execute queries against a model using the <code>bounce</code> function that takes the SPARQL <code>SELECT</code> query as a first parameter and a model as the second, e.g.:
-</p>
-
-
-<pre class="example">(bounce 
-"PREFIX cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt; 
-select ?expr ?title ?lang
-{?work cdm:resource_legal_id_celex \"62007CJ0535\"^^xsd:string .
- ?expr cdm:expression_belongs_to_work ?work .
- ?expr cdm:expression_title ?title .
- ?expr cdm:expression_uses_language ?lang .
- }" model)
-</pre>
-
-
-
-
-<p>
-The result is returnd as a Clojure map with all the results in the <code>:data</code> field:
-</p>
-
-
-<pre class="example">{:vars (:expr :title :lang), :data ({:lang "http://publications.europa.eu/resource/authority/language/FRA", :title "Arrêt de la Cour (deuxième chambre) du 14 octobre 2010. # Commission européenne contre République d'Autriche. # Manquement d’État - Directives 79/409/CEE et 92/43/CEE - Conservation des oiseaux sauvages - Désignation incorrecte et protection juridique insuffisante des zones de protection spéciale. # Affaire C-535/07.", :expr "http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA"}...)}
-</pre>
-
-
-
-
-<p>
-You can handle those results like any other Clojure map
-</p>
-
-
-<pre class="example">(filter #(= (:lang %) "http://publications.europa.eu/resource/authority/language/ENG")  (:data (get-titles-by-celex "61960CC0002")))
-</pre>
-
-
-
-
-</div>
-
-</div>
-
-<div id="outline-container-10.2" class="outline-3">
-<h3 id="sec-10.2"><span class="section-number-3">10.2</span> RDF Serialization formats </h3>
-<div class="outline-text-3" id="text-10.2">
-
-<p>Logically, all RDF is triples of subject, predicate and object, and indeed that is how it is often represtend internally inside triple stores. However, triples can be serialized and exchanged in a variety of different formats. Some of these such as Turtle are very close to the triple philosophy, others need more interpretation.
-</p>
-
-</div>
-
-<div id="outline-container-10.2.1" class="outline-4">
-<h4 id="sec-10.2.1"><span class="section-number-4">10.2.1</span> Turtle </h4>
-<div class="outline-text-4" id="text-10.2.1">
-
-<p>One of the simplest forms to encode semantic information is Turtle. Turtle essentially lists the triples. Individual triples are separated by dots (<code>.</code>), but in order to avoid long lists of full triples those triples that share the same subject and predicateonly list the different objects, separated by ~,~, whereas those only sharing the same subject are  compacted by using <code>;</code>.
-</p>
-
-
-
-<pre class="example">@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
-@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
-@prefix cdm: &lt;http://publications.europa.eu/ontology/cdm#&gt; .
-@prefix cdm-annotation: &lt;http://publications.europa.eu/ontology/annotation#&gt; .
-@base &lt;http://www.w3.org/2002/07/owl#&gt; .
-
-&lt;http://example.org/resource/celex/61960CC0002&gt; rdf:type cdm:case-law ,
-                                                         cdm:document_cjeu ,
-                                                         cdm:opinion_advocate-general ,
-                                                         cdm:resource_legal ,
-                                                         cdm:work ,
-                                                 cdm:resource_legal_number_natural_celex "0002"^^xsd:positiveInteger ;
- cdm:resource_legal_year "1960"^^xsd:gYear .
-
-&lt;http://example.org/resource/celex/61960CC0002.BUL&gt; rdf:type cdm:expression .                                              
-</pre>
-
-
-
-
-<p>
-The mimetype of Turtle is <code>application/x-turtle</code>, the typical file extension <code>TTL</code> (cf. also above for the treatment in the seabass library).
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-10.2.2" class="outline-4">
-<h4 id="sec-10.2.2"><span class="section-number-4">10.2.2</span> RDF/XML </h4>
-<div class="outline-text-4" id="text-10.2.2">
-
-<p>Probably the most frequent pure RDF encoding is <code>RDF/XML</code> which is, as the name suggests, an XML-based serialization format for RDF: 
-</p>
-
-
-
-<pre class="example">&lt;rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://www.w3.org/2002/07/owl"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-     xmlns:cdm="http://publications.europa.eu/ontology/cdm#"
-     xmlns:cdm-annotation="http://publications.europa.eu/ontology/annotation#"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:skos="http://www.w3.org/2004/02/skos/core#"&gt;
-  &lt;cdm:judgement rdf:about="http://example.org/resource/celex/62007CJ0535"&gt;
-        &lt;rdf:type rdf:resource="&amp;cdm;document_cjeu"/&gt;
-        &lt;rdf:type rdf:resource="&amp;cdm;judgement"/&gt;
-        &lt;cdm:resource_legal_number_natural_celex rdf:datatype="&amp;xsd;positiveInteger"&gt;0535&lt;/cdm:resource_legal_number_natural_celex&gt;
-        &lt;cdm:resource_legal_year rdf:datatype="&amp;xsd;gYear"&gt;2007&lt;/cdm:resource_legal_year&gt;    
-  &lt;/cdm:judgement&gt;
-
-  &lt;cdm:expression rdf:about="http://example.org/resource/celex/62007CJ0535.ITA"&gt;
-        &lt;cdm:expression_title rdf:datatype="&amp;xsd;string"&gt;Sentenza della Corte (Seconda Sezione) del 14 ottobre 2010. # Commissione europea contro Repubblica d&amp;apos;Austria. # Inadempimento di uno Stato - Direttive 79/409/CEE e 92/43/CEE - Conservazione degli uccelli selvatici - Designazione erronea e tutela giuridica insufficiente delle zone di protezione speciale. # Causa C-535/07.&lt;/cdm:expression_title&gt;
-        &lt;cdm:expression_belongs_to_work rdf:resource="http://example.org/resource/celex/62007CJ0535"/&gt;
-        &lt;cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ITA"/&gt;
-    &lt;/cdm:expression&gt;
-&lt;/rdf:RDF&gt;
-</pre>
-
-
-
-
-<p>
-In all of these cases the subject can also be indicated by the <code>rdf:Description</code> element with an explicit <code>rdf:type</code> that indicates the correct type. This example uses an abbreviation that uses (one of) the types as the class name.
-</p>
-<p>
-The subject is always indicated by the <code>rdf:about</code> attribute, the predicate as the element name (e.g. <code>cdm:expression_title</code>), the object by the <code>rdf:resource</code> attribute. In the case of data properties, <code>rdf:datatype</code> can be used ot indicate the correct datatype.
-</p>
-<p>
-In order to mark up common concepts such as the Italian language in this example, the RDF examples refer to codes defined elsewhere in authority tables.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-10.2.3" class="outline-4">
-<h4 id="sec-10.2.3"><span class="section-number-4">10.2.3</span> RDFa </h4>
-<div class="outline-text-4" id="text-10.2.3">
-
-<p>RDFa is, in the words if the W3C recommendation <a href="http://www.w3.org/TR/rdfa-syntax/">http://www.w3.org/TR/rdfa-syntax/</a>, "Syntax and processing rules for embedding RDF through attributes" into a markup language, virtually always (X)HTML. The same webpage is then both human-readable and machine-readable.
-</p>
-<p>
-RDFa largely operates through attributes that either already exist in HTML or are newly added. In fact, RDFa means "RDF in Attributes".
-</p>
-<p>
-For the <code>property</code> and <code>rel</code> attributes this looks as follows (all examples taken directly from the RDFa 1.1 specification <a href="http://www.w3.org/TR/rdfa-syntax/">http://www.w3.org/TR/rdfa-syntax/</a>):
-</p>
-
-
-
-<pre class="example">&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
-  &lt;head&gt;
-    &lt;title&gt;My home-page&lt;/title&gt;
-    &lt;meta property="http://purl.org/dc/terms/creator" content="Mark Birbeck" /&gt;
-    &lt;link rel="http://xmlns.com/foaf/0.1/topic" href="http://www.example.com/#us" /&gt;
-  &lt;/head&gt;
-  &lt;body&gt;...&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-
-
-
-<p>
-This means that the data property <code>http://purl.org/dc/terms/creator</code>, in this case defined by the Dublin Core specification, has the value <code>Mark Birbeck</code>. The link to <code>http://www.example.com/#us</code> is to be interpreted as a Friend of a Friend (FOAF) topic <code>http://xmlns.com/foaf/0.1/topic</code>.
-</p>
-<p>
-Just like for Turtle it is possible to define abbreviations through prefixes. The following is exactly equivalent to the previous example:
-</p>
-
-
-
-<pre class="example">&lt;html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="foaf: http://xmlns.com/foaf/0.1/
-          dc: http://purl.org/dc/terms/"
-  &gt;
-  &lt;head&gt;
-    &lt;title&gt;My home-page&lt;/title&gt;
-    &lt;meta property="dc:creator" content="Mark Birbeck" /&gt;
-    &lt;link rel="foaf:topic" href="http://www.example.com/#us" /&gt;
-  &lt;/head&gt;
-  &lt;body&gt;...&lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-
-
-
-<p>
-In principle, the <code>prefix</code> attribute can be used on any element (though in reality this is rarely used).
-</p>
-<p>
-If the content is already present on the human readable page, it can just be reused and an explicit <code>content</code> attribute is not needed:
-</p>
-
-
-
-<pre class="example">&lt;html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="dc: http://purl.org/dc/terms/"
-  &gt;
-  &lt;head&gt;&lt;title&gt;My Home Page&lt;/title&gt;&lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1 property="dc:title"&gt;My home-page&lt;/h1&gt;
-    &lt;p&gt;Last modified: 16 September 2015&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-
-
-
-<p>
-If necessary, the information on the content can be explicitly typed using the <code>datatype</code> property:
-</p>
-
-
-<pre class="example">&lt;html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="xsd: http://www.w3.org/2001/XMLSchema#
-          dc: http://purl.org/dc/terms/"
-  &gt;
-  &lt;head&gt;&lt;title&gt;My Home Page&lt;/title&gt;&lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1 property="dc:title"&gt;My home-page&lt;/h1&gt;
-    &lt;p&gt;Last modified: &lt;span property="dc:modified"
-            content="2015-09-16T16:00:00-05:00"
-            datatype="xsd:dateTime"&gt;16 September 2015&lt;/span&gt;.&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-
-
-
-
-
-
-<p>
-In all these cases the subject of the triples is implicitly the webpage itself. RDFa also permits to indicate explicit information on other subjects using the <code>about</code> property:
-</p>
-
-
-
-<pre class="example">&lt;html
-  xmlns="http://www.w3.org/1999/xhtml"
-  prefix="bibo: http://purl.org/ontology/bibo/
-          dc: http://purl.org/dc/terms/"
-  &gt;
-  &lt;head&gt;
-    &lt;title&gt;Books by Marco Pierre White&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    I think White's book
-    '&lt;span about="urn:ISBN:0091808189" 
-           property="dc:title"&gt;Canteen Cuisine&lt;/span&gt;'
-    is well worth getting since although it's quite advanced stuff, he
-    makes it pretty easy to follow. You might also like
-    &lt;span 
-     about="urn:ISBN:1596913614" 
-     property="dc:description"
-     &gt;White's autobiography&lt;/span&gt;.
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-
-
-
-<p>
-If really needed, <code>rdf:type</code> can be indicated through the <code>typeof</code> attribute.
-</p>
-<p>
-Finally, it is possible to markup also the object of a triple explicitly, indicating in this example that Albert Einstein lived, in terms of the DBpedia ontology, both in the German empire and in Switzerland:
-</p>
-
-
-
-<pre class="example">&lt;div about="http://dbpedia.org/resource/Albert_Einstein" rel="dbp-owl:residence"&gt;
-  &lt;span about="http://dbpedia.org/resource/German_Empire"&gt;&lt;/span&gt;
-  &lt;span about="http://dbpedia.org/resource/Switzerland"&gt;&lt;/span&gt;
-&lt;/div&gt;
-</pre>
-
-
-
-
-<p>
-In full, the following attributes are defined in the RDFa recommendation, section 5:
-</p>
-<ul>
-<li>
-about: a SafeCURIEorCURIEorIRI, used for stating what the data is about (a 'subject' in RDF terminology);
-</li>
-<li>
-content: a CDATA string, for supplying machine-readable content for a literal (a 'literal object', in RDF terminology);
-</li>
-<li>
-datatype: a TERMorCURIEorAbsIRI representing a datatype, to express the datatype of a literal;
-</li>
-<li>
-href (optional): a traditionally navigable IRI for expressing the partner resource of a relationship (a 'resource object', in RDF terminology);
-</li>
-<li>
-inlist: An attribute used to indicate that the object associated with a rel or property attribute on the same element is to be added to the list for that predicate. The value of this attribute must be ignored. Presence of this attribute causes a list to be created if it does not already exist.
-</li>
-<li>
-prefix: a white space separated list of prefix-name IRI pairs of the form NCName ':' ' '+ xsd:anyURI
-</li>
-<li>
-property: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between a subject and either a resource object if given or some literal text (also a 'predicate');
-</li>
-<li>
-rel: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing relationships between two resources ('predicates' in RDF terminology);
-</li>
-<li>
-resource: a SafeCURIEorCURIEorIRI for expressing the partner resource of a relationship that is not intended to be navigable (e.g., a 'clickable' link) (also an 'object');
-</li>
-<li>
-rev: a white space separated list of TERMorCURIEorAbsIRIs, used for expressing reverse relationships between two resources (also 'predicates');
-</li>
-<li>
-src (optional): an IRI for expressing the partner resource of a relationship when the resource is embedded (also a 'resource object');
-</li>
-<li>
-typeof: a white space separated list of TERMorCURIEorAbsIRIs that indicate the RDF type(s) to associate with a subject;
-</li>
-<li>
-vocab: A IRI that defines the mapping to use when a TERM is referenced in an attribute value. 
-
-</li>
-</ul>
-
-<p>CURIes in this context are "compact URI expressions", essentially abbreviated URIs. 
-</p>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-10.3" class="outline-3">
-<h3 id="sec-10.3"><span class="section-number-3">10.3</span> Exercise: Markup of a web page </h3>
-<div class="outline-text-3" id="text-10.3">
-
-<p>Markup a Wikipedia page, e.g. <a href="http://en.wikipedia.org/wiki/The_hobbit">http://en.wikipedia.org/wiki/The_hobbit</a>, with the DBpedia ontology
-</p>
-<p>
-cf. also <a href="http://wiki.dbpedia.org/Ontology?v=194q">http://wiki.dbpedia.org/Ontology?v=194q</a> for the ontology and <a href="http://dbpedia.org/page/The_Hobbit">http://dbpedia.org/page/The_Hobbit</a> for the "solution" of dbpedia
-</p>
-<p>
-<a href="#sec-10.3"><img src="img/the_hobbit_rdfa.png"/></a>
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-10.4" class="outline-3">
-<h3 id="sec-10.4"><span class="section-number-3">10.4</span> Facebook and RDFa: the Open Graph protocol </h3>
-<div class="outline-text-3" id="text-10.4">
-
-<p>Facebook uses RDFa to integrate with external webpages. The Open Graph protocol <a href="http://opengraphprotocol.org/">http://opengraphprotocol.org/</a> / <a href="http://ogp.me/">http://ogp.me/</a> defines a vocabulary that can be used to integrate metadata into a webpage. In fact, this vocabulary is itself defined in RDF and available under <a href="http://ogp.me/ns/ogp.me.ttl">http://ogp.me/ns/ogp.me.ttl</a>. It defines the following core properties ("basic metadata") that should always be present (cited after <a href="http://ogp.me/">http://ogp.me/</a>):
-</p>
-<ul>
-<li>
-<code>og:title</code> - The title of your object as it should appear within the graph, e.g., "The Rock".
-</li>
-<li>
-<code>og:type</code> - The type of your object, e.g., "video.movie". Depending on the type you specify, other properties may also be required.
-</li>
-<li>
-<code>og:image</code> - An image URL which should represent your object within the graph.
-</li>
-<li>
-<code>og:url</code> - The canonical URL of your object that will be used as its permanent ID in the graph, e.g., "<a href="http://www.imdb.com/title/tt0117500/"">http://www.imdb.com/title/tt0117500/"</a>.
-
-</li>
-</ul>
-
-<p><code>og</code> stands for <a href="http://ogp.me/ns#">http://ogp.me/ns#</a>.
-</p>
-<p>
-This information should be given in metatags in the HTML header, though this is a Facebook restriction, not an RDFa one:
-</p>
-
-
-
-<pre class="example">&lt;html&gt;
-  &lt;head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# book: http://ogp.me/ns/book#"&gt;
-    &lt;title&gt;OG Sample Object - Geordnetes Weltbild&lt;/title&gt;
-
-    &lt;meta property="og:title" content="Geordnetes Weltbild" /&gt;
-    &lt;meta property="og:image" content="http://www.budabe.de/img/geordnetes_weltbild_cover_1.jpg" /&gt;
-    &lt;meta property="og:url" content="http://www.budabe.eu/static/geordnetes_weltbild" /&gt;
-    &lt;meta property="og:type" content="book" /&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-  ...
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
-
-
-
-
-<p>
-In addition to these mandatory elements the following optional metadata elements are possible for all types of objects:
-</p>
-<ul>
-<li>
-og:audio - A URL to an audio file to accompany this object.
-</li>
-<li>
-og:description - A one to two sentence description of your object.
-</li>
-<li>
-og:determiner - The word that appears before this object's title in a sentence. An enum of (a, an, the, "", auto). If auto is chosen, the consumer of your data should chose between "a" or "an". Default is "" (blank).
-</li>
-<li>
-og:locale - The locale these tags are marked up in. Of the format language_TERRITORY. Default is en_US.
-</li>
-<li>
-og:locale:alternate - An array of other locales this page is available in.
-</li>
-<li>
-og:site_name - If your object is part of a larger web site, the name which should be displayed for the overall site. e.g., "IMDb".
-</li>
-<li>
-og:video - A URL to a video file that complements this object
-
-
-</li>
-</ul>
-
-<p>Individual types of objects can and often have more specific metadata in addition to the generic ones. A book for example can have the following metadata elements (namespace <a href="http://ogp.me/ns/book#">http://ogp.me/ns/book#</a>):
-</p>
-<ul>
-<li>
-book:author - profile array - Who wrote this book.
-</li>
-<li>
-book:isbn - string - The ISBN
-</li>
-<li>
-book:release_date - datetime - The date the book was released.
-</li>
-<li>
-book:tag - string array - Tag words associated with this book.
-
-</li>
-</ul>
-
-<p>The following types of objects are predefined (all of them have their own namespaces):
-</p><ul>
-<li>
-website
-</li>
-<li>
-music with subtypes music.song, music.album, music.playlist and music.radio_station
-</li>
-<li>
-video with subtypes video.movie, video.episode, video.tv_show, video.other
-</li>
-<li>
-article
-</li>
-<li>
-book
-</li>
-<li>
-profile
-
-</li>
-</ul>
-
-<p>In addition, Facebook itself defines a number of extensions in the <a href="http://ogp.me/ns/fb#">http://ogp.me/ns/fb#</a> namespace, notably:
-</p><ul>
-<li>
-  fb:app_id: the application id in Facebook, e.g. 230196110444178
-</li>
-<li>
-  fb:admins: one or more ids of Facebook users that can get administrative information on this object, e.g. 100004654151051
-
-</li>
-</ul>
-
-<p>Facebook can then directly use this metadata integrating information on a resource into Facebook itself, e.g. for the "liking" of resources. You can access this information by going through the like button with for the administrator(s) will now contain an additional link to this admin page.
-</p>
-<p>
-<a href="#sec-10.4"><img src="img/facebook_activities.png"/></a>
-</p>
-<p>
-In the application configuration, e.g. for <a href="https://developers.facebook.com/apps/230196110444178">https://developers.facebook.com/apps/230196110444178</a>, an application can even go beyond this. It can define action types (= object properties in OWL terms) e.g. to rate a book. For this it can either reuse existing object types or even define completely new ones. It can also define new object types (= classes in OWL terms).
-</p>
-<p>
-<a href="#sec-10.4"><img src="img/app_center_open_graph.png"/></a>
-</p>
-<p>
-An application can indicate its intention to publish things on Facebook through the like button:
-</p>
-
-
-
-<pre class="example">&lt;fb:like href="http://www.goodreads.com/book/show/13010670-programming-clojure" width="280" layout="standard" show_faces="true" action="like" colorscheme="light" font="arial" /&gt;
-</pre>
-
-
-
-
-
-<p>
-In all of these cases Facebook extracts metadata in the website to populate the information in Facebook. This metadata is precisely the one encoded in RDFa. To test this integration the company has created a debugger for metadata: <a href="http://developers.facebook.com/tools/debug/og/object">http://developers.facebook.com/tools/debug/og/object</a>. You can use it for example: <a href="http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402">http://developers.facebook.com/tools/debug/og/object?q=http%3A%2F%2Fwww.goodreads.com%2Freview%2Fshow%2F488396402</a>. Google has a corresponding tool, <a href="http://www.google.com/webmasters/tools/richsnippets">http://www.google.com/webmasters/tools/richsnippets</a> that also supports the Open Graph Protocol.
-</p>
-<p>
-However, Facebook goes a step further. In the application center a developer can define new RDF objects based on the Open Graph Protocol with new elements inside. What is more, the system then automatically creates a sample website with RDFa data integrated, e.g. <a href="http://samples.ogp.me//199815506812566">http://samples.ogp.me//199815506812566</a> for a sample application on book rating. In other terms, Facebook permits to extend the existing ontology with new properties and classes:
-</p>
-<p>
-<a href="#sec-10.4"><img src="img/open_graph_new_properties.png"/></a>
-</p>
-<p>
-<a href="#sec-10.4"><img src="img/open_graph_new_class.png"/></a>
-</p>
-
-<p>
-What is more, the tool automatically generates a sample object, e. g. for book: <a href="https://graph.facebook.com/10151191340470101/">https://graph.facebook.com/10151191340470101/</a>, and instructions on how to call the corresponding web services that an application can use to post its entries directly to a user's timeline:
-</p>
-
-
-<pre class="example">curl -F 'access_token=XXXXX'      -F 'book=http://samples.ogp.me/199815506812566'         'https://graph.facebook.com/me/worms-web:rate'
-
-curl -F 'access_token=XXXX'      -F 'book=https://www.budabe.eu/static/geordnetes_weltbild'         'https://graph.facebook.com/me/worms-web:rate'
-</pre>
-
-
-
-
-<p>
-With aggregations it is possible to calculate numbers of smaller activities, e.g. this user has heard 200 songs last months.
-</p>
-<p>
-At this stage many of the big players from <a href="http://imdb.com">http://imdb.com</a>, <a href="http://www.amazon.com">http://www.amazon.com</a>, <a href="http://digg.com">http://digg.com</a>, <a href="https://www.spotify.com">https://www.spotify.com</a>, <a href="http://www.goodreads.com/">http://www.goodreads.com/</a> all integrate in this way with Facebook, using the Facebook authentication, sometimes amongst others such as the Twitter or Google authentication.
-</p>
-<p>
-<a href="http://youtu.be/TM-2fNtg7p8">http://youtu.be/TM-2fNtg7p8</a> and <a href="http://youtu.be/__FplazeKvU">http://youtu.be/__FplazeKvU</a> give a good idea on the business reasons that Facebook has to integrate Facebook with all sorts of objects outside it, making effectively a part of Facebook. This specific take on a semantic web of things that monitors a users activities &mdash; books, music, runs, whatever &mdash; is at the same time techically fascinating and obviously disquieting from a privacy point of view.
-</p>
-
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-11" class="outline-2">
-<h2 id="sec-11"><span class="section-number-2">11</span> Excursion: Web Services in .NET </h2>
-<div class="outline-text-2" id="text-11">
-
-<p>Special guest: Lukas Georgieff, talking about SOAP-based and RESTful web services on the .NET platform using C#
-</p>
-<p>
-Session <span class="timestamp-wrapper"> <span class="timestamp">2012-11-30 Fri</span></span>
-</p><ul>
-<li>
-.Net-Framework
-</li>
-<li>
-Windows Communication Foundation
-<ul>
-<li>
-Architecture
-</li>
-<li>
-Contracts and Description
-</li>
-<li>
-Service Runtime
-</li>
-<li>
-Messaging
-</li>
-<li>
-Hosting and Activation
-</li>
-</ul>
-</li>
-<li>
-SOAP and WCF
-<ul>
-<li>
-Music Store (Service)
-<ul>
-<li>
-Requirements
-</li>
-<li>
-Implementation
-<ul>
-<li>
-Create a Visual Studio WCF-Project
-</li>
-<li>
-Service and Operation Contracts
-</li>
-<li>
-Message and Data Contracts
-</li>
-<li>
-loginUser and postUserImage
-</li>
-<li>
-Binding
-</li>
-</ul>
-</li>
-<li>
-Live Coding: Echo Service
-</li>
-</ul>
-</li>
-<li>
-Music Store (Client): Implementation
-<ul>
-<li>
-Service-Reference
-</li>
-<li>
-Calling Stub-Methods
-
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-<p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-12-01 Sat</span></span>
-</p><ul>
-<li>
-RESTful and WCF
-<ul>
-<li>
-Music Store (Service)
-<ul>
-<li>
-Implementation
-<ul>
-<li>
-Service and Operation Contracts
-</li>
-<li>
-UriTemplate, WebGet and WebInvoke
-</li>
-<li>
-Data Contracts
-</li>
-<li>
-loginUser, postUserImage and WebOperationContext
-</li>
-<li>
-Binding
-</li>
-</ul>
-</li>
-<li>
-Live Coding: Echo Service
-</li>
-<li>
-Music Store (Client): Implementation
-<ul>
-<li>
-WebChannelFactory
-</li>
-<li>
-Implementing a RESTful Stub
-
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-
-</div>
-
 <div id="outline-container-12" class="outline-2">
-<h2 id="sec-12"><span class="section-number-2">12</span> Bibliography </h2>
+<h2 id="sec-12"><span class="section-number-2">12</span> Excursion: Clojure and JVM</h2>
 <div class="outline-text-2" id="text-12">
 
-</div>
 
 </div>
 
-<div id="outline-container-13" class="outline-2">
-<h2 id="sec-13"><span class="section-number-2">13</span> Excursion: Clojure and JVM </h2>
-<div class="outline-text-2" id="text-13">
-
-
-</div>
-
-<div id="outline-container-13.1" class="outline-3">
-<h3 id="sec-13.1"><span class="section-number-3">13.1</span> Why Clojure? </h3>
-<div class="outline-text-3" id="text-13.1">
+<div id="outline-container-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> Why Clojure?</h3>
+<div class="outline-text-3" id="text-12-1">
 
 <p>Clojure is a Lisp for the JVM, the Java platform. It combines the advantages of Lisp, notably its flexible and clean syntax, with full interoperability with existing Java libraries and excellent support for concurrent programming. 
 </p>
@@ -4646,8 +4401,6 @@ Hello World!
 nil
 user=&gt; 
 </pre>
-
-
 
 
 <p>
@@ -4668,8 +4421,6 @@ true
 </pre>
 
 
-
-
 <p>
 This short code defines boolean function &mdash; a predicate &mdash; with one parameter using <code>defn</code>. This function checks if all characters in a string are lower-case. It works by just checking if another predicate, -Character/isLowerCase- is true for every character in the string. If so, it returns <code>true</code>, otherwise <code>false</code>.
 </p>
@@ -4684,21 +4435,18 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 That code demonstrates two things:
 </p><ul>
-<li>
-Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
+<li>Combination of functions allows for a highly declarative style of programming. The above code ready almost like an instruction in ordinary language: filter all strings from this list of string that are in all lower case
 </li>
-<li>
-Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
-
+<li>Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no structural differences between Lisp code and data structures (everything look structurally the same). This principle is known as homoiconicity.
 </li>
 </ul>
 
-<p>Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
+
+<p>
+Function definitions can be more complex in that you can have multiple set of parameters, in the following case none (case -[]-), one (case -[name]-) and two (case -[phrase name]):
 </p>
 
 
@@ -4710,8 +4458,6 @@ Like all Lisps Clojure follows a philosophy of "code is data", i.e. there are no
   ([phrase name]
      (str phrase ", " name)))
 </pre>
-
-
 
 
 <p>
@@ -4733,51 +4479,54 @@ user=&gt;
 
 
 
-
-
 <p>
 On this basis we can now look at some more of the advantages:
 </p>
 <ul>
-<li>
-Elegant and concise syntax
+<li>Elegant and concise syntax
 </li>
-<li>
-Largely immutable data structures
+<li>Largely immutable data structures
 </li>
-<li>
-Excellent support for concurrent programming
+<li>Excellent support for concurrent programming
 </li>
-<li>
-Close JVM integration
-
+<li>Close JVM integration
 </li>
 </ul>
 
-<p>Recommended reading: {Halloway:2012ta}
+
+<p>
+Recommended reading: {Halloway:2012ta}
 </p>
 </div>
 
 </div>
 
-<div id="outline-container-13.2" class="outline-3">
-<h3 id="sec-13.2"><span class="section-number-3">13.2</span> Practicalities </h3>
-<div class="outline-text-3" id="text-13.2">
+<div id="outline-container-12-2" class="outline-3">
+<h3 id="sec-12-2"><span class="section-number-3">12.2</span> Practicalities</h3>
+<div class="outline-text-3" id="text-12-2">
 
 
 </div>
 
-<div id="outline-container-13.2.1" class="outline-4">
-<h4 id="sec-13.2.1"><span class="section-number-4">13.2.1</span> Tutorials </h4>
-<div class="outline-text-4" id="text-13.2.1">
+<div id="outline-container-12-2-1" class="outline-4">
+<h4 id="sec-12-2-1"><span class="section-number-4">12.2.1</span> Tutorials</h4>
+<div class="outline-text-4" id="text-12-2-1">
 
 <p>A number of Clojure tutorials exist on the Web, both as written tutorials and as podcasts. In addition, a number of books have appeared:
 </p>
 <ul>
-<li id="sec-13.2.1.1">Books <br/>
-
+<li id="sec-12-2-1-1">Books<br/>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+<p class="footnote"><sup><a class="footnum" name="fn-.1" href="#fnr-.1">1</a></sup>     S. Halloway and A. Bedra, Programming Clojure, Second Edition. Pragmatic Bookshelf, 2012.
+</p>
+<p class="footnote"><sup><a class="footnum" name="fn-.1" href="#fnr-.1">1</a></sup>     C. Emerick, B. Carper, and C. Grand, “Clojure Programming - Practical LISP for the Java World.,” O'Reilly 2012, 
+</p>
 </li>
-<li id="sec-13.2.1.2">Podcasts <br/>
+</ul>
+<ul>
+<li id="sec-12-2-1-2">Podcasts<br/>
 
 <p>
 <a href="http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128">http://blip.tv/clojure/clojure-for-java-programmers-1-of-2-989128</a>
@@ -4786,7 +4535,9 @@ Close JVM integration
 <a href="http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262">http://blip.tv/clojure/clojure-for-java-programmers-2-of-2-989262</a>
 </p>
 </li>
-<li id="sec-13.2.1.3">API <br/>
+</ul>
+<ul>
+<li id="sec-12-2-1-3">API<br/>
 The Clojure API is documented under <a href="http://clojure.github.com/clojure/">http://clojure.github.com/clojure/</a>
 
 </li>
@@ -4795,18 +4546,18 @@ The Clojure API is documented under <a href="http://clojure.github.com/clojure/"
 
 </div>
 
-<div id="outline-container-13.2.2" class="outline-4">
-<h4 id="sec-13.2.2"><span class="section-number-4">13.2.2</span> Installation and integration with Emacs </h4>
-<div class="outline-text-4" id="text-13.2.2">
+<div id="outline-container-12-2-2" class="outline-4">
+<h4 id="sec-12-2-2"><span class="section-number-4">12.2.2</span> Installation and integration with Emacs</h4>
+<div class="outline-text-4" id="text-12-2-2">
 
 <ol>
-<li>
-Download leiningen 2.0
-
+<li>Download leiningen 2.0
 </li>
 </ol>
 
-<p>Download from <a href="http://leiningen.org/">http://leiningen.org/</a>
+
+<p>
+Download from <a href="http://leiningen.org/">http://leiningen.org/</a>
 </p>
 
 
@@ -4819,19 +4570,17 @@ chmod 755 lein
 </pre>
 
 
-
-
 <p>
 then move lein to a place in the PATH
 </p>
 <ol>
-<li>
-Install package manager
-
+<li>Install package manager
 </li>
 </ol>
 
-<p>Only for Emacs 23: 
+
+<p>
+Only for Emacs 23: 
 </p>
 <p>
 Install the Marmalade package manager
@@ -4846,56 +4595,57 @@ Install the Marmalade package manager
 </pre>
 
 
-
-
 <ol>
-<li>
-Install clojure-mode
-
+<li>Install clojure-mode
 </li>
 </ol>
 
-<p><a href="https://github.com/technomancy/clojure-mode">https://github.com/technomancy/clojure-mode</a>
+
+<p>
+<a href="https://github.com/technomancy/clojure-mode">https://github.com/technomancy/clojure-mode</a>
 </p>
 <ol>
-<li>
-Install nrepl
-
+<li>Install nrepl
 </li>
 </ol>
 
-<p><a href="https://github.com/kingtim/nrepl.el">https://github.com/kingtim/nrepl.el</a>
+
+<p>
+<a href="https://github.com/kingtim/nrepl.el">https://github.com/kingtim/nrepl.el</a>
 </p>
 <p>
 M-x package-install [RET] nrepl [RET]
 </p>
 <p>
 Configure in .emacs:
-(require 'package)
-(add-to-list 'package-archives
-'("marmalade" . "<a href="http://marmalade-repo.org/packages/"">http://marmalade-repo.org/packages/"</a>) t)
-(add-to-list 'package-archives
-'("melpa" . "<a href="http://melpa.milkbox.net/packages/"">http://melpa.milkbox.net/packages/"</a>) t)
-(package-initialize)
 </p>
-<p>
-(require 'clojure-mode) ;;<a href="https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el">https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el</a>
-</p>
-<p>
-(setq inferior-lisp-program "lein repl")
-(setq clojure-swank-command ;; <a href="https://github.com/pallet/ritz/tree/develop/swank">https://github.com/pallet/ritz/tree/develop/swank</a>
-(if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
-"lein ritz-in %s"
-"echo \"lein ritz-in %s\" | $SHELL -l"))
-</p>
-<ol>
-<li>
-Start nrepl
 
+
+<pre class="example">(require 'package)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
+
+(require 'clojure-mode) ;;https://github.com/technomancy/clojure-mode/blob/master/clojure-mode.el
+
+(setq inferior-lisp-program "lein repl")
+(setq clojure-swank-command ;; https://github.com/pallet/ritz/tree/develop/swank
+  (if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
+    "lein ritz-in %s"
+    "echo \"lein ritz-in %s\" | $SHELL -l"))
+</pre>
+
+
+<ol>
+<li>Start nrepl
 </li>
 </ol>
 
-<p>M-x nrepl-jack-in
+
+<p>
+M-x nrepl-jack-in
 </p>
 <p>
 For Eclipse users there is the Counterclockwise plugin that can be used instead (<a href="http://code.google.com/p/counterclockwise/">http://code.google.com/p/counterclockwise/</a>). For installation instructions see there.
@@ -4904,9 +4654,9 @@ For Eclipse users there is the Counterclockwise plugin that can be used instead 
 
 </div>
 
-<div id="outline-container-13.2.3" class="outline-4">
-<h4 id="sec-13.2.3"><span class="section-number-4">13.2.3</span> Leiningen </h4>
-<div class="outline-text-4" id="text-13.2.3">
+<div id="outline-container-12-2-3" class="outline-4">
+<h4 id="sec-12-2-3"><span class="section-number-4">12.2.3</span> Leiningen</h4>
+<div class="outline-text-4" id="text-12-2-3">
 
 <p>Leiningen (<a href="http://leiningen.org">http://leiningen.org</a>) is the standard tool for managing dependencies for Clojure. It builds on the standard Java tool for this purpose, Maven, but adds a much more simpler syntax to express dependencies.
 </p>
@@ -4922,8 +4672,6 @@ Like Maven projects Leiningen projects have a predefined directory structure:
 </pre>
 
 
-
-
 <p>
 Project files with the dependency structure just list the packages and their desired versions:
 </p>
@@ -4936,8 +4684,6 @@ Project files with the dependency structure just list the packages and their des
                  [cheshire "4.0.2"]
                  [org.clojure/data.zip "0.1.0"]])
 </pre>
-
-
 
 
 <p>
@@ -4990,8 +4736,6 @@ deploying and copying.
 </pre>
 
 
-
-
 <p>
 <code>lein repl</code> starts a Clojure command shell with all dependencies loaded:
 </p>
@@ -5023,8 +4767,6 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 <code>lein new PROJECT</code> creates a new empty project structure with placeholders for all important files:
 </p>
@@ -5052,8 +4794,6 @@ $
 </pre>
 
 
-
-
 <p>
 The Leiningen tutorial <a href="https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md">https://github.com/technomancy/leiningen/blob/master/doc/TUTORIAL.md</a> illustrates all possible operations in detail.
 </p>
@@ -5061,9 +4801,9 @@ The Leiningen tutorial <a href="https://github.com/technomancy/leiningen/blob/ma
 
 </div>
 
-<div id="outline-container-13.2.4" class="outline-4">
-<h4 id="sec-13.2.4"><span class="section-number-4">13.2.4</span> Syntax and data structures </h4>
-<div class="outline-text-4" id="text-13.2.4">
+<div id="outline-container-12-2-4" class="outline-4">
+<h4 id="sec-12-2-4"><span class="section-number-4">12.2.4</span> Syntax and data structures</h4>
+<div class="outline-text-4" id="text-12-2-4">
 
 <p>We have already seen examples of Clojure's syntax. Function calls are of the type:
 </p>
@@ -5074,8 +4814,6 @@ The Leiningen tutorial <a href="https://github.com/technomancy/leiningen/blob/ma
 
 
 
-
-
 <p>
 Defining new functions is as simple:
 </p>
@@ -5083,8 +4821,6 @@ Defining new functions is as simple:
 
 <pre class="example">(defn all-lower? [s] (every? #(Character/isLowerCase %) s))
 </pre>
-
-
 
 
 <p>
@@ -5107,10 +4843,8 @@ Nil: nil
 </pre>
 
 
-
-
 <ul>
-<li id="sec-13.2.4.1">Lists <br/>
+<li id="sec-12-2-4-1">Lists<br/>
 Lisps are famous for using lists. In Clojure lists are also key to the syntax, but not anywhere as strongly as in classical Lisps.
 
 
@@ -5132,8 +4866,6 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 As we have seen, also function calls are lists:
 </p>
@@ -5145,10 +4877,10 @@ true
 
 
 
-
-
 </li>
-<li id="sec-13.2.4.2">Vectors <br/>
+</ul>
+<ul>
+<li id="sec-12-2-4-2">Vectors<br/>
 Vectors are Clojure's equivalent to arrays. They are indexed, indexes can be used to address individual elements in the vector.
 
 
@@ -5168,13 +4900,13 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 Vectors themselves can be used as functions, taking the relevant index as a parameter.
 </p>
 </li>
-<li id="sec-13.2.4.3">Maps <br/>
+</ul>
+<ul>
+<li id="sec-12-2-4-3">Maps<br/>
 Maps are very much the bread and butter data structure in Clojure and are used to model flexible data structures:
 
 
@@ -5190,13 +4922,13 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 Using the comma to separate key-value-pairs is optional. All data structures can be used as as keys, though keywords are the most common case. Keywords can also be used as functions, they return the value corresponding to this key in the map.
 </p>
 </li>
-<li id="sec-13.2.4.4">-defrecord- <br/>
+</ul>
+<ul>
+<li id="sec-12-2-4-4">-defrecord-<br/>
 In addition, you can easily define new data structures in the form of records:
 
 
@@ -5212,8 +4944,6 @@ user=&gt;
 
 
 
-
-
 </li>
 </ul>
 </div>
@@ -5221,9 +4951,9 @@ user=&gt;
 
 </div>
 
-<div id="outline-container-13.3" class="outline-3">
-<h3 id="sec-13.3"><span class="section-number-3">13.3</span> Control structures </h3>
-<div class="outline-text-3" id="text-13.3">
+<div id="outline-container-12-3" class="outline-3">
+<h3 id="sec-12-3"><span class="section-number-3">12.3</span> Control structures</h3>
+<div class="outline-text-3" id="text-12-3">
 
 <p>Clojure has at its core only very simple comtrol structures: <code>if</code>, <code>do</code> and <code>loop</code>. Of these, however, you use only <code>if</code> regularly and directly:
 </p>
@@ -5235,8 +4965,6 @@ user=&gt; (if (all-lower? "abc") "all lower case" "also capital letters")
 "all lower case"
 user=&gt; 
 </pre>
-
-
 
 
 <p>
@@ -5257,8 +4985,6 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 <code>do</code> is needed if for some reason more than one action is needed in the then or else branch. By necessity, these other actions are defined by their side effect:
 </p>
@@ -5269,8 +4995,6 @@ else
 "also capital letters"
 user=&gt; 
 </pre>
-
-
 
 
 
@@ -5288,8 +5012,6 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 As usual for Lisps these primitive control structures are replaced by more powerful abstractions built on top of these basic building blocks. These include <code>for</code> and <code>when</code>. <code>for</code>, however, has little in common with a for-loop in, say, C. Ui stead it is a close parent of the list comprehensions that exist e.g. in Python:
 </p>
@@ -5300,8 +5022,6 @@ As usual for Lisps these primitive control structures are replaced by more power
 (4 16 36)
 user=&gt; 
 </pre>
-
-
 
 
 <p>
@@ -5319,8 +5039,6 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 or even shorter
 </p>
@@ -5333,8 +5051,6 @@ user=&gt;
 </pre>
 
 
-
-
 <p>
 This makes usually for much clearer code.
 </p>
@@ -5342,9 +5058,9 @@ This makes usually for much clearer code.
 
 </div>
 
-<div id="outline-container-13.4" class="outline-3">
-<h3 id="sec-13.4"><span class="section-number-3">13.4</span> Lazy sequences </h3>
-<div class="outline-text-3" id="text-13.4">
+<div id="outline-container-12-4" class="outline-3">
+<h3 id="sec-12-4"><span class="section-number-3">12.4</span> Lazy sequences</h3>
+<div class="outline-text-3" id="text-12-4">
 
 <p>However, Clojure still has a surprise  in petto. In contrast to most other languages it does not only know finite, but also infinite sequences. With this we can find a much more flexible definition for our squares of even numbers, one that does not only work for a given finite list '(1 2 3 4 5 6), but for any type of range:
 </p>
@@ -5358,8 +5074,6 @@ user=&gt; (take 50 (even-squares))
 (0 4 16 36 64 100 144 196 256 324 400 484 576 676 784 900 1024 1156 1296 1444 1600 1764 1936 2116 2304 2500 2704 2916 3136 3364 3600 3844 4096 4356 4624 4900 5184 5476 5776 6084 6400 6724 7056 7396 7744 8100 8464 8836 9216 9604)
 user=&gt; 
 </pre>
-
-
 
 
 <p>
@@ -5377,8 +5091,6 @@ user=&gt;
 
 
 
-
-
 <p>
 This may look rather surprising &mdash; how can a language treat infinite sequences? This only works because Clojure treats these sequences as so-called lazy sequences that are instantiated &mdash; realized is the term &mdash; only when really used. So, before we actually take the first 10 squares, nothing is calculated. Only the moment that we really want to print those 10 and then in a second round 50 squares are they really calculated. Results that are no longer needed can be garbage collected.
 </p>
@@ -5389,30 +5101,29 @@ Lazy sequences make for elegant code also for finite, but potentially large sequ
 
 </div>
 
-<div id="outline-container-13.5" class="outline-3">
-<h3 id="sec-13.5"><span class="section-number-3">13.5</span> Assignment </h3>
-<div class="outline-text-3" id="text-13.5">
+<div id="outline-container-12-5" class="outline-3">
+<h3 id="sec-12-5"><span class="section-number-3">12.5</span> Assignment</h3>
+<div class="outline-text-3" id="text-12-5">
 
 <ol>
-<li>
-Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
+<li>Write a clojure program that takes a list of strings and returns another list of only those strings that start with the character "a", but uppercased. So, e.g. for an input '("xyz" "cde" "abc" "bab" "axx") it should return '("ABC" "AXX"). Write first a unit test and then the function and run lein test to prove it works.
 </li>
-<li>
-Write the same program in another programming language of your choice
-
+<li>Write the same program in another programming language of your choice
 </li>
 </ol>
 
-<p>Hand in assignment via the course's Moodle page.
+
+<p>
+Hand in assignment via the course's Moodle page.
 </p>
 
 </div>
 
 </div>
 
-<div id="outline-container-13.6" class="outline-3">
-<h3 id="sec-13.6"><span class="section-number-3">13.6</span> Principles of functional programming </h3>
-<div class="outline-text-3" id="text-13.6">
+<div id="outline-container-12-6" class="outline-3">
+<h3 id="sec-12-6"><span class="section-number-3">12.6</span> Principles of functional programming</h3>
+<div class="outline-text-3" id="text-12-6">
 
 <p>Session <span class="timestamp-wrapper"> <span class="timestamp">2012-10-19 Fri</span></span>
 </p>
@@ -5420,25 +5131,21 @@ Write the same program in another programming language of your choice
 Functional programming centres around a number of key principles that are more or less "purely" realized in the various functional languages:
 </p>
 <ul>
-<li>
-Immutable data
+<li>Immutable data
 </li>
-<li>
-Functions as data
+<li>Functions as data
 </li>
-<li>
-Pure Functions
+<li>Pure Functions
 </li>
-<li>
-Higher-Order Functions
+<li>Higher-Order Functions
 </li>
-<li>
-Use of recursion
-
+<li>Use of recursion
 </li>
 </ul>
 
-<p>We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
+
+<p>
+We have seen cases of function as data and higher order functions. These are key to all functional languages and especially to Clojure. Clojure also has a strong preference for pure functions, i.e. functions that have no side-effects and always return the same output for the same input. 
 </p>
 <p>
 The example of the "square of even numbers" functions is built on functions as data (<code>even?</code>, <code>#(* % %)</code> etc.) that are parameters to higher-order functions (<code>filter</code>, <code>map</code>). All of these functions are pure in a mathematical sense.
@@ -5447,8 +5154,6 @@ The example of the "square of even numbers" functions is built on functions as d
 
 <pre class="example">(map  #(* % %) (filter even? '(1 2 3 4 5 6)))
 </pre>
-
-
 
 
 <p>
@@ -5466,9 +5171,9 @@ More information on Clojure and its API is available under <a href="http://cloju
 
 </div>
 
-<div id="outline-container-13.7" class="outline-3">
-<h3 id="sec-13.7"><span class="section-number-3">13.7</span> Futures </h3>
-<div class="outline-text-3" id="text-13.7">
+<div id="outline-container-12-7" class="outline-3">
+<h3 id="sec-12-7"><span class="section-number-3">12.7</span> Futures</h3>
+<div class="outline-text-3" id="text-12-7">
 
 <p>For long-running calculations Clojure has the concept of futures (<a href="http://clojuredocs.org/clojure_core/clojure.core/future">http://clojuredocs.org/clojure_core/clojure.core/future</a>). A future is calculated in a separate thread, but transparently to the user:
 </p>
@@ -5483,8 +5188,6 @@ More information on Clojure and its API is available under <a href="http://cloju
     (write-request out host)
     (future (read-response in))))
 </pre>
-
-
 
 
 <p>
@@ -5509,8 +5212,6 @@ user&gt; @p
 </pre>
 
 
-
-
 <p>
 If you need the guarantee to have the value at a later stage, you can dereference the future by using the <code>@</code> reader macro, e.g. <code>@p</code>. In this case program execution will block until the correct value is calculated, if that is not yet the case.
 </p>
@@ -5518,9 +5219,9 @@ If you need the guarantee to have the value at a later stage, you can dereferenc
 
 </div>
 
-<div id="outline-container-13.8" class="outline-3">
-<h3 id="sec-13.8"><span class="section-number-3">13.8</span> Multimethods: Polymorphism functional style </h3>
-<div class="outline-text-3" id="text-13.8">
+<div id="outline-container-12-8" class="outline-3">
+<h3 id="sec-12-8"><span class="section-number-3">12.8</span> Multimethods: Polymorphism functional style</h3>
+<div class="outline-text-3" id="text-12-8">
 
 
 <p>
@@ -5550,29 +5251,22 @@ Clojure has no native concept of objects (it does have an object concept for int
 </pre>
 
 
-
-
 <p>
 In the most frequent case dispatching is by data type or class, but it can be by anything else. <code>defmulti</code> defines in its implementation the strategy to be chosen by the individual <code>defmethod</code>.
 </p></div>
 </div>
 </div>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-<p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup>     S. Halloway and A. Bedra, Programming Clojure, Second Edition. Pragmatic Bookshelf, 2012.
-</p>
-<p class="footnote"><sup><a class="footnum" name="fn.1" href="#fnr.1">1</a></sup>     C. Emerick, B. Carper, and C. Grand, “Clojure Programming - Practical LISP for the Java World.,” O'Reilly 2012, 
-</p>
+
 </div>
 </div>
+</div>
+
 <div id="postamble">
-<p class="author"> Author: Marc Wilhelm Küster
-<a href="mailto:kuester@client-183-99.eduroam.fh-worms.de">&lt;kuester@client-183-99.eduroam.fh-worms.de&gt;</a>
-</p>
-<p class="date"> Date: 2013-11-09 11:40:13 CET</p>
-<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
-</div>
+<p class="date">Date: 2014-01-03T09:59+0100</p>
+<p class="author">Author: Marc Wilhelm Küster</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
 </div>
 </body>
 </html>
