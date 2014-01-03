@@ -167,9 +167,9 @@
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535 -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535 -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535">
         <rdf:type rdf:resource="&cdm;document_cjeu"/>
         <rdf:type rdf:resource="&cdm;judgement"/>
         <cdm:resource_legal_number_natural_celex rdf:datatype="&xsd;positiveInteger">0535</cdm:resource_legal_number_natural_celex>
@@ -186,27 +186,27 @@
         <cdm:resource_legal_type rdf:datatype="&xsd;string">CJ</cdm:resource_legal_type>
         <cdm:work_id_document rdf:datatype="&xsd;string">celex:62007CJ0535</cdm:work_id_document>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:case-law_delivered_by_judge rdf:resource="http://anycellar.publications.europa.eu/resource/agent/Bay%20Larsen"/>
-        <cdm:case-law_delivered_by_advocate-general rdf:resource="http://anycellar.publications.europa.eu/resource/agent/Sharpston"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/11997E249"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/12008E288"/>
-        <cdm:case-law_states_failure_concerning_resource_legal rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31979L0409"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31979L0409"/>
-        <cdm:case-law_states_failure_concerning_resource_legal rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31992L0043"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/31992L0043"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/61995CJ0044"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/61997CJ0166"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/61998CJ0374"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62000CJ0240"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62001CJ0415"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62002CJ0394"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62004CJ0006"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62004CJ0235"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62004CJ0418"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62005CJ0183"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62005CJ0236"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62006CJ0186"/>
-        <cdm:work_cites_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0293"/>
+        <cdm:case-law_delivered_by_judge rdf:resource="http://publications.europa.eu/resource/agent/Bay%20Larsen"/>
+        <cdm:case-law_delivered_by_advocate-general rdf:resource="http://publications.europa.eu/resource/agent/Sharpston"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/11997E249"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/12008E288"/>
+        <cdm:case-law_states_failure_concerning_resource_legal rdf:resource="http://publications.europa.eu/resource/celex/31979L0409"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/31979L0409"/>
+        <cdm:case-law_states_failure_concerning_resource_legal rdf:resource="http://publications.europa.eu/resource/celex/31992L0043"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/31992L0043"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/61995CJ0044"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/61997CJ0166"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/61998CJ0374"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62000CJ0240"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62001CJ0415"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62002CJ0394"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62004CJ0006"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62004CJ0235"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62004CJ0418"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62005CJ0183"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62005CJ0236"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62006CJ0186"/>
+        <cdm:work_cites_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0293"/>
         <cdm:work_created_by_agent rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/CURIA"/>
         <cdm:case-law_commented_by_agent rdf:resource="http://publications.europa.eu/resource/authority/corporate-body/OP_DATPRO"/>
         <cdm:case-law_originates_in_country rdf:resource="http://publications.europa.eu/resource/authority/country/AUT"/>
@@ -233,314 +233,314 @@
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.BUL -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.BUL -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.BUL">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.BUL">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Комисия/Австрия</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Решение на Съда (втори състав) от14 октомври 2010 г. # Европейска комисия срещу Република Австрия. # Неизпълнение на задължения от държава членка - Директиви 79/409/ЕИО и 92/43/ЕИО - Опазване на дивите птици - Неправилно определяне и недостатъчна правна защита на специалните защитени зони. # Дело C-535/07.</cdm:expression_title>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/BUL"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.CES -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.CES -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.CES">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.CES">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komise v. Rakousko</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Rozsudek Soudního dvora (druhého senátu) ze dne 14. října 2010. # Evropská komise proti Rakouské republice. # Nesplnění povinnosti státem - Směrnice 79/409/EHS a 92/43/EHS - Ochrana volně žijících ptáků - Nesprávné vyhlášení a nedostatečná právní ochrana zvláště chráněných oblastí. # Věc C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/CES"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DAN -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.DAN -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DAN">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.DAN">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">Domstolens Dom (Anden Afdeling) af 14. oktober  2010. # Europa-Kommissionen mod Republikken Østrig. # Traktatbrud - direktiv 79/409/EØF og 92/43/EØF - beskyttelse af vilde fugle - fejlagtig udpegning og utilstrækkelig retlig beskyttelse af særligt beskyttede områder. # Sag C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Kommissionen mod Østrig</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/DAN"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DEU -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.DEU -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.DEU">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.DEU">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Kommission / Österreich</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title rdf:datatype="&xsd;string">Urteil des Gerichtshofes (Zweite Kammer) vom 14. Oktober  2010. # Europäische Kommission gegen Republik Österreich. # Vertragsverletzung eines Mitgliedstaats - Richtlinien 79/409/EWG und 92/43/EWG - Erhaltung der wildlebenden Vogelarten - Fehlerhafte Ausweisung und unzureichender rechtlicher Schutz der besonderen Schutzgebiete. # Rechtssache C-535/07.</cdm:expression_title>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/DEU"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ELL -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.ELL -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ELL">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.ELL">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title rdf:datatype="&xsd;string">Απόφαση του Δικαστηρίου (δεύτερο τμήμα) της 14ης Οκτωβρίου  2010. # Ευρωπαϊκή Επιτροπή κατά Δημοκρατίας της Αυστρίας. # Παράβαση κράτους μέλους - Οδηγίες 79/409/ΕΟΚ και 92/43/ΕΟΚ - Διατήρηση των αγρίων πτηνών - Μη ορθός καθορισμός και ανεπαρκής έννομη προστασία των ζωνών ειδικής προστασίας. # Υπόθεση C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Επιτροπή κατά Αυστρίας</cdm:expression_title_alternative>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ELL"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ENG -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.ENG -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ENG">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.ENG">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commission v Austria</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Judgment of the Court (Second Chamber) of 14 October 2010. # European Commission v Republic of Austria. # Failure of a Member State to fulfil obligations - Directives 79/409/EEC and 92/43/EEC - Conservation of wild birds - Incorrect designation and inadequate legal protection of special protection areas. # Case C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ENG"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.EST -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.EST -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.EST">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.EST">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">Euroopa Kohtu otsus (teine koda), 14. oktoober 2010. # Euroopa Komisjon versus Austria Vabariik. # Liikmesriigi kohustuste rikkumine - Direktiivid 79/409/EMÜ ja 92/43/EMÜ - Loodusliku linnustiku kaitse - Erikaitsealade ebaõige määramine ja ebapiisav õiguskaitse. # Kohtuasi C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">komisjon vs. Austria</cdm:expression_title_alternative>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/EST"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FIN -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.FIN -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FIN">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.FIN">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title rdf:datatype="&xsd;string">Yhteisöjen tuomioistuimen tuomio (toinen jaosto) 14 päivänä lokakuuta 2010. # Euroopan komissio vastaan Itävallan tasavalta. # Jäsenyysvelvoitteiden noudattamatta jättäminen - Direktiivit 79/409/ETY ja 92/43/ETY - Luonnonvaraisten lintujen suojelu - Erityissuojelualueiden virheellinen osoittaminen ja riittämätön oikeudellinen suojelu. # Asia C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">komissio v. Itävalta</cdm:expression_title_alternative>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/FIN"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.FRA -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.FRA">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.FRA">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">Arrêt de la Cour (deuxième chambre) du 14 octobre 2010. # Commission européenne contre République d&apos;Autriche. # Manquement d’État - Directives 79/409/CEE et 92/43/CEE - Conservation des oiseaux sauvages - Désignation incorrecte et protection juridique insuffisante des zones de protection spéciale. # Affaire C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commission / Autriche</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/FRA"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.HUN -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.HUN -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.HUN">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.HUN">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">A Bíróság (második tanács) 2010. október 14-i ítélete. # Európai Bizottság kontra Osztrák Köztársaság. # Tagállami kötelezettségszegés - 79/409/EGK és 92/43/EGK irányelv - A vadon élő madarak védelme - Különleges védelmi területek nem megfelelő kijelölése és elégtelen jogi védelme. # C-535/07. sz. ügy</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Bizottság kontra Ausztria</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/HUN"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ITA -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.ITA -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.ITA">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.ITA">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commissione / Austria</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Sentenza della Corte (Seconda Sezione) del 14 ottobre 2010. # Commissione europea contro Repubblica d&apos;Austria. # Inadempimento di uno Stato - Direttive 79/409/CEE e 92/43/CEE - Conservazione degli uccelli selvatici - Designazione erronea e tutela giuridica insufficiente delle zone di protezione speciale. # Causa C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/ITA"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LAV -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.LAV -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LAV">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.LAV">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisija/Austrija</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title rdf:datatype="&xsd;string">Tiesas spriedums (otrā palāta) 2010. gada 14.oktobrī. # Eiropas Komisija pret Austrijas Republiku. # Valsts pienākumu neizpilde - Direktīvas 79/409/EEK un 92/43/EEK - Savvaļas putnu aizsardzība - Īpaši aizsargājamo teritoriju nepareiza noteikšana un nepietiekama tiesiskā aizsardzība. # Lieta C-535/07.</cdm:expression_title>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/LAV"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LIT -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.LIT -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.LIT">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.LIT">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">2010 m. spalio 14 d. Teisingumo Teismo (antroji kolegija) sprendimas. # Europos Komisija prieš Austrijos Respubliką. # Valstybės įsipareigojimų neįvykdymas - Direktyvos 79/409/EEB ir 92/43/EEB - Laukinių paukščių apsauga - Specialios apsaugos teritorijų neteisingas įsteigimas ir nepakankama teisinė apsauga. # Byla C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisija prieš Austriją</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/LIT"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.MLT -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.MLT -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.MLT">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.MLT">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Il-Kummissjoni vs L-Awstrija</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Sentenza tal-Qorti tal-Ġustizzja (it-Tieni Awla) tal-14 ta&apos; Ottubru 2010. # Il-Kummissjoni Ewropea vs ir-Repubblika ta&apos; l-Awstrija. # Nuqqas ta’ Stat li jwettaq obbligu - Direttivi 79/409/KEE u 92/43/KEE - Konservazzjoni ta’ għasafar selvaġġi - Klassifikazzjoni inkorretta u protezzjoni legali insuffiċjenti ta’ żoni speċjali tal-protezzjoni. # Kawża C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/MLT"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.NLD -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.NLD -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.NLD">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.NLD">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">Arrest van het Hof (Tweede kamer) van 14 oktober 2010. # Europese Commissie tegen Republiek Oostenrijk. # Niet-nakoming - Richtlijnen 79/409/EEG en 92/43/EEG - Behoud van vogelstand - Onjuiste aanwijzing en onvoldoende rechtsbescherming van specialebeschermingszones. # Zaak C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Commissie/Oostenrijk</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/NLD"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POL -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.POL -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POL">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.POL">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisja przeciwko Austrii</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title rdf:datatype="&xsd;string">Wyrok Trybunału (druga izba) z dnia 14 października 2010 r. # Komisja Europejska przeciwko Republice Austrii. # Uchybienie zobowiązaniom państwa członkowskiego - Dyrektywy 79/409/EWG i 92/43/EWG - Ochrona dzikiego ptactwa - Nieprawidłowe wyznaczenie i niewystarczająca ochrona prawna obszarów specjalnej ochrony. # Sprawa C-535/07.</cdm:expression_title>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/POL"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POR -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.POR -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.POR">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.POR">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">Acórdão do Tribunal de Justiça (Segunda Secção) de 14 de Outubro de 2010. # Comissão Europeia contra República da Áustria. # Incumprimento de Estado - Directivas 79/409/CEE e 92/43/CEE - Conservação das aves selvagens - Designação incorrecta e protecção jurídica insuficiente das zonas de protecção especial. # Processo C-535/07.</cdm:expression_title>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Comissão/Áustria</cdm:expression_title_alternative>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/POR"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.RON -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.RON -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.RON">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.RON">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Comisia/Austria</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Hotărârea Curții (camera a doua) din data de14 octombrie 2010. # Comisia Europeană împotriva Republicii Austria. # Neîndeplinirea obligațiilor de către un stat membru - Directivele 79/409/CEE și 92/43/CEE - Conservarea păsărilor sălbatice - Desemnare incorectă și protecție juridică insuficientă a ariilor de protecție specială. # Cauza C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/RON"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLK -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.SLK -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLK">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.SLK">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisia/Rakúsko</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Rozsudok Súdneho dvora (druhá komora) zo 14. októbra 2010. # Európska komisia proti Rakúskej republike. # Nesplnenie povinnosti členským štátom - Smernice 79/409/EHS a 92/43/EHS - Ochrana voľne žijúceho vtáctva - Nesprávne označenie a nedostatočná právna ochrana území osobitnej ochrany. # Vec C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SLK"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLV -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.SLV -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SLV">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.SLV">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Komisija proti Avstriji</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Sodba Sodišča (drugi senat) z dne14. oktobra 2010. # Evropska komisija proti Republiki Avstriji. # Neizpolnitev obveznosti države - Direktivi 79/409/EGS in 92/43/EGS - Ohranjanje prosto živečih ptic - Nepravilna določitev in nezadostno pravno varstvo posebnih območij varstva. # Zadeva C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SLV"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.SPA -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.SPA">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">Comisión/Austria</cdm:expression_title_alternative>
         <cdm:expression_title rdf:datatype="&xsd;string">Sentencia del Tribunal de Justicia (Sala Segunda) de 14 de octubre de 2010. # Comisión Europea contra República de Austria. # Incumplimiento de Estado - Directivas 79/409/CEE y 92/43/CEE - Conservación de las aves silvestres - Designación incorrecta y protección jurídica insuficiente de las zonas de protección especial. # Asunto C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SPA"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.html -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.SPA.html -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.html">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.SPA.html">
         <rdf:type rdf:resource="&cdm;manifestation"/>
         <cdm:manifestation_type rdf:datatype="&xsd;string">html</cdm:manifestation_type>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:manifestation_manifests_expression rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA"/>
+        <cdm:manifestation_manifests_expression rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535.SPA"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.txt -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.SPA.txt -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA.txt">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.SPA.txt">
         <rdf:type rdf:resource="&cdm;manifestation_case-law"/>
         <cdm:manifestation_case-law_operative_part rdf:datatype="&rdf;XMLLiteral">
       &lt;TXT_DI&gt;
@@ -787,20 +787,20 @@
     </cdm:manifestation_case-law_summary>
         <cdm:manifestation_type rdf:datatype="&xsd;string">txt</cdm:manifestation_type>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:manifestation_manifests_expression rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SPA"/>
+        <cdm:manifestation_manifests_expression rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535.SPA"/>
     </NamedIndividual>
     
 
 
-    <!-- http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SWE -->
+    <!-- http://publications.europa.eu/resource/celex/62007CJ0535.SWE -->
 
-    <NamedIndividual rdf:about="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535.SWE">
+    <NamedIndividual rdf:about="http://publications.europa.eu/resource/celex/62007CJ0535.SWE">
         <rdf:type rdf:resource="&cdm;expression"/>
         <cdm:expression_title rdf:datatype="&xsd;string">Domstolens dom (andra avdelningen) den 14 oktober 2010. # Europeiska kommissionen mot Republiken Österrike. # Fördragsbrott - Direktiv 79/409/EEG och 92/43/EEG - Bevarande av vilda fåglar - Särskilda skyddsområden har utsetts på ett felaktigt sätt och inte getts ett tillräckligt rättsligt skydd. # Mål C-535/07.</cdm:expression_title>
         <cdm:expression_title_information_additional rdf:datatype="&xsd;string">TITJUR</cdm:expression_title_information_additional>
         <cdm:expression_title_alternative rdf:datatype="&xsd;string">kommissionen mot Österrike</cdm:expression_title_alternative>
         <cdm-annotation:build_info>$BUILD_INFO$</cdm-annotation:build_info>
-        <cdm:expression_belongs_to_work rdf:resource="http://anycellar.publications.europa.eu/resource/celex/62007CJ0535"/>
+        <cdm:expression_belongs_to_work rdf:resource="http://publications.europa.eu/resource/celex/62007CJ0535"/>
         <cdm:expression_uses_language rdf:resource="http://publications.europa.eu/resource/authority/language/SWE"/>
     </NamedIndividual>
     

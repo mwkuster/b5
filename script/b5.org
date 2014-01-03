@@ -1574,7 +1574,7 @@ One of the simplest forms to encode semantic information is Turtle. Turtle essen
                                                          cdm:document_cjeu ,
                                                          cdm:opinion_advocate-general ,
                                                          cdm:resource_legal ,
-                                                         cdm:work ,
+                                                         cdm:work ;
                                                  cdm:resource_legal_number_natural_celex "0002"^^xsd:positiveInteger ;
  cdm:resource_legal_year "1960"^^xsd:gYear .
 
@@ -1798,6 +1798,7 @@ gem install rdf
 gem install rdf-rdfxml
 gem install rdf-n3
 gem install sparql
+gem install rdf-turtle
 etc.
 #+END_SRC
 
@@ -1811,7 +1812,9 @@ require 'rdf/rdfxml'
 
 repo = RDF::Repository.new
 repo.load("62007CJ0535.rdf", :format => :rdfxml)
-repo.load("61960CC0002.ttl", :format => :turtle)
+repo.load("61960CC0002.ttl", :format => :ttl)
+repo.load("http://publications.europa.eu/resource/celex/62012CJ0001", 
+          options={:headers => {"Accept" => "application/rdf+xml;notice=tree"}, :format => :rdfxml})
 
 #Just for debugging: show the contents of the repository
 repo.each_statement { |statement| puts statement }

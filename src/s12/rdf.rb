@@ -1,15 +1,17 @@
 require 'rdf'
 require 'sparql'
 require 'rdf/turtle'
-require 'rdf/rdfxml'
 
-#Named graph
 repo = RDF::Repository.new
+repo.load("61960CC0002.ttl", :format => :ttl)
+
+require 'rdf/rdfxml'
 repo.load("62007CJ0535.rdf", :format => :rdfxml)
-repo.load("61960CC0002.ttl", :format => :turtle)
+repo.load("http://publications.europa.eu/resource/celex/62012CJ0001", 
+          options={:headers => {"Accept" => "application/rdf+xml;notice=tree"}, :format => :rdfxml})
 
 #Just for debugging: show the contents of the repository
-repo.each_statement { |statement| puts statement }
+#repo.each_statement { |statement| puts statement }
 
 
 def output_all_triples (repository)
@@ -46,13 +48,13 @@ sparql
   puts query
               
   solutions = SPARQL.execute(query, repo)
-  puts "Titles:"
-  puts solutions.each { |sol| puts sol.to_hash}
+  #puts "Titles:"
+  #puts solutions.each { |sol| puts sol.to_hash}
 
   solutions.collect { |sol| sol[:title].to_s}
 end
 
 output_all_triples(repo)
 
-titles = titles_by_celex(repo, "62007CJ0535")
+titles = titles_by_celex(repo, "62012CJ0001")
 puts titles
